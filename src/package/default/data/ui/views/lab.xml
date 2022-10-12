@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<view template="splunk4champions2:/templates/lab.html" type="html">
+	<label>Start</label>
+</view>

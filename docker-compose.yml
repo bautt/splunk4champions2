@@ -1,0 +1,14 @@
+version: "3.6"
+
+services:
+  splunk:
+    image: splunk/splunk:9.0.1
+    container_name: splunk4champions2_testbench
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=passw0rd
+    ports:
+      - 8000:8000
+      - 8089:8089
+    volumes:
+      - './dist:/opt/splunk/etc/apps/splunk4champions2'

@@ -1,0 +1,12 @@
+Long searches can be difficult to read. For example, the following search uses multiple commands and includes many occurrences of renaming columns in the search results.
+
+![](/static/app/splunk4champions2/images/lab1_task3_howto1.png)
+
+**On Linux or Windows use Ctrl + \ . You can also use Ctrl + Shift + F , which works well with many non-English keyboards.**
+**On Mac OSX use Command + \. You can also use Command + Shift + F , which works well with many non-English keyboards.**
+
+![](/static/app/splunk4champions2/images/lab1_task3_howto2.png)
+
+Visit [https://docs.splunk.com/Documentation/Splunk/latest/Search/Parsingsearches#Search_bar_shortcuts](https://docs.splunk.com/Documentation/Splunk/latest/Search/Parsingsearches#Search_bar_shortcuts) to learn more about searchbar shortcuts.
+
+Click here to perform a very long search: [Search](/en-GB/app/splunk4champions/search?display.page.search.mode=fast&q=search%20index=s4c_access%20status=200%20|%20stats%20count%20AS%20views%20count(eval(action=%22addtocart%22))%20AS%20addtocart%20count(eval(action=%22purchase%22))%20AS%20purchases%20by%20productName%20|%20eval%20viewsToPurchases=(purchases/views)*100%20|%20eval%20cartToPurchases=(purchases/addtocart)*100%20|%20table%20productName%20views%20addtocart%20purchases%20viewsToPurchases%20cartToPurchases%20|%20rename%20productName%20AS%20%22Product%20Name%22,%20views%20AS%20%22Views%22,%20addtocart%20as%20%22Adds%20To%20Cart%22,%20purchases%20AS%20%22Purchases%22&earliest=0&latest=)

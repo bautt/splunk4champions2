@@ -1,0 +1,88 @@
+# Splunk4Champions 2.0
+
+This repository houses a new version of the Splunk4Champions workshop. The content management has been redesigned to work with React.js, Splunk UI and MDX files.
+
+## Setting up the Development Environment
+
+Clone the repository to your local workstation
+```
+git clone https://github.com/bautt/splunk4champions2
+```
+
+Install the required dependencies
+```
+make deps
+```
+
+Run the development task. This will build a development version of the app in the `dist` folder.
+```
+make dev
+```
+
+During development, you can use `ln -s` to create a symlink from the `dist` folder to `$SPLUNK_HOME/etc/apps`splunk4champions2`.
+
+
+### Docker
+
+There is a `docker-compose.yml` provided as part of this repository.
+
+Running the command below will install the app in a new Splunk container. Please note that the container will listen on port 8000, so ensure it's available.
+```
+docker-compose up -d
+```
+
+## Editing Workshop Content
+
+### workshop.js
+
+The overall structure of the workshop, including chapters, sections and steps is configured in `src/web/workshop/workshop.js`.
+Modify this file to add new chapters, sections and steps. It's importing icons from [@splunk/react-icons](https://splunkui.splunk.com/Packages/react-icons/Usage).
+
+The actual content is all contained in Steps, each of which has his own markdown file.
+
+#### Chapter
+
+Example of a chapter
+```
+import Settings from '@splunk/react-icons/Settings';
+...
+
+{
+    "title": "1 - Settings",
+    "id": "one",
+    "icon": <Settings/>,
+    "subtitle": "test",
+    "sections" : [<Sections here...>]
+}
+```
+
+#### Section
+
+Example of a section
+```
+{
+    "title": "Set your preferences",
+    "steps": [<Steps here...>]
+}
+```
+
+#### Step
+
+Example of an individual step. The path to the `.mdx` file is relative to the `src/web/workshop` folder.
+```
+{
+    "title": "Fast Mode",
+    "content": "chapter1/fast_mode.mdx"
+}
+```
+
+### Content Files
+
+Content files are located in `src/web/workshop/**/*.mdx` and are written in [MDX](https://mdxjs.com/docs/using-mdx/) which allows to use JSX inside Markdown content.
+This allows to intermix text-heavy markdown-style content with interactive elements (ie. from [Splunk UI](https://splunkui.splunk.com/))
+
+### Useful Components for MDX
+
+#### SplunkSearch
+
+The `<SplunkSearch/>` component adds an interactive search bar including a time picker to prettify SPL searches. It also allows to copy the search to clipboard. 
