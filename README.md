@@ -21,6 +21,26 @@ make dev
 
 During development, you can use `ln -s` to create a symlink from the `dist` folder to `$SPLUNK_HOME/etc/apps`splunk4champions2`.
 
+To build the app, use the `package` target. This will build a production version of the app in a temporary folder and create a tar file in the repository root.
+```
+make package
+```
+
+### Running App Vetting locally
+
+Create a new virtualenv with the required dependencies
+```
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+Run AppInspect CLI
+```
+make package
+make appinspect
+```
+
 
 ### Docker
 
