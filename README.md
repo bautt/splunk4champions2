@@ -41,6 +41,7 @@ make package
 make appinspect
 ```
 
+For complete validation, use the [Appinspect API](https://dev.splunk.com/enterprise/docs/developapps/testvalidate/appinspect/useappinspectapi/) with Postman for release candidates.
 
 ### Docker
 
