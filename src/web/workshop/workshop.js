@@ -1,6 +1,9 @@
 import React from 'react';
 import Settings from '@splunk/react-icons/Settings';
 import Activity from '@splunk/react-icons/Activity';
+import Search from  '@splunk/react-icons/Search';
+import Metrics from  '@splunk/react-icons/Metrics';
+import Dashboard from  '@splunk/react-icons/Dashboard';
 
 const labs = {
     chapters: [
@@ -97,6 +100,201 @@ const labs = {
                 },
                 {
                     "title": "Fun with Inspector #2",
+                    "steps": [
+                        {
+                            "title": "Optimize Searches 1",
+                            "content": "chapter2/optimize_searches_1.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 2",
+                            "content": "chapter2/optimize_searches_2.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 3",
+                            "content": "chapter2/optimize_searches_3.mdx"
+                        },
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "title": "3 - Search",
+            "id": "three",
+            "subtitle": "test",
+            "icon": <Search/>,
+            "sections": [
+                {
+                    "title": "Data Storage",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "What is in a Bucket",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Search Tips",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Distributed Architecture",
+                    "steps": [
+                        {
+                            "title": "Optimize Searches 1",
+                            "content": "chapter2/optimize_searches_1.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 2",
+                            "content": "chapter2/optimize_searches_2.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 3",
+                            "content": "chapter2/optimize_searches_3.mdx"
+                        },
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "title": "4 - Metrics",
+            "id": "four",
+            "subtitle": "test",
+            "icon": <Metrics/>,
+            "sections": [
+                {
+                    "title": "Data Storage",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "What is in a Bucket",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Search Tips",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Distributed Architecture",
+                    "steps": [
+                        {
+                            "title": "Optimize Searches 1",
+                            "content": "chapter2/optimize_searches_1.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 2",
+                            "content": "chapter2/optimize_searches_2.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 3",
+                            "content": "chapter2/optimize_searches_3.mdx"
+                        },
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "title": "5 - Dashboards",
+            "id": "five",
+            "subtitle": "test",
+            "icon": <Dashboard/>,
+            "sections": [
+                {
+                    "title": "Data Storage",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "What is in a Bucket",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Search Tips",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Distributed Architecture",
                     "steps": [
                         {
                             "title": "Optimize Searches 1",
