@@ -4,6 +4,9 @@ import Activity from '@splunk/react-icons/Activity';
 import Search from  '@splunk/react-icons/Search';
 import Metrics from  '@splunk/react-icons/Metrics';
 import Dashboard from  '@splunk/react-icons/Dashboard';
+import ChartScatter from  '@splunk/react-icons/ChartScatter';
+import Data from  '@splunk/react-icons/Data';
+
 
 const labs = {
     chapters: [
@@ -14,7 +17,7 @@ const labs = {
             "subtitle": "test",
             "sections": [
                 {
-                    "title": "Set your preferences",
+                    "title": "1.1 Set your preferences",
                     "steps": [
                         {
                             "title": "Splunk Search Assistant",
@@ -39,7 +42,7 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Search Mode",
+                    "title": "1.2 Search Mode",
                     "steps": [
                         {
                             "title": "Fast Mode",
@@ -60,7 +63,7 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Reformat Search",
+                    "title": "1.3 Reformat Search",
                     "steps": [
                         {
                             "title": "Make searches easier to read",
@@ -69,7 +72,7 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Language Settings",
+                    "title": "1.4 Language Settings",
                     "steps": [
                         {
                             "title": "User language and locale",
@@ -86,7 +89,7 @@ const labs = {
             "icon": <Activity/>,
             "sections": [
                 {
-                    "title": "Fun with Inspector #1",
+                    "title": "2.1 Fun with Inspector #1",
                     "steps": [
                         {
                             "title": "Search Task",
@@ -99,7 +102,7 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Fun with Inspector #2",
+                    "title": "2.2 Fun with Inspector #2",
                     "steps": [
                         {
                             "title": "Optimize Searches 1",
@@ -119,24 +122,11 @@ const labs = {
             ]
         },
         {
-            "title": "3 - Search",
+            "title": "3 - Data",
             "id": "three",
             "subtitle": "test",
-            "icon": <Search/>,
+            "icon": <Data/>,
             "sections": [
-                {
-                    "title": "Data Storage",
-                    "steps": [
-                        {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
-                        }
-                    ]
-                },
                 {
                     "title": "What is in a Bucket",
                     "steps": [
@@ -150,19 +140,7 @@ const labs = {
                         }
                     ]
                 },
-                {
-                    "title": "Search Tips",
-                    "steps": [
-                        {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
-                        }
-                    ]
-                },
+               
                 {
                     "title": "Distributed Architecture",
                     "steps": [
@@ -184,8 +162,48 @@ const labs = {
             ]
         },
         {
-            "title": "4 - Metrics",
+            "title": "4 - Search",
             "id": "four",
+            "subtitle": "test",
+            "icon": <Search/>,
+            "sections": [
+                {
+                    "title": "What is in a Bucket",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+               
+                {
+                    "title": "Distributed Architecture",
+                    "steps": [
+                        {
+                            "title": "Optimize Searches 1",
+                            "content": "chapter2/optimize_searches_1.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 2",
+                            "content": "chapter2/optimize_searches_2.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 3",
+                            "content": "chapter2/optimize_searches_3.mdx"
+                        },
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "title": "5 - Metrics",
+            "id": "five",
             "subtitle": "test",
             "icon": <Metrics/>,
             "sections": [
@@ -249,8 +267,8 @@ const labs = {
             ]
         },
         {
-            "title": "5 - Dashboards",
-            "id": "five",
+            "title": "6 - Dashboards",
+            "id": "six",
             "subtitle": "test",
             "icon": <Dashboard/>,
             "sections": [
@@ -269,6 +287,71 @@ const labs = {
                 },
                 {
                     "title": "What is in a Bucket",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Search Tips",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Distributed Architecture",
+                    "steps": [
+                        {
+                            "title": "Optimize Searches 1",
+                            "content": "chapter2/optimize_searches_1.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 2",
+                            "content": "chapter2/optimize_searches_2.mdx"
+                        },
+                        {
+                            "title": "Optimize Searches 3",
+                            "content": "chapter2/optimize_searches_3.mdx"
+                        },
+                    ]
+                }
+                
+            ]
+        },
+        {
+            "title": "7 - Playground",
+            "id": "seven",
+            "subtitle": "test",
+            "icon": <ChartScatter/>,
+            "sections": [
+                {
+                    "title": "Weather Data",
+                    "steps": [
+                        {
+                            "title": "Search Task",
+                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                        },
+                        {
+                            "title": "Open Inspector",
+                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Stocks Data",
                     "steps": [
                         {
                             "title": "Search Task",

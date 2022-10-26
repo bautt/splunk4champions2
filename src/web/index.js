@@ -45,8 +45,8 @@ function App() {
 
     return (
         <>  
-            <div style={{"backgroundColor": "#3c444d", height: "60px", width: "100%"}}>
-            <Heading level={1} style={{marginLeft: 20, marginTop: 0, paddingTop: 20, color: "white"}}>Splunk4Champions Workshop</Heading>
+            <div style={{"backgroundColor": "#3C444D", height: "40px", width: "100%"}}>
+            <Heading level={2} style={{marginLeft: 20, marginTop: 0, paddingTop: 10, color: "#52A051"}}>Splunk4Champions Workshop</Heading>
             </div>
             <ChapterBar activeChapter={activeChapterId} onChapterChange={changeChapter}>
                 {renderedChapters}
