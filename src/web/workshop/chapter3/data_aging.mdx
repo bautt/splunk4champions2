@@ -1,0 +1,69 @@
+## Data life cycle 
+
+<img src="/static/app/splunk4champions2/images/hot_warm1.png" width="700" />
+
+## Hot/Warm Storage
+New data lives here
+At least 1 hot bucket per index, per indexer
+800+ IOPS (!)
+
+## Buckets roll from Hot to Warm when....
+We get too many hot buckets [maxHotBuckets]
+The timespan of a bucket gets too large
+A hot bucket hasn’t received data in a while
+Bucket metadata files have grown too large
+There is an index clustering replication error
+Cold Storage
+Historical data goes here
+Allows older data to be kept on slower (cheaper) storage
+Don’t go below 350 IOPS
+
+## Buckets roll from Warm to Cold when...
+
+We get too many Warm buckets [maxWarmDBCount]
+Frozen Storage
+No longer searchable
+Data rolls from Cold to Frozen when...
+
+The total size of the index (Hot+Warm+Cold) grows too large
+The oldest event in a bucket exceeds a specific age
+
+----
+
+
+<img src="/static/app/splunk4champions2/images/hot_warm2.png" width="500" />
+## When do we roll data?
+
+Control retention for all indexes that reference the volume. Oldest bucket in the volume is deleted/frozen when defined size is exceeded.
+
+____
+
+## Useful links
+
+[TSIDX in Splexicon](https://docs.splunk.com/Splexicon:Tsidxfile)
+
+[journal.gz in Splexicon](https://docs.splunk.com/Splexicon:Rawdatafile)
+
+Bloomfilter in Splexicon
+https://docs.splunk.com/Splexicon:Bloomfilter
+
+Interactive Bloomfilter-Demo
+https://www.jasondavies.com/bloomfilter/
+
+How SplunkStores Data
+https://conf.splunk.com/files/2017/slides/splunk-data-life-cycle-determining-when-and-where-to-roll-data.pdf
+
+SmartStore architecture overview
+https://docs.splunk.com/Documentation/Splunk/latest/Indexer/SmartStorearchitecture
+
+Index Compression
+https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Reducetsidxdiskusage
+
+Require
+https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Require
+
+Search Reference
+https://www.splunk.com/pdfs/solution-guides/splunk-quick-reference-guide.pdf
+
+Limits.conf
+https://docs.splunk.com/Documentation/Splunk/latest/Admin/Limitsconf

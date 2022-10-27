@@ -1,0 +1,18 @@
+## How is data stored? 
+Events are distributed across indexers and stored in sub-directories of index directories on the file system. 
+![Data](/static/app/splunk4champions2/images/Data1.png)
+___
+
+## What is an Index? 
+The index is the repository for Splunk Enterprise data. Splunk Enterprise transforms incoming data into events, which it stores in indexes. 
+![Index](/static/app/splunk4champions2/images/index_folder.png)
+
+___
+
+## What is a Bucket?
+
+A bucket is a file system directory containing a portion of a Splunk Enterprise index. A Splunk Enterprise index typically consists of many buckets, organized by age.
+
+Note: The bucket search command is not related to the index buckets described here. Its purpose is to put continuous numerical values into discrete sets or bins. The bucket command is actually an alias for the bin command. See the bin command in the Search Reference.
+
+ 

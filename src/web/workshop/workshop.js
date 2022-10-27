@@ -128,34 +128,44 @@ const labs = {
             "icon": <Data/>,
             "sections": [
                 {
-                    "title": "What is in a Bucket",
+                    "title": "How is data stored?",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                            "title": "Index and Buckets",
+                            "content": "chapter3/index_and_buckets.mdx"
                         },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
-                        }
+                       
                     ]
                 },
-               
                 {
-                    "title": "Distributed Architecture",
+                    "title": "What is in a bucket?",
                     "steps": [
                         {
-                            "title": "Optimize Searches 1",
-                            "content": "chapter2/optimize_searches_1.mdx"
+                            "title": "Inside a bucket",
+                            "content": "chapter3/inside_bucket.mdx"
                         },
+                       
+                    ]
+                },
+                {
+                    "title": "Distributed Architecture(s)",
+                    "steps": [
                         {
-                            "title": "Optimize Searches 2",
-                            "content": "chapter2/optimize_searches_2.mdx"
+                            "title": "Indexers and Clusters",
+                            "content": "chapter3/indexers_and_clusters.mdx"
                         },
+                       
+                    ]
+                },
+
+                {
+                    "title": "Data aging",
+                    "steps": [
                         {
-                            "title": "Optimize Searches 3",
-                            "content": "chapter2/optimize_searches_3.mdx"
+                            "title": "Indexers and Clusters",
+                            "content": "chapter3/data_aging.mdx"
                         },
+                       
                     ]
                 }
                 
