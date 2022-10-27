@@ -338,44 +338,15 @@ const labs = {
             "icon": <ChartScatter/>,
             "sections": [
                 {
-                    "title": "Weather Data",
+                    "title": "Setup",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Setup Task",
+                            "content": "chapter7/setup_data.mdx"
                         }
                     ]
                 },
-                {
-                    "title": "Stocks Data",
-                    "steps": [
-                        {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
-                        }
-                    ]
-                },
-                {
-                    "title": "Search Tips",
-                    "steps": [
-                        {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
-                        }
-                    ]
-                },
+                
                 {
                     "title": "Distributed Architecture",
                     "steps": [
