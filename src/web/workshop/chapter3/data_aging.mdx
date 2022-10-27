@@ -8,15 +8,16 @@ At least 1 hot bucket per index, per indexer
 800+ IOPS (!)
 
 ## Buckets roll from Hot to Warm when....
-We get too many hot buckets [maxHotBuckets]
-The timespan of a bucket gets too large
-A hot bucket hasn’t received data in a while
-Bucket metadata files have grown too large
-There is an index clustering replication error
-Cold Storage
-Historical data goes here
-Allows older data to be kept on slower (cheaper) storage
-Don’t go below 350 IOPS
+* We get too many hot buckets [maxHotBuckets]
+* The timespan of a bucket gets too large
+* A hot bucket hasn’t received data in a while
+* Bucket metadata files have grown too large
+* There is an index clustering replication error
+
+### Cold Storage
+* Historical data goes here
+* Allows older data to be kept on slower (cheaper) storage
+* Don’t go below 350 IOPS
 
 ## Buckets roll from Warm to Cold when...
 
