@@ -178,36 +178,51 @@ const labs = {
             "icon": <Search/>,
             "sections": [
                 {
-                    "title": "What is in a Bucket",
+                    "title": "Basic tipps",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                            "title": "Basic Tipps",
+                            "content": "chapter4/basic_tipps.mdx"
                         },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
-                        }
+                       
                     ]
                 },
                
                 {
-                    "title": "Distributed Architecture",
+                    "title": "TERM & tstats",
                     "steps": [
                         {
-                            "title": "Optimize Searches 1",
-                            "content": "chapter2/optimize_searches_1.mdx"
-                        },
+                            "title": "Using TERM",
+                            "content": "chapter4/term.mdx"
+                        }, 
                         {
-                            "title": "Optimize Searches 2",
-                            "content": "chapter2/optimize_searches_2.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 3",
-                            "content": "chapter2/optimize_searches_3.mdx"
-                        },
+                            "title": "Using tstats",
+                            "content": "chapter4/tstats.mdx"
+                        }, 
                     ]
-                }
+                },
+                 
+                {
+                    "title": "stats & joins",
+                    "steps": [
+                        {
+                            "title": "Using stats",
+                            "content": "chapter4/stats.mdx"
+                        }, 
+                        
+                    ]
+                },
+
+                {
+                    "title": "Quiz",
+                    "steps": [
+                        {
+                            "title": "Search Quiz",
+                            "content": "chapter4/quiz.mdx"
+                        }, 
+                        
+                    ]
+                },
                 
             ]
         },
