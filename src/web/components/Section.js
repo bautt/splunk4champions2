@@ -11,7 +11,7 @@ export default function Section({ chapter, section }) {
             {
                 steps.map((step, index) => (
                     <ColumnLayout.Row key={index}>
-                        <ColumnLayout.Column span={2}/>
+                        <ColumnLayout.Column span={1}/>
                         <ColumnLayout.Column span={10}>
                             <SectionStep step={step}></SectionStep>
                         </ColumnLayout.Column>
