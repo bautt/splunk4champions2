@@ -1,0 +1,14 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+Run the Search and oberserve the details presented for "optimizedSearch"
+
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log* typingqueue`}>
+</SplunkSearch>
+
+<Link to="www.example.com" openInNewContext>example.com</Link>, https://example.com, and contact@example.com.
+
+| Alpha | Bravo   |
+| ----- | -------: |
+| 中文  | Charlie |
+| 👩‍❤️‍👩    | Delta   |
