@@ -358,20 +358,13 @@ const labs = {
                 },
                 
                 {
-                    "title": "Distributed Architecture",
+                    "title": "Follow Up Links",
                     "steps": [
                         {
-                            "title": "Optimize Searches 1",
-                            "content": "chapter2/optimize_searches_1.mdx"
+                            "title": "Follow Up Links ",
+                            "content": "chapter7/follow_up.mdx"
                         },
-                        {
-                            "title": "Optimize Searches 2",
-                            "content": "chapter2/optimize_searches_2.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 3",
-                            "content": "chapter2/optimize_searches_3.mdx"
-                        },
+                       
                     ]
                 }
                 
