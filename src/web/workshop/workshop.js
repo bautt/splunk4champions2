@@ -6,6 +6,7 @@ import Metrics from  '@splunk/react-icons/Metrics';
 import Dashboard from  '@splunk/react-icons/Dashboard';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
 import Data from  '@splunk/react-icons/Data';
+import Emotion from '@emotion/stylis'
 
 
 const labs = {
@@ -189,12 +190,8 @@ const labs = {
                 },
                
                 {
-                    "title": "TERM & tstats",
+                    "title": "tstats",
                     "steps": [
-                        {
-                            "title": "Using TERM",
-                            "content": "chapter4/term.mdx"
-                        }, 
                         {
                             "title": "Using tstats",
                             "content": "chapter4/tstats.mdx"
@@ -202,6 +199,16 @@ const labs = {
                     ]
                 },
                  
+                {
+                    "title": "TERM",
+                    "steps": [
+                        {
+                            "title": "Using TERM",
+                            "content": "chapter4/term.mdx"
+                        }, 
+                    ]
+                },
+
                 {
                     "title": "stats & joins",
                     "steps": [
@@ -378,6 +385,26 @@ const labs = {
                         {
                             "title": "Follow Up Links ",
                             "content": "chapter7/follow_up.mdx"
+                        },
+                       
+                    ]
+                },
+                {
+                    "title": "Syntax test",
+                    "steps": [
+                        {
+                            "title": "Syntax test",
+                            "content": "chapter7/test.mdx"
+                        },
+                       
+                    ]
+                },
+                {
+                    "title": "Quiz",
+                    "steps": [
+                        {
+                            "title": "Syntax test",
+                            "content": "chapter1/App.js"
                         },
                        
                     ]
