@@ -18,5 +18,15 @@ ___
 * Place streaming commands earlier in the pipeline
 ___
 
+## 5. Try to reduce the scan count
+ When the scan count is high and the event count is low we are filtering events during schema on
+the fly.
+This is the most expensive place to filter as we have downloaded
+buckets, open the tsidx, extracted slices fully parsed events. 
+
+
+See "TSTATS and PREFIX"  .conf talk by Richart Morgan
+https://conf.splunk.com/files/2020/slides/PLA1089C.pdf 
+
 More information on command types 
 https://docs.splunk.com/Documentation/Splunk/9.0.1/Search/Typesofcommands
