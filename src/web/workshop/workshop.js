@@ -90,6 +90,15 @@ const labs = {
             "icon": <Activity/>,
             "sections": [
                 {
+                    "title": "Using Job inspector",
+                    "steps": [
+                        {
+                            "title": "Using Inspector",
+                            "content": "chapter2/using_inspector.mdx"
+                        }
+                    ]
+                },
+                {
                     "title": "2.1 Fun with Inspector #1",
                     "steps": [
                         {
