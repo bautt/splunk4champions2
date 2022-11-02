@@ -1,4 +1,5 @@
 # Splunk4Champions 2.0
+## This is a complete re-design from https://github.com/bautt/splunk4champions training 
 
 This repository houses a new version of the Splunk4Champions workshop. The content management has been redesigned to work with React.js, Splunk UI and MDX files.
 
