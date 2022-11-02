@@ -12,5 +12,8 @@ To:
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
 </SplunkSearch>
 
+TERM can only be used with minor breakers, not with major: 
 * Minor breakers: `/ : = @ . - $ # % \ _ `
 * Major breakers: `` \r\n\s\t [] <> () {} | ! ; ‚ ‘ “``
+
+https://docs.splunk.com/Documentation/Splunk/9.0.2/Search/UseCASEandTERMtomatchphrases
