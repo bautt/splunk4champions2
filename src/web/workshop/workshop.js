@@ -185,6 +185,16 @@ const labs = {
                 },
                
                 {
+                    "title": "Command Types",
+                    "steps": [
+                        {
+                            "title": "Search Command Types",
+                            "content": "chapter4/types.mdx"
+                        }, 
+                    ]
+                },
+
+                {
                     "title": "tstats",
                     "steps": [
                         {
@@ -313,15 +323,7 @@ const labs = {
                         {
                             "title": "Annotations",
                             "content": "chapter6/annotations.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 2",
-                            "content": "chapter2/optimize_searches_2.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 3",
-                            "content": "chapter2/optimize_searches_3.mdx"
-                        },
+                        }
                     ]
                 }
                 
@@ -349,26 +351,6 @@ const labs = {
                         {
                             "title": "Follow Up Links ",
                             "content": "chapter7/follow_up.mdx"
-                        },
-                       
-                    ]
-                },
-                {
-                    "title": "Syntax test",
-                    "steps": [
-                        {
-                            "title": "Syntax test",
-                            "content": "chapter7/test.mdx"
-                        },
-                       
-                    ]
-                },
-                {
-                    "title": "Quiz",
-                    "steps": [
-                        {
-                            "title": "Syntax test",
-                            "content": "chapter1/App.js"
                         },
                        
                     ]
