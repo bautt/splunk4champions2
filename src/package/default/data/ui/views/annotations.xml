@@ -1,0 +1,56 @@
+<dashboard  version="1.1" script="pageffects.js" stylesheet="s4c_dashboards.css">
+  <row>
+    <panel>
+      <title>Task 3.1</title>
+      <html>
+      <table width="100%">
+         <tr>
+          <td width="80%">
+                 <p>
+                <i>Use Annotations to mark important events in your chart.</i>
+                <p><b>See editable example page: <a href="lab6_task3" target="_blank">lab6_task3</a>.</b></p>
+
+              </p>
+              
+          </td>
+        </tr>
+      </table>
+    </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <html>
+        <code>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</code>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Average Search Run Time with WARN/ERROR event annotations</title>
+      <chart>
+        <search type="annotation">
+          <query>index=_internal (log_level="WARN" OR log_level="ERROR") 
+| eval annotation_label = message
+| eval annotation_category = log_level</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <search>
+          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <!-- Secondary search that drives the annotations -->
+        <!-- Customize the event annotation colors based on category name -->
+        <option name="charting.annotation.categoryColors">{"ERROR":"#ff3300","WARN":"#ffcc00"}</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.lineWidth">1</option>
+        <option name="charting.seriesColors">[#339933]</option>
+        <option name="height">287</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>

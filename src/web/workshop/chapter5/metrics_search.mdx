@@ -1,0 +1,15 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
+
+## Using mcatalog command
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=_*`}></SplunkSearch>
+
+## Using mstats command
+<SplunkSearch earliest="-30d" latest="now" spl={`| mstats avg("spl.mlog.thruput.thruput.average_kbps") prestats=true WHERE "index"="_metrics" span=15m
+| timechart avg("spl.mlog.thruput.thruput.average_kbps") AS Avg span=15m
+| sort - _time`}>
+</SplunkSearch>
+
+## Using msearch command
+
+<SplunkSearch earliest="-30d" latest="now" spl={` | msearch index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>

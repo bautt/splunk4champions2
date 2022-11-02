@@ -1,0 +1,52 @@
+<dashboard  version="1.1" >
+  <init>
+	<eval token="timezone">strftime(now(),"%Z %z")</eval>
+	 <unset token="lang="></unset>
+  </init>
+  <search>
+    <query>| makeresults  | eval locale=$env:locale|s$</query>
+    <earliest>@d</earliest>
+    <latest>now</latest>
+    <sampleRatio>1</sampleRatio>
+    <done>
+      <condition match="$result.locale$==&quot;en-GB&quot;">
+        <set token="lang">Panel Title in proper English</set>
+      </condition>
+      <condition match="$result.locale$==&quot;de-DE&quot;">
+        <set token="lang">Titel des Panels auf Deutsch</set>
+      </condition>
+      <condition match="$result.locale$==&quot;en-US&quot;">
+        <set token="lang">Title in American English</set>
+      </condition>
+      <condition match="$result.locale$==&quot;it-IT&quot;">
+        <set token="lang">Titolo Italiano</set>
+      </condition>
+      <condition match="$result.locale$==&quot;fr-FR&quot;">
+        <set token="lang">Titre français</set>
+      </condition>
+    </done>
+  </search>
+  <row>
+    <panel>
+      <title>$lang$</title>
+      <table>
+        <search>
+          <query>| makeresults
+| eval "Time Zone" = "$timezone$"
+| eval "Current Locale" ="$env:locale$"
+| eval "Splunk Version" = "$env:version$"
+| eval "Splunk Version" = "$env:version$"
+| eval "User Name" ="$env:user$"
+| eval "User Real Name" ="$env:user_realname$"
+| eval "User Email" ="$env:user_email$"
+| eval "App Context" = "$env:app$"
+| table *</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>

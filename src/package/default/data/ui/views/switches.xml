@@ -1,0 +1,68 @@
+<dashboard version="1.1" stylesheet="s4c_dashboards.css">
+  <row>
+    <panel>
+      <title>Task 2.2</title>
+      <html>
+      <table width="100%">
+         <tr>
+          <td width="80%">
+                 <p>
+                <i>Create "Switches" for your dashboard.</i> Add this feature to your dashboard to make it more appealing :)
+                   <p><b>See editable example page: <a href="lab6_task4" target="_blank">lab6_task4</a>.</b></p>
+              </p>
+          </td>
+        </tr>
+      </table>
+    </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <table>
+        <title>Click me to switch visualizations</title>
+        <search>
+          <query>| makeresults | eval Option1="Option1",Option2="Option2" | table Option1,Option2 </query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">10</option>
+        <option name="drilldown">cell</option>
+        <drilldown>
+          <condition field="Option1">
+            <set token="Option1">foo</set>
+            <unset token="Option2"></unset>
+          </condition>
+          <condition field="Option2">
+            <set token="Option2">foo</set>
+            <unset token="Option1"></unset>
+          </condition>
+        </drilldown>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel depends="$Option1$">
+      <chart>
+        <search>
+          <query>index="_audit" | timechart count by host</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+    <panel depends="$Option2$">
+      <chart>
+        <search>
+          <query>index="_internal" | stats count by component</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+      </chart>
+    </panel>
+  </row>
+  
+</dashboard>
