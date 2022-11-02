@@ -95,6 +95,10 @@ const labs = {
                         {
                             "title": "Using Inspector",
                             "content": "chapter2/using_inspector.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter2/useful_links2.mdx"
                         }
                     ]
                 },
@@ -188,10 +192,10 @@ const labs = {
             "icon": <Search/>,
             "sections": [
                 {
-                    "title": "Basic tipps",
+                    "title": "Search Basics",
                     "steps": [
                         {
-                            "title": "Basic Tipps",
+                            "title": "Search Basics",
                             "content": "chapter4/basic_tipps.mdx"
                         },
                        
@@ -249,59 +253,40 @@ const labs = {
             "icon": <Metrics/>,
             "sections": [
                 {
-                    "title": "Data Storage",
+                    "title": "Metrics",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Metrics introduction",
+                            "content": "chapter5/metrics_intro.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "What is in a Bucket",
+                    "title": "Onboarding Metrics",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Onboarding Metrics",
+                            "content": "chapter5/metrics_onboard.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Search Tips",
+                    "title": "Searching Metrics",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Searching Metrics",
+                            "content": "chapter5/metrics_search.mdx"
                         }
+                    
                     ]
                 },
                 {
-                    "title": "Distributed Architecture",
+                    "title": "Metrics Lab",
                     "steps": [
                         {
-                            "title": "Optimize Searches 1",
-                            "content": "chapter2/optimize_searches_1.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 2",
-                            "content": "chapter2/optimize_searches_2.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 3",
-                            "content": "chapter2/optimize_searches_3.mdx"
-                        },
+                            "title": "Metrics Lab",
+                            "content": "chapter5/metrics_lab.mdx"
+                        }
                     ]
                 }
                 
@@ -314,50 +299,38 @@ const labs = {
             "icon": <Dashboard/>,
             "sections": [
                 {
-                    "title": "Data Storage",
+                    "title": "Base Search",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Base Search",
+                            "content": "chapter6/base_search.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "What is in a Bucket",
+                    "title": "Drilldown",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Drilldown",
+                            "content": "chapter6/drilldown.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Search Tips",
+                    "title": "Tokens",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
-                        },
-                        {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Switch with tokens",
+                            "content": "chapter6/tokens.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Distributed Architecture",
+                    "title": "Annotations",
                     "steps": [
                         {
-                            "title": "Optimize Searches 1",
-                            "content": "chapter2/optimize_searches_1.mdx"
+                            "title": "Annotations",
+                            "content": "chapter6/annotations.mdx"
                         },
                         {
                             "title": "Optimize Searches 2",
