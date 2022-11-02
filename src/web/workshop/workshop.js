@@ -5,8 +5,7 @@ import Search from  '@splunk/react-icons/Search';
 import Metrics from  '@splunk/react-icons/Metrics';
 import Dashboard from  '@splunk/react-icons/Dashboard';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
-import Data from  '@splunk/react-icons/Data';
-import Emotion from '@emotion/stylis'
+import Data from  '@splunk/react-icons/Data'
 
 
 const labs = {
@@ -101,35 +100,18 @@ const labs = {
                             "content": "chapter2/useful_links2.mdx"
                         }
                     ]
-                },
+                }, 
                 {
-                    "title": "2.1 Fun with Inspector #1",
+                    "title": "Inspector Lab",
                     "steps": [
                         {
-                            "title": "Search Task",
-                            "content": "chapter2/fun_with_job_inspector_search.mdx"
+                            "title": "Inspector Lab",
+                            "content": "chapter2/inspector_lab.mdx"
                         },
                         {
-                            "title": "Open Inspector",
-                            "content": "chapter2/fun_with_job_inspector_open.mdx"
+                            "title": "Useful Links",
+                            "content": "chapter2/useful_links2.mdx"
                         }
-                    ]
-                },
-                {
-                    "title": "2.2 Fun with Inspector #2",
-                    "steps": [
-                        {
-                            "title": "Optimize Searches 1",
-                            "content": "chapter2/optimize_searches_1.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 2",
-                            "content": "chapter2/optimize_searches_2.mdx"
-                        },
-                        {
-                            "title": "Optimize Searches 3",
-                            "content": "chapter2/optimize_searches_3.mdx"
-                        },
                     ]
                 }
                 
@@ -223,11 +205,11 @@ const labs = {
                 },
 
                 {
-                    "title": "stats & joins",
+                    "title": "Search Tipps",
                     "steps": [
                         {
-                            "title": "Using stats",
-                            "content": "chapter4/stats.mdx"
+                            "title": "Search Tipps",
+                            "content": "chapter4/more_tipps.mdx"
                         }, 
                         
                     ]
@@ -237,7 +219,7 @@ const labs = {
                     "title": "Quiz",
                     "steps": [
                         {
-                            "title": "Search Quiz",
+                            "title": "Quiz",
                             "content": "chapter4/quiz.mdx"
                         }, 
                         
