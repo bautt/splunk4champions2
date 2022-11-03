@@ -50,7 +50,11 @@ A cache manager on the indexer fetches copies of warm buckets from the remote st
 
 https://docs.splunk.com/Documentation/Splunk/8.1.1/Indexer/SmartStorearchitecture
 ____
-
+## tsidx reduction
+https://docs.splunk.com/Documentation/Splunk/9.0.1/Indexer/Reducetsidxdiskusage
+The tsidx reduction process eliminates the full-size tsidx files and replaces them with mini versions of those files that contain essential metadata. 
+The rawdata files and some other metadata files remain untouched. You can continue to search across the aged data, if necessary, but such searches will exhibit significantly worse performance. Rare term searches, in particular, will run slowly.
+____
 ## Useful links
 
 [TSIDX in Splexicon](https://docs.splunk.com/Splexicon:Tsidxfile)
