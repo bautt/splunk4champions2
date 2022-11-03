@@ -17,7 +17,7 @@ const labs = {
             "subtitle": "test",
             "sections": [
                 {
-                    "title": "1.1 Set your preferences",
+                    "title": "Set your preferences",
                     "steps": [
                         {
                             "title": "Splunk Search Assistant",
@@ -42,7 +42,7 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "1.2 Search Mode",
+                    "title": "Search Mode",
                     "steps": [
                         {
                             "title": "Fast Mode",
@@ -63,7 +63,7 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "1.3 Reformat Search",
+                    "title": "Reformat Search",
                     "steps": [
                         {
                             "title": "Make searches easier to read",
@@ -72,11 +72,20 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "1.4 Language Settings",
+                    "title": "Language Settings",
                     "steps": [
                         {
                             "title": "User language and locale",
                             "content": "chapter1/user_language_locale.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Comments",
+                    "steps": [
+                        {
+                            "title": "",
+                            "content": "chapter1/comments.mdx"
                         }
                     ]
                 }
@@ -323,6 +332,15 @@ const labs = {
                         {
                             "title": "Annotations",
                             "content": "chapter6/annotations.mdx"
+                        }
+                    ]
+                }, 
+                {
+                    "title": "Dashboard Studio",
+                    "steps": [
+                        {
+                            "title": "Dashboard Studio",
+                            "content": "chapter6/studio.mdx"
                         }
                     ]
                 }
