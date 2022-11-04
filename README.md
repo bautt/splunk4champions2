@@ -1,4 +1,5 @@
 # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/icon_champion.png)
 
 ## This is a complete re-design from https://github.com/bautt/splunk4champions training 
 ## 
@@ -20,7 +21,6 @@ Splunk admins
 - Dashboard hints
 
 
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/leiste.png)
 
 ### Benefit:
 - Sustainable and energy saving usage of Splunk
@@ -28,6 +28,20 @@ Splunk admins
 
 ### Design Goals: 
 Zero-Powerpoint: all information needed is included in the app
+
+### Some screenshots:
+
+#### Inspector
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/inspector.png)
+#### Data
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/data.png)
+#### Search
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/search.png)
+#### Metrics
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/metrics.png)
+#### Dashboards
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/dashboards.png)
+
 
 ### Download and installation:
 If you download a release https://github.com/bautt/splunk4champions2/releases/ it will unpack as "../etc/apps/splunk4champions2"
