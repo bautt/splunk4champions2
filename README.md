@@ -29,8 +29,7 @@ Splunk admins
 Zero-Powerpoint: all information needed is included in the app
 
 ### Some screenshots:
-#### Navigation:
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/leiste.png)
+
 #### Inspector
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/inspector.png)
 #### Data
