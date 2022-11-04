@@ -372,6 +372,16 @@ const labs = {
                         },
                        
                     ]
+                },
+                {
+                    "title": "Credits",
+                    "steps": [
+                        {
+                            "title": "Credits",
+                            "content": "chapter7/credits.mdx"
+                        },
+                       
+                    ]
                 }
                 
             ]
