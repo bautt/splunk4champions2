@@ -1,4 +1,5 @@
 # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/icon_champion.png)
 
 ## This is a complete re-design from https://github.com/bautt/splunk4champions training 
 ## 
