@@ -1,8 +1,38 @@
-# Splunk4Champions 2.0
-## This is a complete re-design from https://github.com/bautt/splunk4champions training 
+# Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
 
+## This is a complete re-design from https://github.com/bautt/splunk4champions training 
+## 
 This repository houses a new version of the Splunk4Champions workshop. The content management has been redesigned to work with React.js, Splunk UI and MDX files.
 
+Splunk4Champions is  a session for more experienced Splunk users (champions) who are still willing to learn some new tricks and get deeper understanding of how Splunk search works.
+We want to share hints & tricks on how to use Splunk searches more efficiently and also provide some underlying theory for that. This is an interactive hands-on workshop which will require your participation and also provide your dozens of follow-up links to find more information. 
+
+### Target audience: 
+Advanced Splunk users 
+Splunk admins
+
+### Content:
+- Options and GUI Settings
+- Using Job Inspector
+- How is data stored in Splunk
+- Search performance: good and bad searches
+- Converting log data to metrics
+- Dashboard hints
+
+![](https://github.com/bautt/splunk4champions2/blob/master/images/1-Settings.png)
+
+### Benefit:
+- Sustainable and energy saving usage of Splunk
+- New insights and inspiration
+
+### Design Goals: 
+Zero-Powerpoint: all information needed is included in the app
+
+### Download and installation:
+If you download a release https://github.com/bautt/splunk4champions2/releases/ it will unpack as "../etc/apps/splunk4champions2"
+
+
+# Development readme:
 ## Setting up the Development Environment
 
 Clone the repository to your local workstation
