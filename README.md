@@ -20,7 +20,6 @@ Splunk admins
 - Dashboard hints
 
 
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/leiste.png)
 
 ### Benefit:
 - Sustainable and energy saving usage of Splunk
@@ -28,6 +27,21 @@ Splunk admins
 
 ### Design Goals: 
 Zero-Powerpoint: all information needed is included in the app
+
+### Some screenshots:
+#### Navigation:
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/leiste.png)
+#### Inspector
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/inspector.png)
+#### Data
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/data.png)
+#### Search
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/search.png)
+#### Metrics
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/metrics.png)
+#### Dashboards
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/dashboards.png)
+
 
 ### Download and installation:
 If you download a release https://github.com/bautt/splunk4champions2/releases/ it will unpack as "../etc/apps/splunk4champions2"
