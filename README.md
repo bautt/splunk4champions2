@@ -18,8 +18,7 @@ Splunk admins
 - Search performance: good and bad searches
 - Converting log data to metrics
 - Dashboard hints
-
-![](https://github.com/bautt/splunk4champions2/blob/master/images/1-Settings.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Data1.png)
 
 ### Benefit:
 - Sustainable and energy saving usage of Splunk
