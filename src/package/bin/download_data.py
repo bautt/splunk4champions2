@@ -1,14 +1,25 @@
-from datetime import datetime
+#!/usr/bin/env python
+
+import datetime 
+import time 
 import urllib.request
 
+start = time.time()
 url = 'https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.gz'
 target = '/opt/splunk/etc/apps/splunk4champions2/static/current.log.gz'
 #target = '../static/current.log.gz'
 #target = '$SPLUNK_HOME/etc/apps/splunk4champions2/static/current.log.gz'
 
-urllib.request.urlretrieve(url, target)
-now = datetime.now()
+d = urllib.request.urlopen(url)
+# print(d.info())
+content_length = (d.info()['Content-Length'])
+# urllib.request.urlretrieve(url, target)
 
-message=(" Splunk4Champions download script for weather data was started")
-dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-print(dt_string + message)
+
+dauer = ('{0:0.1f}'.format(time.time() - start))
+now = datetime.datetime.now()
+datum = (now.strftime("%Y-%m-%d %H:%M:%S"))
+message2=(" Splunk4Champions2 download script for weather data was finished in ")
+print(datum +  message2 + str(dauer) + ' seconds. The size of the file was ' + str(content_length) + ' Bytes online')
+
+
