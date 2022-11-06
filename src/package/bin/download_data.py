@@ -13,7 +13,7 @@ target = '/opt/splunk/etc/apps/splunk4champions2/static/current.log.gz'
 d = urllib.request.urlopen(url)
 # print(d.info())
 content_length = (d.info()['Content-Length'])
-# urllib.request.urlretrieve(url, target)
+urllib.request.urlretrieve(url, target)
 
 
 dauer = ('{0:0.1f}'.format(time.time() - start))
