@@ -29,6 +29,10 @@ Splunk admins
 ### Design Goals: 
 Zero-Powerpoint: all information needed is included in the app
 
+## Download and installation:
+For simple installaiton just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
+
+
 ### Some screenshots:
 
 #### Inspector
@@ -43,8 +47,6 @@ Zero-Powerpoint: all information needed is included in the app
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/dashboards.png)
 
 
-### Download and installation:
-If you download a release https://github.com/bautt/splunk4champions2/releases/ it will unpack as "../etc/apps/splunk4champions2"
 
 
 # Development readme:
