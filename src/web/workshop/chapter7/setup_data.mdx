@@ -9,3 +9,14 @@ Before we continue with example data we need to create indexes for it. Go to Set
 
 Go to the [Link to pre-configured data sources](../../manager/splunk4champions2/data/inputs/monitor?search=s4c&count=25) and click on "Enable"
 ___
+___
+
+## Update example data  (optional)
+
+If you would like to get most recent example  data from the apps github-repository enable *download_data.py* scripted input. 
+ [Link to scripted input](../../manager/search/data/inputs/script?search=s4c) 
+ To control success you can search for the script output in the _internal index: 
+ `index=_internal source=s4c*`
+
+ The message should look like: 
+ `2022-11-07 13:08:08 /opt/splunk/etc/apps/splunk4champions2/static/current.log.gz Splunk4Champions2 download script for weather data was finished in 6.2 seconds. The size of the file was 50504224 Bytes online`
