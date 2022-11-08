@@ -305,6 +305,10 @@ const labs = {
                         {
                             "title": "Base Search",
                             "content": "chapter6/base_search.mdx"
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -314,6 +318,10 @@ const labs = {
                         {
                             "title": "Drilldown",
                             "content": "chapter6/drilldown.mdx"
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -323,6 +331,10 @@ const labs = {
                         {
                             "title": "Switch with tokens",
                             "content": "chapter6/tokens.mdx"
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -332,6 +344,10 @@ const labs = {
                         {
                             "title": "Annotations",
                             "content": "chapter6/annotations.mdx"
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }, 
@@ -359,6 +375,10 @@ const labs = {
                         {
                             "title": "Setup Task",
                             "content": "chapter7/setup_data.mdx"
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -369,7 +389,11 @@ const labs = {
                         {
                             "title": "Follow Up Links ",
                             "content": "chapter7/follow_up.mdx"
-                        },
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 },
@@ -379,7 +403,11 @@ const labs = {
                         {
                             "title": "Credits",
                             "content": "chapter7/credits.mdx"
-                        },
+                        }, 
+                        {
+                            "title": "Standard links",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 }
