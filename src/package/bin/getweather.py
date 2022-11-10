@@ -15,15 +15,19 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-import os, sys
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
+
+import os
+import sys
+import tarfile
 import time
 
 import requests
-import tarfile
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from splunklib.searchcommands import dispatch, GeneratingCommand, Configuration, Option, validators
+from splunklib.searchcommands import (Configuration, GeneratingCommand, Option,
+                                      dispatch, validators)
 from splunklib.six.moves import range
 
 
@@ -38,10 +42,11 @@ class GeneratingCSC(GeneratingCommand):
     ``| getweather | collect index=s4c_weather sourcetype=s4c_weather``
 
     """
-
     def generate(self):
-        link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.gz'
-        with requests.get(link, stream=True) as rx, tarfile.open(fileobj=rx.raw, mode="r:gz") as tarobj:
+       # link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.gz' 
+        link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current22.tar.gz'       
+        #link='https://splunktb.ddns.net/en-GB/static/app/splunk4champions/current.log.gz'
+        with requests.get(link, stream=True, verify=False) as rx, tarfile.open(fileobj=rx.raw, mode="r:gz") as tarobj:
             for entry in tarobj:
                fileobj=tarobj.extractfile(entry)
                for line in fileobj:
