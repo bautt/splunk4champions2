@@ -30,13 +30,13 @@ from splunklib.six.moves import range
 @Configuration()
 class GeneratingCSC(GeneratingCommand):
     """
-    The generatingcsc command generates a specific number of records.
+    The getweather command downloads example weather data and extracts it in to the search. 
+    Use |collect
 
     Example:
 
-    ``| generatingcsc count=4``
+    ``| getweather | collect index=s4c_weather sourcetype=s4c_weather``
 
-    Returns a 4 records having text 'Test Event'.
     """
 
     def generate(self):
