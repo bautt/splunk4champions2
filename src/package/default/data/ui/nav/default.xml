@@ -1,3 +1,6 @@
-<nav search_view="lab" color= "#9684A1">
+<nav search_view="lab">
     <view name="lab" default="true"/>
+    <view name="search" />
+    <view name="analytics_workspace" />
+    <view name="dashboards" />
 </nav>
