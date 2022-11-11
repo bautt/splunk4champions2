@@ -5,6 +5,7 @@ import Search from  '@splunk/react-icons/Search';
 import Metrics from  '@splunk/react-icons/Metrics';
 import Dashboard from  '@splunk/react-icons/Dashboard';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
+import Tool from  '@splunk/react-icons/Tool';
 import Data from  '@splunk/react-icons/Data'
 
 
