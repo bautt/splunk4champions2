@@ -1,5 +1,11 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
 ![](/static/app/splunk4champions2/images/lab1_task2_fast.png)
 
-**Fast mode** uses the least amount of system resources. It is great to use Fast Mode when merely checking if data is present or not (in combination with `| tstats`) or after a search is already built.
+**Fast mode** uses the least amount of system resources. It is great to use Fast Mode when merely checking if data is present or not or after a search is already built.
 
-Click here to perform a fast mode search: [Search](/en-GB/app/splunk4champions/search?display.page.search.mode=fast&q=search%20index%3D_internal)
+Try this simple search out in different modes: 
+
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal`}>
+</SplunkSearch>

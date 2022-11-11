@@ -41,11 +41,12 @@
           <li>Wildcards are not compatible with Bloom Filters</li>
           <li>Wildcard matching of terms in the index takes time</li>
           <li>Lexicon is structured by common prefixes, so appending an * is best (if you have to do it)</li>
+          <li>Never ever use wildcards to replace minor breakers e.g. autoconfig*bat for autoconfig.bat</li>
           </ul>
         </td>
         <td width="40%">
           <ul>
-          <li>Varying levels of suck-itude<br/><code>&gt; myterm* → Not great<br/>&gt; *myterm → Bad<br/>&gt; *myterm* → Death</code></li>
+          <li>Varying levels of suck-itude<br/><code>&gt; myterm\* → Not great<br/>&gt; \*myterm → Bad<br/>&gt; my\*erm → Really Bad<br/>&gt; \*myterm\* → Death</code></li>
           <li>Use the OR operator<br/>i.e.: <code>MyTerm1 OR MyTerm2</code></li>
           </ul>
         </td>
@@ -140,7 +141,7 @@
         </td>
         <td width="40%">
           <ul>
-          <li>Use the stats command to link events where possible</li>
+          <li>Use the stats command to link events where possible. If you have to use transaction, specify startswith, maxspan, maxpause. </li>
           </ul>
         </td>
       </tr>
@@ -150,7 +151,7 @@
         </td>
         <td width="40%">
           <ul>
-          <li>Joins can be used to link events by a common field value, but this is an intensive search command</li>
+          <li>Joins can be used to link events by a common field value, but this is an intensive search command. It has limits for the result number and limits for the duration of the inner search, it also run sequentially. </li>
           </ul>
         </td>
         <td width="40%">
