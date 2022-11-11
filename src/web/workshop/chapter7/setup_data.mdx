@@ -27,8 +27,10 @@ The size of the file was 50504224 Bytes online`
 
 ## Add data using custom search command: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`| getweather
+Please only run once! 
+
+<SplunkSearch earliest="-2y" latest="now" spl={`| getweather
 | spath output=_time path=dt 
-| eval sourcetype="s4c:weather", source="s4c_data"
-| collect index=s4c_weather  output_format=hec`}>
-</SplunkSearch>
+| eval sourcetype="s4c:weather", source="s4c_data" 
+\`\`\`| collect index=s4c_weather  output_format=hec\`\`\`
+`}></SplunkSearch>

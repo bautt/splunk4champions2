@@ -365,10 +365,10 @@ const labs = {
             ]
         },
         {
-            "title": "7 - Playground",
+            "title": "0 - Setup",
             "id": "seven",
             "subtitle": "test",
-            "icon": <ChartScatter/>,
+            "icon": <Tool/>,
             "sections": [
                 {
                     "title": "Setup",
