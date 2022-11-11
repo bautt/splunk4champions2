@@ -1,7 +1,7 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-TERM directive avoids splitting in TERMs 
+### TERM directive avoids splitting in TERMs 
 
 Compare: 
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_internal 127.0.0.1`}>
@@ -12,8 +12,15 @@ To:
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
 </SplunkSearch>
 
-TERM can only be used with minor breakers, not with major: 
+### TERM can only be used with minor breakers, not with major breakers: 
+
 * Minor breakers: `/ : = @ . - $ # % \ _ `
 * Major breakers: `` \r\n\s\t [] <> () {} | ! ; ‚ ‘ “``
+
+### Highlighting TERMS: 
+The easiest way to see minor and major breakers in action is to move the mouse over the log: 
+whatever you can select in one peace contains only minor breakers and can be used with TERM or PREFIX directives:
+
+![](/static/app/splunk4champions2/images/highlight_terms.gif)
 
 https://docs.splunk.com/Documentation/Splunk/9.0.2/Search/UseCASEandTERMtomatchphrases

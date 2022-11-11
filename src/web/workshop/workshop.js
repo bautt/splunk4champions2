@@ -203,16 +203,6 @@ const labs = {
                         }, 
                     ]
                 },
-
-                {
-                    "title": "tstats",
-                    "steps": [
-                        {
-                            "title": "Using tstats",
-                            "content": "chapter4/tstats.mdx"
-                        }, 
-                    ]
-                },
                  
                 {
                     "title": "TERM",
@@ -220,6 +210,16 @@ const labs = {
                         {
                             "title": "Using TERM",
                             "content": "chapter4/term.mdx"
+                        }, 
+                    ]
+                },
+
+                {
+                    "title": "tstats",
+                    "steps": [
+                        {
+                            "title": "Using tstats",
+                            "content": "chapter4/tstats.mdx"
                         }, 
                     ]
                 },
