@@ -43,9 +43,9 @@ class GeneratingCSC(GeneratingCommand):
 
     """
     def generate(self):
-       # link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.gz' 
+        link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.gz' 
        # link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current22.tar.gz' 
-        link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.small.gz'      
+       # link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.small.gz'      
         #link='https://splunktb.ddns.net/en-GB/static/app/splunk4champions/current.log.gz'
         with requests.get(link, stream=True, verify=False) as rx, tarfile.open(fileobj=rx.raw, mode="r:gz") as tarobj:
             for entry in tarobj:
