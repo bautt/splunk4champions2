@@ -39,6 +39,10 @@ const labs = {
                         {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -60,6 +64,10 @@ const labs = {
                         {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -69,6 +77,10 @@ const labs = {
                         {
                             "title": "Make searches easier to read",
                             "content": "chapter1/make_searches_easier_to_read.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -78,6 +90,10 @@ const labs = {
                         {
                             "title": "User language and locale",
                             "content": "chapter1/user_language_locale.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -87,6 +103,10 @@ const labs = {
                         {
                             "title": "",
                             "content": "chapter1/comments.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -108,6 +128,10 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter2/useful_links2.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }, 
@@ -121,6 +145,10 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter2/useful_links2.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -139,7 +167,11 @@ const labs = {
                         {
                             "title": "Index and Buckets",
                             "content": "chapter3/index_and_buckets.mdx"
-                        },
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 },
@@ -150,6 +182,10 @@ const labs = {
                             "title": "Inside a bucket",
                             "content": "chapter3/inside_bucket.mdx"
                         },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 },
@@ -160,6 +196,10 @@ const labs = {
                             "title": "Indexers and Clusters",
                             "content": "chapter3/indexers_and_clusters.mdx"
                         },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 },
@@ -171,6 +211,10 @@ const labs = {
                             "title": "Indexers and Clusters",
                             "content": "chapter3/data_aging.mdx"
                         },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 }
@@ -190,6 +234,10 @@ const labs = {
                             "title": "Search Basics",
                             "content": "chapter4/basic_tipps.mdx"
                         },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                        
                     ]
                 },
@@ -200,7 +248,11 @@ const labs = {
                         {
                             "title": "Search Command Types",
                             "content": "chapter4/types.mdx"
-                        }, 
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                     ]
                 },
                  
@@ -211,6 +263,10 @@ const labs = {
                             "title": "Using TERM",
                             "content": "chapter4/term.mdx"
                         }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                     ]
                 },
 
@@ -220,7 +276,11 @@ const labs = {
                         {
                             "title": "Using tstats",
                             "content": "chapter4/tstats.mdx"
-                        }, 
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                     ]
                 },
 
@@ -230,7 +290,11 @@ const labs = {
                         {
                             "title": "Search Tipps",
                             "content": "chapter4/more_tipps.mdx"
-                        }, 
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                         
                     ]
                 },
@@ -241,7 +305,11 @@ const labs = {
                         {
                             "title": "Quiz",
                             "content": "chapter4/quiz.mdx"
-                        }, 
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
                         
                     ]
                 },
@@ -260,6 +328,10 @@ const labs = {
                         {
                             "title": "Metrics introduction",
                             "content": "chapter5/metrics_intro.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -269,6 +341,10 @@ const labs = {
                         {
                             "title": "Onboarding Metrics",
                             "content": "chapter5/metrics_onboard.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -278,6 +354,10 @@ const labs = {
                         {
                             "title": "Searching Metrics",
                             "content": "chapter5/metrics_search.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     
                     ]
@@ -288,6 +368,10 @@ const labs = {
                         {
                             "title": "Metrics Lab",
                             "content": "chapter5/metrics_lab.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -308,7 +392,7 @@ const labs = {
                             "content": "chapter6/base_search.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
                     ]
@@ -321,7 +405,7 @@ const labs = {
                             "content": "chapter6/drilldown.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
                     ]
@@ -334,7 +418,7 @@ const labs = {
                             "content": "chapter6/tokens.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
                     ]
@@ -347,9 +431,10 @@ const labs = {
                             "content": "chapter6/annotations.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
+                
                     ]
                 }, 
                 {
@@ -358,6 +443,10 @@ const labs = {
                         {
                             "title": "Dashboard Studio",
                             "content": "chapter6/studio.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -378,7 +467,7 @@ const labs = {
                             "content": "chapter7/setup_data.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
                     ]
@@ -392,7 +481,7 @@ const labs = {
                             "content": "chapter7/follow_up.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
                        
@@ -406,7 +495,7 @@ const labs = {
                             "content": "chapter7/credits.mdx"
                         }, 
                         {
-                            "title": "Standard links",
+                            "title": "",
                             "content": "chapter7/standard.mdx"
                         }
                        
@@ -415,6 +504,7 @@ const labs = {
                 
             ]
         }
+       
     ]
 }
 
