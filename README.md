@@ -1,5 +1,6 @@
-# Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_100.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_schwarz_trans_150x150.png) ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_weiss_trans_150x150.png)
+
+ # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
 
 ## This is a complete re-design from https://github.com/bautt/splunk4champions training 
 ## 
