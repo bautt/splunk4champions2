@@ -1,14 +1,14 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## Create Indexes 
+## Create Indexes  (Splunk Cloud AND Splunk Enterprise)
 Before we continue with example data we need to create indexes for it. Go to Settings -> Data -> Indexes and create 3 indexes: 
-
+Index size 3GB, for cloud: retention at least 1y. 
 1. s4c_stocks (default)
 2. s4c_weather (default)
 3. s4c_metrics (metric index)
 
-## Add data using custom search command: 
+## Add data using custom search command:  (Splunk Cloud AND Splunk Enterprise)
 
 Please only run once! 
 
@@ -22,7 +22,7 @@ If your server has an internet connection and custom command works you are finis
 
 ____
 
-## Alternative method (no custom search command, no internet, Splunk Enterprise only)
+## Alternative method (Splunk Enterprise only)
 
 ## Enable Data Sources
 Go to the [Link to pre-configured data sources](../../manager/splunk4champions2/data/inputs/monitor?search=s4c&count=25) and click on "Enable"
@@ -33,10 +33,10 @@ Go to the [Link to pre-configured data sources](../../manager/splunk4champions2/
 
 If you would like to get most recent example  data from the apps github-repository enable *download_data.py* scripted input. 
  [Link to scripted input](../../manager/search/data/inputs/script?search=s4c) 
- To control success you can search for the script output in the _internal index: 
+ 
+ * To control success you can search for the script output in the _internal index: 
  `index=_internal source=s4c*`
-
- The message should look like: 
+ * The message should look like: 
  `2022-11-07 13:08:08 /opt/splunk/etc/apps/splunk4champions2/static/current.log.gz Splunk4Champions2 download script for weather data was finished in 6.2 seconds.
 The size of the file was 50504224 Bytes online`
 
