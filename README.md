@@ -47,28 +47,29 @@ For simple installaiton just download the release https://github.com/bautt/splun
 #### Dashboards
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/dashboards.png)
 
-# Credits
+___
+## Credits
 
 Large part of the workshop content is collected, recycled and consolidated from publicly available .conf 
 presentations, blog articles and Splunk Docs.  All information in this app is provided "as is", with no guarantee of completeness, accuracy, 
 timeliness or of the results obtained from the use of this information.
 
 
-* This workshop was initially created by <Link to="https://www.linkedin.com/in/andreas-g-5536ba1a0/" openInNewContext>Andreas Greeske</Link> and <Link to="https://www.linkedin.com/in/baublys/" openInNewContext>Tomas Baublys</Link> in 2020
-* The new version is built on the Splunk-UI template created by <Link to="https://www.linkedin.com/in/dfederschmidt/" openInNewContext>Daniel Federschmidt</Link> in 2022
+* This workshop was initially created by Andreas Greeske</Link> and Tomas Baublys in 2020
+* The new 2.0 version is built on the Splunk-UI template created by Daniel Federschmidt
 * Any suggestions or improvements for workshop content are highly appreciated: [Tomas Baublys](mailto:tbaublys@splunk.com)
 
 
 ### Special Thanks for the public content to:
-*  [Martin Müller](https://www.linkedin.com/in/martin-m%C3%BCller-749890143/) 
-*  [Clara Merriman](https://www.linkedin.com/in/clara-merriman/)
-*  [Richard Morgan](https://www.linkedin.com/in/richardmorgan1972/)
+*  Martin Müller
+*  Clara Merriman
+*  Richard Morgan
 ...
 and many others mentioned in the links in each section! 
 
 
 ### Special Thanks for his help in problem solving: 
-*  [Dirk Nitschke](https://www.linkedin.com/in/dirknitschke/) 
+*  Dirk Nitschke
 
 
 ---
