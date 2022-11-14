@@ -60,15 +60,15 @@ timeliness or of the results obtained from the use of this information.
 
 
 ### Special Thanks for the public content to:
-*  <Link to="https://www.linkedin.com/in/martin-m%C3%BCller-749890143/" openInNewContext>Martin Müller </Link>
-*  <Link to="https://www.linkedin.com/in/clara-merriman/" openInNewContext>Clara Merriman </Link>
-*  <Link to="https://www.linkedin.com/in/richardmorgan1972/" openInNewContext>Richard Morgan</Link>
+*  [Martin Müller](https://www.linkedin.com/in/martin-m%C3%BCller-749890143/) 
+*  [Clara Merriman](https://www.linkedin.com/in/clara-merriman/)
+*  [Richard Morgan](https://www.linkedin.com/in/richardmorgan1972/)
 ...
 and many others mentioned in the links in each section! 
 
 
 ### Special Thanks for his help in problem solving: 
-*  <Link to="https://www.linkedin.com/in/dirknitschke/" openInNewContext>Dirk Nitschke</Link> 
+*  [Dirk Nitschke](https://www.linkedin.com/in/dirknitschke/) 
 
 
 ---
