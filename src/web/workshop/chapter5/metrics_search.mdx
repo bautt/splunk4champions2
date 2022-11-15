@@ -1,5 +1,5 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
 
+import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## Using mcatalog command
 <SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=_*`}></SplunkSearch>
@@ -13,3 +13,14 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 ## Using msearch command
 
 <SplunkSearch earliest="-30d" latest="now" spl={` | msearch index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
+
+## Best way to work with metrics is Analytics Workspace 
+
+Just make sure you set "data ingested in last X days" setting according to your data and select the proper time setting. 
+
+![](/static/app/splunk4champions2/images/Analytics1.png)
+
+From here you can set most of the settings, than save to dashboard or open in the search and fine tune your search. 
+
+![](/static/app/splunk4champions2/images/Analytics2.png)
+
