@@ -1,3 +1,6 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
 ## Inline Comments
 You can add inline comments to the search string of a saved 
 search by enclosing the comments in backtick characters (\`\`\`)
@@ -13,3 +16,9 @@ search by enclosing the comments in backtick characters (\`\`\`)
 
 
 https://docs.splunk.com/Documentation/Splunk/9.0.1/Search/Comments
+
+<SplunkSearch earliest="-24h" latest="now" spl={`index=_internal host=* source="*metrics.log" sourcetype=splunkd group=per_Sourcetype_thruput 
+\`\`\`this search is borrowed from "Indexing Performance" in Monitoring Console\`\`\`
+| eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") 
+| timechart minspan=30s per_second(kb) by series useother=false limit=5`}>
+</SplunkSearch>

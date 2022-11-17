@@ -37,6 +37,10 @@ const labs = {
                             "content": "chapter1/search_auto_format.mdx"
                         },
                         {
+                            "title": "Themes",
+                            "content": "chapter1/themes.mdx"
+                        },
+                        {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
                         }, 
