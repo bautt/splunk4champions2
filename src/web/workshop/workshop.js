@@ -442,6 +442,20 @@ const labs = {
                     ]
                 }, 
                 {
+                    "title": "Colors",
+                    "steps": [
+                        {
+                            "title": "I see colors everywhere",
+                            "content": "chapter6/colors.mdx"
+                        }, 
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
+                
+                    ]
+                }, 
+                {
                     "title": "Dashboard Studio",
                     "steps": [
                         {
