@@ -74,7 +74,7 @@
       </chart>
     </panel>
     <panel depends="$tokShowPanelB$">
-      <title>Custom Colors for Column Chart</title>
+      <title>Custom Colours for Column Chart</title>
       <chart>
         <search base="base_random" depends="tokShowPanelB$">
           <query>|sort - count</query>
@@ -102,7 +102,7 @@
         <option name="charting.chart.style">shiny</option>
         <option name="charting.drilldown">none</option>
         <option name="charting.fieldColors">{"COMPLETE":#358856,"CANCELED":#ED8440,"FAILED":#B90E0A,"PENDING":#7EA77B }</option>
-        <option name="charting.backgroundColor">#e6f7f2</option>
+        <option name="charting.backgroundColor">#eaeaea</option>
         <option name="charting.fontColor">#000080</option>
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
@@ -120,7 +120,7 @@
   </row>
   <row>
     <panel depends="$tokShowPanelA$">
-      <title>Custom Colors for Column Chart</title>
+      <title>Default Colors for Bar Chart</title>
       <chart>
         <search base="base_random">
           <query>|sort - count</query>
@@ -161,7 +161,7 @@
       </chart>
     </panel>
     <panel depends="$tokShowPanelB$">
-      <title>Custom Colors for Column Chart</title>
+      <title>Custom Colours for Bar Chart</title>
       <chart>
         <search base="base_random">
           <query>|sort - count</query>
@@ -189,7 +189,7 @@
         <option name="charting.chart.style">shiny</option>
         <option name="charting.drilldown">none</option>
         <option name="charting.fieldColors">{"COMPLETE":#358856,"CANCELED":#ED8440,"FAILED":#B90E0A,"PENDING":#7EA77B }</option>
-        <option name="charting.backgroundColor">#e6f7f2</option>
+        <option name="charting.backgroundColor">#eaeaea</option>
         <option name="charting.fontColor">#000080</option>
         <option name="charting.layout.splitSeries">0</option>
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
