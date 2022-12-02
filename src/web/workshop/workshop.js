@@ -180,6 +180,19 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "Segmentation",
+                    "steps": [
+                        {
+                            "title": "Segmentation",
+                            "content": "chapter3/segmentation.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
+                    ]
+                },
+                {
                     "title": "What is in a bucket?",
                     "steps": [
                         {

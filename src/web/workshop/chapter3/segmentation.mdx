@@ -1,0 +1,15 @@
+## What is event segmentation?
+
+What happpens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
+Tokens with minor breakers will be stored as a TERM and in separate tokens. 
+
+<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '2rem'}}>
+Minor breakers: / : = @ . - $ # % \ _
+</div>
+<p></p>
+<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '2rem'}}>
+ Major breakers: \r\n\s\t[] &lt;&gt; () {} | ! ; &sbquo; &lsquo;
+</div>
+
+ * Breakers can be configured in segmenters.conf – but you should not touch it without a good reason. 
+___
