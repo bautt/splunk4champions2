@@ -188,7 +188,7 @@ const labs = {
                         },
                         {
                             "title": "",
-                            "content": "chapter7/termshigh.mdx"
+                            "content": "chapter3/termshigh.mdx"
                         },
                         {
                             "title": "",
