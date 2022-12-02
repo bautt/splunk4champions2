@@ -1,3 +1,6 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
 ## What is event segmentation?
 
 What happpens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
@@ -12,4 +15,6 @@ Minor breakers: / : = @ . - $ # % \ _
 </div>
 
  * Breakers can be configured in segmenters.conf – but you should not touch it without a good reason. 
-___
+
+<Link to="https://docs.splunk.com/Documentation/SCS/current/Search/Eventsegmentationandsearching
+" openInNewContext>Event Segmentation in Splunk Docs</Link> 
