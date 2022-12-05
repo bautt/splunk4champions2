@@ -1,3 +1,4 @@
+
 #!/usr/bin/env python
 
 import datetime 
@@ -11,7 +12,7 @@ splunkhome = (os.environ['SPLUNK_HOME'])
 #path = Path(Path.cwd())
 #parent = path.parent
 start = time.time()
-url = 'https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current.log.gz'
+url = 'https://github.com/bautt/splunk4champions2/raw/main/src/package/static/current.log.gz'
 target = (splunkhome + '/etc/apps/splunk4champions2/static/current.log.gz')
 
 # getting size info from the file
