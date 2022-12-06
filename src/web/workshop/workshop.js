@@ -180,6 +180,23 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "Segmentation",
+                    "steps": [
+                        {
+                            "title": "Segmentation",
+                            "content": "chapter3/segmentation.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter3/termshigh.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter7/standard.mdx"
+                        }
+                    ]
+                },
+                {
                     "title": "What is in a bucket?",
                     "steps": [
                         {
@@ -267,6 +284,14 @@ const labs = {
                             "title": "Using TERM",
                             "content": "chapter4/term.mdx"
                         }, 
+                        {
+                            "title": "Segmentation",
+                            "content": "chapter3/segmentation.mdx"
+                        },
+                        {
+                            "title": "",
+                            "content": "chapter3/termshigh.mdx"
+                        },
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
