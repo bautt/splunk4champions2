@@ -1,0 +1,193 @@
+<table width="100%">
+      <tr>
+        <td width="20%">
+         <p>All Time</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Events are grouped by time</li>
+          <li>Reduce searched buckets by being specific about time</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use a specific time range</li>
+          <li>Narrow the time range as much as possible</li>
+          </ul>
+        </td>
+     </tr>
+      <tr>
+        <td width="20%">
+         <p>index=*</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Events are grouped into indexes</li>
+          <li>Reduce searched buckets by specifying an index</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Always specify an index in your search</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Wildcards</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Wildcards are not compatible with Bloom Filters</li>
+          <li>Wildcard matching of terms in the index takes time</li>
+          <li>Lexicon is structured by common prefixes, so appending an * is best (if you have to do it)</li>
+          <li>Never ever use wildcards to replace minor breakers e.g. autoconfig*bat for autoconfig.bat</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Varying levels of suck-itude<br/><code>&gt; myterm\* → Not great<br/>&gt; \*myterm → Bad<br/>&gt; my\*erm → Really Bad<br/>&gt; \*myterm\* → Death</code></li>
+          <li>Use the OR operator<br/>i.e.: <code>MyTerm1 OR MyTerm2</code></li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Avoid Transforming before Streaming</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li><b>Streaming commands</b> run on indexers in parallel and should be placed first.</li>
+          <li>Examples: eval, fields, rename, makemv, rex, spath, where</li>
+          <li><b>Transforming commands</b> run on search heads and require the full set</li>
+           <li>Examples: chart, timechart, stats, top, rare, addtotals</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>NOT<br/>!=</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Bloom filters and indexes are designed to quickly locate terms that exist</li>
+          <li>Searching for terms that don’t exist takes longer</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li> Use the OR/AND operators<br/><code>(host=c OR host=d)<br/>(host=f ANDhost=h)</code><br/>vs.<br/><code>(host!=a host!=b) <br/>NOT host=a host=b</code></li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Verbose Search Mode</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Verbose search mode causes full event data to be sent to the search head, even if it isn’t needed</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use Smart Mode or Fast Mode</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Real-time Searches</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>RT Searches put an increased load on search head and indexers</li>
+           <li>The same effect can typically be accomplished with a 1 min. or 5 min. scheduled search or just a quick search with panel refresh in the dashboard.</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use a scheduled search that occurs more frequently</li>
+          <li>Use Indexed-Realtime searches
+(Set by Splunk admin)</li>
+<li> Use panel refresh:</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Subsearches returning no results</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>running zero-result searches when this might have negative side effects, such as generating false positives or running custom search commands that make costly API calls</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use <code>require</code> in your SPL Statements</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Transaction</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Not distributed to indexers</li>
+           <li>Typically only needed if using additional parameters (maxSpan, startsWith, etc...)</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use the stats command to link events where possible. If you have to use transaction, specify startswith, maxspan, maxpause. </li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Joins/Subsearches</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Joins can be used to link events by a common field value, but this is an intensive search command. It has limits for the result number and limits for the duration of the inner search, it also run sequentially. </li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use the stats (preferred) or transaction command to link events</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Prefer <code>loadjob</code> over <code>savedsearch</code></p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>The savedsearch command always runs a new search. To reanimate the results of a previously run search, use the loadjob command.</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Use the loadjob to run a savedsearch.</li>
+          </ul>
+        </td>
+      </tr>
+       <tr>
+        <td width="20%">
+         <p>Search after first |</p>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>Filtering search results using a second “| search” command in your query is inefficient</li>
+          </ul>
+        </td>
+        <td width="40%">
+          <ul>
+          <li>As much as possible, add all filtering criteria before the first | <br/>i.e.: <code>&gt;index=main foo bar| </code><br/>vs. <br/><code>&gt;index=main foo | search bar</code></li>
+        </ul>
+        </td>
+      </tr>
+      </table>

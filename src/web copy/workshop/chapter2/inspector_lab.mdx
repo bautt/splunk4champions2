@@ -1,0 +1,9 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+Run the Search and oberserve the details presented for "optimizedSearch"
+
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" 
+| search Rīga OR Bonn
+| timechart span=4h  avg(main.temp) by name`}>
+</SplunkSearch>

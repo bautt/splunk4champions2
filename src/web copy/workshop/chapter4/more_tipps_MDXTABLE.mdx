@@ -1,0 +1,17 @@
+Search Tipps
+
+| Things to avoid	 | Explanation | Suggested Alternative |
+| :---- |:---- | :--- |
+| All Time | Events are grouped by time | Reduce searched buckets by being specific about timem, Use a specific time range. Narrow the time range as much as possible
+| index=* | Events are grouped into indexes | Reduce searched buckets by specifying an index, Always specify an index in your search
+| Wildcards | Wildcards are not compatible with Bloom Filters. Wildcard matching of terms in the index takes time. Lexicon is structured by common prefixes, so appending an * is best (if you have to do it)|  myterm\* → Not great \*myterm → Bad \*myterm\* → Death --> Use the OR operator
+| Avoid Transforming before Streaming |Streaming commands run on indexers in parallel   s and should be placed first. | Streaming examples: Examples: eval, fields, rename, makemv, rex, spath, where Transforming commands run on search heads and require the full set Examples: chart, timechart, stats, top, rare, addtotals
+| Exclusion instead inclusion | NOT or `!=`|Splunk is designed to quickly locate terms that exist, Searching for terms that do not exist takes longer. Use the OR AND operators
+| Verbose Search Mode | Verbose search mode causes full event data to be sent to the search head, even if it isn’t needed| Use Smart Mode or Fast Mode
+| Real-time Searches | RT Searches put an increased load on search head and indexers| The same effect can typically be accomplished with a 1 min. or 5 min. scheduled search or just a quick search with panel refresh in the dashboard. Use a scheduled search that occurs more frequently. Use Indexed-Realtime searches (Set by Splunk admin), Use panel refresh: /app/splunk4champions/realtime_vs_refresh
+| Subsearches returning no results| running zero-result searches when this might have negative side effects, such as generating false positives or running custom search commands that make costly API calls| Use require in your SPL Statements
+| Transaction | Not distributed to indexers, Typically only needed if using additional parameters (maxSpan, startsWith, etc...)| Use the stats command to link events where possible
+| Joins/Subsearches| Joins can be used to link events by a common field value, but this is an intensive search command| Use the stats (preferred) or transaction command to link events
+| Prefer loadjob over savedsearch| The savedsearch command always runs a new search. To reanimate the results of a previously run search, use the loadjob command.| Use the loadjob to run a savedsearch.
+| Late filter |Filtering search results using a second “\| search” command in your query is inefficient| As much as possible, add all filtering criteria before the first \|
+| Not using tstats |If you run statistics on large data and can rely on indexed fields - try to utilize tstats command - your performance will be increased significantly.| type=term tstats can be used with PREFIX: tstats count by PREFIX(host=)
