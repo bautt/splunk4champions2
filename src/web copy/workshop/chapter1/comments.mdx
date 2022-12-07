@@ -1,0 +1,31 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## Inline Comments
+You can add inline comments to the search string of a saved 
+search by enclosing the comments in backtick characters (\`\`\`)
+
+<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '2rem'}}>
+\`\`\` the code is documentation enough  \`\`\`
+</div>
+
+is not true for Splunk searches anymore.
+
+<img src="/static/app/splunk4champions2/images/comments.png" width="100%" />
+
+
+## Use inline comments to:
+
+* Explain each "step" of a complicated search that is shared with other users.
+* Discuss ways of improving a search with other users.
+* Leave notes for yourself in unshared searches that are works in progress.
+* Troubleshoot searches by running them with chunks of SPL "commented out".
+
+
+https://docs.splunk.com/Documentation/Splunk/9.0.1/Search/Comments
+
+<SplunkSearch earliest="-24h" latest="now" spl={`index=_internal host=* source="*metrics.log" sourcetype=splunkd group=per_Sourcetype_thruput 
+\`\`\`this search is borrowed from "Indexing Performance" in Monitoring Console\`\`\`
+| eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") 
+| timechart minspan=30s per_second(kb) by series useother=false limit=5`}>
+</SplunkSearch>

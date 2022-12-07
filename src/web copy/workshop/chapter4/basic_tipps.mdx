@@ -1,0 +1,61 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## 1. Only search in the index you need:
+<img src="/static/app/splunk4champions2/images/only_index.png" width="100%" />
+___
+
+## 2. Restrict time range 
+<img src="/static/app/splunk4champions2/images/time_range.png" width="100%" />
+___
+
+## 3. Always think about the number of buckets to open
+<img src="/static/app/splunk4champions2/images/number_buckets.png" width="100%" />
+___
+## 4. Tell exactly what you want (before the first pipe)
+
+* Specify and limit the index(es) & other meta-fields like host(s), source(s) & sourcetype(s)
+* Limit the time range for searching 
+* Fine-tune your searches to your unique events as much as possible
+* Reduce the number of fields being passed SPL pipeline for processing (use fields command)
+* Place streaming commands earlier in the pipeline
+___
+
+## 5. Try to reduce the scan count
+ When the scan count is high and the event count is low we are filtering events during schema on
+the fly.
+This is the most expensive place to filter as we have downloaded
+buckets, open the tsidx, extracted slices fully parsed events. 
+
+## 6. Lispy Efficiency
+Lispy expressions are predicates Splunk® platform uses to locate events. Finding Lispy in the search log is good for debugging. All events matching the predicates are scanned 
+(scanned includes includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
+Lispy efficiency can be defined as `eventCount / scanCount`
+
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)
+| stats first(_time) as _time first(total_run_time) as total_run_time first(event_count) as event_count first(scan_count) as scan_count first(user) as user first(savedsearch_name) as savedsearch_name first(search) as search by search_id
+| eval lispy_efficiency = event_count / scan_count`}>
+</SplunkSearch>
+
+## 7. Avoid using wildcards as prefixes or in the middle of the string
+When you use a wildcard character at the beginning of a string, the search must look at every string to determine if the end of the string matches what you specify after the asterisk. 
+Wildcard characters in the middle of a word or string might cause inconsistent results. This is especially true if the string contains punctuation, such as an underscore _ or dash - character.
+
+
+
+____
+
+See "Fields, Indexed Tokens and You" PLA1466b by Martin Müller
+https://conf.splunk.com/files/2022/slides/PLA1466B.pdf
+
+See "TSTATS and PREFIX"  .conf talk by Richart Morgan
+https://conf.splunk.com/files/2020/slides/PLA1089C.pdf 
+
+More information on command types 
+https://docs.splunk.com/Documentation/Splunk/latest/Search/Typesofcommands
+
+Write better searches in Splunk docs:
+https://docs.splunk.com/Documentation/Splunk/latest/Search/Writebettersearches
+
+Search Manual 
+https://docs.splunk.com/Documentation/SplunkCloud/latest/Search/Wildcards

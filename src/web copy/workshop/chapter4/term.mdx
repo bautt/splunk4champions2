@@ -1,0 +1,15 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+### TERM directive avoids splitting in TERMs 
+
+Compare: 
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal 127.0.0.1`}>
+</SplunkSearch>
+
+To: 
+
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
+</SplunkSearch>
+
+### TERM can only be used with minor breakers, not with major breakers: 

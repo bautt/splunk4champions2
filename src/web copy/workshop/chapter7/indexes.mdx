@@ -1,0 +1,25 @@
+## Required indexes 
+
+ [s4c_weather]
+coldPath = $SPLUNK_DB/s4c_weather/colddb
+enableDataIntegrityControl = 0
+enableTsidxReduction = 0
+homePath = $SPLUNK_DB/s4c_weather/db
+maxTotalDataSizeMB = 3072
+thawedPath = $SPLUNK_DB/s4c_weather/thaweddb
+
+[s4c_stocks]
+coldPath = $SPLUNK_DB/s4c_stocks/colddb
+enableDataIntegrityControl = 0
+enableTsidxReduction = 0
+homePath = $SPLUNK_DB/s4c_stocks/db
+maxTotalDataSizeMB = 1024
+thawedPath = $SPLUNK_DB/s4c_stocks/thaweddb
+
+[s4c_metrics]
+coldPath = $SPLUNK_DB/s4c_metrics/colddb
+enableDataIntegrityControl = 0
+enableTsidxReduction = 0
+homePath = $SPLUNK_DB/s4c_metrics/db
+maxTotalDataSizeMB = 1024
+thawedPath = $SPLUNK_DB/s4c_metrics/thaweddb

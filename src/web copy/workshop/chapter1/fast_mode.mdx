@@ -1,0 +1,13 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+![](/static/app/splunk4champions2/images/lab1_task2_fast.png)
+
+**Fast mode** uses the least amount of system resources. It is great to use Fast Mode when merely checking if data is present or not or after a search is already built.
+
+Try this simple search out in different modes: 
+
+<SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`index=s4c_weather`}>
+</SplunkSearch>
+
+* If you see no data in the s4c_data and s4c_stocks index, please go to section 0-Setup and follow the instructions (create indexes and add exanple data)
