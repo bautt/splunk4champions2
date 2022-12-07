@@ -180,8 +180,12 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Segmentation",
+                    "title": "Data Pipeline",
                     "steps": [
+                        {
+                            "title": "Pipeline",
+                            "content": "chapter3/pipeline.mdx"
+                        },
                         {
                             "title": "Segmentation",
                             "content": "chapter3/segmentation.mdx"
