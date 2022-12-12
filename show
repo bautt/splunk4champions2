@@ -1,0 +1,16 @@
+#!/bin/bash
+APP="https://github.com/bautt/s4cshow/raw/main/splunk4champions2.tar.gz"
+TMPFILE="/tmp/splunk4champions2.tar.gz"
+INDEXES="https://raw.githubusercontent.com/bautt/s4cshow/main/indexes.conf"
+INPUTS="https://raw.githubusercontent.com/bautt/s4cshow/main/inputs.conf"
+#get app from github
+/usr/bin/wget -q $APP -O $TMPFILE
+# unpack it directly to Splunk etc apps
+/usr/bin/tar zxf $TMPFILE --directory /opt/splunk/etc/apps
+# create indexes
+mkdir -p /opt/splunk/etc/apps/splunk4champions2/local
+wget -q $INDEXES  -O /opt/splunk/etc/apps/splunk4champions2/local/indexes.conf
+#enable inputs for local files in static 
+wget -q $INPUTS -O /opt/splunk/etc/apps/splunk4champions2/local/inputs.conf
+#restart splunk
+/opt/splunk/bin/splunk restart
