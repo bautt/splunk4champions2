@@ -18,3 +18,20 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 Remove the comments from: 
 `| mcollect index=s4c_metrics split=true name` 
 once the index is ready and you want the data to be saved in the metrics index. 
+
+## Quiz
+
+Here is an example: which search is better suitable to be used as a base search in a weather dashboard? 
+<SplunkSearch earliest="-2y" latest="now" spl={`
+index=s4c_weather 
+|bin _time span=4h
+| stats avg(main*) BY name _time
+`}></SplunkSearch>
+
+OR 
+
+<SplunkSearch earliest="-2y" latest="now" spl={`
+| mstats avg(weather.*)  prestats=true WHERE "index"="s4c_metrics" span=4h BY name
+| stats avg(weather.*) BY name _time
+| fields - _span*
+`}></SplunkSearch>
