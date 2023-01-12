@@ -1,9 +1,44 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-Run the Search and oberserve the details presented for "optimizedSearch"
+Run the search, wait for it to finish, and click on "Job -> Inspect Job" to oberserve the details: 
 
 <SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" 
-| search Rīga OR Bonn
-| timechart span=4h  avg(main.temp) by name`}>
+|bucket span=4h _time
+|stats avg(main.temp) AS temp by name _time
+|where name=="Berlin" OR name=="London" OR name=="Paris"
+|xyseries _time, name, temp`}>
 </SplunkSearch>
+
+
+1. In the first line we see the number of results, scanned events and time. 
+You can calculate events scanned per second from that. 
+
+In this example we see something like: 
+"This search has completed and has returned 2,169 results by scanning 1,355,725 events in 6.535 seconds"
+
+
+
+2. Execution costs: time to process each component, number of invocation, input and output count
+    * "command.search.index" -> time to read the idx files 
+    * "command.search.rawdata" -> time to read rawdata
+    * "command.search.filter" -> time to filter non-matching events
+    * "command.search.kv" -> field extractions (analog for lookups, tags)
+    * "command.search.typer" -> processing event types
+
+
+3. Properties:  Under lower section "Search job properties" 
+    * look for the "optimizedSearch" - is it different?
+    * diskUsage - how much space the search is using?
+
+* Alternatively look search for "lispy" in the search log
+
+
+Now compare the results with this search: 
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
+|timechart  span=4h  avg(main.temp) by name`}>
+</SplunkSearch>
+
+* Would it be better to add 
+    |fields name main.temp _time
+after the first pipe? 

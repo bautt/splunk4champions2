@@ -1,9 +1,0 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
-import Link from '@splunk/react-ui/Link'
-
-![](/static/app/splunk4champions2/images/lab1_task2_verbose.png)
-
-**Verbose mode** returns as much information as possible from the data, including all events and field information.
-
-<SplunkSearch earliest="-30d" latest="now" mode="Verbose mode" spl={`index=s4c_weather`}>
-</SplunkSearch>
