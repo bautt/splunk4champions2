@@ -1,12 +1,18 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
+# On Splunk Show - No setup needed.
+____
+
+# For your own installation: 
+
 ## Create Indexes  (Splunk Cloud AND Splunk Enterprise)
 Before we continue with example data we need to create indexes for it. Go to Settings -> Data -> Indexes and create 3 indexes: 
 Index size 3GB, for cloud: retention at least 1y. 
-1. s4c_stocks (default)
-2. s4c_weather (default)
+1. s4c_stocks (default settings)
+2. s4c_weather (default settings)
 3. s4c_metrics (metric index)
+4. s4c_tutorial (for splunk tutorial data)
 
 <img src="/static/app/splunk4champions2/images/indexes.png" width="100%" />
 
@@ -17,9 +23,16 @@ Go to the [Link to pre-configured data sources](../../manager/splunk4champions2/
 -> If you have no internet connection, you are done now. The data will be at least several weeks old. 
 
 <img src="/static/app/splunk4champions2/images/datasources.png" width="100%" />
+____
+
+# SETUP FINISHED 
+
+____
 
 
-## Add data using custom search command:  (Splunk Cloud AND Splunk Enterprise)
+## Only use if advised: 
+
+## Add new data using custom search command:  (Splunk Cloud AND Splunk Enterprise)
 
 Please only run once! 
 
@@ -32,8 +45,6 @@ Please only run once!
 If your server has an internet connection and custom command works you are finished. 
 
 ____
-
-
 
 ## Update example data  (optional)
 
