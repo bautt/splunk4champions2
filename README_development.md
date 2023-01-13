@@ -31,6 +31,12 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 ```
+p.s. had to add following:
+````
+pip uninstall python-magic
+pip install python-magic-bin==0.4.14
+```
+
 
 Run AppInspect CLI
 ```
