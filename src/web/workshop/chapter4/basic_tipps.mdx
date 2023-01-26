@@ -40,22 +40,3 @@ Lispy efficiency can be defined as `eventCount / scanCount`
 ## 7. Avoid using wildcards as prefixes or in the middle of the string
 When you use a wildcard character at the beginning of a string, the search must look at every string to determine if the end of the string matches what you specify after the asterisk. 
 Wildcard characters in the middle of a word or string might cause inconsistent results. This is especially true if the string contains punctuation, such as an underscore _ or dash - character.
-
-
-
-____
-
-See "Fields, Indexed Tokens and You" PLA1466b by Martin Müller
-https://conf.splunk.com/files/2022/slides/PLA1466B.pdf
-
-See "TSTATS and PREFIX"  .conf talk by Richart Morgan
-https://conf.splunk.com/files/2020/slides/PLA1089C.pdf 
-
-More information on command types 
-https://docs.splunk.com/Documentation/Splunk/latest/Search/Typesofcommands
-
-Write better searches in Splunk docs:
-https://docs.splunk.com/Documentation/Splunk/latest/Search/Writebettersearches
-
-Search Manual 
-https://docs.splunk.com/Documentation/SplunkCloud/latest/Search/Wildcards

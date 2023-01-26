@@ -83,6 +83,10 @@ const labs = {
                             "content": "chapter1/make_searches_easier_to_read.mdx"
                         }, 
                         {
+                            "title": "Useful links",
+                            "content": "chapter1/useful_links.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -96,6 +100,10 @@ const labs = {
                             "content": "chapter1/user_language_locale.mdx"
                         }, 
                         {
+                            "title": "Useful links",
+                            "content": "chapter1/useful_links.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -107,6 +115,10 @@ const labs = {
                         {
                             "title": "",
                             "content": "chapter1/comments.mdx"
+                        }, 
+                        {
+                            "title": "Useful links",
+                            "content": "chapter1/useful_links.mdx"
                         }, 
                         {
                             "title": "",
@@ -173,6 +185,10 @@ const labs = {
                             "content": "chapter3/index_and_buckets.mdx"
                         }, 
                         {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links3.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -195,6 +211,10 @@ const labs = {
                             "content": "chapter3/termshigh.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links3.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -207,6 +227,10 @@ const labs = {
                             "title": "Inside a bucket",
                             "content": "chapter3/inside_bucket.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links3.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
@@ -222,6 +246,10 @@ const labs = {
                             "content": "chapter3/indexers_and_clusters.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links3.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -236,6 +264,10 @@ const labs = {
                             "title": "Indexers and Clusters",
                             "content": "chapter3/data_aging.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links3.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
@@ -260,6 +292,10 @@ const labs = {
                             "content": "chapter4/basic_tipps.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links4.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -274,6 +310,10 @@ const labs = {
                             "title": "Search Command Types",
                             "content": "chapter4/types.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links4.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
@@ -297,6 +337,10 @@ const labs = {
                             "content": "chapter3/termshigh.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links4.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -310,6 +354,10 @@ const labs = {
                             "title": "Using tstats",
                             "content": "chapter4/tstats.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links4.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
@@ -325,6 +373,10 @@ const labs = {
                             "content": "chapter4/more_tipps.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links4.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -339,6 +391,10 @@ const labs = {
                             "title": "Quiz",
                             "content": "chapter4/quiz.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links4.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
