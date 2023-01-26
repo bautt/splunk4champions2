@@ -38,10 +38,3 @@ With `PREFIX` indexed fields are not longer a prerequisite for tstats. The exten
 <SplunkSearch earliest="-30d" latest="now" spl={`| tstats max(PREFIX(current_size_kb=)) as max_size_kb where index=_internal source=*metrics.log* TERM(group=queue) by _time span=15m PREFIX(name=) | timechart span=15m max(max_size_kb) by "name="`}>
 </SplunkSearch>
 ____
-
-Nice blog article on tstats and PREFIX by Tyler Quinlivan: https://www.tylerquinlivan.com/posts/exploring_splunk_prefix/
-
-| PDF Title        |      Author |  Link to Slides | Session Recording |
-| ------------- | :----------- | -----| ---- |
-| PLA109C - TSTATS and PREFIX   |Richard Morgan	| [PDF](https://conf.splunk.com/files/2020/slides/PLA1089C.pdf) | [mp4](https://conf.splunk.com/files/2020/recordings/PLA1089C.mp4)
-| PLA1162B - Clara-Fication: Finding and Improving Expensive Searches	     |   Clara Merriman, Martin Müller	    |  [PDF](https://conf.splunk.com/files/2022/slides/PLA1162B.pdf) |[mp4](https://conf.splunk.com/files/2022/recordings/PLA1162B_1080.mp4)
