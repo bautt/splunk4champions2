@@ -45,9 +45,6 @@ function App() {
 
     return (
         <>  
-            <div style={{"backgroundColor": "#3C444D", height: "40px", width: "100%"}}>
-            <Heading level={2} style={{marginLeft: 20, marginTop: 0, paddingTop: 10, color: "#52A051"}}>Splunk4Champions Workshop</Heading>
-            </div>
             <ChapterBar activeChapter={activeChapterId} onChapterChange={changeChapter}>
                 {renderedChapters}
             </ChapterBar>
@@ -61,4 +58,4 @@ layout(
         <ToastMessages />
         <App></App>
     </SplunkThemeProvider>
-    , { hideFooter: true, hideAppBar: true });
+    , { hideFooter: false, hideAppBar: false });
