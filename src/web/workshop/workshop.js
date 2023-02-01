@@ -419,6 +419,10 @@ const labs = {
                             "content": "chapter5/metrics_intro.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter5/useful_links5.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -431,6 +435,10 @@ const labs = {
                             "title": "Onboarding Metrics",
                             "content": "chapter5/metrics_onboard.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter5/useful_links5.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
@@ -445,6 +453,10 @@ const labs = {
                             "content": "chapter5/metrics_search.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter5/useful_links5.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
@@ -458,6 +470,10 @@ const labs = {
                             "title": "Metrics Lab",
                             "content": "chapter5/metrics_lab.mdx"
                         },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter5/useful_links5.mdx"
+                        }, 
                         {
                             "title": "",
                             "content": "chapter7/standard.mdx"
