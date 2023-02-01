@@ -548,6 +548,10 @@ const labs = {
                             "content": "chapter6/studio.mdx"
                         },
                         {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }, 
+                        {
                             "title": "",
                             "content": "chapter7/standard.mdx"
                         }
