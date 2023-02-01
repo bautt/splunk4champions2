@@ -43,10 +43,6 @@ const labs = {
                         {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -68,10 +64,6 @@ const labs = {
                         {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -102,10 +94,6 @@ const labs = {
                         {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -119,10 +107,6 @@ const labs = {
                         {
                             "title": "Useful links",
                             "content": "chapter1/useful_links.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -144,10 +128,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter2/useful_links2.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }, 
@@ -161,10 +141,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter2/useful_links2.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -187,10 +163,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links3.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
@@ -213,10 +185,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links3.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -230,10 +198,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links3.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
@@ -248,10 +212,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links3.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
@@ -267,10 +227,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links3.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
@@ -294,10 +250,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter4/useful_links4.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
@@ -313,10 +265,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter4/useful_links4.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -339,10 +287,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter4/useful_links4.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -357,10 +301,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter4/useful_links4.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -375,10 +315,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter4/useful_links4.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                         
                     ]
@@ -394,10 +330,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter4/useful_links4.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                         
                     ]
@@ -421,10 +353,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter5/useful_links5.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -438,10 +366,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter5/useful_links5.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -455,10 +379,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter5/useful_links5.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     
                     ]
@@ -473,10 +393,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter5/useful_links5.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -521,10 +437,6 @@ const labs = {
                         {
                             "title": "Switch with tokens",
                             "content": "chapter6/tokens.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -534,10 +446,6 @@ const labs = {
                         {
                             "title": "Annotations",
                             "content": "chapter6/annotations.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                 
                     ]
@@ -548,10 +456,6 @@ const labs = {
                         {
                             "title": "I see colors everywhere",
                             "content": "chapter6/colors.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                 
                     ]
@@ -566,10 +470,6 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter6/useful_links6.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 }
@@ -588,10 +488,6 @@ const labs = {
                         {
                             "title": "Setup Task",
                             "content": "chapter7/setup_data.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                     ]
                 },
@@ -602,10 +498,6 @@ const labs = {
                         {
                             "title": "Follow Up Links ",
                             "content": "chapter7/follow_up.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
@@ -616,10 +508,6 @@ const labs = {
                         {
                             "title": "Credits",
                             "content": "chapter7/credits.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
                         }
                        
                     ]
