@@ -472,7 +472,20 @@ const labs = {
                             "content": "chapter6/useful_links6.mdx"
                         }
                     ]
-                }
+                },
+                {
+                    "title": "DS Tutorial",
+                    "steps": [
+                        {
+                            "title": "Dashboard Studio Tutorial",
+                            "content": "chapter6/ds_tutorial.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
+                },
                 
             ]
         },
