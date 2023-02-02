@@ -19,8 +19,8 @@ Splunk admins
 - How is data stored in Splunk
 - Search performance: good and bad searches
 - Converting log data to metrics
-- Dashboard hints
-
+- Dashboard hints (XML)
+- Dashboard Studio Introduction and Tutorial 
 
 
 ### Benefit:
