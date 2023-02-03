@@ -1,5 +1,5 @@
 <form version="1.1">
-  <label>06_Dashboard</label>
+  <label>z06_Dashboard</label>
   <fieldset submitButton="false">
     <input type="time" token="time_select">
       <label>Select Time...</label>
