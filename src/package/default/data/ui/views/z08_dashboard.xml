@@ -1,5 +1,5 @@
 <form version="1.1">
-  <label>08_Dashboard</label>
+  <label>z08_Dashboard</label>
   <search id="singleValue_BaseSearch">
     <query>
       index=_internal
