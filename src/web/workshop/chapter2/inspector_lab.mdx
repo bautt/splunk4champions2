@@ -10,6 +10,12 @@ Run the search, wait for it to finish, and click on "Job -> Inspect Job" to ober
 |xyseries _time, name, temp`}>
 </SplunkSearch>
 
+0. Consider changing job settings to avoid expiration: 
+<img src="/static/app/splunk4champions2/images/jobsettings1.png" width="300" />
+<p>
+<img src="/static/app/splunk4champions2/images/jobsettings2.png" width="400" />
+</p>
+
 
 1. In the first line we see the number of results, scanned events and time. 
 You can calculate events scanned per second from that. 
@@ -31,13 +37,18 @@ In this example we see something like:
     * look for the "optimizedSearch" - is it different?
     * diskUsage - how much space the search is using?
 
-* Alternatively look search for "lispy" in the search log
+* Alternatively look search for <b>lispy</b> in the search log
 
 
-Now compare the results with this search: 
+ Now compare the results with this search: 
 <SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
 |timechart  span=4h  avg(main.temp) by name`}>
 </SplunkSearch>
+Here is an example comparison: 
+What is different? 
+<p>
+<img src="/static/app/splunk4champions2/images/jobcompare.png" width="400" />
+</p>
 
 * Would it be better to add 
     |fields name main.temp _time
