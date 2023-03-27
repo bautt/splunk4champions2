@@ -16,7 +16,6 @@ Run the search, wait for it to finish, and click on "Job -> Inspect Job" to ober
 <img src="/static/app/splunk4champions2/images/jobsettings2.png" width="400" />
 </p>
 
-
 1. In the first line we see the number of results, scanned events and time. 
 You can calculate events scanned per second from that. 
 
@@ -47,9 +46,14 @@ In this example we see something like:
 Here is an example comparison: 
 What is different? 
 <p>
-<img src="/static/app/splunk4champions2/images/jobcompare.png" width="400" />
+<img src="/static/app/splunk4champions2/images/jobcompare.png" width="600" />
 </p>
 
-* Would it be better to add 
-    |fields name main.temp _time
-after the first pipe? 
+* Would it be better to add "|fields name main.temp _time"
+after the first line? Check it out:
+
+
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
+| fields name main.temp _time 
+| timechart  span=4h  avg(main.temp) by name`}>
+</SplunkSearch>
