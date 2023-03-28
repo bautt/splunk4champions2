@@ -1,3 +1,5 @@
+import Link from '@splunk/react-ui/Link';
+
 ## Data life cycle 
 
 <img src="/static/app/splunk4champions2/images/hot_warm1.png" width="700" />
@@ -47,10 +49,11 @@ Indexing and searching of data occurs on the indexer, just as in a traditional d
 The key difference with SmartStore is that the remote object store becomes the location for master copies of warm buckets, while the indexer's local storage is used to cache copies of warm buckets currently participating in a search or that have a high likelihood of participating in a future search.
 
 A cache manager on the indexer fetches copies of warm buckets from the remote store and places them in the indexer's local cache when the buckets are needed for a search. The cache manager also evicts warm bucket copies from the cache once their likelihood of being searched again diminishes.
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/SmartStorearchitecture" openInNewContext>Smart Store Architecture docs </Link>
 
-https://docs.splunk.com/Documentation/Splunk/8.1.1/Indexer/SmartStorearchitecture
 ____
 ## tsidx reduction
-https://docs.splunk.com/Documentation/Splunk/9.0.1/Indexer/Reducetsidxdiskusage
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Reducetsidxdiskusage" openInNewContext>tsidx reduction docs</Link>
+
 The tsidx reduction process eliminates the full-size tsidx files and replaces them with mini versions of those files that contain essential metadata. 
 The rawdata files and some other metadata files remain untouched. You can continue to search across the aged data, if necessary, but such searches will exhibit significantly worse performance. Rare term searches, in particular, will run slowly.
