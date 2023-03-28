@@ -12,4 +12,10 @@ To:
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
 </SplunkSearch>
 
-### TERM can only be used with minor breakers, not with major breakers: 
+The example search can be dangerous in some cases: if you have an event like this: 
+> ` 2023-03-27 09:12:23.456 ip=1.2.3.4 source: 9.8.7.6 ` 
+
+the search for ` TERM(1.2.3.4)`  will not find this event! 
+You should use  ` TERM(ip=1.2.3.4)` instead!
+
+### TERM can only be used with minor breakers, not with major breakers
