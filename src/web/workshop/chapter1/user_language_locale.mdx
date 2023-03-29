@@ -1,4 +1,7 @@
 
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
 When a user logs in, Splunk automatically uses the language that the user's browser is set to. To switch languages, change the browser's locale setting. Locale configurations are browser-specific.
 
 Splunk detects locale strings. A locale string contains two components: a language specifier and a localization specifier. This is usually presented as two lowercase letters and two uppercase letters linked by an underscore. For example, "en_US" means US English and "en_GB" means British English and "de_DE" means German.
@@ -21,6 +24,5 @@ ___
 |Chinese simpl. |zh-CN
 |Chinese trag. |zh-TW
 
-App developers can however add additional languages, see: https://docs.splunk.com/Documentation/SplunkCloud/latest/AdvancedDev/TranslateSplunk
-
-and following Blog: https://splunkonbigdata.com/creating-a-splunk-locale/
+App developers can however add additional languages, see: <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/AdvancedDev/TranslateSplunk" openInNewContext>"Translate Splunk"</Link>
+and the following Blog: <Link to="https://splunkonbigdata.com/creating-a-splunk-locale/" openInNewContext>"Blog article -  Creating a Splunk locale"</Link>
