@@ -16,8 +16,6 @@
                  <p>
                 <i>Set a token while zooming on a chart to zoom on other charts.</i> Add this feature to your dashboard to make it more appealing :)
               </p>
-              <p><b>See editable example page: <a href="lab6_task2" target="_blank">lab6_task2</a>.</b></p>
-
               <p>Example taken from <a href="https://docs.splunk.com/Documentation/Splunk/latest/Viz/Chartcontrols#Pan_and_zoom_chart_controls" target="_blank">here</a>.</p>
                
           </td>
