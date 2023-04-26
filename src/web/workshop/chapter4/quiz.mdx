@@ -83,3 +83,25 @@ versus:
 <SplunkSearch earliest="-30d" latest="now" spl={`earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00" index=s4c_weather 
                 |stats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp)  p95(main.temp)  p5(main.temp)   by name`}>
 </SplunkSearch>
+
+___
+
+## 8. Which search is better? And why?
+<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather"  name IN(Berlin Brussels Warsaw)`}>
+</SplunkSearch>
+
+versus: 
+
+<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather"  | where name IN("Berlin", "Brussels", "Warsaw")`}>
+</SplunkSearch>
+
+___
+
+## 9. Which search is better? And why?
+<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather" *erlin`}>
+</SplunkSearch>
+
+versus: 
+
+<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather" Ber*`}>
+</SplunkSearch>
