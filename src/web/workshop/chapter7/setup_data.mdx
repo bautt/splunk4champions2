@@ -8,7 +8,7 @@ ____
 
 ## Create Indexes  (Splunk Cloud AND Splunk Enterprise)
 Before we continue with example data we need to create indexes for it. Go to Settings -> Data -> Indexes and create 3 indexes: 
-Index size 3GB, for cloud: retention at least 1y. 
+Index size 3GB, in Splunk Cloud - set retention for at least 1y. 
 1. s4c_stocks (default settings)
 2. s4c_weather (default settings)
 3. s4c_metrics (metric index)
@@ -42,7 +42,7 @@ Please only run once!
 \`\`\`| collect index=s4c_weather  output_format=hec\`\`\`
 `}></SplunkSearch>
 
-If your server has an internet connection and custom command works you are finished. 
+If your server has an internet connection and custom command works you are finished.
 
 ____
 
