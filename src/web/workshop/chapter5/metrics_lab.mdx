@@ -5,7 +5,7 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## CONVERT WEATHER DATA TO METRICS
 
-<SplunkSearch earliest="-2y" latest="now" spl={`index=s4c_weather earliest="-2y" latest=now() Orlando OR Vilnius OR Frankfurt OR Brussels OR Austin OR Warsaw OR Prague OR Sydney OR Stockholm OR London OR Bonn OR Copenhagen OR Zurich
+<SplunkSearch earliest="-60d" latest="now" spl={`index=s4c_weather earliest="-2y" latest=now() Orlando OR Vilnius OR Frankfurt OR Brussels OR Austin OR Warsaw OR Prague OR Sydney OR Stockholm OR London OR Bonn OR Copenhagen OR Zurich
 | rename clouds.all AS weather.Clouds main.temp AS weather.Temperature main.temp_max AS weather.MaxTemp main.temp_min AS weather.MinTemp main.humidity AS weather.Humidity main.pressure AS weather.Pressure wind.speed AS weather.Windspeed visibility AS weather.Visibility wind.deg AS weather.WindDirection coord.lat AS weather.Lat coord.lon AS weather.Lon weather{}.id AS weather.Id
 | stats first(weather.*) by _time name
 | rename first(*) AS *
