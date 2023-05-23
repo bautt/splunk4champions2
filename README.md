@@ -1,34 +1,30 @@
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_schwarz_trans_150x150.png#gh-light-mode-only) ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_weiss_trans_150x150.png#gh-dark-mode-only)
 
- # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
+ # Welcome to the enhanced Splunk4Champions Workshop!
+Discover the new and improved Splunk4Champions workshop, now featuring an upgraded content management system powered by React.js, Splunk UI, and MDX files. This workshop is designed to provide advanced Splunk users (champions) with an opportunity to enhance their skills and delve deeper into the intricacies of Splunk search.
 
-## This is a complete re-design from https://github.com/bautt/splunk4champions training 
-## 
-This repository houses a new version of the Splunk4Champions workshop. The content management has been redesigned to work with React.js, Splunk UI and MDX files.
+Join us for an engaging and interactive hands-on experience where you'll not only learn new tricks but also gain a comprehensive understanding of how Splunk searches work. We will share invaluable hints and techniques to help you maximize the efficiency of your Splunk searches, complemented by the underlying theory behind them. As a participant, your active involvement will be required, and you'll be provided with numerous follow-up links to explore further information at your own pace.
 
-Splunk4Champions is  a presales workshop for more experienced Splunk users (champions) who are still willing to learn some new tricks and get deeper understanding of how Splunk search works.
-We want to share hints & tricks on how to use Splunk searches more efficiently and also provide some underlying theory for that. This is an interactive hands-on workshop which will require your participation and also provide your dozens of follow-up links to find more information. 
+## Who should attend:
+- Advanced Splunk users
+- Splunk admins
 
-### Target audience: 
-Advanced Splunk users 
-Splunk admins
+## Workshop Highlights:
+- Exploring Options and GUI Settings for optimal customization
+- Harnessing the power of the Job Inspector for advanced search analysis
+- Understanding the intricacies of data storage in Splunk
+- Mastering search performance: identifying good and bad search practices
+- Unleashing the potential of converting log data into metrics
+- Crafting compelling dashboards using XML and expert hints
+- Introduction and tutorial on Dashboard Studio, your gateway to stunning visualizations
 
-### Content:
-- Options and GUI Settings
-- Using Job Inspector
-- How is data stored in Splunk
-- Search performance: good and bad searches
-- Converting log data to metrics
-- Dashboard hints (XML)
-- Dashboard Studio Introduction and Tutorial 
+## Benefits of attending:
+- Achieve sustainable and energy-saving Splunk usage practices
+- Gain fresh insights and inspiration for leveraging Splunk's capabilities
 
+No more boring PowerPoint slides! All the necessary information is included directly in the app, ensuring an engaging and immersive learning experience.
 
-### Benefit:
-- Sustainable and energy saving usage of Splunk
-- New insights and inspiration
-
-### Design Goals: 
-Zero-Powerpoint: all information needed is included in the app
+Don't miss this opportunity to elevate your Splunk skills and become a true champion in harnessing the power of Splunk. Join us at the Splunk4Champions Workshop and unlock a world of endless possibilities!
 
 ## Download and installation:
 For simple installaiton just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
@@ -68,5 +64,5 @@ timeliness or of the results obtained from the use of this information.
 and many others mentioned in the links in each section! 
 
 
-### Special Thanks for his help in problem solving: 
+### Special Thanks for problem solving: 
 *  Dirk Nitschke
