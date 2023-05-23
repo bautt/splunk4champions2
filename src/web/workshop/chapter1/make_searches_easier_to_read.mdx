@@ -30,7 +30,7 @@ Long searches can be difficult to read. For example, the following search uses m
 
 ## Example 
 
-Run the Search and oberserve the details presented for "optimizedSearch"
+Run this search and use the formatting macro: (the search may not produce results in the test environment, but is quite usefull to run on license server)
 
 <SplunkSearch  earliest="-30d" latest="now" spl={`index=_internal type=Usage source="*license_usage.log" (idx=*) h!=DATA h!=CHANGE (h!="All_Hosts_Base") (s!="All_Sources_Base") | stats values(h) AS hostnames dc(h) AS host_count sum(b) AS host_volume by s date_mday  | eval source_volume_MB=(host_volume/1024/1024)  | fields - host_volume  | stats avg(source_volume_MB) AS avg_source_volume_MB values(hostnames) AS hostnames by s | eval avg_source_volume_MB=round(avg_source_volume_MB,3)  | appendcols  [ search index=_internal type=Usage source="*license_usage.log" (idx=*) h!=DATA h!=CHANGE (h!="All_Hosts_Base") (s!="All_Sources_Base")  | stats dc(h) AS host_count, sum(b) AS host_volume by s date_mday | stats avg(host_count) AS avg_host_count by s | eval avg_host_count=round(avg_host_count,2)] | eval avg_host_source_volume_MB=round(avg_source_volume_MB/avg_host_count,3) | table s avg_host_count hostnames avg_source_volume_MB avg_host_source_volume_MB | sort - avg_host_source_volume_MB | rename s AS Source, h AS Host, hostnames AS "Host name(s)", host_volume_avg_MB AS "Host Volume Avg (MB)", avg_host_count AS "Avg Host Count", avg_source_volume_MB AS "Avg daily Source Volume (MB)", avg_host_source_volume_MB AS "Avg daily Source Volume by Host (MB)"`}>
 </SplunkSearch>
