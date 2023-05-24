@@ -1,5 +1,6 @@
 
 import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
 
 ## Using mcatalog command
 <SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=_*`}></SplunkSearch>
@@ -11,7 +12,7 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 </SplunkSearch>
 
 ## Using mpreview command
-
+Use mpreview to get an idea of the kinds of metric time series that are stored in your metrics indexes and to troubleshoot your metrics data.
 <SplunkSearch earliest="-30d" latest="now" spl={` | mpreview index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
 
 ## Best way to work with metrics is Analytics Workspace 
