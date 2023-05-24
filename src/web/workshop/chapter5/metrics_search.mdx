@@ -10,9 +10,9 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 | sort - _time`}>
 </SplunkSearch>
 
-## Using msearch command
+## Using mpreview command
 
-<SplunkSearch earliest="-30d" latest="now" spl={` | msearch index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
+<SplunkSearch earliest="-30d" latest="now" spl={` | mpreview index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
 
 ## Best way to work with metrics is Analytics Workspace 
 
