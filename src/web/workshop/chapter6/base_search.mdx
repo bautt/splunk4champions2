@@ -1,16 +1,36 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## Base Searches
+### Best search is an avoided search :)
 
-### Optimal search is an avoided search :) 
 
-See a base search example, look at the source code and explain it. 
+The "base search" in Splunk refers to the initial search query that retrieves the raw data from indexed sources. 
+It forms the foundation for a  subsequent post-processing searches, which are additional queries applied to the retrieved data for filtering, 
+transforming, and aggregating the results to extract meaningful insights in different panels. 
 
- <Link to="basesearch" openInNewContext>Basesearch dashboard example</Link>
+A base search should be a transforming search which is used to produce a formatted statistics table. 
+Post-process searches are used to process / filter the table and present the results in different panels.
+Post-process searches can only reference fields present in the base search results.
+
+Multiple base searches can be used in one dashboard and referenced by name.
+
+<img src="/static/app/splunk4champions2/images/basesearch_lucid.png" width="80%" />
+
+
+See a base search example - open the  <Link to="basesearch" openInNewContext>Basesearch dashboard example</Link>.
+
+Base search is defined at the beginning of the dashboard: 
+
+<img src="/static/app/splunk4champions2/images/base1.png" width="80%" />
+
+and referenced in different panels with some post-process search: 
+
+<img src="/static/app/splunk4champions2/images/base2.png" width="50%" />
+
+The resulting dashboard has 8 different panels, but all are based on the same base search with some post-processing. 
 
 <img src="/static/app/splunk4champions2/images/base_search_dashboard.png" width="80%" />
 
 ----
 
-Another way to use one search for many visualizations is trelis. 
+Another way to use one search for many visualizations is <Link to="tstats-trelis" openInNewContext>Trelis visualization</Link>
