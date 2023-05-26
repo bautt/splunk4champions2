@@ -3,10 +3,16 @@ import Link from '@splunk/react-ui/Link'
 
 ## Token switches
 
-Create "Switches" for your dashboard. Add this feature to your dashboard to make it more appealing
+Splunk XML-Dashboards allow you to set and unset tokens and pass the values to other panels. Some tokens are set by actions 
+(for example mouse click event). In the example below we use a click action to determine which visualization should be shown. 
+
+<img src="/static/app/splunk4champions2/images/selectviz2.gif" width="80%"/>
 
 Go to <Link to="switches" openInNewContext>Token switches</Link>
 
-More pre-defined tokens: <Link to="tokens" openInNewContext>Tokens</Link>
+First we are setting tokens by clicking on the table: 
+<img src="/static/app/splunk4champions2/images/tokenviz1.png" width="80%" />
 
-<img src="/static/app/splunk4champions2/images/token_switch.png" width="80%" />
+Then we define two panels each depending on different token: 
+<img src="/static/app/splunk4champions2/images/tokenviz1.png" width="80%" />
+
