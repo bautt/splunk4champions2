@@ -39,7 +39,7 @@ For simple installaiton just download the release https://github.com/bautt/splun
 #### Search
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/search.png)
 #### Metrics
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/metrics.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_metrics.png)
 #### Dashboards
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_base.png)
 
