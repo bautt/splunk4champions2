@@ -8,33 +8,33 @@ The indexed fields can be from indexed data or accelerated data models.
 *This section is based on 2020 Richard Morgans session "TSTATS and PREFIX" and 2021 .conf session "Clara-Fication: More Tstats for Your Buckets" by Clara Merriman and Martin Müller*
 
 ## Simple example: index based tstats search (works with indexed fields)
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_* OR index=* by host`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where &#x60;s4c_index_all&#x60; by host`}>
 </SplunkSearch>
 
 ## Filter by indexed fields: 
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log*`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where &#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log*`}>
 </SplunkSearch>
 
 ## Filter by simple indexed terms: 
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log* typingqueue`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where &#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log* typingqueue`}>
 </SplunkSearch>
 
 ## Filter by complex indexed `TERM`s: 
-| tstats count where index=_internal source=*metrics.log* TERM(blocked=true)
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log* TERM(blocked=true)`}>
+| tstats count where &#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log* TERM(blocked=true)
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where &#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log* TERM(blocked=true)`}>
 </SplunkSearch>
 
 ## PREFIX(name=) will ad-hoc-interpret the indexed term name=typingqueue as a key-value pair (v8.0+) - even if there is no indexed field "name"
 With `PREFIX` indexed fields are not longer a prerequisite for tstats. The extension massively increases the instances where tstats can be used
 `PREFIX` allows TERMS to be processed as if they were indexed fields.
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log* TERM(blocked=true) by name`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where &#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log* TERM(blocked=true) by name`}>
 </SplunkSearch>
 
 ## “Traditional” search to chart queue sizes:
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal source=*metrics.log* TERM(group=queue) | timechart span=15m max(current_size_kb) by name`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`&#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log* TERM(group=queue) | timechart span=15m max(current_size_kb) by name`}>
 </SplunkSearch>
 
 ## PREFIX() works for aggregations too!
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats max(PREFIX(current_size_kb=)) as max_size_kb where index=_internal source=*metrics.log* TERM(group=queue) by _time span=15m PREFIX(name=) | timechart span=15m max(max_size_kb) by "name="`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats max(PREFIX(current_size_kb=)) as max_size_kb where &#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=*metrics.log* TERM(group=queue) by _time span=15m PREFIX(name=) | timechart span=15m max(max_size_kb) by "name="`}>
 </SplunkSearch>
 ____

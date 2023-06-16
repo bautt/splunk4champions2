@@ -9,7 +9,7 @@
   </init>
   <search id="singleValue_BaseSearch">
     <query>
-      index=_internal
+      `s4c_index_internal` `s4c_timerange_override_internal`
       |timechart  span=$timespan_sources$ dc(source) as Sources dc(sourcetype) as SourceTypes
     </query>
     <earliest>$time_select.earliest$</earliest>
@@ -166,7 +166,7 @@
       <title>Log-Level</title>
       <chart>
         <search depends="$page1">
-          <query>index=_internal 
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` 
 |  stats count by log_level
 | where log_level != "INFO"
 | sort - count</query>
@@ -224,7 +224,7 @@
       </input>
       <table depends="$loglevel_drilldown$">
         <search depends="$page1">
-          <query>index=_internal log_level="$loglevel_drilldown$"
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` log_level="$loglevel_drilldown$"
 | head $size_resultset$
 | table _time log_level _raw</query>
           <earliest>$time_select.earliest$</earliest>
@@ -255,7 +255,7 @@
       </input>
       <chart>
         <search depends="$page2$">
-          <query>index=_internal
+          <query>`s4c_index_internal` `s4c_timerange_override_internal`
 | timechart span=$timespan2$ count as Events</query>
           <earliest>$time_select.earliest$</earliest>
           <latest>$time_select.latest$</latest>
@@ -302,7 +302,7 @@
       <title>Timed Drilldown</title>
       <table>
         <search depends="$page2$">
-          <query>index=_internal log_level!="INFO"
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` log_level!="INFO"
 | table _time log_level _raw</query>
           <earliest>$filtertime.earliest$</earliest>
           <latest>$filtertime.latest$</latest>
@@ -327,7 +327,7 @@
         <fieldForLabel>sourcetype</fieldForLabel>
         <fieldForValue>sourcetype</fieldForValue>
         <search>
-          <query>index=_internal
+          <query>`s4c_index_internal` `s4c_timerange_override_internal`
 | stats count by sourcetype</query>
           <earliest>0</earliest>
           <latest></latest>
@@ -338,7 +338,7 @@
         <fieldForLabel>source</fieldForLabel>
         <fieldForValue>source</fieldForValue>
         <search>
-          <query>index=_internal 
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` 
 | where sourcetype="$st$"
 | stats count by source</query>
           <earliest>0</earliest>
@@ -347,7 +347,7 @@
       </input>
       <table>
         <search>
-          <query>index=_internal source="$s$" sourcetype="$st$"
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` source="$s$" sourcetype="$st$"
 | head 100
 | table _time  _raw</query>
           <earliest>$time_select.earliest$</earliest>

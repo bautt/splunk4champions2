@@ -39,7 +39,7 @@ Please only run once!
 <SplunkSearch earliest="-2y" latest="now" spl={`| getweather
 | spath output=_time path=dt 
 | eval sourcetype="s4c:weather", source="s4c_data" 
-\`\`\`| collect index=s4c_weather  output_format=hec\`\`\`
+\`\`\`| collect &#x60;s4c_index_weather&#x60;  output_format=hec\`\`\`
 `}></SplunkSearch>
 
 If your server has an internet connection and custom command works you are finished.
@@ -52,7 +52,7 @@ If you would like to get most recent example  data from the apps github-reposito
  [Link to scripted input](../../manager/search/data/inputs/script?search=s4c) 
  
  * To control success you can search for the script output in the _internal index: 
- `index=_internal source=s4c*`
+ `&#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; source=s4c*`
  * The message should look like: 
  `2022-11-07 13:08:08 /opt/splunk/etc/apps/splunk4champions2/static/current.log.gz Splunk4Champions2 download script for weather data was finished in 6.2 seconds.
 The size of the file was 50504224 Bytes online`

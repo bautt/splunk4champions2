@@ -14,7 +14,7 @@
       <title>Number of Sources</title>
       <single>
         <search>
-          <query>index=_internal
+          <query>`s4c_index_internal` `s4c_timerange_override_internal`
 | timechart  dc(source) as Sources dc(sourcetype) as SourceTypes</query>
           <earliest>$time_select.earliest$</earliest>
           <latest>$time_select.latest$</latest>
@@ -44,7 +44,7 @@
       <title>Anzahl der Sourcetypes</title>
       <single>
         <search>
-          <query>index=_internal
+          <query>`s4c_index_internal` `s4c_timerange_override_internal`
 | timechart  dc(source) as Sources dc(sourcetype) as SourceTypes
 | fields _time SourceTypes</query>
           <earliest>$time_select.earliest$</earliest>

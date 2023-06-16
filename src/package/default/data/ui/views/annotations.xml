@@ -19,7 +19,7 @@
   <row>
     <panel>
       <html>
-        <code>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</code>
+        <code>`s4c_index_audit` `s4c_timerange_override_audit` action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</code>
       </html>
     </panel>
   </row>
@@ -28,14 +28,14 @@
       <title>Average Search Run Time with WARN/ERROR event annotations</title>
       <chart>
         <search type="annotation">
-          <query>index=_internal (log_level="WARN" OR log_level="ERROR") 
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` (log_level="WARN" OR log_level="ERROR") 
 | eval annotation_label = message
 | eval annotation_category = log_level</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
         <search>
-          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
+          <query>`s4c_index_audit` `s4c_timerange_override_audit` action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>

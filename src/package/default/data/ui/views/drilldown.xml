@@ -1,7 +1,7 @@
 <dashboard  version="1.1" stylesheet="s4c_dashboards.css">
   
   <search>
-    <query>index="_audit"</query>
+    <query>`s4c_index_audit` `s4c_timerange_override_audit`</query>
     <preview>
       <eval token="timezone">strftime(time(), "%z")</eval>
     </preview>
@@ -30,7 +30,7 @@
       <chart>
         <title>Pan and Zoom (All source types)</title>
         <search>
-          <query>index=_internal | timechart count by sourcetype</query>
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` | timechart count by sourcetype</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -48,7 +48,7 @@
         <title>Pan and Zoom (Web access source type)</title>
         <search>
           <query>
-      index=_internal sourcetype=splunk_web_access
+      `s4c_index_internal` `s4c_timerange_override_internal` sourcetype=splunk_web_access
       |  timechart count by sourcetype
     </query>
           <earliest>$selection_earliest$</earliest>

@@ -3,7 +3,7 @@ import Link from '@splunk/react-ui/Link'
 
 Run the search, wait for it to finish, and click on "Job -> Inspect Job" to oberserve the details: 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" 
+<SplunkSearch earliest="-1y" latest="now"  spl={`&#x60;s4c_index_weather&#x60; 
 |bucket span=4h _time
 |stats avg(main.temp) AS temp by name _time
 |where name=="Berlin" OR name=="London" OR name=="Paris"
@@ -40,7 +40,7 @@ In this example we see something like:
 
 
  Now compare the results with this search: 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
+<SplunkSearch earliest="-1y" latest="now"  spl={`&#x60;s4c_index_weather&#x60; Berlin OR London OR Paris 
 |timechart  span=4h  avg(main.temp) by name`}>
 </SplunkSearch>
 Here is an example comparison: 
@@ -53,7 +53,7 @@ What is different?
 after the first line? Check it out:
 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
+<SplunkSearch earliest="-1y" latest="now"  spl={`&#x60;s4c_index_weather&#x60; Berlin OR London OR Paris 
 | fields name main.temp _time 
 | timechart  span=4h  avg(main.temp) by name`}>
 </SplunkSearch>

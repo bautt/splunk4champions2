@@ -3,7 +3,7 @@ import Link from '@splunk/react-ui/Link'
 
 Run the Search and oberserve the details presented for "optimizedSearch"
 
-<SplunkSearch earliest="-1m" latest="now" spl={`index=_internal 
+<SplunkSearch earliest="-1m" latest="now" spl={`&#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; 
 | search sourcetype="splunkd" 
 | fields splunkserver`}>
 </SplunkSearch>

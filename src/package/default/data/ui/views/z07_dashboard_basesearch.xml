@@ -2,7 +2,7 @@
   <label>z07_Dashboard_BaseSearch</label>
   <search id="singleValue_BaseSearch">
     <query>
-      index=_internal
+      `s4c_index_internal` `s4c_timerange_override_internal`
       |timechart  span=$timespan_sources$ dc(source) as Sources dc(sourcetype) as SourceTypes
     </query>
     <earliest>$time_select.earliest$</earliest>
@@ -96,7 +96,7 @@
       <title>Log-Level</title>
       <chart>
         <search>
-          <query>index=_internal 
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` 
 |  stats count by log_level
 | where log_level != "INFO"
 | sort - count</query>
@@ -154,7 +154,7 @@
       </input>
       <table>
         <search>
-          <query>index=_internal log_level="$loglevel_drilldown$"
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` log_level="$loglevel_drilldown$"
 | head $size_resultset$
 | table _time log_level _raw</query>
           <earliest>$time_select.earliest$</earliest>

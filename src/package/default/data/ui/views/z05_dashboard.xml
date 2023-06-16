@@ -22,7 +22,7 @@
       </input>
       <single>
         <search>
-          <query>index=_internal
+          <query>`s4c_index_internal` `s4c_timerange_override_internal`
 | timechart  span=$timespan_sources$ dc(source) as Sources dc(sourcetype) as SourceTypes
 | fields _time Sources</query>
           <earliest>$time_select.earliest$</earliest>
@@ -61,7 +61,7 @@
       </input>
       <single>
         <search>
-          <query>index=_internal
+          <query>`s4c_index_internal` `s4c_timerange_override_internal`
 | timechart  span=$timespan_sourcetypes$ dc(source) as Sources dc(sourcetype) as SourceTypes
 | fields _time SourceTypes</query>
           <earliest>$time_select.earliest$</earliest>
@@ -93,7 +93,7 @@
     <panel>
       <chart>
         <search>
-          <query>index=_internal 
+          <query>`s4c_index_internal` `s4c_timerange_override_internal` 
 |  stats count by log_level
 | where log_level != "INFO"
 | sort - count</query>

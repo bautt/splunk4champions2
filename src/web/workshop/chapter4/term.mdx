@@ -4,12 +4,12 @@ import Link from '@splunk/react-ui/Link'
 ### TERM directive avoids splitting in TERMs 
 
 Compare: 
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal 127.0.0.1`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`&#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; 127.0.0.1`}>
 </SplunkSearch>
 
 To: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`&#x60;s4c_index_internal&#x60; &#x60;s4c_timerange_override_internal&#x60; TERM(127.0.0.1)`}>
 </SplunkSearch>
 
 The example search can be dangerous in some cases: if you have an event like this: 

@@ -5,7 +5,7 @@
       <title>Realtime Search 5m window (BAD): index=_* OR index=*| timechart count by component limit=10</title>
       <chart>
         <search>
-          <query>index=_* OR index=*| timechart count by component limit=10</query>
+          <query>`s4c_index_all` | timechart count by component limit=10</query>
           <earliest>rt-5m</earliest>
           <latest>rt</latest>
           <sampleRatio>1</sampleRatio>
@@ -53,7 +53,7 @@
       <title>5min search with 1s refresh (BETTER): index=_* OR index=*| timechart count by component limit=10</title>
       <chart>
         <search>
-          <query>index=_* OR index=*| timechart count by component limit=10</query>
+          <query>`s4c_index_all` | timechart count by component limit=10</query>
           <earliest>-5m</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
