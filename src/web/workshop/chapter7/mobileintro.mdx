@@ -1,4 +1,21 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## Splunk Mobile & Augmented Reality
+Splunk Mobile is easy to setup and allow you to view dashboards, receive alerts and monitor splunk data from a mobile device. 
+
+<img src="/static/app/splunk4champions2/images/mobileintro.png" width="95%" />
+
+
+## Splunk Secure Gateway 
+Main administration point for the Splunk Mobile is "Splunk Secure Gateway" - it facilitates communication between mobile devices and Splunk
+platform instances using an end-to-end encrypted cloud service called Spacebridge.
+Spacebridge has been certified to meet SOC2, Type 2 and ISO 27001 standards and is
+HIPAA and PCI-DSS compliant.
+Splunk Secure Gateway can also be used to set up SAML authentication, so organizations
+can use single sign-on (SSO) for identity and access management.
+
+The Splunk Secure Gateway app requires you to open port 443 outbound to the host prod.spacebridge.spl.mobi, which allows Spacebridge to bidirectionally route the encrypted data between client devices and Splunk platform instances through WebSocket connection.
+ No inbound ports are opened.
+<img src="/static/app/splunk4champions2/images/Spacebridge_Data_Exchange.png" width="95%" />
+
+See <Link to="https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Security" openInNewContext>"Secure Gateway Security"</Link>

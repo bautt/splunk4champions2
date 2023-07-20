@@ -7,6 +7,7 @@ import Dashboard from  '@splunk/react-icons/Dashboard';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
 import Tool from  '@splunk/react-icons/Tool';
 import Data from  '@splunk/react-icons/Data'
+import GaugeRadial from '@splunk/react-icons/GaugeRadial';
 
 
 const labs = {
@@ -493,7 +494,7 @@ const labs = {
             "title": "7 - Mobile",
             "id": "seven",
             "subtitle": "Splunk Mobile & AR",
-            "icon": <Tool/>,
+            "icon": <GaugeRadial/>,
             "sections": [
                 {
                     "title": "Introduction",
@@ -509,7 +510,7 @@ const labs = {
                     "title": "Setup Mobile",
                     "steps": [
                         {
-                            "title": "Follow Up Links ",
+                            "title": "Setup the Gateway and add your device",
                             "content": "chapter7/mobilesetup.mdx"
                         }
                        
@@ -519,7 +520,7 @@ const labs = {
                     "title": "Mobile Links",
                     "steps": [
                         {
-                            "title": "Credits",
+                            "title": "Mobile Links",
                             "content": "chapter7/mobilelinks.mdx"
                         }
                        
@@ -530,7 +531,7 @@ const labs = {
         },
         {
             "title": "0 - Setup",
-            "id": "seven",
+            "id": "zero",
             "subtitle": "test",
             "icon": <Tool/>,
             "sections": [
