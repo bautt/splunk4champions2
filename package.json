@@ -1,5 +1,9 @@
 {
   "dependencies": {
+    "@splunk/react-icons": "^4.0.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "styled-components": "^5.3.11",
     "yarn": "^1.22.19"
   }
 }
