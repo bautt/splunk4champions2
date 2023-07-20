@@ -490,6 +490,45 @@ const labs = {
             ]
         },
         {
+            "title": "7 - Mobile",
+            "id": "seven",
+            "subtitle": "Splunk Mobile & AR",
+            "icon": <Tool/>,
+            "sections": [
+                {
+                    "title": "Introduction",
+                    "steps": [
+                        {
+                            "title": "Splunk Mobile & AR",
+                            "content": "chapter7/mobileintro.mdx"
+                        }
+                    ]
+                },
+                
+                {
+                    "title": "Setup Mobile",
+                    "steps": [
+                        {
+                            "title": "Follow Up Links ",
+                            "content": "chapter7/mobilesetup.mdx"
+                        }
+                       
+                    ]
+                },
+                {
+                    "title": "Mobile Links",
+                    "steps": [
+                        {
+                            "title": "Credits",
+                            "content": "chapter7/mobilelinks.mdx"
+                        }
+                       
+                    ]
+                }
+                
+            ]
+        },
+        {
             "title": "0 - Setup",
             "id": "seven",
             "subtitle": "test",
@@ -500,7 +539,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Setup Task",
-                            "content": "chapter7/setup_data.mdx"
+                            "content": "chapter0/setup_data.mdx"
                         }
                     ]
                 },
@@ -510,7 +549,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Follow Up Links ",
-                            "content": "chapter7/follow_up.mdx"
+                            "content": "chapter0/follow_up.mdx"
                         }
                        
                     ]
@@ -520,7 +559,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Credits",
-                            "content": "chapter7/credits.mdx"
+                            "content": "chapter0/credits.mdx"
                         }
                        
                     ]
