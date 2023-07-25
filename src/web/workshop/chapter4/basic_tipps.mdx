@@ -29,7 +29,7 @@ buckets, open the tsidx, extracted slices fully parsed events.
 
 ## 6. Lispy Efficiency
 Lispy expressions are predicates Splunk® platform uses to locate events. Finding Lispy in the search log is good for debugging. All events matching the predicates are scanned 
-(scanned includes includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
+(scanned includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
 Lispy efficiency can be defined as `eventCount / scanCount`
 
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)

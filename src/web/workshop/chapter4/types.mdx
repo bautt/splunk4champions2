@@ -13,7 +13,7 @@ There are six broad categorizations for almost all of the search commands:
 A streaming command operates on each event as it is returned by a search. 
 Essentially one event in and one (or no) event out.
 <img src="/static/app/splunk4champions2/images/Streaming_flow.png" width="80%" />
-Typical distributable streaming commands are: eval, fields, head, iplocation, replace... 
+Typical streaming commands are: eval, fields, head, iplocation, replace... 
 
 A non-streaming command requires the events from all of the indexers before the command can operate on the entire set of events. Many transforming commands are non-streaming commands. There are also several commands that are not transforming commands but are also non-streaming. These non-transforming, non-streaming commands are most often dataset processing commands.
 <img src="/static/app/splunk4champions2/images/Nonstreaming_flow.png" width="20%" />
