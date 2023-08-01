@@ -6,7 +6,7 @@ Discover the new and improved Splunk4Champions workshop, now featuring an upgrad
 Join us for an engaging and interactive hands-on experience where you'll not only learn new tricks but also gain a comprehensive understanding of how Splunk searches work. We will share invaluable hints and techniques to help you maximize the efficiency of your Splunk searches, complemented by the underlying theory behind them. As a participant, your active involvement will be required, and you'll be provided with numerous follow-up links to explore further information at your own pace.
 
 ## Who should attend:
-- Advanced Splunk users
+- Experienced and ambitious Splunk users
 - Splunk use case owners, use case developers
 - Splunk admins
 
