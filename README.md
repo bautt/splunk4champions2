@@ -7,6 +7,7 @@ Join us for an engaging and interactive hands-on experience where you'll not onl
 
 ## Who should attend:
 - Advanced Splunk users
+- Splunk use case owners, use case developers
 - Splunk admins
 
 ## Workshop Highlights:
@@ -15,7 +16,7 @@ Join us for an engaging and interactive hands-on experience where you'll not onl
 - Understanding the intricacies of data storage in Splunk
 - Mastering search performance: identifying good and bad search practices
 - Unleashing the potential of converting log data into metrics
-- Crafting compelling dashboards using XML and expert hints
+- Crafting compelling dashboards using XML expert hints
 - Introduction and tutorial on Dashboard Studio, your gateway to stunning visualizations
 - Introduction and demo of Splunk Mobile 
 
