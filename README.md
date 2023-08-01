@@ -17,6 +17,7 @@ Join us for an engaging and interactive hands-on experience where you'll not onl
 - Unleashing the potential of converting log data into metrics
 - Crafting compelling dashboards using XML and expert hints
 - Introduction and tutorial on Dashboard Studio, your gateway to stunning visualizations
+- Introduction and demo of Splunk Mobile 
 
 ## Benefits of attending:
 - Achieve sustainable and energy-saving Splunk usage practices
@@ -27,7 +28,8 @@ No more boring PowerPoint slides! All the necessary information is included dire
 Don't miss this opportunity to elevate your Splunk skills and become a true champion in harnessing the power of Splunk. Join us at the Splunk4Champions Workshop and unlock a world of endless possibilities!
 
 ## Download and installation:
-For simple installaiton just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
+For simple installation just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
+If you have access to show.splunk.com - use the workshop on Splunk Show. 
 
 
 ### Some screenshots:
@@ -42,6 +44,8 @@ For simple installaiton just download the release https://github.com/bautt/splun
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_metrics.png)
 #### Dashboards
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_base.png)
+#### Mobile
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/screenshot_mobile.png)
 
 ___
 ## Credits
