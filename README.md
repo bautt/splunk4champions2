@@ -1,6 +1,6 @@
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_schwarz_trans_150x150.png#gh-light-mode-only) ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_weiss_trans_150x150.png#gh-dark-mode-only)
 
- # Welcome to the enhanced Splunk4Champions Workshop!
+ # Welcome to the Splunk4Champions Workshop!
 Discover the new and improved Splunk4Champions workshop, now featuring an upgraded content management system powered by React.js, Splunk UI, and MDX files. This workshop is designed to provide advanced Splunk users (champions) with an opportunity to enhance their skills and delve deeper into the intricacies of Splunk search.
 
 Join us for an engaging and interactive hands-on experience where you'll not only learn new tricks but also gain a comprehensive understanding of how Splunk searches work. We will share invaluable hints and techniques to help you maximize the efficiency of your Splunk searches, complemented by the underlying theory behind them. As a participant, your active involvement will be required, and you'll be provided with numerous follow-up links to explore further information at your own pace.
