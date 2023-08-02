@@ -33,7 +33,7 @@ For simple installation just download the release https://github.com/bautt/splun
 If you have access to show.splunk.com - use the workshop on Splunk Show. 
 
 
-### Some screenshots:
+### Selected screenshots:
 
 #### Inspector
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_inspector.png)
