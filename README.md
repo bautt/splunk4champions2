@@ -66,10 +66,10 @@ timeliness or of the results obtained from the use of this information.
 *  Martin Müller
 *  Clara Merriman
 *  Richard Morgan
-*  Holger Sesterhenn
 ...
 and many others mentioned in the links in each section! 
 
 
 ### Special Thanks for problem solving: 
 *  Dirk Nitschke
+*  Holger Sesterhenn
