@@ -38,15 +38,16 @@ If you have access to show.splunk.com - use the workshop on Splunk Show.
 #### Inspector
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_inspector.png)
 #### Data
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/data.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_data.png)
 #### Search
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/search.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenhot_search.png)
 #### Metrics
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_metrics.png)
 #### Dashboards
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_base.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_colors.png)
 #### Mobile
-![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/screenshot_mobile.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/Screenshot_mobile.png)
 
 ___
 ## Credits
