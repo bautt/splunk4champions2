@@ -1,0 +1,130 @@
+
+<dashboard version="2" theme="light">
+    <label>DS_Annotations</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"dataSources": {
+		"ds_search_1": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=_audit action=search result_count=\"*\" | timechart avg(total_run_time) as avgRunTime",
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				}
+			},
+			"name": "base"
+		},
+		"ds_iy1awN95": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=_internal (log_level=\"WARN\" OR log_level=\"ERROR\") \n| eval annotation_label = log_level\n| eval color=if(log_level=\"ERROR\",\"#ff3300\",color)\n| eval color=if(log_level=\"WARN\",\"#ffcc00\",color)\n| table _time annotation_label color"
+			},
+			"name": "Anno"
+		}
+	},
+	"visualizations": {
+		"viz_chart_1": {
+			"type": "splunk.line",
+			"dataSources": {
+				"primary": "ds_search_1",
+				"annotation": "ds_iy1awN95"
+			},
+			"options": {
+				"yAxisAbbreviation": "auto",
+				"y2AxisAbbreviation": "auto",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisLabelRotation": 0,
+				"xAxisTitleVisibility": "show",
+				"yAxisTitleVisibility": "show",
+				"y2AxisTitleVisibility": "show",
+				"yAxisScale": "linear",
+				"showOverlayY2Axis": 0,
+				"y2AxisScale": "inherit",
+				"nullValueDisplay": "gaps",
+				"dataValuesDisplay": "off",
+				"showSplitSeries": 0,
+				"showIndependentYRanges": 0,
+				"legendMode": "standard",
+				"legendDisplay": "right",
+				"lineWidth": 2,
+				"annotationX": "> annotation | seriesByIndex(0)",
+				"annotationLabel": "> annotation | seriesByIndex(1)",
+				"annotationColor": "> annotation | seriesByIndex(2)"
+			},
+			"context": {}
+		},
+		"viz_PiWUoKSL": {
+			"type": "splunk.rectangle",
+			"dataSources": {
+				"primary": "ds_iy1awN95"
+			}
+		}
+	},
+	"inputs": {
+		"input_global_trp": {
+			"type": "input.timerange",
+			"options": {
+				"token": "global_time",
+				"defaultValue": "-24h@h,now"
+			},
+			"title": "Global Time Range"
+		}
+	},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"display": "auto-scale"
+		},
+		"structure": [
+			{
+				"item": "viz_chart_1",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 5,
+					"w": 1200,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_PiWUoKSL",
+				"type": "block",
+				"position": {
+					"x": 530,
+					"y": 380,
+					"w": 20,
+					"h": 20
+				}
+			}
+		],
+		"globalInputs": [
+			"input_global_trp"
+		]
+	},
+	"title": "DS_Annotations",
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"latest": "$global_time.latest$",
+						"earliest": "$global_time.earliest$"
+					}
+				}
+			}
+		}
+	}
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>
