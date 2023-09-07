@@ -1,13 +1,25 @@
-<dashboard  version="1.1" script="pageffects.js" stylesheet="s4c_dashboards.css">
+<form version="1.1" script="pageffects.js" stylesheet="s4c_dashboards.css">
+  <fieldset submitButton="false">
+    <input type="time" token="timetoken" searchWhenChanged="true">
+      <label>timetoken</label>
+      <default>
+        <earliest>-60m@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
   <row>
     <panel>
-      <title>Task 3.1</title>
       <html>
       <table width="100%">
          <tr>
           <td width="80%">
                  <p>
-                <i>Use Annotations to mark important events in your chart.</i>
+                <i>Annotations allow you to add context information to
+the time series data. For example, if you have a chart 
+that shows some app behaviour over the last week, you can add an event annotation that flags 
+the changes or restarts. It is basically an additional search running in parallel and looking for related events.
+Annotations are supported for charts, column charts, and area charts. In order to create an event annotation you have to edit xml. </i>
               </p>
               
           </td>
@@ -20,6 +32,13 @@
     <panel>
       <html>
         <code>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</code>
+        <p>
+          The additional annotation search used here looks like this: 
+          <code>index=_internal (log_level="WARN" OR log_level="ERROR") 
+| fields _time log_level thread_name 
+| eval annotation_label = thread_name
+| eval annotation_category = log_level</code>
+        </p>
       </html>
     </panel>
   </row>
@@ -29,15 +48,16 @@
       <chart>
         <search type="annotation">
           <query>index=_internal (log_level="WARN" OR log_level="ERROR") 
-| eval annotation_label = message
+| fields _time log_level thread_name 
+| eval annotation_label = thread_name
 | eval annotation_category = log_level</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
         <search>
           <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <earliest>$timetoken.earliest$</earliest>
+          <latest>$timetoken.latest$</latest>
         </search>
         <!-- Secondary search that drives the annotations -->
         <!-- Customize the event annotation colors based on category name -->
@@ -48,7 +68,8 @@
         <option name="charting.lineWidth">1</option>
         <option name="charting.seriesColors">[#339933]</option>
         <option name="height">287</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
   </row>
-</dashboard>
+</form>
