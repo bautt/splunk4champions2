@@ -58,7 +58,7 @@ timeliness or of the results obtained from the use of this information.
 
 
 * This workshop was initially created by Andreas Greeske</Link> and Tomas Baublys in 2020
-* The new 2.0 version is built on the Splunk-UI template created by Daniel Federschmidt
+* The new 2.0 version is built by Tomas Baublys on the Splunk-UI template which was created by Daniel Federschmidt
 * Any suggestions or improvements for workshop content are highly appreciated: [Tomas Baublys](mailto:tbaublys@splunk.com)
 
 
