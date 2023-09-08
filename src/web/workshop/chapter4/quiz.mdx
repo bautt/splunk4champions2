@@ -6,18 +6,18 @@ import Link from '@splunk/react-ui/Link'
 ___
 
 ## 2. Which search is better? And why?
-<SplunkSearch earliest="-30d" latest="now" spl={`index="s4c_weather" Frankfurt earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00"
-              | rename "weather{}.description" as Description 
-              | stats  count as eventcount by Description 
-              | where eventcount > 10000 `}>
+<SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" Frankfurt
+| rename "weather{}.description" as Description 
+| stats  count as eventcount by Description 
+| where eventcount > 5000 `}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index="s4c_weather" Frankfurt earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00"
-              | stats  count as eventcount by "weather{}.description" 
-              | where eventcount > 10000 
-              | rename "weather{}.description" as Description`}>
+<SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" Frankfurt
+| stats  count as eventcount by "weather{}.description" 
+| where eventcount > 5000 
+| rename "weather{}.description" as Description`}>
 </SplunkSearch>
 
 ___
@@ -35,53 +35,58 @@ ___
 
 ## 4. Which search is better? And why?
 <SplunkSearch earliest="-30d" latest="now" spl={`index="_introspection" component=PerProcess "data.process"=splunkd
-                | stats last(_time) as _time, count as eventcount by "data.pid"| rename "data.pid" as processId | where eventcount > 10`}>
+ | stats last(_time) as _time, count as eventcount by "data.pid"
+ | rename "data.pid" as processId 
+ | where eventcount > 10`}>
 </SplunkSearch>
 
 versus: 
 
 <SplunkSearch earliest="-30d" latest="now" spl={`index="_introspection"  "data.process"=splunkd 
-                | transaction "data.pid"| rename "data.pid" as processId |  table _time, processId, eventcount| search eventcount > 10`}>
+ | transaction "data.pid"
+ | rename "data.pid" as processId 
+ | table _time, processId, eventcount
+ | search eventcount > 10`}>
 </SplunkSearch>
 
 ___
 
 ## 5. Which search is better? And why?
 <SplunkSearch earliest="-30d" latest="now" spl={`index="_audit" 
-                | join type=left host [search index="_audit" 
-                | stats count as eventcount by host]`}>
+| join type=left host [search index="_audit" 
+| stats count as eventcount by host]`}>
 </SplunkSearch>
 
 versus: 
 
 <SplunkSearch earliest="-30d" latest="now" spl={`index="_audit" 
-                | eventstats count as host_count by host 
-                | stats count by component, host_count, host`}>
+| eventstats count as host_count by host 
+| stats count by component, host_count, host`}>
 </SplunkSearch>
 
 ___
 
 ## 6. Which search is better? And why?
-<SplunkSearch earliest="-30d" latest="now" spl={`index=s4c_weather earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00" 
-                | stats count by name `}>
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_weather 
+| stats count by name `}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`|tstats count  WHERE earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00" index="s4c_weather"   by name`}>
+<SplunkSearch earliest="-1y" latest="now" spl={`|tstats count  WHERE index="s4c_weather" by name`}>
 </SplunkSearch>
 
 ___
 
 ## 7. Which search is better? And why?
-<SplunkSearch earliest="-30d" latest="now" spl={`|tstats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp)  p95(main.temp)  p5(main.temp) 
-                 WHERE earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00" index=s4c_weather by name`}>
+<SplunkSearch earliest="-1y" latest="now" spl={`|tstats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp) 
+ WHERE index=s4c_weather by name`}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`earliest="01/01/2018:00:00:00" latest="12/31/2021:24:00:00" index=s4c_weather 
-                |stats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp)  p95(main.temp)  p5(main.temp)   by name`}>
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_weather 
+|stats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp) by name`}>
 </SplunkSearch>
 
 ___
@@ -92,7 +97,8 @@ ___
 
 versus: 
 
-<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather"  | where name IN("Berlin", "Brussels", "Warsaw")`}>
+<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather"  
+| where name IN("Berlin", "Brussels", "Warsaw")`}>
 </SplunkSearch>
 
 ___
