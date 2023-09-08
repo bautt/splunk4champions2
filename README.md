@@ -70,6 +70,7 @@ timeliness or of the results obtained from the use of this information.
 and many others mentioned in the links in each section! 
 
 
-### Special Thanks for problem solving: 
+### Special Thanks for problem solving and content improvements: 
 *  Dirk Nitschke
 *  Holger Sesterhenn
+*  Henri Mak
