@@ -7,8 +7,6 @@
       <table>
         <search>
           <query>| makeresults
-| eval "Current Locale" ="$env:locale$"
-| eval "Splunk Version" = "$env:version$"
 | eval "Splunk Version" = "$env:version$"
 | eval "User Name" ="$env:user$"
 | eval "User Real Name" ="$env:user_realname$"
@@ -128,7 +126,7 @@
       <title>Humidity</title>
       <chart>
         <search>
-          <query>|tstats max(main.humidity) WHERE (index=s4c_weather AND (name=Bonn OR name=Vilnius OR name=Austin OR name=London OR name=Berlin OR name=Paris))   groupby _time name span=2h 
+          <query>|tstats max(main.humidity) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=2h 
 |xyseries _time name max(main.humidity)</query>
           <earliest>1687557600</earliest>
           <latest>1688248800</latest>
@@ -172,7 +170,7 @@
       <title>Maximum Wind Speed</title>
       <chart>
         <search>
-          <query>|tstats max(wind.speed) WHERE (index=s4c_weather AND (name=Bonn OR name=Vilnius OR name=Austin OR name=London OR name=Berlin OR name=Paris))   groupby _time name span=12h
+          <query>|tstats max(wind.speed) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=12h
 |xyseries _time name max(wind.speed)</query>
           <earliest>-30d@d</earliest>
           <latest>now</latest>
@@ -206,6 +204,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
@@ -217,7 +216,7 @@
       <title>Maximum temperature over a year</title>
       <chart>
         <search>
-          <query>|tstats max(main.temp) WHERE (index=s4c_weather AND (name=Bonn OR name=Vilnius OR name=Austin OR name=London OR name=Berlin OR name=Paris))   groupby _time name span=12h 
+          <query>|tstats max(main.temp) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=12h 
 |xyseries _time name max(main.temp)</query>
           <earliest>@y</earliest>
           <latest>now</latest>
@@ -251,6 +250,7 @@
         <option name="charting.legend.mode">standard</option>
         <option name="charting.legend.placement">right</option>
         <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
