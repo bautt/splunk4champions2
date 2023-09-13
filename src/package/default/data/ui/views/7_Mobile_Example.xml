@@ -126,7 +126,7 @@
       <title>Humidity</title>
       <chart>
         <search>
-          <query>|tstats max(main.humidity) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=2h 
+          <query>|tstats max(main.humidity) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Prague))   groupby _time name span=2h 
 |xyseries _time name max(main.humidity)</query>
           <earliest>1687557600</earliest>
           <latest>1688248800</latest>
@@ -170,7 +170,7 @@
       <title>Maximum Wind Speed</title>
       <chart>
         <search>
-          <query>|tstats max(wind.speed) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=12h
+          <query>|tstats max(wind.speed) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Prague))   groupby _time name span=12h
 |xyseries _time name max(wind.speed)</query>
           <earliest>-30d@d</earliest>
           <latest>now</latest>

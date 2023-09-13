@@ -1,7 +1,7 @@
 <form version="1.1" script="pageffects.js" stylesheet="s4c_dashboards.css">
   <fieldset submitButton="false">
     <input type="time" token="timetoken" searchWhenChanged="true">
-      <label>timetoken</label>
+      <label></label>
       <default>
         <earliest>-60m@m</earliest>
         <latest>now</latest>
@@ -46,6 +46,11 @@ Annotations are supported for charts, column charts, and area charts. In order t
     <panel>
       <title>Average Search Run Time with WARN/ERROR event annotations</title>
       <chart>
+        <search>
+          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
+          <earliest>$timetoken.earliest$</earliest>
+          <latest>$timetoken.latest$</latest>
+        </search>
         <search type="annotation">
           <query>index=_internal (log_level="WARN" OR log_level="ERROR") 
 | fields _time log_level thread_name 
@@ -53,11 +58,6 @@ Annotations are supported for charts, column charts, and area charts. In order t
 | eval annotation_category = log_level</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
-        </search>
-        <search>
-          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
-          <earliest>$timetoken.earliest$</earliest>
-          <latest>$timetoken.latest$</latest>
         </search>
         <!-- Secondary search that drives the annotations -->
         <!-- Customize the event annotation colors based on category name -->
