@@ -10,7 +10,7 @@
 			"options": {
 				"query": "index=_audit action=search result_count=\"*\" | timechart avg(total_run_time) as avgRunTime",
 				"queryParameters": {
-					"earliest": "-24h@h",
+					"earliest": "-60m@m",
 					"latest": "now"
 				}
 			},
@@ -69,7 +69,7 @@
 			"type": "input.timerange",
 			"options": {
 				"token": "global_time",
-				"defaultValue": "-24h@h,now"
+				"defaultValue": "-60m@m"
 			},
 			"title": "Global Time Range"
 		}
@@ -85,7 +85,7 @@
 				"type": "block",
 				"position": {
 					"x": 0,
-					"y": 5,
+					"y": 0,
 					"w": 1200,
 					"h": 250
 				}
