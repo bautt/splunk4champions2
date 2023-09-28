@@ -46,11 +46,6 @@ Annotations are supported for charts, column charts, and area charts. In order t
     <panel>
       <title>Average Search Run Time with WARN/ERROR event annotations</title>
       <chart>
-        <search>
-          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
-          <earliest>$timetoken.earliest$</earliest>
-          <latest>$timetoken.latest$</latest>
-        </search>
         <search type="annotation">
           <query>index=_internal (log_level="WARN" OR log_level="ERROR") 
 | fields _time log_level thread_name 
@@ -59,10 +54,16 @@ Annotations are supported for charts, column charts, and area charts. In order t
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
+        <search>
+          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
+          <earliest>$timetoken.earliest$</earliest>
+          <latest>$timetoken.latest$</latest>
+        </search>
         <!-- Secondary search that drives the annotations -->
         <!-- Customize the event annotation colors based on category name -->
         <option name="charting.annotation.categoryColors">{"ERROR":"#ff3300","WARN":"#ffcc00"}</option>
         <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">zero</option>
         <option name="charting.drilldown">none</option>
         <option name="charting.legend.placement">none</option>
         <option name="charting.lineWidth">1</option>
