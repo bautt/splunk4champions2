@@ -44,7 +44,7 @@
 				"yAxisScale": "linear",
 				"showOverlayY2Axis": 0,
 				"y2AxisScale": "inherit",
-				"nullValueDisplay": "gaps",
+				"nullValueDisplay": "connect",
 				"dataValuesDisplay": "off",
 				"showSplitSeries": 0,
 				"showIndependentYRanges": 0,
@@ -54,8 +54,7 @@
 				"annotationX": "> annotation | seriesByIndex(0)",
 				"annotationLabel": "> annotation | seriesByIndex(1)",
 				"annotationColor": "> annotation | seriesByIndex(2)"
-			},
-			"context": {}
+			}
 		},
 		"viz_PiWUoKSL": {
 			"type": "splunk.rectangle",
