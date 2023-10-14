@@ -22,7 +22,7 @@ Run the development task. This will build a development version of the app in th
 make dev
 ```
 
-During development, you can use `ln -s` to create a symlink from the `dist` folder to `$SPLUNK_HOME/etc/apps`splunk4champions2`.
+During development, you can use `ln -s` to create a symlink from the `dist` folder to `$SPLUNK_HOME/etc/apps/`splunk4champions2`.
 
 To build the app, use the `package` target. This will build a production version of the app in a temporary folder and create a tar file in the repository root.
 ```
