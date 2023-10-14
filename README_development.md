@@ -1,6 +1,13 @@
 # Development readme:
 ## Setting up the Development Environment
 
+Prework on Mac: 
+1) install nodejs pkg from https://nodejs.org/de/download 
+2) sudo npm install --global yarn
+3) sudo npm install -g webpack
+4) sudo  npm i -g webpack-cli
+
+
 Clone the repository to your local workstation
 ```
 git clone https://github.com/bautt/splunk4champions2
