@@ -4,9 +4,7 @@
 Prework on Mac: 
 ```
 1) install nodejs pkg from https://nodejs.org/de/download 
-2) sudo npm install --global yarn
-3) sudo npm install -g webpack
-4) sudo  npm i -g webpack-cli
+# sudo npm install --global yarn webpack  webpack-cli
 ```
 
 Clone the repository to your local workstation
