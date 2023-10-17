@@ -40,12 +40,15 @@ ___
 ## Bloomfilter
 A data structure that you use to test whether an element is a member of a set. 
 Splunk Enterprise uses bloom filters to decrease the time it requires to retrieve events from the index. This strategy is effective when you search for rare terms.
-<img width="40%" src="/static/app/splunk4champions2/images/bloomfilter.png"/>
-<img width="40%" src="/static/app/splunk4champions2/images/bouncer.jpg"/>
+<img width="80%" src="/static/app/splunk4champions2/images/bloomfilter.png"/>
 
 
 Best way to understand the bloomfilter is to explore it in the interactive demo: 
 <a href="https://www.jasondavies.com/bloomfilter/" target="_blank">Interactive Bloomfilter-Demo</a>
+
+Think of the bloom filter as the club bouncer not letting you inside, because the person you are looking for is definetely not there. It saves a lot of time to skip all the buckets which do not contain what we search for. 
+<img width="55%" src="/static/app/splunk4champions2/images/bouncer.jpg"/>
+
 
 ## TSIDX file
 A time-series index file, also called an index file. A tsidx file associates each unique keyword in your data with location references to events, 
