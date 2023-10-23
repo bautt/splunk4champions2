@@ -1,10 +1,14 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
 ### Highlighting TERMS: 
 
-The easiest way to see minor and major breakers in action is to move the mouse over the log: 
-whatever you can select in one peace contains only minor breakers and can be used with TERM or PREFIX directives:
+The easiest way to see minor and major breakers in action is to move the mouse over the log terms: 
+whatever you can highlight in one peace contains only minor breakers and can be used with TERM or PREFIX directives:
 
+<SplunkSearch earliest="-1h" latest="now" spl={`index=_internal`}></SplunkSearch>
 
-<img width="100%" src="/static/app/splunk4champions2/images/highlight_terms.gif"/>
+Open the search above and move the mouse slowly over the result TERMs: 
+<img src="/static/app/splunk4champions2/images/highlight_terms.png" width="100%" />
 
-
-https://docs.splunk.com/Documentation/Splunk/latest/Search/UseCASEandTERMtomatchphrases
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/UseCASEandTERMtomatchphrases" openInNewContext>"Splunk Docs on TERM"</Link>
