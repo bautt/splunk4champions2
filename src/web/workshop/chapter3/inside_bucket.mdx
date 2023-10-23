@@ -1,40 +1,25 @@
-## What is in a Bucket?
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
 
-<img width="50%" src="/static/app/splunk4champions2/images/inabucket.png"/>
-A bucket is a file system directory containing a portion of a Splunk Enterprise index. A Splunk Enterprise index typically consists of many buckets, organized by age.
+## What is in a Bucket?
+<img width="50%" src="/static/app/splunk4champions2/images/inabucket23.png"/>
+
+A bucket is a file system directory containing a portion of a Splunk Eanterprise index. A Splunk Enterprise index typically consists of many buckets, organized by age.
 Real directory with weather data index: 
 <img width="100%" src="/static/app/splunk4champions2/images/directory.png"/>
 Size of the files depends on data. In this case the tsidx files are 225MB for 78MB of compressed data. 
 I used zstd and uncompressed journal.zst and the uncompressed data was 1,4GB in size. 
 Merged lexicon file in the directory is a part of search index too, it is used to support typeahead. It is also required by walklex command. 
 
-
+in
 
 Note: The bucket search command is not related to the index buckets described here. Its purpose is to put continuous numerical values into discrete sets or bins. The bucket command is actually an alias for the bin command. See the bin command in the Search Reference.
 
 ___
-<table>
-          <tr>
-            <td width="40%">
-            <ol>
-              <li>
-                  <a href="https://docs.splunk.com/Splexicon:Bloomfilter" target="_blank">Bloomfilter</a>
-                </li>
-              <li>
-                  <a href="https://docs.splunk.com/Splexicon:Tsidxfile" target="_blank">TSIDX</a>
-                </li>
-              <li>
-                  <a href="https://docs.splunk.com/Splexicon:Rawdatafile" target="_blank">journal.gz</a>
-                </li>
 
-            </ol>
-          </td>
-          <td>
-            
-      </td>
-          </tr>
-
-        </table>
+* <Link to="https://docs.splunk.com/Splexicon:Bloomfilter" openInNewContext>"Bloomfilter in Splexicon"</Link>
+* <Link to="https://docs.splunk.com/Splexicon:Tsidxfile" openInNewContext>"TSIDX in Splexicon"</Link>
+* <Link to="https://docs.splunk.com/Splexicon:Rawdatafile" openInNewContext>"Raw data / Journal in Splexicon"</Link>
 
 
 ## Bloomfilter
@@ -44,10 +29,7 @@ Splunk Enterprise uses bloom filters to decrease the time it requires to retriev
 
 
 Best way to understand the bloomfilter is to explore it in the interactive demo: 
-<a href="https://www.jasondavies.com/bloomfilter/" target="_blank">Interactive Bloomfilter-Demo</a>
-
-Think of the bloom filter as the club bouncer not letting you inside, because the person you are looking for is definetely not there. It saves a lot of time to skip all the buckets which do not contain what we search for. 
-<img width="55%" src="/static/app/splunk4champions2/images/bouncer.jpg"/>
+* <Link to="https://www.jasondavies.com/bloomfilter/" openInNewContext>"Interactive Bloom-filter-Demo"</Link>
 
 
 ## TSIDX file
