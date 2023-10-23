@@ -40,7 +40,7 @@ If you have access to show.splunk.com - use the workshop on Splunk Show.
 #### Data
 ![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_data.png)
 #### Search
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenhot_search.png)
+![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_search.png)
 #### Metrics
 ![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_metrics.png)
 #### Dashboards
