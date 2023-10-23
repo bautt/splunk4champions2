@@ -296,7 +296,7 @@ const labs = {
                     "title": "tstats",
                     "steps": [
                         {
-                            "title": "Using tstats",
+                            "title": "",
                             "content": "chapter4/tstats.mdx"
                         },
                         {
