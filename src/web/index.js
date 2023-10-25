@@ -31,7 +31,7 @@ function App() {
                     <TabLayout defaultActivePanelId={firstSectionId} className="sectionBar">
                         {
                             chapter.sections.map((section, index) => (
-                                <TabLayout.Panel key={index} label={section.title} panelId={chapter.id + section.title} style={{ marginBottom: 20 }}>
+                                <TabLayout.Panel key={index} label={section.title} panelId={chapter.id + section.title} style={{ marginBottom: 15 }}>
                                     <ToastContext.Provider value={createToast}>
                                         <Section chapter={chapter} section={section}></Section>
                                     </ToastContext.Provider>
@@ -54,7 +54,7 @@ function App() {
 
 
 layout(
-    <SplunkThemeProvider family="enterprise" colorScheme="light">
+    <SplunkThemeProvider family="enterprise" colorScheme="light" density="compact">
         <ToastMessages />
         <App></App>
     </SplunkThemeProvider>
