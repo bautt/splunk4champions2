@@ -2,15 +2,16 @@
 
 .sectionBar > div[role=tablist] {
  /*   background-color: #c3cbd4; */
- background-color: #edede9;
+  /*background-color: #edede9;*/
+  background-color: #F0FBFF;
 }
 
 .sectionBar {
     margin-top: 0 !important;
-    height: 80px;
+    height: 40px;
 }
 
 .sectionBar button {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
