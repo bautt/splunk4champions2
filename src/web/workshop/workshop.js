@@ -113,43 +113,9 @@ const labs = {
                 }
             ]
         },
+        
         {
-            "title": "2 - Inspector",
-            "id": "two",
-            "subtitle": "test",
-            "icon": <Activity/>,
-            "sections": [
-                {
-                    "title": "Using Job inspector",
-                    "steps": [
-                        {
-                            "title": "Using Inspector",
-                            "content": "chapter2/using_inspector.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links2.mdx"
-                        }
-                    ]
-                }, 
-                {
-                    "title": "Inspector Lab",
-                    "steps": [
-                        {
-                            "title": "Inspector Lab",
-                            "content": "chapter2/inspector_lab.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links2.mdx"
-                        }
-                    ]
-                }
-                
-            ]
-        },
-        {
-            "title": "3 - Data",
+            "title": "2 - Data",
             "id": "three",
             "subtitle": "test",
             "icon": <Data/>,
@@ -159,11 +125,25 @@ const labs = {
                     "steps": [
                         {
                             "title": "Index and Buckets",
-                            "content": "chapter3/index_and_buckets.mdx"
+                            "content": "chapter2/index_and_buckets.mdx"
                         }, 
                         {
                             "title": "Useful Links",
-                            "content": "chapter3/useful_links3.mdx"
+                            "content": "chapter2/useful_links3.mdx"
+                        }
+                       
+                    ]
+                },
+                {
+                    "title": "What is in a bucket?",
+                    "steps": [
+                        {
+                            "title": "Inside a bucket",
+                            "content": "chapter2/inside_bucket.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter2/useful_links3.mdx"
                         }
                        
                     ]
@@ -173,34 +153,20 @@ const labs = {
                     "steps": [
                         {
                             "title": "Pipeline",
-                            "content": "chapter3/pipeline.mdx"
+                            "content": "chapter2/pipeline.mdx"
                         },
                         {
                             "title": "Segmentation",
-                            "content": "chapter3/segmentation.mdx"
+                            "content": "chapter2/segmentation.mdx"
                         },
                         {
                             "title": "",
-                            "content": "chapter3/termshigh.mdx"
+                            "content": "chapter2/termshigh.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter3/useful_links3.mdx"
+                            "content": "chapter2/useful_links3.mdx"
                         }
-                    ]
-                },
-                {
-                    "title": "What is in a bucket?",
-                    "steps": [
-                        {
-                            "title": "Inside a bucket",
-                            "content": "chapter3/inside_bucket.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links3.mdx"
-                        }
-                       
                     ]
                 },
                 {
@@ -208,11 +174,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Indexers and Clusters",
-                            "content": "chapter3/indexers_and_clusters.mdx"
+                            "content": "chapter2/indexers_and_clusters.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter3/useful_links3.mdx"
+                            "content": "chapter2/useful_links3.mdx"
                         }
                        
                     ]
@@ -223,11 +189,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Indexers and Clusters",
-                            "content": "chapter3/data_aging.mdx"
+                            "content": "chapter2/data_aging.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter3/useful_links3.mdx"
+                            "content": "chapter2/useful_links3.mdx"
                         }
                        
                     ]
@@ -236,7 +202,7 @@ const labs = {
             ]
         },
         {
-            "title": "4 - Search",
+            "title": "3 - Search",
             "id": "four",
             "subtitle": "test",
             "icon": <Search/>,
@@ -246,11 +212,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Search Basics",
-                            "content": "chapter4/basic_tipps.mdx"
+                            "content": "chapter3/basic_tipps.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links4.mdx"
+                            "content": "chapter3/useful_links4.mdx"
                         }
                        
                     ]
@@ -261,11 +227,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Search Command Types",
-                            "content": "chapter4/types.mdx"
+                            "content": "chapter3/types.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links4.mdx"
+                            "content": "chapter3/useful_links4.mdx"
                         }
                     ]
                 },
@@ -275,7 +241,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Using TERM",
-                            "content": "chapter4/term.mdx"
+                            "content": "chapter3/term.mdx"
                         }, 
                         {
                             "title": "Segmentation",
@@ -287,7 +253,7 @@ const labs = {
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links4.mdx"
+                            "content": "chapter3/useful_links4.mdx"
                         }
                     ]
                 },
@@ -297,25 +263,25 @@ const labs = {
                     "steps": [
                         {
                             "title": "",
-                            "content": "chapter4/tstats.mdx"
+                            "content": "chapter3/tstats.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links4.mdx"
+                            "content": "chapter3/useful_links4.mdx"
                         }
                     ]
                 },
 
                 {
-                    "title": "Search Tipps",
+                    "title": "Search Tips",
                     "steps": [
                         {
-                            "title": "Search Tipps",
-                            "content": "chapter4/more_tipps.mdx"
+                            "title": "What makes searches slow",
+                            "content": "chapter3/more_tips.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links4.mdx"
+                            "content": "chapter3/useful_links4.mdx"
                         }
                         
                     ]
@@ -326,11 +292,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Quiz",
-                            "content": "chapter4/quiz.mdx"
+                            "content": "chapter3/quiz.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links4.mdx"
+                            "content": "chapter3/useful_links4.mdx"
                         }
                         
                     ]
@@ -338,6 +304,43 @@ const labs = {
                 
             ]
         },
+
+        {
+            "title": "4 - Inspector",
+            "id": "two",
+            "subtitle": "test",
+            "icon": <Activity/>,
+            "sections": [
+                {
+                    "title": "Using Job inspector",
+                    "steps": [
+                        {
+                            "title": "Using Inspector",
+                            "content": "chapter4/using_inspector.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links2.mdx"
+                        }
+                    ]
+                }, 
+                {
+                    "title": "Inspector Lab",
+                    "steps": [
+                        {
+                            "title": "Inspector Lab",
+                            "content": "chapter4/inspector_lab.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links2.mdx"
+                        }
+                    ]
+                }
+                
+            ]
+        },
+
         {
             "title": "5 - Metrics",
             "id": "five",
