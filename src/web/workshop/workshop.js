@@ -245,11 +245,11 @@ const labs = {
                         }, 
                         {
                             "title": "Segmentation",
-                            "content": "chapter3/segmentation.mdx"
+                            "content": "chapter2/segmentation.mdx"
                         },
                         {
                             "title": "",
-                            "content": "chapter3/termshigh.mdx"
+                            "content": "chapter2/termshigh.mdx"
                         },
                         {
                             "title": "Useful Links",
