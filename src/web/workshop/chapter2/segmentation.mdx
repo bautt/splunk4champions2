@@ -5,14 +5,21 @@ import Link from '@splunk/react-ui/Link'
 
 What happpens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
 Tokens with minor breakers will be stored as a TERM and in separate tokens. 
+So the first step in segmentation process is to break up _raw using major breakers. Next the minor breakers are applied to the tokens created by major breakers. Both are stored in the TSIDX file. 
 
-<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '2rem'}}>
-Minor breakers: / : = @ . - $ # % \ _
+
+<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '1rem'}}>
+ Major breakers: [ ] < > ( ) { } | ! ; , ' " * \n \r \s \t & ? + %21 %26 %2526 %3B %7C %20 %2B %3D -- %2520 %5D %5B %3A %0A %2C %28 %29 &sbquo; &lsquo;
 </div>
 <p></p>
-<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '2rem'}}>
- Major breakers: \r\n\s\t[] &lt;&gt; () {} | ! ; &sbquo; &lsquo;
+<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '1rem'}}>
+Minor breakers: / : = @ . - $  % \\ _
 </div>
 
+
  * Breakers can be configured in segmenters.conf – but you should not touch it without a good reason. 
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Eventsegmentationandsearching#Major_breakers" openInNewContext>Major and minor breakers in Splunk Docs</Link>
+
+ 
+
 
