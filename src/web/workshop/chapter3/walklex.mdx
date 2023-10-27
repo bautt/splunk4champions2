@@ -1,0 +1,15 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+If you want to see what fields are actually indexed fields and what terms are in your tsidx you can use * <Link to="https://docs.splunk.com/Documentation/Splunk/9.1.1/SearchReference/Walklex" openInNewContext>walklex</Link>
+command. 
+
+## Display indexed fields and the count (type=fieldvalue)
+<SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=fieldvalue|stats sum(count) by term`}>
+</SplunkSearch>
+
+## Display TERMS and the count (type=term)
+<SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=term|stats sum(count) by term`}>
+</SplunkSearch>
+
+Caution: walklex command only includes buckets with a merged_lexicon file or a single tsidx file. That means that hot buckets (in most cases recently ingested data) is not included. 
