@@ -9,10 +9,10 @@ The indexed fields can be from indexed data or accelerated data models.
 
 *This section is based on 2020 Richard Morgans session "TSTATS and PREFIX" and 2021 .conf session "Clara-Fication: More Tstats for Your Buckets" by Clara Merriman and Martin Müller*
 
-## Lets look at this "traditional" search in weather data: 
+## Lets look at this "traditional" search in raw weather data: 
 <SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" |timechart span=1h avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) by name`}></SplunkSearch>
 
-and compare to this "tstats" search: 
+use job inspector and compare it to this "tstats" search: 
 <SplunkSearch earliest="-1y" latest="now" spl={`|tstats avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) WHERE index=s4c_weather earliest=-1y latest=now()  by name _time span=1h`}></SplunkSearch>
 
 
