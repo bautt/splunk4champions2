@@ -519,7 +519,7 @@ const labs = {
             ]
         },
         {
-            "title": "0. Setup",
+            "title": "Help",
             "id": "zero",
             "subtitle": "test",
             "icon": <Tool/>,
