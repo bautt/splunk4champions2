@@ -237,23 +237,24 @@ const labs = {
                 },
                  
                 {
-                    "title": "TERM",
+                    "title": "Terms",
                     "steps": [
                         {
-                            "title": "Using TERM",
-                            "content": "chapter3/term.mdx"
-                        }, 
-                        {
-                            "title": "Segmentation",
+                            "title": "",
                             "content": "chapter2/segmentation.mdx"
                         },
                         {
                             "title": "",
-                            "content": "chapter2/termshigh.mdx"
+                            "content": "chapter3/walklex.mdx"
                         },
                         {
                             "title": "",
-                            "content": "chapter3/walklex.mdx"
+                            "content": "chapter3/term.mdx"
+                        }, 
+                        
+                        {
+                            "title": "",
+                            "content": "chapter2/termshigh.mdx"
                         },
                         {
                             "title": "Useful Links",
