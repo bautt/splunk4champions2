@@ -1,8 +1,9 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-### TERM directive avoids splitting in TERMs 
+## TERM directive avoids splitting in (minor) TERMs 
 
+### Using term in a search
 Compare: 
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_internal 127.0.0.1`}>
 </SplunkSearch>
