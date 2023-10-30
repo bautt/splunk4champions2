@@ -1,6 +1,8 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
+# Using the walklex command
+
 If you want to see what fields are actually indexed fields and what terms are in your tsidx you can use * <Link to="https://docs.splunk.com/Documentation/Splunk/9.1.1/SearchReference/Walklex" openInNewContext>walklex</Link>
 command. 
 
@@ -12,4 +14,16 @@ command.
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=term|stats sum(count) by term`}>
 </SplunkSearch>
 
-Caution: walklex command only includes buckets with a merged_lexicon file or a single tsidx file. That means that hot buckets (in most cases recently ingested data) is not included. 
+## Add prefix to filter results
+<SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=term prefix=http`}>
+</SplunkSearch>
+
+ You may also notice the source field of the walklex output contains something like: **s4c_tutorial~0~E7F9BD44-1185-4AD9-85D0-F6DEAD372EC1**
+ it is composed from index name, bucket id and indexer guid: **index-id-guId**
+
+> **Caution:** Walklex only works on warm and cold buckets, recently indexed data in hot buckets will not be considered. 
+> Users can only run walklex command if their role has following capabilities: "run_walklex" OR "admin_all_objects". It does not work if your role has search filters added.
+
+
+ * <Link to="https://www.youtube.com/watch?v=ZifLQmXgZVQ" openInNewContext>" Using the walklex command video"</Link>
+ *  <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Walklex" openInNewContext>"Walklex in Splunk docs"</Link>
