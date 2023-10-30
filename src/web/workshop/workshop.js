@@ -23,10 +23,6 @@ const labs = {
                     "steps": [
                         {
                             "title": "Splunk Search Assistant",
-                            "content": "chapter1/search_assistant_1.mdx"
-                        },
-                        {
-                            "title": "Splunk Search Assistant",
                             "content": "chapter1/search_assistant_2.mdx"
                         },
                         {
