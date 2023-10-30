@@ -252,7 +252,7 @@ const labs = {
                             "content": "chapter2/termshigh.mdx"
                         },
                         {
-                            "title": "walklex",
+                            "title": "",
                             "content": "chapter3/walklex.mdx"
                         },
                         {
