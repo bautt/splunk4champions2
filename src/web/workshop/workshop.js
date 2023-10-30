@@ -13,7 +13,7 @@ import GaugeRadial from '@splunk/react-icons/GaugeRadial';
 const labs = {
     chapters: [
         {
-            "title": "1 - Settings",
+            "title": "1. Settings",
             "id": "one",
             "icon": <Settings/>,
             "subtitle": "test",
@@ -115,7 +115,7 @@ const labs = {
         },
         
         {
-            "title": "2 - Data",
+            "title": "2. Data",
             "id": "three",
             "subtitle": "test",
             "icon": <Data/>,
@@ -202,7 +202,7 @@ const labs = {
             ]
         },
         {
-            "title": "3 - Search",
+            "title": "3. Search",
             "id": "four",
             "subtitle": "test",
             "icon": <Search/>,
@@ -262,6 +262,23 @@ const labs = {
                         }
                     ]
                 },
+                {
+                    "title": "Inspector",
+                    "steps": [
+                        {
+                            "title": "Using Inspector",
+                            "content": "chapter4/using_inspector.mdx"
+                        },
+                        {
+                            "title": "Inspector Lab",
+                            "content": "chapter4/inspector_lab.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links2.mdx"
+                        }
+                    ]
+                },
 
                 {
                     "title": "tstats",
@@ -311,43 +328,7 @@ const labs = {
         },
 
         {
-            "title": "4 - Inspector",
-            "id": "two",
-            "subtitle": "test",
-            "icon": <Activity/>,
-            "sections": [
-                {
-                    "title": "Using Job inspector",
-                    "steps": [
-                        {
-                            "title": "Using Inspector",
-                            "content": "chapter4/using_inspector.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links2.mdx"
-                        }
-                    ]
-                }, 
-                {
-                    "title": "Inspector Lab",
-                    "steps": [
-                        {
-                            "title": "Inspector Lab",
-                            "content": "chapter4/inspector_lab.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links2.mdx"
-                        }
-                    ]
-                }
-                
-            ]
-        },
-
-        {
-            "title": "5 - Metrics",
+            "title": "4. Metrics",
             "id": "five",
             "subtitle": "test",
             "icon": <Metrics/>,
@@ -409,7 +390,7 @@ const labs = {
             ]
         },
         {
-            "title": "6 - Dashboards",
+            "title": "5. Dashboards",
             "id": "six",
             "subtitle": "test",
             "icon": <Dashboard/>,
@@ -499,7 +480,7 @@ const labs = {
             ]
         },
         {
-            "title": "7 - Mobile",
+            "title": "6. Mobile",
             "id": "seven",
             "subtitle": "Splunk Mobile & AR",
             "icon": <GaugeRadial/>,
@@ -538,7 +519,7 @@ const labs = {
             ]
         },
         {
-            "title": "0 - Setup",
+            "title": "0. Setup",
             "id": "zero",
             "subtitle": "test",
             "icon": <Tool/>,
