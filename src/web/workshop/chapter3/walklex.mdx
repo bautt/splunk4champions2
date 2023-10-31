@@ -2,6 +2,16 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
 # Using the walklex command
+<table width="100%">
+        <tr width="60%">
+           <td width="40%"><img src="/static/app/splunk4champions2/images/walklex_man1.png" width="80%"/></td>
+           <td>
+           <li>Walklex command  only works on warm and cold buckets, recently indexed data in hot buckets will not be considered. </li>
+           <li>Users can only run walklex command if their role has following capabilities: "run_walklex" OR "admin_all_objects". </li>
+           <li> Walklex command does not work if your role has search filters added.</li>
+           </td>
+        </tr>
+      </table>
 
 If you want to see what fields are actually indexed fields and what terms are in your tsidx you can use * <Link to="https://docs.splunk.com/Documentation/Splunk/9.1.1/SearchReference/Walklex" openInNewContext>walklex</Link>
 command. 
@@ -20,6 +30,3 @@ command.
 
  You may also notice the source field of the walklex output contains something like: **s4c_tutorial~0~E7F9BD44-1185-4AD9-85D0-F6DEAD372EC1**
  it is composed from index name, bucket id and indexer guid: **index-id-guId**
-
-> **Caution:** Walklex only works on warm and cold buckets, recently indexed data in hot buckets will not be considered. 
-> Users can only run walklex command if their role has following capabilities: "run_walklex" OR "admin_all_objects". It does not work if your role has search filters added.
