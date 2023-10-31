@@ -2,6 +2,10 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
 # Using the walklex command
+
+If you want to see what fields are actually indexed fields and what terms are in your tsidx you can use * <Link to="https://docs.splunk.com/Documentation/Splunk/9.1.1/SearchReference/Walklex" openInNewContext>walklex</Link>
+command.
+
 <table width="100%">
         <tr width="60%">
            <td width="40%"><img src="/static/app/splunk4champions2/images/walklex_man1.png" width="80%"/></td>
@@ -13,18 +17,16 @@ import Link from '@splunk/react-ui/Link'
         </tr>
       </table>
 
-If you want to see what fields are actually indexed fields and what terms are in your tsidx you can use * <Link to="https://docs.splunk.com/Documentation/Splunk/9.1.1/SearchReference/Walklex" openInNewContext>walklex</Link>
-command. 
 
-## Display indexed fields and the count (type=fieldvalue)
+### Display indexed fields and the count (type=fieldvalue)
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=fieldvalue|stats sum(count) by term`}>
 </SplunkSearch>
 
-## Display TERMS and the count (type=term)
+### Display TERMS and the count (type=term)
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=term|stats sum(count) by term`}>
 </SplunkSearch>
 
-## Add prefix to filter results
+### Add prefix to filter results
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_tutorial type=term prefix=http`}>
 </SplunkSearch>
 

@@ -1,12 +1,22 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## What is event segmentation?
+# What is event segmentation?
 
-What happpens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
+<table width="100%">
+        <tr width="60%">
+           <td width="40%"><img src="/static/app/splunk4champions2/images/segmentation.png" width="80%"/></td>
+           <td>
+           What happpens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
 Tokens with minor breakers will be stored as a TERM and in separate tokens. 
 So the first step in segmentation process is to break up _raw using major breakers. Next the minor breakers are applied to the tokens created by major breakers. Both are stored in the TSIDX file. 
 
+           </td>
+        </tr>
+      </table>
+<p></p>
+
+### Major and Minor Breakers
 
 <div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '1rem'}}>
  Major breakers: [ ] < > ( ) { } | ! ; , ' " * \n \r \s \t & ? + %21 %26 %2526 %3B %7C %20 %2B %3D -- %2520 %5D %5B %3A %0A %2C %28 %29 &sbquo; &lsquo;
