@@ -7,9 +7,10 @@ import Dashboard from  '@splunk/react-icons/Dashboard';
 import Images from  '@splunk/react-icons/Images';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
 import Tool from  '@splunk/react-icons/Tool';
-import Data from  '@splunk/react-icons/Data'
+import Data from  '@splunk/react-icons/Data';
 import GaugeRadial from '@splunk/react-icons/GaugeRadial';
-
+import { TbAugmentedReality2, TbLayoutDashboard, TbDatabase } from "react-icons/tb";
+import {GrConfigure} from "react-icons/gr";
 
 const labs = {
     chapters: [
@@ -113,7 +114,7 @@ const labs = {
         
         {
             "title": "2. Data",
-            "id": "three",
+            "id": "two",
             "subtitle": "test",
             "icon": <Data/>,
             "sections": [
@@ -447,7 +448,7 @@ const labs = {
             "title": "6. Dashboard Studio",
             "id": "six",
             "subtitle": "Dashboard Studio",
-            "icon": <Images/>,
+            "icon": <TbLayoutDashboard/>,
             "sections": [
                 {
                     "title": "Dashboard Studio",
@@ -478,10 +479,10 @@ const labs = {
                         ]
                     },
         {
-            "title": "7. Mobile",
+            "title": "7. Mobile & AR",
             "id": "seven",
             "subtitle": "Splunk Mobile & AR",
-            "icon": <GaugeRadial/>,
+            "icon": <TbAugmentedReality2/>,
             "sections": [
                 {
                     "title": "Introduction",
@@ -517,7 +518,7 @@ const labs = {
             ]
         },
         {
-            "title": "Help",
+            "title": "Setup",
             "id": "zero",
             "subtitle": "test",
             "icon": <Tool/>,
