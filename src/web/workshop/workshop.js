@@ -4,6 +4,7 @@ import Activity from '@splunk/react-icons/Activity';
 import Search from  '@splunk/react-icons/Search';
 import Metrics from  '@splunk/react-icons/Metrics';
 import Dashboard from  '@splunk/react-icons/Dashboard';
+import Images from  '@splunk/react-icons/Images';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
 import Tool from  '@splunk/react-icons/Tool';
 import Data from  '@splunk/react-icons/Data'
@@ -199,7 +200,7 @@ const labs = {
         },
         {
             "title": "3. Search",
-            "id": "four",
+            "id": "three",
             "subtitle": "test",
             "icon": <Search/>,
             "sections": [
@@ -263,15 +264,15 @@ const labs = {
                     "steps": [
                         {
                             "title": "Using Inspector",
-                            "content": "chapter4/using_inspector.mdx"
+                            "content": "chapter3/using_inspector.mdx"
                         },
                         {
                             "title": "Inspector Lab",
-                            "content": "chapter4/inspector_lab.mdx"
+                            "content": "chapter3/inspector_lab.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter4/useful_links2.mdx"
+                            "content": "chapter3/inspector_useful_links.mdx"
                         }
                     ]
                 },
@@ -325,8 +326,8 @@ const labs = {
 
         {
             "title": "4. Metrics",
-            "id": "five",
-            "subtitle": "test",
+            "id": "four",
+            "subtitle": "",
             "icon": <Metrics/>,
             "sections": [
                 {
@@ -334,11 +335,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Metrics introduction",
-                            "content": "chapter5/metrics_intro.mdx"
+                            "content": "chapter4/metrics_intro.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter4/useful_links5.mdx"
                         }
                     ]
                 },
@@ -347,11 +348,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Onboarding Metrics",
-                            "content": "chapter5/metrics_onboard.mdx"
+                            "content": "chapter4/metrics_onboard.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter4/useful_links5.mdx"
                         }
                     ]
                 },
@@ -360,11 +361,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Searching Metrics",
-                            "content": "chapter5/metrics_search.mdx"
+                            "content": "chapter4/metrics_search.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter4/useful_links5.mdx"
                         }
                     
                     ]
@@ -374,11 +375,11 @@ const labs = {
                     "steps": [
                         {
                             "title": "Metrics Lab",
-                            "content": "chapter5/metrics_lab.mdx"
+                            "content": "chapter4/metrics_lab.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter4/useful_links5.mdx"
                         }
                     ]
                 }
@@ -386,8 +387,8 @@ const labs = {
             ]
         },
         {
-            "title": "5. Dashboards",
-            "id": "six",
+            "title": "5. XML Dashboards",
+            "id": "five",
             "subtitle": "test",
             "icon": <Dashboard/>,
             "sections": [
@@ -396,11 +397,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Base Search",
-                            "content": "chapter6/base_search.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
+                            "content": "chapter5/base_search.mdx"
                         }
                     ]
                 },
@@ -409,11 +406,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Drilldown",
-                            "content": "chapter6/drilldown.mdx"
-                        }, 
-                        {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
+                            "content": "chapter5/drilldown.mdx"
                         }
                     ]
                 },
@@ -422,7 +415,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Switch with tokens",
-                            "content": "chapter6/tokens.mdx"
+                            "content": "chapter5/tokens.mdx"
                         }
                     ]
                 },
@@ -431,7 +424,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Annotations",
-                            "content": "chapter6/annotations.mdx"
+                            "content": "chapter5/annotations.mdx"
                         }
                 
                     ]
@@ -441,11 +434,21 @@ const labs = {
                     "steps": [
                         {
                             "title": "I see colors everywhere",
-                            "content": "chapter6/colors.mdx"
+                            "content": "chapter5/colors.mdx"
                         }
                 
                     ]
                 }, 
+               
+                
+            ]
+        },
+        {
+            "title": "6. Dashboard Studio",
+            "id": "six",
+            "subtitle": "Dashboard Studio",
+            "icon": <Images/>,
+            "sections": [
                 {
                     "title": "Dashboard Studio",
                     "steps": [
@@ -471,12 +474,11 @@ const labs = {
                             "content": "chapter6/useful_links6.mdx"
                         }
                     ]
-                },
-                
-            ]
-        },
+                }
+                        ]
+                    },
         {
-            "title": "6. Mobile",
+            "title": "7. Mobile",
             "id": "seven",
             "subtitle": "Splunk Mobile & AR",
             "icon": <GaugeRadial/>,
