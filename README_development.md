@@ -119,3 +119,4 @@ The `<SplunkSearch/>` component adds an interactive search bar including a time 
 
 #### Reactjs icons 
 https://react-icons.github.io/react-icons/icons?name=tb
+npm install react-icons --save 
