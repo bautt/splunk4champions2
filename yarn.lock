@@ -1225,6 +1225,11 @@ react-dom@^16.14.0, react-dom@^16.8, "react-dom@>= 16.8.0":
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
+react-icons@^4.11.0:
+  version "4.11.0"
+  resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.11.0.tgz"
+  integrity sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -1240,7 +1245,7 @@ react-is@^16.7.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react@^16.14.0, react@^16.8, "react@>= 16.8.0":
+react@*, react@^16.14.0, react@^16.8, "react@>= 16.8.0":
   version "16.14.0"
   resolved "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
   integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==

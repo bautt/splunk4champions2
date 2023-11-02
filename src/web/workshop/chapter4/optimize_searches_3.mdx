@@ -1,7 +1,0 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
-
-
-Run the Search and oberserve the details presented for "optimizedSearch"
-
-<SplunkSearch earliest="-24h" latest="now" spl={`index=_internal | search sourcetype="splunkd" | fields splunkserver`}>
-</SplunkSearch>
