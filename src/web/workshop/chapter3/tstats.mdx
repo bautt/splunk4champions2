@@ -10,10 +10,10 @@ The indexed fields can be from indexed data or accelerated data models.
 *This section is based on 2020 Richard Morgans session "TSTATS and PREFIX" and 2021 .conf session "Clara-Fication: More Tstats for Your Buckets" by Clara Merriman and Martin Müller*
 
 ## Lets look at this "traditional" search in raw weather data: 
-<SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" |timechart span=1h avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) by name`}></SplunkSearch>
+<SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" |timechart span=1h avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) by name limit=0`}></SplunkSearch>
 
 use job inspector and compare it to this "tstats" search: 
-<SplunkSearch earliest="-1y" latest="now" spl={`|tstats avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) WHERE index=s4c_weather earliest=-1y latest=now()  by name _time span=1h`}></SplunkSearch>
+<SplunkSearch earliest="-1y" latest="now" spl={`|tstats avg(main.temp) avg(visibility) avg(wind.speed) avg(main.humidity) avg(main.pressure) WHERE index=s4c_weather earliest=-1y latest=now()  by name _time span=1h| xyseries _time,name,avg*`}></SplunkSearch>
 
 
 ## Simple example: index based tstats search (works with indexed fields)
@@ -40,7 +40,7 @@ With `PREFIX` indexed fields are not longer a prerequisite for tstats. The exten
 </SplunkSearch>
 
 ## “Traditional” search to chart queue sizes:
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal source=*metrics.log* TERM(group=queue) | timechart span=15m max(current_size_kb) by name`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal source=*metrics.log* group=queue | timechart span=15m max(current_size_kb) by name`}>
 </SplunkSearch>
 
 ## PREFIX() works for aggregations too!
