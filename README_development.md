@@ -116,3 +116,6 @@ This allows to intermix text-heavy markdown-style content with interactive eleme
 #### SplunkSearch
 
 The `<SplunkSearch/>` component adds an interactive search bar including a time picker to prettify SPL searches. It also allows to copy the search to clipboard. 
+
+#### Reactjs icons 
+https://react-icons.github.io/react-icons/icons?name=tb
