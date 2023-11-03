@@ -447,14 +447,14 @@ const labs = {
         {
             "title": "6. Dashboard Studio",
             "id": "six",
-            "subtitle": "Dashboard Studio",
+            "subtitle": "",
             "icon": <TbLayoutDashboard/>,
             "sections": [
                 {
                     "title": "Dashboard Studio",
                     "steps": [
                         {
-                            "title": "Dashboard Studio",
+                            "title": "",
                             "content": "chapter6/studio.mdx"
                         },
                         {
