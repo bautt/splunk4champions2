@@ -233,7 +233,24 @@ const labs = {
                         }
                     ]
                 },
-                 
+                {
+                    "title": "Inspector",
+                    "steps": [
+                        {
+                            "title": "Using Inspector",
+                            "content": "chapter3/using_inspector.mdx"
+                        },
+                        {
+                            "title": "Inspector Lab",
+                            "content": "chapter3/inspector_lab.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter3/inspector_useful_links.mdx"
+                        }
+                    ]
+                },
+
                 {
                     "title": "Terms",
                     "steps": [
@@ -260,24 +277,6 @@ const labs = {
                         }
                     ]
                 },
-                {
-                    "title": "Inspector",
-                    "steps": [
-                        {
-                            "title": "Using Inspector",
-                            "content": "chapter3/using_inspector.mdx"
-                        },
-                        {
-                            "title": "Inspector Lab",
-                            "content": "chapter3/inspector_lab.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter3/inspector_useful_links.mdx"
-                        }
-                    ]
-                },
-
                 {
                     "title": "tstats",
                     "steps": [
