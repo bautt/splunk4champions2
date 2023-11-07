@@ -9,6 +9,11 @@ Tokens from inputs work the same way like in xml dashboards. Inputs can be used 
 Dashboard Studio has the ability to reference any search results directly as a token. The syntax used is "$data source name:result.field$"
 * <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/DashStudio/searchTokens" openInNewContext> "Setting tokens from search results or search job metadata" </Link>
 
+In order to be able to use search results and job properties as tokens, you have to check the "Access search results or metada" checkbox in the data source configuration. 
+
+<img width="30%" src="/static/app/splunk4champions2/images/ds_metadata.png"/>
+
+
 ## Drilldown tokens and conditional hiding
 Since version 9.1 (Cloud 9.0.2303) you can hide panels in the dashboard if the search has no results. This feature is called conditionally visible panels. 
 The logic behind it can also be used to make panels dependent on a particular token. If the token is not set to a defined value the search would return no results and the panel will be hidden. 

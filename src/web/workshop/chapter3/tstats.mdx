@@ -36,7 +36,7 @@ use job inspector and compare it to this "tstats" search:
 ## PREFIX(name=) will ad-hoc-interpret the indexed term name=typingqueue as a key-value pair (v8.0+) - even if there is no indexed field "name"
 With `PREFIX` indexed fields are not longer a prerequisite for tstats. The extension massively increases the instances where tstats can be used
 `PREFIX` allows TERMS to be processed as if they were indexed fields.
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log* TERM(blocked=true)`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_internal source=*metrics.log* TERM(blocked=true) by PREFIX(name=)`}>
 </SplunkSearch>
 
 ## “Traditional” search to chart queue sizes:

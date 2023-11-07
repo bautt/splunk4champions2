@@ -14,14 +14,14 @@
 					"latest": "now"
 				}
 			},
-			"name": "base"
+			"name": "Search1"
 		},
 		"ds_iy1awN95": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=_internal (log_level=\"WARN\" OR log_level=\"ERROR\") \n| eval annotation_label = log_level\n| eval color=if(log_level=\"ERROR\",\"#ff3300\",color)\n| eval color=if(log_level=\"WARN\",\"#ffcc00\",color)\n| table _time annotation_label color"
+				"query": "index=_internal (log_level=\"ERROR\" OR log_level=\"WARN\") \n| dedup log_level\n| eval annotation_label = log_level\n| eval color=if(log_level=\"ERROR\",\"#ff3300\",color)\n| eval color=if(log_level=\"WARN\",\"#ffcc00\",color)\n| table _time annotation_label color"
 			},
-			"name": "Anno"
+			"name": "AnnotationSearch1"
 		}
 	},
 	"visualizations": {
@@ -93,8 +93,8 @@
 				"item": "viz_PiWUoKSL",
 				"type": "block",
 				"position": {
-					"x": 530,
-					"y": 380,
+					"x": 580,
+					"y": 280,
 					"w": 20,
 					"h": 20
 				}

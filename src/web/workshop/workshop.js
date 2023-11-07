@@ -476,6 +476,34 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "DS Annotations",
+                    "steps": [
+                        {
+                            "title": "DS Annotations",
+                            "content": "chapter6/ds_annotations.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
+                },
+                
+                {
+                    "title": "DS Base",
+                    "steps": [
+                        {
+                            "title": "DS Base",
+                            "content": "chapter6/ds_base.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
+                },
+
+                {
                     "title": "DS Tokens",
                     "steps": [
                         {
