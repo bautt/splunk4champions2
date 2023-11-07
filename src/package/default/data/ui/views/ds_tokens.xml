@@ -1,0 +1,239 @@
+
+<dashboard version="2" theme="dark">
+    <label>DS_tokens</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"dataSources": {
+		"ds_TVEfS7HL": {
+			"type": "ds.search",
+			"options": {
+				"query": "| makeresults\n| eval \"Time Zone\" = \"$env:user_timezone$\"\n| eval \"Current Locale\" =\"$env:locale$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"User Name\" =\"$env:user$\"\n| eval \"User Real Name\" =\"$env:user_realname$\"\n| eval \"User Email\" =\"$env:user_email$\"\n| eval \"App Context\" = \"$env:app$\"\n| table *",
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				}
+			},
+			"name": "Table search"
+		},
+		"ds_CPSXv4Gy": {
+			"type": "ds.search",
+			"options": {
+				"query": "| makeresults\n| eval \"Time Zone\" = \"$timezone$\"\n| eval \"Current Locale\" =\"$env:locale$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"User Name\" =\"$env:user$\"\n| eval \"User Real Name\" =\"$env:user_realname$\"\n| eval \"User Email\" =\"$env:user_email$\"\n| eval \"App Context\" = \"$env:app$\"\n| table *",
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				}
+			},
+			"name": "Prebuilt tokens search"
+		},
+		"ds_tjGb3Bj3": {
+			"type": "ds.search",
+			"options": {
+				"query": " |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time\n| top sourcetype showperc=0"
+			},
+			"name": "Search_1"
+		},
+		"ds_Ag85vsLj": {
+			"type": "ds.chain",
+			"options": {
+				"extend": "ds_tjGb3Bj3",
+				"query": "| search sourcetype=$selected_sourcetype$\n| fields - _tc"
+			},
+			"name": "Search_2"
+		}
+	},
+	"visualizations": {
+		"viz_rADf9ZlO": {
+			"type": "splunk.table",
+			"options": {
+				"count": 20,
+				"dataOverlayMode": "none",
+				"drilldown": "none",
+				"showRowNumbers": false,
+				"showInternalFields": false
+			},
+			"dataSources": {
+				"primary": "ds_TVEfS7HL"
+			},
+			"hideWhenNoData": true
+		},
+		"viz_Jvg85Ahy": {
+			"type": "splunk.table",
+			"options": {
+				"count": 20,
+				"dataOverlayMode": "none",
+				"drilldown": "none",
+				"showRowNumbers": false,
+				"showInternalFields": false,
+				"backgroundColor": "transparent",
+				"tableFormat": {
+					"rowBackgroundColors": "> table | seriesByIndex(0) | pick(tableAltRowBackgroundColorsByBackgroundColor)",
+					"headerBackgroundColor": "> backgroundColor | setColorChannel(tableHeaderBackgroundColorConfig)",
+					"rowColors": "> rowBackgroundColors | maxContrast(tableRowColorMaxContrast)",
+					"headerColor": "> headerBackgroundColor | maxContrast(tableRowColorMaxContrast)"
+				},
+				"columnFormat": {
+					"Time Zone": {
+						"width": 99
+					}
+				}
+			},
+			"dataSources": {
+				"primary": "ds_CPSXv4Gy"
+			},
+			"title": "Prebuilt tokens",
+			"hideWhenNoData": true
+		},
+		"viz_JmhEBw51": {
+			"type": "splunk.bar",
+			"dataSources": {
+				"primary": "ds_tjGb3Bj3"
+			},
+			"showProgressBar": false,
+			"showLastUpdated": false,
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "selected_sourcetype",
+								"key": "row.sourcetype.value"
+							}
+						]
+					}
+				}
+			],
+			"title": ""
+		},
+		"viz_DnjHiF1x": {
+			"type": "splunk.table",
+			"title": "$selected_sourcetype$",
+			"dataSources": {
+				"primary": "ds_Ag85vsLj"
+			},
+			"hideWhenNoData": true
+		},
+		"viz_8ZgJmH5u": {
+			"type": "splunk.markdown",
+			"options": {
+				"markdown": ""
+			}
+		},
+		"viz_VdcN8kKw": {
+			"type": "splunk.markdown",
+			"options": {
+				"markdown": "Tokens can be used in markup: \n$env:user$ has selected $selected_sourcetype$\n",
+				"fontColor": "#ec9960",
+				"fontSize": "extraLarge"
+			}
+		}
+	},
+	"inputs": {
+		"input_global_trp": {
+			"type": "input.timerange",
+			"options": {
+				"token": "global_time",
+				"defaultValue": "-24h@h,now"
+			},
+			"title": "Global Time Range"
+		}
+	},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"width": 1440,
+			"height": 1030,
+			"display": "actual-size"
+		},
+		"structure": [
+			{
+				"item": "viz_JmhEBw51",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 20,
+					"w": 720,
+					"h": 280
+				}
+			},
+			{
+				"item": "viz_DnjHiF1x",
+				"type": "block",
+				"position": {
+					"x": 70,
+					"y": 370,
+					"w": 520,
+					"h": 140
+				}
+			},
+			{
+				"item": "viz_8ZgJmH5u",
+				"type": "block",
+				"position": {
+					"x": 20,
+					"y": 240,
+					"w": 490,
+					"h": 90
+				}
+			},
+			{
+				"item": "viz_VdcN8kKw",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 300,
+					"w": 680,
+					"h": 80
+				}
+			},
+			{
+				"item": "viz_Jvg85Ahy",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 540,
+					"w": 1160,
+					"h": 180
+				}
+			},
+			{
+				"item": "viz_rADf9ZlO",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 725,
+					"w": 990,
+					"h": 300
+				}
+			}
+		],
+		"globalInputs": [
+			"input_global_trp"
+		]
+	},
+	"title": "DS_tokens",
+	"description": "",
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"latest": "$global_time.latest$",
+						"earliest": "$global_time.earliest$"
+					}
+				}
+			}
+		}
+	}
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>

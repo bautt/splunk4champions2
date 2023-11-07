@@ -474,7 +474,21 @@ const labs = {
                             "content": "chapter6/useful_links6.mdx"
                         }
                     ]
+                },
+                {
+                    "title": "DS Tokens",
+                    "steps": [
+                        {
+                            "title": "DS Tokens",
+                            "content": "chapter6/ds_tokens.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
                 }
+                
                         ]
                     },
         {

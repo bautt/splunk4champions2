@@ -1,0 +1,18 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## Tokens from inputs
+Tokens from inputs work the same way like in xml dashboards. Inputs can be used above and inside canvas. Inputs with no data available can be hidden. 
+* <Link to="https://docs.splunk.com/Documentation/SplunkCloud/9.1.2308/DashStudio/inputConfig" openInNewContext> "Adding and configuring inputs" </Link>
+
+## Tokens from search
+Dashboard Studio has the ability to reference any search results directly as a token. The syntax used is "$data source name:result.field$"
+* <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/DashStudio/searchTokens" openInNewContext> "Setting tokens from search results or search job metadata" </Link>
+
+## Drilldown tokens and conditional hiding
+Since version 9.1 (Cloud 9.0.2303) you can hide panels in the dashboard if the search has no results. This feature is called conditionally visible panels. 
+The logic behind it can also be used to make panels dependent on a particular token. If the token is not set to a defined value the search would return no results and the panel will be hidden. 
+
+* <Link to="https://www.splunk.com/en_us/blog/tips-and-tricks/dashboard-studio-how-to-configure-show-hide-and-token-eval-in-dashboard-studio.html" openInNewContext> "Dashboard Studio: How to Configure Show/Hide and Token Eval in Dashboard Studio" </Link>
+
+Here is an example dashboard for tokens in DS: <Link to="ds_tokens" openInNewContext>Using Tokens (Dashboard Studio)</Link>
