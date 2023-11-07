@@ -30,7 +30,8 @@
 		"ds_tjGb3Bj3": {
 			"type": "ds.search",
 			"options": {
-				"query": " |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time\n| top sourcetype showperc=0"
+				"query": " |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time\n| top sourcetype showperc=0",
+				"enableSmartSources": true
 			},
 			"name": "Search_1"
 		},
@@ -124,9 +125,9 @@
 		"viz_VdcN8kKw": {
 			"type": "splunk.markdown",
 			"options": {
-				"markdown": "Tokens can be used in markup: \n$env:user$ has selected $selected_sourcetype$\n",
+				"markdown": "Tokens can be used in markup: \n$env:user$ has selected $selected_sourcetype$\n\n* Job has results: $Search_1:job.hasResults$\n* Job result count: $Search_1:job.resultCount$\n* Job last updated: $Search_1:job.lastUpdated$\t\n",
 				"fontColor": "#ec9960",
-				"fontSize": "extraLarge"
+				"fontSize": "large"
 			}
 		}
 	},
@@ -162,8 +163,8 @@
 				"item": "viz_DnjHiF1x",
 				"type": "block",
 				"position": {
-					"x": 70,
-					"y": 370,
+					"x": 10,
+					"y": 400,
 					"w": 520,
 					"h": 140
 				}
@@ -182,10 +183,10 @@
 				"item": "viz_VdcN8kKw",
 				"type": "block",
 				"position": {
-					"x": 10,
+					"x": 0,
 					"y": 300,
-					"w": 680,
-					"h": 80
+					"w": 760,
+					"h": 110
 				}
 			},
 			{
