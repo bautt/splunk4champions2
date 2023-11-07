@@ -1,0 +1,20 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+ <img width="30%" src="/static/app/splunk4champions2/images/ds_base.png"/>
+
+## Visual Editor
+Base search handling is improved in Dashboard Studio. You do not need to edit the source, base and chain searches can be created and assigned in
+ the UI making it much easier to create and understand. 
+
+## Multiple searches
+ Dashboard Studio allows multiple chain searches in a chain. 
+
+## Use a transforming base search or fields
+The base search itself has to be transforming (using stats, chart, timechart). If the base search is a non-transforming search, 
+you must explicitly state in the base search what fields will be used in the chain search using the | fields command. 
+
+
+
+
+Here is an example dashboard for base and chain searches  in DS: <Link to="ds_base_search" openInNewContext>Base search (Dashboard Studio)</Link>

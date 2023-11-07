@@ -1,0 +1,446 @@
+
+<dashboard version="2" theme="dark">
+    <label>DS_BaseSearch</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"visualizations": {
+		"viz_Km1suaBQ": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 0,
+				"sparklineDisplay": "below",
+				"trendDisplay": "percent",
+				"underLabel": "Sources",
+				"unitPosition": "after",
+				"shouldUseThousandSeparators": true,
+				"backgroundColor": "> trendValue | rangeValue(convertedColorRange)"
+			},
+			"context": {
+				"convertedColorRange": [
+					{
+						"to": 0,
+						"value": "#9E2520"
+					},
+					{
+						"from": 0,
+						"value": "#1C6B2D"
+					}
+				]
+			},
+			"dataSources": {
+				"primary": "ds_ecvG9Lwb"
+			},
+			"title": "Number of Sources",
+			"showProgressBar": true
+		},
+		"viz_oYKuqTEF": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 0,
+				"sparklineDisplay": "below",
+				"trendDisplay": "absolute",
+				"underLabel": "Sourcetypes",
+				"unitPosition": "after",
+				"shouldUseThousandSeparators": true,
+				"backgroundColor": "> trendValue | rangeValue(convertedColorRange)"
+			},
+			"context": {
+				"convertedColorRange": [
+					{
+						"to": 0,
+						"value": "#9E2520"
+					},
+					{
+						"from": 0,
+						"value": "#1C6B2D"
+					}
+				]
+			},
+			"dataSources": {
+				"primary": "ds_phU0Pnyo"
+			},
+			"title": "Number of Sourcetypes",
+			"showProgressBar": false
+		},
+		"viz_ZxZt9rDn": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 0,
+				"sparklineDisplay": "below",
+				"trendDisplay": "absolute",
+				"underLabel": "Hosts",
+				"unitPosition": "after",
+				"shouldUseThousandSeparators": true,
+				"backgroundColor": "> trendValue | rangeValue(convertedColorRange)"
+			},
+			"context": {
+				"convertedColorRange": [
+					{
+						"to": 0,
+						"value": "#9E2520"
+					},
+					{
+						"from": 0,
+						"value": "#1C6B2D"
+					}
+				]
+			},
+			"dataSources": {
+				"primary": "ds_ByHWgaLf"
+			},
+			"title": "Number of Hosts",
+			"showProgressBar": false
+		},
+		"viz_bZSBof2I": {
+			"type": "splunk.area",
+			"options": {
+				"yAxisAbbreviation": "off",
+				"y2AxisAbbreviation": "off",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisTitleVisibility": "hide"
+			},
+			"dataSources": {
+				"primary": "ds_lQLQWfYC"
+			},
+			"title": "Source timechart",
+			"showProgressBar": false
+		},
+		"viz_Z0gPBUV2": {
+			"type": "splunk.area",
+			"options": {
+				"yAxisAbbreviation": "off",
+				"y2AxisAbbreviation": "off",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisTitleVisibility": "hide"
+			},
+			"dataSources": {
+				"primary": "ds_R5Zxju8S"
+			},
+			"title": "Sourcetype timechart",
+			"showProgressBar": false
+		},
+		"viz_ZjCjJyJh": {
+			"type": "splunk.pie",
+			"options": {
+				"collapseThreshold": 0.01
+			},
+			"dataSources": {
+				"primary": "ds_7AqOCEEx"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "sourcetype_drilldown",
+								"key": "row.sourcetype.value"
+							}
+						]
+					}
+				}
+			],
+			"title": "Top Sourcetype distribution",
+			"showProgressBar": true
+		},
+		"viz_b5d6jDiN": {
+			"type": "splunk.pie",
+			"options": {
+				"collapseThreshold": 0.01
+			},
+			"dataSources": {
+				"primary": "ds_luuXHv01"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "sourcetype_drilldown",
+								"key": "row.sourcetype.value"
+							}
+						]
+					}
+				}
+			],
+			"title": "Rare Sourcetype distribution",
+			"showProgressBar": true
+		},
+		"viz_go12fOcW": {
+			"type": "splunk.table",
+			"options": {
+				"count": 5,
+				"dataOverlayMode": "none",
+				"drilldown": "none",
+				"showRowNumbers": false,
+				"showInternalFields": false
+			},
+			"dataSources": {
+				"primary": "ds_kVaOclok"
+			},
+			"title": "Sourcetype-Drilldown - select sourcetype in the pie chart",
+			"showProgressBar": true
+		},
+		"viz_oBtVwNpZ": {
+			"type": "splunk.rectangle",
+			"options": {
+				"fillColor": "transparent",
+				"strokeColor": "transparent"
+			}
+		}
+	},
+	"dataSources": {
+		"ds_singleValue_BaseSearch": {
+			"type": "ds.search",
+			"options": {
+				"query": "\n |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time\n    ",
+				"queryParameters": {
+					"earliest": "$time_select.earliest$",
+					"latest": "$time_select.latest$"
+				}
+			},
+			"name": "ds_singleValue_BaseSearch"
+		},
+		"ds_ecvG9Lwb": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| timechart  dc(source)",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Number of Sources - Single value search"
+		},
+		"ds_phU0Pnyo": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| timechart  dc(sourcetype)",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Number of Sourcetypes - Single value search"
+		},
+		"ds_ByHWgaLf": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| timechart  dc(host)",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Number of Hosts - Single value search"
+		},
+		"ds_lQLQWfYC": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| timechart span=1h count by source useother=false",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Source timechart - Area chart search"
+		},
+		"ds_R5Zxju8S": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| timechart span=1h count by sourcetype useother=false",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Sourcetype timechart - Area chart search"
+		},
+		"ds_7AqOCEEx": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| top sourcetype",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Top Sourcetype distribution - Pie chart search"
+		},
+		"ds_luuXHv01": {
+			"type": "ds.chain",
+			"options": {
+				"query": "| rare sourcetype",
+				"extend": "ds_singleValue_BaseSearch"
+			},
+			"name": "Rare Sourcetype distribution - Pie chart search"
+		},
+		"ds_kVaOclok": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=_* OR index=* sourcetype=\"$sourcetype_drilldown$\"\n| head $size_resultset$\n| table _time log_level _raw",
+				"queryParameters": {
+					"earliest": "$time_select.earliest$",
+					"latest": "$time_select.latest$"
+				}
+			},
+			"name": "Sourcetype-Drilldown - select sourcetype in the pie chart - Table search"
+		}
+	},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {}
+				}
+			}
+		}
+	},
+	"inputs": {
+		"input_kzRDFjUN": {
+			"type": "input.timerange",
+			"options": {
+				"token": "time_select",
+				"defaultValue": "-4h@m,now"
+			},
+			"title": "Select Time..."
+		},
+		"input_0ToBBCUU": {
+			"type": "input.dropdown",
+			"options": {
+				"token": "size_resultset",
+				"items": [
+					{
+						"value": "10",
+						"label": "10"
+					},
+					{
+						"value": "100",
+						"label": "100"
+					},
+					{
+						"value": "1000",
+						"label": "1000"
+					},
+					{
+						"value": "999999999",
+						"label": "All"
+					}
+				],
+				"defaultValue": "10"
+			},
+			"title": "Size ResultSet"
+		}
+	},
+	"layout": {
+		"type": "grid",
+		"options": {
+			"height": 840,
+			"width": 1440
+		},
+		"structure": [
+			{
+				"item": "viz_Km1suaBQ",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 480,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_oYKuqTEF",
+				"type": "block",
+				"position": {
+					"x": 480,
+					"y": 0,
+					"w": 480,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_ZxZt9rDn",
+				"type": "block",
+				"position": {
+					"x": 960,
+					"y": 0,
+					"w": 480,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_bZSBof2I",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 250,
+					"w": 720,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_Z0gPBUV2",
+				"type": "block",
+				"position": {
+					"x": 720,
+					"y": 250,
+					"w": 720,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_ZjCjJyJh",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 500,
+					"w": 480,
+					"h": 340
+				}
+			},
+			{
+				"item": "viz_b5d6jDiN",
+				"type": "block",
+				"position": {
+					"x": 480,
+					"y": 500,
+					"w": 480,
+					"h": 340
+				}
+			},
+			{
+				"item": "input_0ToBBCUU",
+				"type": "input",
+				"position": {
+					"x": 960,
+					"y": 500,
+					"w": 198,
+					"h": 90
+				}
+			},
+			{
+				"item": "viz_go12fOcW",
+				"type": "block",
+				"position": {
+					"x": 960,
+					"y": 590,
+					"w": 480,
+					"h": 250
+				}
+			},
+			{
+				"type": "block",
+				"position": {
+					"x": 1158,
+					"y": 500,
+					"w": 282,
+					"h": 90
+				},
+				"item": "viz_oBtVwNpZ"
+			}
+		],
+		"globalInputs": [
+			"input_kzRDFjUN"
+		]
+	},
+	"description": "",
+	"title": "DS_BaseSearch"
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>
