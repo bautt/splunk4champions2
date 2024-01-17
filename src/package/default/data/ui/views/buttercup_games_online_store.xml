@@ -1,0 +1,310 @@
+
+<dashboard version="2" theme="light">
+    <label>Buttercup Games Online Store</label>
+    <description>Dashboard Studio Tutorial</description>
+    <definition><![CDATA[
+{
+	"visualizations": {
+		"viz_uAMyp3dW": {
+			"type": "splunk.table",
+			"options": {
+				"count": 8,
+				"backgroundColor": "transparent",
+				"tableFormat": {
+					"rowBackgroundColors": "> table | seriesByIndex(0) | pick(tableAltRowBackgroundColorsByBackgroundColor)",
+					"headerBackgroundColor": "> backgroundColor | setColorChannel(tableHeaderBackgroundColorConfig)",
+					"rowColors": "> rowBackgroundColors | maxContrast(tableRowColorMaxContrast)",
+					"headerColor": "> headerBackgroundColor | maxContrast(tableRowColorMaxContrast)"
+				},
+				"columnFormat": {
+					"Revenue": {
+						"data": "> table | seriesByName(\"Revenue\") | formatByType(RevenueColumnFormatEditorConfig)",
+						"rowColors": "> table | seriesByName(\"Revenue\") | rangeValue(RevenueRowColorsEditorConfig)"
+					}
+				},
+				"showInternalFields": false
+			},
+			"dataSources": {
+				"primary": "ds_ei4Azbjj"
+			},
+			"context": {
+				"RevenueColumnFormatEditorConfig": {
+					"number": {
+						"thousandSeparated": false,
+						"unitPosition": "after"
+					}
+				},
+				"RevenueRowColorsEditorConfig": [
+					{
+						"value": "#D41F1F",
+						"to": 150
+					},
+					{
+						"value": "#D94E17",
+						"from": 150,
+						"to": 200
+					},
+					{
+						"value": "#D97A0D",
+						"from": 200,
+						"to": 300
+					},
+					{
+						"value": "#9D9F0D",
+						"from": 300,
+						"to": 350
+					},
+					{
+						"value": "#669922",
+						"from": 350,
+						"to": 360
+					},
+					{
+						"value": "#118832",
+						"from": 360
+					}
+				]
+			},
+			"title": "Most Purchased Games"
+		},
+		"viz_KDBFEJcR": {
+			"type": "splunk.line",
+			"options": {
+				"backgroundColor": "transparent",
+				"legendDisplay": "top",
+				"xAxisTitleVisibility": "hide",
+				"yAxisTitleVisibility": "hide"
+			},
+			"dataSources": {
+				"primary": "ds_YNt79QBu"
+			},
+			"title": "Purchase Trends by Category"
+		},
+		"viz_otbGypHN": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"unit": "$",
+				"unitPosition": "before",
+				"numberPrecision": 2,
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_muMWXyEs"
+			},
+			"title": "Total Revenue"
+		},
+		"viz_Jd7wvqZI": {
+			"type": "splunk.map",
+			"options": {
+				"center": [
+					43.52057596240249,
+					7.8439259181755006
+				],
+				"zoom": 0.8019943611056004,
+				"layers": [
+					{
+						"type": "choropleth"
+					}
+				]
+			},
+			"dataSources": {
+				"primary": "ds_FllKHCxW"
+			}
+		},
+		"viz_GDCX0bKm": {
+			"type": "splunk.markdown",
+			"options": {
+				"markdown": "**Purchases by Location**",
+				"fontSize": "extraLarge"
+			}
+		}
+	},
+	"dataSources": {
+		"ds_ei4Azbjj": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 \n| stats count as Purchases by productName categoryId price\n| table productName Purchases categoryId price\n| eval Revenue=Purchases*price\n| table productName Purchases Revenue categoryId\n| sort -Purchases | rename productName as \"Game\" categoryId as \"Category\"",
+				"queryParameters": {
+					"earliest": "$global_time.earliest$",
+					"latest": "$global_time.latest$"
+				}
+			},
+			"name": "Most Purchased Games"
+		},
+		"ds_YNt79QBu": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=s4c_tutorial sourcetype=access_* status=200 action=purchase categoryId!=NULL\n| fields _time categoryId clientip\n| timechart count by categoryId "
+			},
+			"name": "Purchase Trends by Category"
+		},
+		"ds_muMWXyEs": {
+			"type": "ds.chain",
+			"options": {
+				"extend": "ds_ei4Azbjj",
+				"query": "| search Category=$category$ | stats sum(Revenue)\n"
+			},
+			"name": "Total Revenue"
+		},
+		"ds_FllKHCxW": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 categoryId=\"$category$\"\n productName=\"*\"\n| iplocation clientip\n| lookup geo_countries latitude AS lat longitude AS lon OUTPUT featureId AS country\n| stats count by country\n| geom geo_countries featureIdField=country"
+			},
+			"name": "Purchases by Location"
+		},
+		"ds_ti1jxtPv": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 \n| stats count by categoryId\n",
+				"queryParameters": {
+					"earliest": "$global_time.earliest$",
+					"latest": "$global_time.latest$"
+				}
+			},
+			"name": "input search"
+		}
+	},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"latest": "$global_time.latest$",
+						"earliest": "$global_time.earliest$"
+					}
+				}
+			}
+		}
+	},
+	"inputs": {
+		"input_global_trp": {
+			"type": "input.timerange",
+			"options": {
+				"token": "global_time",
+				"defaultValue": "-7d@h,now"
+			},
+			"title": "Global Time Range"
+		},
+		"input_Dc9L7fqB": {
+			"options": {
+				"items": ">frame(label, value) | prepend(formattedStatics) | objects()",
+				"defaultValue": "*",
+				"token": "category"
+			},
+			"title": "Games Categories",
+			"type": "input.dropdown",
+			"dataSources": {
+				"primary": "ds_ti1jxtPv"
+			},
+			"context": {
+				"formattedConfig": {
+					"number": {
+						"prefix": ""
+					}
+				},
+				"formattedStatics": ">statics | formatByType(formattedConfig)",
+				"statics": [
+					[
+						"All"
+					],
+					[
+						"*"
+					]
+				],
+				"label": ">primary | seriesByName(\"categoryId\") | renameSeries(\"label\") | formatByType(formattedConfig)",
+				"value": ">primary | seriesByName(\"categoryId\") | renameSeries(\"value\") | formatByType(formattedConfig)"
+			}
+		}
+	},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"width": 1440,
+			"height": 960,
+			"display": "fit-to-width",
+			"backgroundImage": {
+				"sizeType": "contain",
+				"x": 0,
+				"y": 0,
+				"src": "https://docs.splunk.com/images/e/ed/Tutorialdash.png"
+			}
+		},
+		"structure": [
+			{
+				"item": "viz_uAMyp3dW",
+				"type": "block",
+				"position": {
+					"x": 790,
+					"y": 500,
+					"w": 650,
+					"h": 510
+				}
+			},
+			{
+				"item": "viz_KDBFEJcR",
+				"type": "block",
+				"position": {
+					"x": 790,
+					"y": 10,
+					"w": 640,
+					"h": 450
+				}
+			},
+			{
+				"item": "viz_otbGypHN",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 120,
+					"w": 740,
+					"h": 170
+				}
+			},
+			{
+				"item": "viz_Jd7wvqZI",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 390,
+					"w": 740,
+					"h": 560
+				}
+			},
+			{
+				"item": "viz_GDCX0bKm",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 340,
+					"w": 730,
+					"h": 40
+				}
+			},
+			{
+				"item": "input_Dc9L7fqB",
+				"type": "input",
+				"position": {
+					"x": 10,
+					"y": 10,
+					"w": 198,
+					"h": 82
+				}
+			}
+		],
+		"globalInputs": [
+			"input_global_trp"
+		]
+	},
+	"description": "Dashboard Studio Tutorial",
+	"title": "Buttercup Games Online Store"
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>
