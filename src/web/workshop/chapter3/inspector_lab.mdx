@@ -57,3 +57,14 @@ after the first line? Check it out:
 | fields name main.temp _time 
 | timechart  span=4h  avg(main.temp) by name`}>
 </SplunkSearch>
+
+##  Lispy Efficiency
+Lispy expressions are predicates Splunk® platform uses to locate events. Finding Lispy in the search log is good for debugging. All events matching the predicates are scanned 
+(scanned includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
+Lispy efficiency can be defined as `eventCount / scanCount`
+
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)
+| stats earliest(_time) as _time earliest(total_run_time) as total_run_time earliest(event_count) as event_count earliest(scan_count) as scan_count earliest(user) as user earliest(savedsearch_name) as savedsearch_name earliest(search) as search by search_id
+| eval lispy_efficiency = event_count / scan_count|where scan_count > 100 AND total_run_time > 2
+| table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}>
+</SplunkSearch>

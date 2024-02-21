@@ -27,16 +27,6 @@ the fly.
 This is the most expensive place to filter as we have downloaded
 buckets, open the tsidx, extracted slices fully parsed events. 
 
-## 6. Lispy Efficiency
-Lispy expressions are predicates Splunk® platform uses to locate events. Finding Lispy in the search log is good for debugging. All events matching the predicates are scanned 
-(scanned includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
-Lispy efficiency can be defined as `eventCount / scanCount`
-
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)
-| stats first(_time) as _time first(total_run_time) as total_run_time first(event_count) as event_count first(scan_count) as scan_count first(user) as user first(savedsearch_name) as savedsearch_name first(search) as search by search_id
-| eval lispy_efficiency = event_count / scan_count`}>
-</SplunkSearch>
-
-## 7. Avoid using wildcards as prefixes or in the middle of the string
+## 6. Avoid using wildcards as prefixes or in the middle of the string
 When you use a wildcard character at the beginning of a string, the search must look at every string to determine if the end of the string matches what you specify after the asterisk. 
 Wildcard characters in the middle of a word or string might cause inconsistent results. This is especially true if the string contains punctuation, such as an underscore _ or dash - character.
