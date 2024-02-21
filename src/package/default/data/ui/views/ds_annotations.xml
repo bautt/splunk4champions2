@@ -8,10 +8,10 @@
 		"ds_search_1": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=_audit action=search result_count=\"*\" | timechart avg(total_run_time) as avgRunTime",
+				"query": "index=_audit action=search result_count=\"*\" | timechart span=1m avg(total_run_time) as avgRunTime avg(result_count) as result_count|eval result_count=result_count/20\n| table _time $filter$",
 				"queryParameters": {
-					"earliest": "-60m@m",
-					"latest": "now"
+					"earliest": "$global_time.earliest$",
+					"latest": "$global_time.latest$"
 				}
 			},
 			"name": "Search1"
@@ -19,48 +19,146 @@
 		"ds_iy1awN95": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=_internal (log_level=\"ERROR\" OR log_level=\"WARN\") \n| dedup log_level\n| eval annotation_label = log_level\n| eval color=if(log_level=\"ERROR\",\"#ff3300\",color)\n| eval color=if(log_level=\"WARN\",\"#ffcc00\",color)\n| table _time annotation_label color"
+				"query": "index=$anno$ (log_level=\"ERROR\" OR log_level=\"WARN\") \n```| dedup log_level```\n| eval annotation_label = log_level\n| eval color=if(log_level=\"ERROR\",\"#ff3300\",color)\n| eval color=if(log_level=\"WARN\",\"#ffcc00\",color)\n| table _time annotation_label color",
+				"queryParameters": {
+					"earliest": "$global_time.earliest$",
+					"latest": "$global_time.latest$"
+				}
 			},
 			"name": "AnnotationSearch1"
+		},
+		"ds_wtYme7dB": {
+			"type": "ds.search",
+			"options": {
+				"query": "| makeresults\n| eval text=\"hide result_count\"\n| eval filter=\"avgRunTime result_count\"\n| where filter=\"$filter$\"\n| table text $filter$"
+			},
+			"name": "Search_1"
+		},
+		"ds_Po1A34aK_ds_wtYme7dB": {
+			"type": "ds.search",
+			"options": {
+				"query": "| makeresults\n| eval text=\"show result_count\"\n| eval filter=\"avgRunTime\"\n| where filter=\"$filter$\"\n| table text $filter$"
+			},
+			"name": "Search_1 copy 1"
+		},
+		"ds_24cbTWWN_ds_Po1A34aK_ds_wtYme7dB": {
+			"type": "ds.search",
+			"options": {
+				"query": "| makeresults\n| eval text=\"show Annotation\"\n| eval filter=\"no\"\n| where filter=\"$anno$\"\n| table text $anno$"
+			},
+			"name": "Search_1 copy 2"
+		},
+		"ds_tgyLOC06_ds_wtYme7dB": {
+			"type": "ds.search",
+			"options": {
+				"query": "| makeresults\n| eval text=\"hide Annotation\"\n| eval filter=\"_internal\"\n| where filter=\"$anno$\"\n| table text $anno$"
+			},
+			"name": "Search_1 copy 3"
 		}
 	},
 	"visualizations": {
 		"viz_chart_1": {
-			"type": "splunk.line",
+			"type": "splunk.column",
 			"dataSources": {
 				"primary": "ds_search_1",
 				"annotation": "ds_iy1awN95"
 			},
 			"options": {
-				"yAxisAbbreviation": "auto",
-				"y2AxisAbbreviation": "auto",
-				"showRoundedY2AxisLabels": false,
-				"legendTruncation": "ellipsisMiddle",
-				"showY2MajorGridLines": true,
-				"xAxisLabelRotation": 0,
-				"xAxisTitleVisibility": "show",
-				"yAxisTitleVisibility": "show",
-				"y2AxisTitleVisibility": "show",
-				"yAxisScale": "linear",
-				"showOverlayY2Axis": 0,
-				"y2AxisScale": "inherit",
-				"nullValueDisplay": "connect",
-				"dataValuesDisplay": "off",
-				"showSplitSeries": 0,
-				"showIndependentYRanges": 0,
-				"legendMode": "standard",
-				"legendDisplay": "right",
-				"lineWidth": 2,
-				"annotationX": "> annotation | seriesByIndex(0)",
-				"annotationLabel": "> annotation | seriesByIndex(1)",
-				"annotationColor": "> annotation | seriesByIndex(2)"
-			}
+				"annotationX": "> annotation | seriesByName('_time')",
+				"annotationLabel": "> annotation | seriesByName('annotation_label')",
+				"annotationColor": "> annotation | seriesByName('color')",
+				"overlayFields": "result_count",
+				"y2": "> primary | frameBySeriesNames('result_count')"
+			},
+			"showProgressBar": false,
+			"showLastUpdated": false
 		},
 		"viz_PiWUoKSL": {
 			"type": "splunk.rectangle",
 			"dataSources": {
 				"primary": "ds_iy1awN95"
-			}
+			},
+			"hideWhenNoData": true
+		},
+		"viz_IkvZg3Rn": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_wtYme7dB"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "filter",
+								"value": "avgRunTime"
+							}
+						]
+					}
+				}
+			],
+			"hideWhenNoData": true
+		},
+		"viz_scC43D7E": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_Po1A34aK_ds_wtYme7dB"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "filter",
+								"value": "avgRunTime result_count"
+							}
+						]
+					}
+				}
+			],
+			"hideWhenNoData": true
+		},
+		"viz_XG0YtuN3": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_24cbTWWN_ds_Po1A34aK_ds_wtYme7dB"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "anno",
+								"value": "_internal"
+							}
+						]
+					}
+				}
+			],
+			"hideWhenNoData": true
+		},
+		"viz_K4tdjz9f": {
+			"type": "splunk.singlevalue",
+			"dataSources": {
+				"primary": "ds_tgyLOC06_ds_wtYme7dB"
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.setToken",
+					"options": {
+						"tokens": [
+							{
+								"token": "anno",
+								"value": "no"
+							}
+						]
+					}
+				}
+			],
+			"hideWhenNoData": true
 		}
 	},
 	"inputs": {
@@ -84,7 +182,7 @@
 				"type": "block",
 				"position": {
 					"x": 0,
-					"y": 0,
+					"y": 40,
 					"w": 1200,
 					"h": 250
 				}
@@ -93,10 +191,50 @@
 				"item": "viz_PiWUoKSL",
 				"type": "block",
 				"position": {
-					"x": 580,
-					"y": 280,
+					"x": 10,
+					"y": 710,
 					"w": 20,
 					"h": 20
+				}
+			},
+			{
+				"item": "viz_IkvZg3Rn",
+				"type": "block",
+				"position": {
+					"x": 1000,
+					"y": 250,
+					"w": 200,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_scC43D7E",
+				"type": "block",
+				"position": {
+					"x": 1000,
+					"y": 250,
+					"w": 200,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_XG0YtuN3",
+				"type": "block",
+				"position": {
+					"x": 770,
+					"y": 250,
+					"w": 200,
+					"h": 40
+				}
+			},
+			{
+				"item": "viz_K4tdjz9f",
+				"type": "block",
+				"position": {
+					"x": 770,
+					"y": 250,
+					"w": 200,
+					"h": 40
 				}
 			}
 		],
@@ -106,6 +244,16 @@
 	},
 	"title": "DS_Annotations",
 	"defaults": {
+		"tokens": {
+			"default": {
+				"anno": {
+					"value": "no"
+				},
+				"filter": {
+					"value": "avgRunTime"
+				}
+			}
+		},
 		"dataSources": {
 			"ds.search": {
 				"options": {
