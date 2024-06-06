@@ -6,6 +6,9 @@ import tarfile
 import os
 from datetime import datetime
 
+splunkhome = (os.environ['SPLUNK_HOME'])
+start = time.time()
+
 def get_last_5000_lines_from_tgz(tgz_file_path, log_file_name):
     with tarfile.open(tgz_file_path, 'r:gz') as tar:
         log_file = tar.extractfile(log_file_name)
@@ -49,3 +52,6 @@ if __name__ == "__main__":
     output_file = (splunkhome + '/etc/apps/splunk4champions2/static/www.log') 
 
     append_log_lines(tgz_file_path, log_file_name, output_file)
+datum = (now.strftime("%Y-%m-%d %H:%M:%S"))
+message=(" tb Splunk4Champions2 live update www data script was started. it will write up to 10MB and delete ")
+print(datum + message)
