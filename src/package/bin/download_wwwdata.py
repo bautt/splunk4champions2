@@ -13,8 +13,8 @@ splunkhome = (os.environ['SPLUNK_HOME'])
 #parent = path.parent
 start = time.time()
 
-url = 'https://raw.github.com/bautt/s4cshow/master/www.zip'
-target = (splunkhome + '/etc/apps/splunk4champions2/static/www.zip')
+url = 'https://raw.github.com/bautt/s4cshow/master/www1.tgz'
+target = (splunkhome + '/etc/apps/splunk4champions2/static/www1.tgz')
 
 # getting size info from the file
 d = urllib.request.urlopen(url)

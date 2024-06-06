@@ -48,7 +48,7 @@ def append_log_lines(tgz_file_path, log_file_name, output_file):
 
 if __name__ == "__main__":
     tgz_file_path = (splunkhome + '/etc/apps/splunk4champions2/static/www1.tgz')  
-    log_file_name = 'www.log'
+    log_file_name = 'www1.log'
     output_file = (splunkhome + '/etc/apps/splunk4champions2/static/www.log') 
 
     append_log_lines(tgz_file_path, log_file_name, output_file)
