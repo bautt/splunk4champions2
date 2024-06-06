@@ -5,6 +5,7 @@ import random
 import tarfile
 import os
 from datetime import datetime
+import time 
 
 splunkhome = (os.environ['SPLUNK_HOME'])
 start = time.time()
@@ -36,8 +37,8 @@ def append_log_lines(tgz_file_path, log_file_name, output_file):
                 f.write(new_line + '\n')
                 f.flush()
                 
-                # Delete the log file if it exceeds 10 MB
-                if os.path.getsize(output_file) > 10 * 1024 * 1024:  # 10 MB
+                # Delete the log file if it exceeds 1 MB
+                if os.path.getsize(output_file) > 10 * 1024 :  # 1 MB
                     f.close()
                     delete_output_file(output_file)
                     f = open(output_file, 'a')
@@ -47,8 +48,8 @@ def append_log_lines(tgz_file_path, log_file_name, output_file):
         f.close()
 
 if __name__ == "__main__":
-    tgz_file_path = (splunkhome + '/etc/apps/splunk4champions2/static/www1.tgz')  
-    log_file_name = 'www1.log'
+    tgz_file_path = (splunkhome + '/etc/apps/splunk4champions2/static/www-sample.tgz')  
+    log_file_name = 'www2.log'
     output_file = (splunkhome + '/etc/apps/splunk4champions2/static/www.log') 
 
     append_log_lines(tgz_file_path, log_file_name, output_file)
