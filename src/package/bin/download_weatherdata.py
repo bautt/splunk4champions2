@@ -12,8 +12,8 @@ splunkhome = (os.environ['SPLUNK_HOME'])
 #path = Path(Path.cwd())
 #parent = path.parent
 start = time.time()
-url = 'https://github.com/bautt/splunk4champions2/raw/main/src/package/static/current_2023.log.gz'
-target = (splunkhome + '/etc/apps/splunk4champions2/static/current.log.gz')
+url = 'https://raw.github.com/bautt/s4cshow/master/current_2023.log.gz'
+target = (splunkhome + '/etc/apps/splunk4champions2/static/current_2023.log.gz')
 
 # getting size info from the file
 d = urllib.request.urlopen(url)
