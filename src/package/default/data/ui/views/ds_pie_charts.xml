@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="dark">
-    <label>Meaningful Pie Charts DS</label>
+    <label>Meaningful Charts DS</label>
     <description></description>
     <definition><![CDATA[
 {
@@ -39,6 +39,50 @@
 			},
 			"title": "Pacman",
 			"showProgressBar": true
+		},
+		"viz_KYGpvqFS": {
+			"type": "splunk.line",
+			"options": {
+				"seriesColors": [
+					"#CCCCCC",
+					"#009CEB",
+					"#00CDAF",
+					"#DD9900",
+					"#FF677B",
+					"#CB2196",
+					"#813193",
+					"#0051B5",
+					"#008C80",
+					"#99B100",
+					"#FFA476",
+					"#FF6ACE",
+					"#AE8CFF",
+					"#00689D",
+					"#00490A",
+					"#465D00",
+					"#9D6300",
+					"#F6540B",
+					"#FF969E",
+					"#E47BFE"
+				],
+				"legendDisplay": "off",
+				"xAxisMajorTickSize": 2,
+				"nullValueDisplay": "connect",
+				"yAxisMajorTickSize": 3,
+				"yAxisMinorTickSize": 4,
+				"xAxisTitleVisibility": "hide",
+				"y2AxisMajorTickSize": 1,
+				"y2AxisMinorTickSize": 1,
+				"showRoundedY2AxisLabels": false,
+				"y2AxisAbbreviation": "off",
+				"y2AxisLabelVisibility": "hide",
+				"y2AxisMajorTickVisibility": "hide",
+				"y2AxisMinorTickVisibility": "hide"
+			},
+			"dataSources": {
+				"primary": "ds_NQWSjpdb"
+			},
+			"title": "Dog"
 		}
 	},
 	"dataSources": {
@@ -63,6 +107,17 @@
 				}
 			},
 			"name": "Pacman search"
+		},
+		"ds_NQWSjpdb": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "0",
+					"latest": ""
+				},
+				"query": "|inputlookup dog.csv\n|timechart values(y) span=15m"
+			},
+			"name": "Search_1"
 		}
 	},
 	"defaults": {
@@ -88,7 +143,7 @@
 				"position": {
 					"x": 0,
 					"y": 0,
-					"w": 720,
+					"w": 487,
 					"h": 250
 				}
 			},
@@ -96,9 +151,19 @@
 				"item": "viz_eLbPYaOd",
 				"type": "block",
 				"position": {
-					"x": 720,
+					"x": 487,
 					"y": 0,
-					"w": 720,
+					"w": 478,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_KYGpvqFS",
+				"type": "block",
+				"position": {
+					"x": 965,
+					"y": 0,
+					"w": 475,
 					"h": 250
 				}
 			}
@@ -106,7 +171,7 @@
 		"globalInputs": []
 	},
 	"description": "",
-	"title": "Meaningful Pie Charts DS"
+	"title": "Meaningful Charts DS"
 }
     ]]></definition>
     <meta type="hiddenElements"><![CDATA[
