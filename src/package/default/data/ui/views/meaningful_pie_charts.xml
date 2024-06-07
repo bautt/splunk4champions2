@@ -1,7 +1,8 @@
 <dashboard version="1.1" theme="dark">
-  <label>Meaningful Pie Charts</label>
+  <label>Meaningful Charts</label>
   <row>
     <panel>
+      <title>Pyramid</title>
       <chart>
         <title>Pyramid</title>
         <search>
@@ -51,6 +52,7 @@
       </chart>
     </panel>
     <panel>
+      <title>Pacman</title>
       <chart>
         <title>Pacman</title>
         <search>
@@ -101,6 +103,24 @@
         <option name="trellis.enabled">0</option>
         <option name="trellis.scales.shared">1</option>
         <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Dog</title>
+      <chart>
+        <title>Dog</title>
+        <search>
+          <query>|inputlookup dog.csv
+|timechart values(y) span=15m</query>
+          <earliest>0</earliest>
+          <latest></latest>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.visibility">collapsed</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.legend.placement">none</option>
       </chart>
     </panel>
   </row>

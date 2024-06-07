@@ -5,7 +5,7 @@
     <definition><![CDATA[
 {
 	"visualizations": {
-		"viz_fiZFwgOH": {
+		"viz_5APnbrpC": {
 			"type": "splunk.pie",
 			"options": {
 				"collapseThreshold": 0.01,
@@ -17,34 +17,37 @@
 				]
 			},
 			"dataSources": {
-				"primary": "ds_2JoHmYOB"
+				"primary": "ds_yIf9emks"
 			},
 			"title": "Pyramid",
 			"showProgressBar": true
 		},
-		"viz_eLbPYaOd": {
+		"viz_If3v47DR": {
 			"type": "splunk.pie",
 			"options": {
 				"collapseThreshold": 0.01,
-				"seriesColorsByField": {},
-				"seriesColors": [
-					"#FFBF00",
-					"#000000",
-					"#FFBF00",
-					"#FFBF00"
-				]
+				"seriesColors": "[#fdff00,0x000000,0xfdff00]"
 			},
 			"dataSources": {
-				"primary": "ds_SFOveNV6"
+				"primary": "ds_VNV8DYhc"
 			},
 			"title": "Pacman",
 			"showProgressBar": true
 		},
-		"viz_KYGpvqFS": {
+		"viz_5PFqNgvG": {
 			"type": "splunk.line",
 			"options": {
+				"yAxisAbbreviation": "off",
+				"y2AxisAbbreviation": "off",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisTitleVisibility": "hide",
+				"yAxisTitleVisibility": "hide",
+				"nullValueDisplay": "connect",
+				"legendDisplay": "off",
 				"seriesColors": [
-					"#CCCCCC",
+					"#FFFFFF",
 					"#009CEB",
 					"#00CDAF",
 					"#DD9900",
@@ -64,29 +67,16 @@
 					"#F6540B",
 					"#FF969E",
 					"#E47BFE"
-				],
-				"legendDisplay": "off",
-				"xAxisMajorTickSize": 2,
-				"nullValueDisplay": "connect",
-				"yAxisMajorTickSize": 3,
-				"yAxisMinorTickSize": 4,
-				"xAxisTitleVisibility": "hide",
-				"y2AxisMajorTickSize": 1,
-				"y2AxisMinorTickSize": 1,
-				"showRoundedY2AxisLabels": false,
-				"y2AxisAbbreviation": "off",
-				"y2AxisLabelVisibility": "hide",
-				"y2AxisMajorTickVisibility": "hide",
-				"y2AxisMinorTickVisibility": "hide"
+				]
 			},
 			"dataSources": {
-				"primary": "ds_NQWSjpdb"
+				"primary": "ds_YQzLRisV"
 			},
 			"title": "Dog"
 		}
 	},
 	"dataSources": {
-		"ds_2JoHmYOB": {
+		"ds_yIf9emks": {
 			"type": "ds.search",
 			"options": {
 				"query": "|makeresults\n|eval \"1. Sky\"=35, \"4. Sky\"=35, \"2. Shady side of pyramide\"=15, \"3. Sunny side of pyramide\"=15\n| eval _time=now()\n| untable _time color count\n| fields - _time\n| sort  color",
@@ -95,9 +85,9 @@
 					"latest": "now"
 				}
 			},
-			"name": "Pyramid search"
+			"name": "Pyramid - Pyramid search"
 		},
-		"ds_SFOveNV6": {
+		"ds_VNV8DYhc": {
 			"type": "ds.search",
 			"options": {
 				"query": "|makeresults\n|eval \"1. Resembles pacman\"=15, \"2. Resembles pacman too\"=15,\"3. Resembles pacman\"=60\n| eval _time=now()\n| untable _time color count\n| fields - _time\n| sort  color",
@@ -106,18 +96,17 @@
 					"latest": "now"
 				}
 			},
-			"name": "Pacman search"
+			"name": "Pacman - Pacman search"
 		},
-		"ds_NQWSjpdb": {
+		"ds_YQzLRisV": {
 			"type": "ds.search",
 			"options": {
+				"query": "|inputlookup dog.csv\n|timechart values(y) span=15m",
 				"queryParameters": {
-					"earliest": "0",
-					"latest": ""
-				},
-				"query": "|inputlookup dog.csv\n|timechart values(y) span=15m"
+					"earliest": "0"
+				}
 			},
-			"name": "Search_1"
+			"name": "Dog - Dog search"
 		}
 	},
 	"defaults": {
@@ -131,40 +120,41 @@
 	},
 	"inputs": {},
 	"layout": {
-		"type": "grid",
+		"type": "absolute",
 		"options": {
-			"height": 250,
-			"width": 1440
+			"height": 680,
+			"width": 1024,
+			"display": "auto"
 		},
 		"structure": [
 			{
-				"item": "viz_fiZFwgOH",
+				"item": "viz_5APnbrpC",
 				"type": "block",
 				"position": {
 					"x": 0,
 					"y": 0,
-					"w": 487,
+					"w": 510,
 					"h": 250
 				}
 			},
 			{
-				"item": "viz_eLbPYaOd",
+				"item": "viz_If3v47DR",
 				"type": "block",
 				"position": {
-					"x": 487,
+					"x": 510,
 					"y": 0,
-					"w": 478,
+					"w": 510,
 					"h": 250
 				}
 			},
 			{
-				"item": "viz_KYGpvqFS",
+				"item": "viz_5PFqNgvG",
 				"type": "block",
 				"position": {
-					"x": 965,
-					"y": 0,
-					"w": 475,
-					"h": 250
+					"x": 10,
+					"y": 260,
+					"w": 1010,
+					"h": 420
 				}
 			}
 		],
