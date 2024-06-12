@@ -1,5 +1,5 @@
 <form version="1.1" theme="dark">
-  <label>Dashboard_BaseSearch</label>
+  <label>Base Search - XML</label>
   <search id="singleValue_BaseSearch">
     <query>
  |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time
@@ -17,7 +17,6 @@
       </default>
     </input>
   </fieldset>
- 
   <row>
     <panel>
       <title>Number of Sources</title>
@@ -99,7 +98,7 @@
       </single>
     </panel>
   </row>
-   <row>
+  <row>
     <panel>
       <title>Source timechart</title>
       <chart>

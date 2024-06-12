@@ -1,0 +1,196 @@
+
+<dashboard version="2" theme="light">
+    <label>Pseudonymize user names and reveal on click - DS</label>
+    <description>Depending on your role you can switch to clear text user names</description>
+    <definition><![CDATA[
+{
+	"visualizations": {
+		"viz_PqGyFBx9": {
+			"type": "splunk.table",
+			"options": {
+				"drilldown": "none",
+				"showInternalFields": false
+			},
+			"dataSources": {
+				"primary": "ds_OLK3dpmT"
+			},
+			"title": "ROLES",
+			"showProgressBar": true
+		},
+		"viz_AtMONBSr": {
+			"type": "splunk.pie",
+			"dataSources": {
+				"primary": "ds_K163sErj"
+			},
+			"title": "RESULT"
+		},
+		"viz_1Dczf5Iq": {
+			"type": "splunk.markdown",
+			"options": {
+				"markdown": "Role isAdmin: <$CheckRole:result.isAdmin$>\n\nShow Real Names: <$showRealNames$>\n\nPostprocess: <$CreatePostprocess:result.postprocess$>"
+			}
+		}
+	},
+	"dataSources": {
+		"ds_base": {
+			"type": "ds.search",
+			"options": {
+				"query": "|makeresults format=csv data=\"username,login\npchekhov, 7\nmspock, 16\njtkirk, 2\nhsulu, 6\nnuhura, 5\"\n|stats max(login) by username",
+				"queryParameters": {
+					"earliest": "$time_tok.earliest$",
+					"latest": "$time_tok.latest$"
+				}
+			},
+			"name": "ds_base"
+		},
+		"ds_OLK3dpmT": {
+			"type": "ds.search",
+			"options": {
+				"query": "| rest /services/authentication/current-context splunk_server=local \n| fields roles \n| eval isAdmin=if(isnotnull(mvfind(roles, \"^admin\")), \"true\", \"false\")",
+				"queryParameters": {
+					"earliest": "-15m",
+					"latest": "now"
+				}
+			},
+			"name": "ROLES - Table search"
+		},
+		"ds_K163sErj": {
+			"type": "ds.chain",
+			"options": {
+				"extend": "ds_base",
+				"query": "$CreatePostprocess:result.postprocess$"
+			},
+			"name": "RESULT"
+		},
+		"ds_4racZNfG": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-15m",
+					"latest": "now"
+				},
+				"query": "| rest /services/authentication/current-context splunk_server=local \n| fields roles \n| eval isAdmin=if(isnotnull(mvfind(roles, \"^admin\")), \"true\", \"false\")",
+				"enableSmartSources": true
+			},
+			"name": "CheckRole"
+		},
+		"ds_DGnvUBwd": {
+			"type": "ds.chain",
+			"options": {
+				"extend": "ds_4racZNfG",
+				"query": "| eval options=if(isAdmin==\"true\", split(\"Yes:true##No:false\", \"##\"), null()) \n| fields options \n| mvexpand options \n| eval options=split(options, \":\") \n| eval label=mvindex(options, 0), value=mvindex(options, 1) \n| fields label value"
+			},
+			"name": "ShowRealNamesDropdown"
+		},
+		"ds_SIF0ohb5": {
+			"type": "ds.search",
+			"options": {
+				"queryParameters": {
+					"earliest": "-15m",
+					"latest": "now"
+				},
+				"query": "| makeresults count=1 \n| fields - _time \n| eval postprocess=if(\"$showRealNames$\"==\"true\", \" \", \"| eval username=\\\"user_\\\" . substr(sha256(username), 1, 10)\") ",
+				"enableSmartSources": true
+			},
+			"name": "CreatePostprocess"
+		}
+	},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {}
+				}
+			}
+		}
+	},
+	"inputs": {
+		"input_MmuT8h4m": {
+			"type": "input.timerange",
+			"options": {
+				"token": "time_tok",
+				"defaultValue": "-4h@m,now"
+			},
+			"title": "Time Range"
+		},
+		"input_4azUlczn": {
+			"type": "input.dropdown",
+			"options": {
+				"defaultValue": "false",
+				"items": ">frame(label, value) | prepend(formattedStatics) | objects()",
+				"token": "showRealNames"
+			},
+			"title": "Show Real Names",
+			"hideWhenNoData": true,
+			"dataSources": {
+				"primary": "ds_DGnvUBwd"
+			},
+			"context": {
+				"formattedConfig": {
+					"number": {
+						"prefix": ""
+					}
+				},
+				"formattedStatics": ">statics | formatByType(formattedConfig)",
+				"statics": [],
+				"label": ">primary | seriesByName(\"label\") | renameSeries(\"label\") | formatByType(formattedConfig)",
+				"value": ">primary | seriesByName(\"value\") | renameSeries(\"value\") | formatByType(formattedConfig)"
+			}
+		}
+	},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"height": 1000,
+			"width": 1440,
+			"display": "auto"
+		},
+		"structure": [
+			{
+				"item": "viz_PqGyFBx9",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 1440,
+					"h": 140
+				}
+			},
+			{
+				"item": "viz_AtMONBSr",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 150,
+					"w": 1440,
+					"h": 350
+				}
+			},
+			{
+				"item": "viz_1Dczf5Iq",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 500,
+					"w": 710,
+					"h": 110
+				}
+			}
+		],
+		"globalInputs": [
+			"input_MmuT8h4m",
+			"input_4azUlczn"
+		]
+	},
+	"description": "Depending on your role you can switch to clear text user names",
+	"title": "Pseudonymize user names and reveal on click - DS"
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>

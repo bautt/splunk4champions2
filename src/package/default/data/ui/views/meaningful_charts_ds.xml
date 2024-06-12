@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="dark">
-    <label>Meaningful Charts DS</label>
+    <label>Meaningful Charts 0</label>
     <description></description>
     <definition><![CDATA[
 {
@@ -161,7 +161,7 @@
 		"globalInputs": []
 	},
 	"description": "",
-	"title": "Meaningful Charts DS"
+	"title": "Meaningful Charts 0"
 }
     ]]></definition>
     <meta type="hiddenElements"><![CDATA[

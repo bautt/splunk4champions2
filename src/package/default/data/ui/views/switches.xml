@@ -1,4 +1,5 @@
 <dashboard version="1.1" stylesheet="s4c_dashboards.css">
+  <label>Panel Switches - XML</label>
   <row>
     <panel>
       <title>Task 2.2</title>
@@ -63,5 +64,4 @@
       </chart>
     </panel>
   </row>
-  
 </dashboard>

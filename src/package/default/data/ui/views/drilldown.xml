@@ -1,5 +1,5 @@
-<dashboard  version="1.1" stylesheet="s4c_dashboards.css">
-  
+<dashboard version="1.1" stylesheet="s4c_dashboards.css">
+  <label>Pan and Zoom - XML</label>
   <search>
     <query>index="_audit"</query>
     <preview>

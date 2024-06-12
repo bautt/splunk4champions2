@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="dark">
-    <label>DS_tokens</label>
+    <label>Default Tokens - DS</label>
     <description></description>
     <definition><![CDATA[
 {
@@ -214,7 +214,7 @@
 			"input_global_trp"
 		]
 	},
-	"title": "DS_tokens",
+	"title": "Default Tokens - DS",
 	"description": "",
 	"defaults": {
 		"dataSources": {
