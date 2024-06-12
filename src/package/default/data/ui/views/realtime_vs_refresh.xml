@@ -1,5 +1,5 @@
-<dashboard  version="1.1" theme="dark">
-  <label>Realtime_vs_refresh</label>
+<dashboard version="1.1" theme="dark">
+  <label>Realtime vs. Refresh - XML</label>
   <row>
     <panel>
       <title>Realtime Search 5m window (BAD): index=_* OR index=*| timechart count by component limit=10</title>

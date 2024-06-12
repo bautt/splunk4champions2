@@ -1,0 +1,113 @@
+<form version="1.1" theme="light" hideExport="true" hideEdit="false">
+  <label>Pseudonymize user names and reveal on click - XML</label>
+  <init>
+    <set token="postprocess">| eval username="user_" . substr(sha256(username), 1, 10)</set>
+  </init>
+  <search id="base">
+    <query>|makeresults format=csv data="username,login
+pchekhov, 7
+mspock, 16
+jtkirk, 2
+hsulu, 6
+nuhura, 5"
+|stats max(login) by username</query>
+    <earliest>$time_tok.earliest$</earliest>
+    <latest>$time_tok.latest$</latest>
+  </search>
+  <fieldset submitButton="false">
+    <input type="time" token="time_tok">
+      <label>Time Range</label>
+      <default>
+        <earliest>-4h@m</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown" token="showValues" depends="$role$" searchWhenChanged="true">
+      <label>Show Real Names</label>
+      <choice value="true">Yes</choice>
+      <choice value="false">No</choice>
+      <default>false</default>
+      <initialValue>false</initialValue>
+      <change>
+        <condition label="Yes">
+          <set token="postprocess"></set>
+        </condition>
+        <condition label="No">
+          <set token="postprocess">| eval username="user_" . substr(sha256(username), 1, 10)</set>
+        </condition>
+      </change>
+    </input>
+  </fieldset>
+  <row depends="$alwaysHideCSSPanel$">
+    <panel>
+      <html>
+         <style>
+          /* HIDE ALL MENU KINKS */
+          .view-mode .dashboard-element .element-footer .menus {
+          display: none !important;
+          }          /* HIDE PANEL FOOTER LINE */
+          .view-mode .element-footer {
+          display: none !important;
+          }
+         </style>
+       </html>
+    </panel>
+  </row>
+  <row>
+    <panel id="logo">
+      <title>LOGO</title>
+      <html>
+        <style>
+         </style>  
+         <h1>
+         <img src="europe.png" width="180px" height="75px" hspace="20" style="float:left"/>
+      </h1>
+    </html>
+    </panel>
+    <panel id="statement" depends="$role$">
+      <title>INFO</title>
+      <html>
+        <style/>  
+        <h1>
+          <p>You are allowed to see real names: $role$</p>
+          <p>You selected to see real names: $showValues$</p>
+          <p>Postprocess: $postprocess$</p>
+        </h1>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>ROLES</title>
+      <table>
+        <search>
+          <query>| rest /services/authentication/current-context splunk_server=local 
+| fields roles 
+| eval isAdmin=if(isnotnull(mvfind(roles, "^admin")), "true", "false")</query>
+          <earliest>-15m</earliest>
+          <latest>now</latest>
+          <done>
+            <condition match="$result.isAdmin$==&quot;true&quot;">
+              <set token="role">true</set>
+            </condition>
+          </done>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>RESULT with postprocess=$postprocess$</title>
+      <chart>
+        <search base="base">
+          <query>$postprocess$</query>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

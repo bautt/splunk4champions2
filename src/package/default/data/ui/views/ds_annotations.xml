@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="light">
-    <label>DS_Annotations</label>
+    <label>Annotations - DS</label>
     <description></description>
     <definition><![CDATA[
 {
@@ -242,7 +242,7 @@
 			"input_global_trp"
 		]
 	},
-	"title": "DS_Annotations",
+	"title": "Annotations - DS",
 	"defaults": {
 		"tokens": {
 			"default": {

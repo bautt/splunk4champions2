@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="dark">
-    <label>DS_BaseSearch</label>
+    <label>Base Search - DS</label>
     <description></description>
     <definition><![CDATA[
 {
@@ -433,7 +433,7 @@
 		]
 	},
 	"description": "",
-	"title": "DS_BaseSearch"
+	"title": "Base Search - DS"
 }
     ]]></definition>
     <meta type="hiddenElements"><![CDATA[

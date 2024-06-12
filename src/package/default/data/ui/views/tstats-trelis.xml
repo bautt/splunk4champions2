@@ -1,5 +1,5 @@
 <dashboard version="1.1">
-  <label>Trellis Example: Which weather do you prefer?</label>
+  <label>Trellis Example: Weather - XML</label>
   <row>
     <panel>
       <title>Where should we go? (winter 2021)</title>

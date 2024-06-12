@@ -1,5 +1,5 @@
 <form version="1.1" theme="light">
-  <label>Colors</label>
+  <label>Custom Colors - XML</label>
   <fieldset submitButton="false" autoRun="true">
     <input type="dropdown" token="tokShowHidePanel" searchWhenChanged="true">
       <label>Display Panel</label>

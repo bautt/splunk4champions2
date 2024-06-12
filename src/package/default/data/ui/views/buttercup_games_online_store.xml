@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="light">
-    <label>Buttercup Games Online Store</label>
+    <label>Buttercup Games Online Store - DS</label>
     <description>Dashboard Studio Tutorial</description>
     <definition><![CDATA[
 {
@@ -297,7 +297,7 @@
 		]
 	},
 	"description": "Dashboard Studio Tutorial",
-	"title": "Buttercup Games Online Store"
+	"title": "Buttercup Games Online Store - DS"
 }
     ]]></definition>
     <meta type="hiddenElements"><![CDATA[
