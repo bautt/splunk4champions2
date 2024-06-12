@@ -60,7 +60,7 @@ nuhura, 5"
         <style>
          </style>  
          <h1>
-         <img src="europe.png" width="180px" height="75px" hspace="20" style="float:left"/>
+         <img src="/static/app/splunk4champions2/images/europe.png"  width="180px" height="75px" hspace="20" style="float:left"/>
       </h1>
     </html>
     </panel>

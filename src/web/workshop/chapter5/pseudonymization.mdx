@@ -1,0 +1,23 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## User names and other PID data
+
+* Anonymization: Irreversibly replace data
+* Pseudonymization: Reversibly replace data
+
+If you need to  hide data at presentation layer: 
+* "your_search" | eval user=sha256(user)
+* Can use your own custom search command
+ 
+ in addition to hiding the data in the dashboard, you will also need to apply user lockdown: no search app, no raw events. 
+
+<img src="/static/app/splunk4champions2/images/pseudo.png" width="80%"/>
+
+Go to <Link to="https://conf.splunk.com/files/2017/slides/data-obfuscation-and-field-protection-in-splunk.pdf" openInNewContext>Data Obfuscation and Field
+Protection in Splunk - Dirk Nitschke</Link>
+
+In our example we create a dashboard which hides user names by default and only members of the admin group can use a switch to display clear names. 
+<Link to="pseudo" openInNewContext>Pseudonymize user names and reveal on click - XML</Link>
+
+<Link to="pseudo_ds" openInNewContext>Pseudonymize user names and reveal on click - DS</Link>

@@ -439,7 +439,16 @@ const labs = {
                 
                     ]
                 }, 
-               
+                {
+                    "title": "Pseudonymization",
+                    "steps": [
+                        {
+                            "title": "Hide user names",
+                            "content": "chapter5/pseudonymization.mdx"
+                        }
+                
+                    ]
+                }, 
                 
             ]
         },
