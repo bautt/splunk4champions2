@@ -68,3 +68,14 @@ Lispy efficiency can be defined as `eventCount / scanCount`
 | eval lispy_efficiency = event_count / scan_count|where scan_count > 100 AND total_run_time > 2
 | table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}>
 </SplunkSearch>
+
+## Search optimization 
+Use this search to see latest searches optimized: 
+
+<SplunkSearch earliest="-30d" latest="now" spl={`| rest /services/search/jobs count=0 
+| where author!="splunk-system-user"
+| sort - runDuration
+| table author runDuration search optimizedSearch 
+| rex mode=sed field=optimizedSearch "s/\|/\n|/g"
+| eval optimizedSearch=substr(optimizedSearch,3,1000)`}>
+</SplunkSearch>
