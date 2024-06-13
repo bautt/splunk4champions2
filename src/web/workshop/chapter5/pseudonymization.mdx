@@ -1,12 +1,12 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## User names and other PID data
-
-## Usernames and Other PID Data
+## Hiding Usernames and Other PID Data
 
 * Anonymization: Irreversibly replace data
 * Pseudonymization: Reversibly replace data
+
+### How to hide or reveal PID data depending on the Role:
 
 Consider the following scenario: 
 A Level 1 analyst group should be able to view dashboards without seeing clear names. 
@@ -25,9 +25,6 @@ If you need to  hide data at presentation layer:
 
 
 <img src="/static/app/splunk4champions2/images/pseudo.png" width="80%"/>
-
-Go to <Link to="https://conf.splunk.com/files/2017/slides/data-obfuscation-and-field-protection-in-splunk.pdf" openInNewContext>Data Obfuscation and Field
-Protection in Splunk - Dirk Nitschke</Link>
 
 In our example we create a dashboard which hides user names by default and only members of the admin group can use a switch to display clear names. 
 <Link to="pseudo" openInNewContext>Pseudonymize user names and reveal on click - XML</Link>
