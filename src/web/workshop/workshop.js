@@ -445,10 +445,14 @@ const labs = {
                         {
                             "title": "Hide user names",
                             "content": "chapter5/pseudonymization.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter5/useful_links5.mdx"
                         }
-                
+
                     ]
-                }, 
+                }
                 
             ]
         },
@@ -523,6 +527,20 @@ const labs = {
                             "title": "Useful Links",
                             "content": "chapter6/useful_links6.mdx"
                         }
+                    ]
+                },
+                {
+                    "title": "Pseudonymization",
+                    "steps": [
+                        {
+                            "title": "Hide user names",
+                            "content": "chapter6/pseudonymization.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter5/useful_links5.mdx"
+                        }
+
                     ]
                 }
                 
