@@ -3,14 +3,26 @@ import Link from '@splunk/react-ui/Link'
 
 ## User names and other PID data
 
+## Usernames and Other PID Data
+
 * Anonymization: Irreversibly replace data
 * Pseudonymization: Reversibly replace data
 
+Consider the following scenario: 
+A Level 1 analyst group should be able to view dashboards without seeing clear names. 
+Level 2 analysts, who have a different Splunk user role, should also not see clear names by default, 
+but they should have the ability to reveal the names with a click (this action is audited and documented).
+
+This approach only hides data at the presentation layer. 
+Additional measures are required to prevent unauthorized searches. 
+For enhanced security, you may choose to pseudonymize data at index time and optionally store it in two separate indexes.
+
 If you need to  hide data at presentation layer: 
 * "your_search" | eval user=sha256(user)
-* Can use your own custom search command
  
- in addition to hiding the data in the dashboard, you will also need to apply user lockdown: no search app, no raw events. 
+ In addition to hiding the data in the dashboard, you will also need to apply user lockdown: no search app, no raw events. 
+
+
 
 <img src="/static/app/splunk4champions2/images/pseudo.png" width="80%"/>
 
