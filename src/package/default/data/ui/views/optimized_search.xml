@@ -1,0 +1,28 @@
+<dashboard version="1.1" theme="light">
+  <label>optimized_search</label>
+  <description>Optimized</description>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>| rest /services/search/jobs count=0 
+| where author!="splunk-system-user"
+| sort - runDuration
+| table author runDuration search optimizedSearch 
+| rex mode=sed field=optimizedSearch "s/\|/\n|/g"
+| eval optimizedSearch=substr(optimizedSearch,3,1000)</query>
+          <earliest>-30d</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">20</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">false</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</dashboard>
