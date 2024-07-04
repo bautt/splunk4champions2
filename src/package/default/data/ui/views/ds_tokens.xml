@@ -19,7 +19,7 @@
 		"ds_CPSXv4Gy": {
 			"type": "ds.search",
 			"options": {
-				"query": "| makeresults\n| eval \"Time Zone\" = \"$timezone$\"\n| eval \"Current Locale\" =\"$env:locale$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"User Name\" =\"$env:user$\"\n| eval \"User Real Name\" =\"$env:user_realname$\"\n| eval \"User Email\" =\"$env:user_email$\"\n| eval \"App Context\" = \"$env:app$\"\n| table *",
+				"query": "| makeresults\n| eval \"Time Zone\" = \"$env:user_timezone$\"\n| eval \"Current Locale\" =\"$env:locale$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"Splunk Version\" = \"$env:version$\"\n| eval \"User Name\" =\"$env:user$\"\n| eval \"User Real Name\" =\"$env:user_realname$\"\n| eval \"User Email\" =\"$env:user_email$\"\n| eval \"App Context\" = \"$env:app$\"\n| table *",
 				"queryParameters": {
 					"earliest": "-24h@h",
 					"latest": "now"
