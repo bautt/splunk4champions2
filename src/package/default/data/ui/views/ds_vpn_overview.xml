@@ -562,7 +562,7 @@
 				{
 					"type": "drilldown.customUrl",
 					"options": {
-						"url": "https://itsi-demo-emea.splunk.show/en-GB/app/itsi/deep_dive?savedDeepDiveID=4f5cfe6a-8bf5-11ea-801d-026861aedb46&owner=nobody&earliest=-4h%40m&latest=now"
+						"url": "https://es-demo-emea.splunk.show/en-US/app/InfoSec_App_for_Splunk/network?form.field1.earliest=-24h%40h&form.field1.latest=now&form.app_filter=ftp&form.host_filter=*&form.action_filter=allowed&form.min_hosts=1&form.field2.earliest=-24h%40h&form.field2.latest=now"
 					}
 				}
 			]
@@ -802,7 +802,16 @@
 			"options": {
 				"backgroundColor": "transparent",
 				"majorColor": "#f1813f"
-			}
+			},
+			"eventHandlers": [
+				{
+					"type": "drilldown.customUrl",
+					"options": {
+						"url": "https://itsi-demo-emea.splunk.show/en-US/app/itsi/homeview?view=standard&viewType=service_topology&earliest=-4h&latest=now&serviceId=6e73da65-133b-43b7-9f08-6e1909a02ac2&service=Buttercup%20Store",
+						"newTab": true
+					}
+				}
+			]
 		},
 		"viz_DxJndJGw": {
 			"type": "splunk.singlevalue",
@@ -1061,7 +1070,8 @@
 			"options": {
 				"markdown": "# Splunk T-Shirt Co\n",
 				"textColor": "#f5f5f5",
-				"fontSize": "extraLarge"
+				"fontSize": "extraLarge",
+				"fontColor": "#0877a6"
 			}
 		},
 		"viz_SYUaUf4G": {
@@ -1084,7 +1094,7 @@
 				{
 					"type": "drilldown.customUrl",
 					"options": {
-						"url": "https://i-0fa5253e1b2aca57e.splunk.show/en-GB/app/itsi/homeview?view=standard&viewType=service_topology&earliest=-12h&latest=now&serviceId=b68e8469-43e2-4677-80fd-5d10b01b699b"
+						"url": "https://itsi-demo-emea.splunk.show/en-US/app/itsi/deep_dive?savedDeepDiveID=4f5cfe6a-8bf5-11ea-801d-026861aedb46&owner=nobody&earliest=-4h%40m&latest=now"
 					}
 				}
 			]
@@ -1101,7 +1111,7 @@
 				{
 					"type": "drilldown.customUrl",
 					"options": {
-						"url": "https://itsi-demo-emea.splunk.show/en-GB/app/itsi/deep_dive?savedDeepDiveID=4f5cfe6a-8bf5-11ea-801d-026861aedb46&owner=nobody&earliest=-4h%40m&latest=now"
+						"url": "https://itsi-demo-emea.splunk.show/en-GB/app/itsi/homeview?view=standard&viewType=service_topology"
 					}
 				}
 			]
@@ -1110,7 +1120,8 @@
 			"type": "splunk.markdown",
 			"options": {
 				"markdown": " # Network  Management Dashboard\n#(mock-up)",
-				"fontSize": "large"
+				"fontSize": "large",
+				"fontColor": "#0877a6"
 			}
 		},
 		"viz_D7PzCYsT": {
@@ -2600,7 +2611,7 @@
 				"item": "viz_bwCtTuPb",
 				"type": "block",
 				"position": {
-					"x": 30,
+					"x": 40,
 					"y": 240,
 					"w": 490,
 					"h": 190
