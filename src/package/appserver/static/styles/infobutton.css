@@ -1,0 +1,19 @@
+.infobutton_button {
+	border: none;
+	background: none;
+	color: #b36b00;
+	position: absolute;
+	top: 1rem;
+	right: 2rem;
+	text-decoration: none;
+	font-size: 2.5rem;
+	outline: none;
+}
+
+.infobutton-content {
+	padding: 9px 55px 7px 12px;
+}
+
+.modal, .infobutton {
+	display: none;
+}
