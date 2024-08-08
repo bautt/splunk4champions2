@@ -1,0 +1,50 @@
+<dashboard version="1.1" theme="light" script="scripts/experiment_download.js, scripts/infobutton.js" stylesheet="styles/experiment_download.css, styles/infobutton.css">
+  <label>Download Phyphox Experiments</label>
+  <row>
+    <panel>
+      <html>
+      
+      <form id="form">
+        <div class="form-container">
+          <h2>Add HEC endpoint- &amp; token parameter</h2>
+            <div class="form-group">
+              <label for="hec_protocol">Protocol</label>
+              <select id="hec_protocol" name="hec_protocol">
+                <option value="http">http</option>
+                <option value="https">https</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="hec_host">Host</label>
+              <input type="text" id="hec_host" name="hec_host" placeholder="Enter host address" required=""/>
+            </div>
+            <div class="form-group">
+              <label for="hec_port">Port</label>
+              <input type="number" id="hec_port" name="hec_port" placeholder="Enter port number" value="8088" required=""/>
+            </div>
+            <div class="form-group">
+              <label for="hec_token">Token</label>
+              <input type="text" id="hec_token" name="hec_token" placeholder="Enter token" required=""/>
+            </div>
+        </div>
+      
+        <div class="form-container">
+          <h2>Select an existing Phyphox examples</h2>
+            <div class="form-group">
+              <label for="experimentFileDropdown">Available Examples</label>
+              <select id="experimentFileDropdown" name="experimentFileDropdown">
+                <option value="">Select a file</option>
+              </select>
+            </div>
+        </div>
+      </form>
+
+      <div class="button-container">
+        <button id="download_experiment">DOWNLOAD</button>
+        <div id="qrCode"></div>
+      </div>
+
+    </html>
+    </panel>
+  </row>
+</dashboard>
