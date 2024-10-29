@@ -11,7 +11,7 @@
               <label for="hec_protocol">Protocol</label>
               <select id="hec_protocol" name="hec_protocol">
                 <option value="http">http</option>
-                <option value="https">https</option>
+                <option value="https" selected="selected">https</option>
               </select>
             </div>
             <div class="form-group">
