@@ -1,0 +1,24 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+<img src="/static/app/splunk4champions2/images/phyphox_large.png" width="80%" />
+
+
+## Phyphox app on your phone
+This project leverages the RWTH Phyphox app to collect sensor data from mobile devices, enabling real-time analytics and insights. 
+Phyphox, developed by RWTH Aachen University, is popular and trusted because it combines scientific rigor with accessibility and a focus on privacy. 
+
+## Lab 
+This lab contains following steps: 
+
+1) Install the app on your phone (iPhone or Android) 
+<Link to="https://phyphox.org/download/" openInNewContext> Phyphox App Download Page</Link>
+
+2) Enable HEC : /en-GB/manager/splunk4champions2/http-eventcollector -> Edit Global Settings -> Enable
+(Settings -> Data Inputs -> HTTP Event Collector -> Global Settings -> All Tokens "Enabled" )
+    Copy token value for metrics data
+3) Go to 
+<Link to="download_phyphox_experiments" openInNewContext>Phyphox configuration generator dashboard </Link> and configure your experiment. This config file will contain your splunk address and the hec token, so the app will be able to send json data directly to Splunk. 
+
+4) Transfer the xml-configuration file to your phone: you can use the camera and scan the QR code, than open the link, download the file and open with the phyphox app. 
+
