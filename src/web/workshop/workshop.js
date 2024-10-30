@@ -382,6 +382,19 @@ const labs = {
                             "content": "chapter4/useful_links5.mdx"
                         }
                     ]
+                },
+                {
+                    "title": "Phyphox Experiments",
+                    "steps": [
+                        {
+                            "title": "Phyphox Experiments",
+                            "content": "chapter4/phyphox.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links5.mdx"
+                        }
+                    ]
                 }
                 
             ]
