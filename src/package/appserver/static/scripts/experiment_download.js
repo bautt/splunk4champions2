@@ -2,13 +2,12 @@ require([
   'jquery',
   'splunkjs/mvc',
   'splunkjs/mvc/simplexml/ready!',
-  '/static/app/splunk4champions2/scripts/jquery.qrcode.min.js'
+  '/static/app/phyphox/scripts/jquery.qrcode.min.js'
 ], function($, mvc, qrcode) {
 
   /* some constant variables */
   const gitlab_project_id = '60356749';
   const gitlab_subfolder_path = 'phyphox_experiments';
-  const gitlab_branch_ref = 'main';
   const hec_protocol_placeholder = '$hec_protocol$';
   const hec_host_placeholder = '$hec_host$';
   const hec_port_placeholder = '$hec_port$';
@@ -33,6 +32,14 @@ require([
       $('#download_experiment').removeAttr('disabled');
     }
   });
+
+
+  /* get the host from the URL and add it as value to the host form-field */
+  var host = window.location.hostname;
+  var inputField = document.getElementById('hec_host');
+  if (inputField) {
+    inputField.value = host;
+  }
 
 
   /* get all available phyphox-experiment files from gitlab and add to dropdown */
@@ -62,7 +69,6 @@ require([
       /* set form input values if GET params available */
       var urlParams = new URLSearchParams(window.location.search);
       urlParams.forEach((value, key) => {
-        console.log(key,value);
         if ($.inArray(key, ['hec_protocol', 'experimentFileDropdown'])) {
           $(`#${key}`).val(value).change();
         }
@@ -89,35 +95,64 @@ require([
     var hec_host = $('#hec_host').val();
     var hec_port = $('#hec_port').val();
     var hec_token = $('#hec_token').val();
-
+    
     if ( !(experimentFile in XMLContent) ) {
-      $.ajax({
-        url: experimentFileUrl,
-        method: 'GET',
-        data: {
-          ref: gitlab_branch_ref
-        },
-        headers: {
-        },
-        success: function(data) {
-          XMLContent[experimentFile] = data;
-          replacePlaceholders();
-          renderQRCode();
-          updateHiddenAhref();
-        },
-        error: function() {
-          alert('Failed to download file.');
+      async function customizeXML() {
+        try {
+          var content = await downloadFile();
+          XMLContent[experimentFile] = content;
+          doXmlChanges();
+        } catch (error) {
+          console.error(error);
         }
-      });
+      }
+      customizeXML();
     } else {
+      doXmlChanges();
+    }
+
+    function downloadFile() {
+      return new Promise((resolve, reject) => {
+        $.ajax({
+          url: experimentFileUrl,
+          method: 'GET',
+          xhrFields: {
+            responseType: 'blob'
+          },
+          success: function(data) {
+            var reader = new FileReader();
+            reader.onload = function() {
+              var content = reader.result; // content of file as text
+              resolve(content);
+            };
+            reader.onerror = function() {
+              reject('Error reading XML file');
+            };            
+            reader.readAsText(data); // read blob as text
+          },
+          error: function() {
+            console.log('Failed to download file.');
+          }
+        });
+      });
+    }
+
+    function doXmlChanges() {
+      modifiedXMLContent[experimentFile] = XMLContent[experimentFile];
       replacePlaceholders();
+      addHecHostToDescription();
       renderQRCode();
       updateHiddenAhref();
     }
 
     function replacePlaceholders() {
       /* Update the file content */
-      modifiedXMLContent[experimentFile] = XMLContent[experimentFile].replace(hec_protocol_placeholder, hec_protocol).replace(hec_host_placeholder, hec_host).replace(hec_port_placeholder, hec_port).replace(hec_token_placeholder, hec_token);
+      modifiedXMLContent[experimentFile] = modifiedXMLContent[experimentFile].replace(hec_protocol_placeholder, hec_protocol).replace(hec_host_placeholder, hec_host).replace(hec_port_placeholder, hec_port).replace(hec_token_placeholder, hec_token);
+    }
+
+    function addHecHostToDescription() {
+      /* Update the file content */
+      modifiedXMLContent[experimentFile] = modifiedXMLContent[experimentFile].replace("<description>", `<description>${hec_host} - `);
     }
 
     function renderQRCode() {
