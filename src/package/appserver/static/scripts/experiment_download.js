@@ -2,7 +2,7 @@ require([
   'jquery',
   'splunkjs/mvc',
   'splunkjs/mvc/simplexml/ready!',
-  '/static/app/phyphox/scripts/jquery.qrcode.min.js'
+  '/static/app/splunk4champions2/scripts/jquery.qrcode.min.js'
 ], function($, mvc, qrcode) {
 
   /* some constant variables */
