@@ -39,18 +39,6 @@ The oldest event in a bucket exceeds a specific age
 
 Control retention for all indexes that reference the volume. Oldest bucket in the volume is deleted/frozen when defined size is exceeded.
 
----
-## SmartStore
-
-A SmartStore-enabled index minimizes its use of local storage, with the bulk of its data residing on remote object stores such as S3 or GCS.
-
-Indexing and searching of data occurs on the indexer, just as in a traditional deployment that stores all data locally.
-
-The key difference with SmartStore is that the remote object store becomes the location for master copies of warm buckets, while the indexer's local storage is used to cache copies of warm buckets currently participating in a search or that have a high likelihood of participating in a future search.
-
-A cache manager on the indexer fetches copies of warm buckets from the remote store and places them in the indexer's local cache when the buckets are needed for a search. The cache manager also evicts warm bucket copies from the cache once their likelihood of being searched again diminishes.
-* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/SmartStorearchitecture" openInNewContext>Smart Store Architecture docs </Link>
-
 ____
 ## tsidx reduction
 * <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Reducetsidxdiskusage" openInNewContext>tsidx reduction docs</Link>

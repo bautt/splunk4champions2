@@ -1,0 +1,68 @@
+import Link from '@splunk/react-ui/Link';
+
+
+<table width="100%">
+        <tr width="50%">           
+        <td>
+          In a SmartStore setup, most data resides in remote object stores like AWS S3, Google GCS or  Azure Blob Storage 
+significantly reducing local storage usage. Indexing and searching are performed on local machines, similar to traditional setups. 
+Unlike "Classic" Architecture, where all data is stored on local or network file systems, SmartStore manages data differently. 
+Recent "Hot" data is kept locally and replicated for reliability. 
+As data transitions from "hot" to "warm," it is uploaded to remote object storage, accessed through API calls. 
+Once confirmed stored remotely, additional local copies can be removed and will be marked as "evictable". The primary copy will be kept locally to search the data until the space is needed by the Cache Manager. 
+
+Splunk Enterprise can search only the data that is locally cached; if the required data is not present, it must first be downloaded from remote storage via API before it can be searched. 
+This architecture efficiently balances local and remote storage, optimizing both space utilization and data accessibility while eliminating the need for a separate frozen storage tier. It's "decoupling" compute from storage trading performance for cost efficiency. 
+
+        </td>
+        
+        <td width="50%"><img src="/static/app/splunk4champions2/images/Cache_manager.jpg" width="90%"/></td>
+
+        </tr>
+      </table>
+<p></p>
+
+
+
+<table width="100%">
+        <tr width="60%">
+        <td>
+   Imagine a library where you have a reading desk and all other books are stored on shelves. Splunk SmartStore works similarly:
+
+* Reading Table (Local Storage): Think of your reading desk as the local storage on your computer or server. It's where the books (data) you are currently using or need quick access to are kept.
+* Bookshelves (Remote Storage): The bookshelves represent a larger, remote storage space where most of the books (data) are stored. This could be cloud storage or another form of external storage.
+* Librarian (SmartStore Technology): The librarian is like the SmartStore technology. When you need a book that isn't on your table, the librarian quickly fetches it from the shelves and brings it to you. Similarly, SmartStore retrieves the necessary data from remote storage to local storage when you need it.
+* Returning Books: Once you're done with a book, the librarian puts it back on the shelves, freeing up space on your table. In the same way, SmartStore moves data back to remote storage when it's no longer actively needed, optimizing the use of local storage.
+* Searchable Books (Searchable Data): Even though some books are on the shelves and not on your table, you can still search for them. It just takes a bit longer for the librarian to bring them to your table. Similarly, with SmartStore, all data remains searchable, but accessing data from the remote storage may take a bit longer compared to accessing it from local storage.
+
+In essence, SmartStore efficiently manages data placement, ensuring that only the necessary data is kept readily accessible while the rest remains searchable in remote storage, just like the librarian manages the flow of books between your table and the library's shelve.
+
+Thanks to  <Link to="https://www.linkedin.com/in/holgersesterhenn/" openInNewContext>Holger Sesterhenn</Link>
+           </td>
+           <td width="40%"><img src="/static/app/splunk4champions2/images/library.jpg" width="80%"/></td>
+           
+        </tr>
+      </table>
+<p></p>
+
+
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/SmartStorearchitecture" openInNewContext>Smart Store Architecture docs </Link>
+
+* <Link to="https://www.splunk.com/en_us/blog/platform/splunk-smartstore-cut-the-cord-by-decoupling-compute-and-storage.html" openInNewContext> Smart Store 2018 Blog </Link>
+* <Link to="https://www.splunk.com/en_us/blog/platform/splunk-9-0-smartstore-with-microsoft-azure-container-storage.html" openInNewContext> Smart Store in Azure </Link>
+
+* <Link to="https://docs.splunk.com/Documentation/SVA/current/Architectures/SmartStore" openInNewContext> Validated Architectures  </Link>
+* <Link to="https://bigdatabeard.com/the-what-when-why-of-splunk-smartstore/" openInNewContext> BigDataBeard Blog on Smartstore  </Link>
+
+* <Link to="https://www.youtube.com/watch?v=U3wfj_KwJP0" openInNewContext> Smartstore youtube video  </Link>
+
+Partner Blogs: 
+* <Link to="https://www.amasol.de/blog/detail-page/what-is-splunk-smart-store " openInNewContext> Amasol blog  </Link>
+* <Link to="https://www.atlassian.com/blog/it-teams/unlocking-reliability-with-splunk-smartstore" openInNewContext> Atlassian blog</Link>
+* <Link to="https://hurricanelabs.com/splunk-tutorials/how-to-deploy-splunk-smartstore-for-improved-data-storage/" openInNewContext> Hurricane Labs Blog</Link>
+* <Link to="https://www.loadbalancer.org/blog/multi-site-active-active-splunk-smartstore-with-netapp-storagegrid/" openInNewContext> Smartstore with NetApp  </Link>
+
+.conf Talks
+* <Link to="https://resources.min.io/c/splunk-smartstore-box?x=p9k0ng" openInNewContext> MinIO Conf Talk</Link>
+* <Link to="https://conf.splunk.com/files/2019/slides/FN2168.pdf" openInNewContext> Splunk .conf Talk</Link>
+* <Link to="https://conf.splunk.com/files/2019/slides/FN1435.pdf" openInNewContext> Splunk .conf Talk</Link>
