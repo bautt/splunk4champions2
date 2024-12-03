@@ -186,8 +186,22 @@ const labs = {
                     "title": "Data aging",
                     "steps": [
                         {
-                            "title": "Indexers and Clusters",
+                            "title": "Data Aging",
                             "content": "chapter2/data_aging.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter2/useful_links3.mdx"
+                        }
+                       
+                    ]
+                }, 
+                {
+                    "title": "Smartstore",
+                    "steps": [
+                        {
+                            "title": "Splunk Smartstore",
+                            "content": "chapter2/smartstore.mdx"
                         },
                         {
                             "title": "Useful Links",
