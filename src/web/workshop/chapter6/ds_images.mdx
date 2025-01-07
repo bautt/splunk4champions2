@@ -8,8 +8,11 @@ How to work with images in Dashboard Studio 4 options:
 * Note: The image is stored in the system's KV store. If you need to transfer your app to another system (e.g., from development to production), the image is not automatically included in the app package.
 
 ## 2) Upload to a Central Image Repository and Reference with an External URL
+* You will have to add the URL to  <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/DashStudio/chartsImage" openInNewContext>Trusted Domains List</Link>
+
 * A more complex option, as it creates a dependency on an external system.
 * Considerations: If you share or publish your app outside your network, you'll need to expose the repository or redesign your approach.
+
 
 ## 3) Embed the Image Using Base64 Encoding
     1. Use online converter https://codebeautify.org/image-to-base64-converter to encode your image to Base64
