@@ -542,6 +542,20 @@ const labs = {
                         }
                     ]
                 },
+                {
+                    "title": "DS Images",
+                    "steps": [
+                        {
+                            "title": "Working with images in DS",
+                            "content": "chapter6/ds_images.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
+                },
+
 
                 {
                     "title": "DS Tokens",

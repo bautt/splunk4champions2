@@ -1,0 +1,28 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+How to work with images in Dashboard Studio 4 options:
+
+## 1) Upload Through the UI
+* This is the easiest option for testing and design purposes.
+* Note: The image is stored in the system's KV store. If you need to transfer your app to another system (e.g., from development to production), the image is not automatically included in the app package.
+
+## 2) Upload to a Central Image Repository and Reference with an External URL
+* A more complex option, as it creates a dependency on an external system.
+* Considerations: If you share or publish your app outside your network, you'll need to expose the repository or redesign your approach.
+
+## 3) Embed the Image Using Base64 Encoding
+    1. Use online converter https://codebeautify.org/image-to-base64-converter to encode your image to Base64
+    2. In json code replace the <code>kvstore://234234234.Link=...</code> line with <code>"src": "data:image/png;base64, \<your base64 code here"\> </code>
+* Pro: The image becomes part of the JSON code, ensuring it's included with the app
+* Con: However, this approach may impact performance and readability of your source code
+
+
+## 4) Store Images in the App's Local Directory
+    1. Copy images to ../appserver/static/images
+    2. Reference images by relative URL like this: "/static/app/YOURApp/images/YOURIMAGE.jpg" 
+* Note: This method is similar to how images are handled in XML-Dashboards
+* Images are packaged with the app 
+
+
+<Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/DashStudio/chartsImage" openInNewContext>Splunk Docs on Images in DS</Link>
