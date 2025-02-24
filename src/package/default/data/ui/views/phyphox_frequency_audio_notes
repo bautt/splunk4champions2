@@ -1,0 +1,116 @@
+<dashboard version="1.1" theme="light" stylesheet="styles/styles.css">
+  <label>Phyphox Audio Frequency Notes</label>
+  <row id="marginbottom_s_margintop_s_borderbottom_s_bordertop_s">
+    <panel>
+      <html>
+        <style>
+          pre { margin: 0px !important; }
+          #marginbottom_s_margintop_s_borderbottom_s_bordertop_s { display: none; }
+        </style>
+        <div id="approach_desc_wrapper">
+          <h1>Frequency (Hz) mapping approach</h1>
+          <ul>
+            <li>create static lookup with Frequency ⇔ Note mapping</li>
+            <li>train RandomForestClassifier model 'hz_notes_classification' to predict Note from Hz frequency to achieve mapping over variable range of Hz frequency</li>
+            <li>apply 'hz_notes_classification' model to Hz frequency range 0 to 4000 and save resulting mapping to lookup</li>
+            <li>use resulting lookup for mapping live measurements</li>
+          </ul>
+        </div>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel id="panel_width_20_2">
+      <title>current Hz Frequency and mapped Note</title>
+      <single>
+        <search>
+          <query>| mstats max("f0") prestats=true WHERE index="s4c_phyphox_metrics" span=1s 
+| timechart max("f0") AS max_f0 span=1s 
+| eval max_f0 = round(max_f0, 1)
+| lookup notes_frequency_0_4000_tenth.csv max_f0</query>
+          <earliest>-1s</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">block</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0.00</option>
+        <option name="rangeColors">["0xbbbbbb","0xbbbbbb"]</option>
+        <option name="rangeValues">[0]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">1</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel id="panel_width_80_2">
+      <title>mapping of Hz Frequency to Notes</title>
+      <chart>
+        <search>
+          <query>| mstats max("f0") prestats=true WHERE index="s4c_phyphox_metrics" span=1s 
+| timechart max("f0") AS max_f0 span=1s 
+| bin span=1s _time 
+| fields - _span*
+| eval max_f0 = round(max_f0, 1)
+| lookup notes_frequency_0_4000_tenth.csv max_f0
+| eval note_{Note} = 1 
+| fields - Note note_</query>
+          <earliest>-1m</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+          <refresh>1s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.includeZero">1</option>
+        <option name="charting.axisY.maximumNumber">100</option>
+        <option name="charting.axisY.minimumNumber">0</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">1</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.overlayFields">max_f0</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked100</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.fieldColors">{"Avg":"#1e93c6"}</option>
+        <option name="charting.fieldDashStyles">{"Avg":"Solid"}</option>
+        <option name="charting.gridLinesX.showMajorLines">1</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">seriesCompare</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </chart>
+    </panel>
+  </row>
+</dashboard>
