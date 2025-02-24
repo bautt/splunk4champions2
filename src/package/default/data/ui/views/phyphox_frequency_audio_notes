@@ -14,6 +14,7 @@
             <li>train RandomForestClassifier model 'hz_notes_classification' to predict Note from Hz frequency to achieve mapping over variable range of Hz frequency</li>
             <li>apply 'hz_notes_classification' model to Hz frequency range 0 to 4000 and save resulting mapping to lookup</li>
             <li>use resulting lookup for mapping live measurements</li>
+            <li> Use tone generator, for example https://www.onlinepianist.com/virtual-piano or https://midi.city</li>
           </ul>
         </div>
       </html>
