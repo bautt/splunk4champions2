@@ -1,0 +1,388 @@
+
+<dashboard version="2" theme="dark">
+    <label>Phyphox_Audio_Notes</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"visualizations": {
+		"viz_uVam74UN": {
+			"type": "viz.error",
+			"options": {}
+		},
+		"viz_ZNjAV8KA": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"sparklineDisplay": "below",
+				"trendDisplay": "absolute",
+				"unitPosition": "after",
+				"shouldUseThousandSeparators": true,
+				"unit": "Hz",
+				"majorColor": "> majorValue | rangeValue(majorColorEditorConfig)"
+			},
+			"context": {
+				"convertedColorRange": [
+					{
+						"from": 0,
+						"value": "#bbbbbb"
+					},
+					{
+						"to": 0,
+						"value": "#bbbbbb"
+					}
+				],
+				"majorColorEditorConfig": [
+					{
+						"to": 20,
+						"value": "#D41F1F"
+					},
+					{
+						"from": 20,
+						"to": 40,
+						"value": "#D94E17"
+					},
+					{
+						"from": 40,
+						"to": 60,
+						"value": "#CBA700"
+					},
+					{
+						"from": 60,
+						"to": 80,
+						"value": "#669922"
+					},
+					{
+						"from": 80,
+						"value": "#118832"
+					}
+				]
+			},
+			"dataSources": {
+				"primary": "ds_tDlnKAS5_ds_oMndSczA"
+			},
+			"title": "Peak Frequency in Hz",
+			"showProgressBar": true
+		},
+		"viz_J4AL9HzO": {
+			"type": "splunk.column",
+			"options": {
+				"yAxisAbbreviation": "auto",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisLabelRotation": 0,
+				"xAxisTitleVisibility": "show",
+				"yAxisTitleVisibility": "show",
+				"showYAxisWithZero": 1,
+				"yAxisMax": 100,
+				"yAxisMin": 0,
+				"yAxisScale": "linear",
+				"showOverlayY2Axis": 1,
+				"y2AxisScale": "log",
+				"overlayFields": [
+					"max_f0"
+				],
+				"dataValuesDisplay": "off",
+				"stackMode": "stacked100",
+				"seriesColorsByField": {
+					"Avg": "#1e93c6"
+				},
+				"showXMajorGridLines": 1,
+				"showSplitSeries": 0,
+				"showIndependentYRanges": 0,
+				"legendDisplay": "right",
+				"yAxisMajorTickSize": 2,
+				"y2AxisAbbreviation": "off"
+			},
+			"dataSources": {
+				"primary": "ds_gI2LhSo2"
+			},
+			"title": "Notes over time",
+			"showProgressBar": true
+		},
+		"viz_joIXAGg3": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 2,
+				"sparklineDisplay": "below",
+				"trendDisplay": "absolute",
+				"unitPosition": "after",
+				"shouldUseThousandSeparators": true,
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('Note')",
+				"majorColor": "> majorValue | matchValue(majorColorEditorConfig)",
+				"trendColor": "transparent"
+			},
+			"context": {
+				"convertedColorRange": [
+					{
+						"from": 0,
+						"value": "#bbbbbb"
+					},
+					{
+						"to": 0,
+						"value": "#bbbbbb"
+					}
+				],
+				"majorColorEditorConfig": [
+					{
+						"match": "A0",
+						"value": "#D41F1F"
+					},
+					{
+						"match": "G2",
+						"value": "#D97A0D"
+					},
+					{
+						"match": "D3",
+						"value": "#9D9F0D"
+					},
+					{
+						"match": "A1",
+						"value": "#118832"
+					}
+				]
+			},
+			"dataSources": {
+				"primary": "ds_tDlnKAS5_ds_oMndSczA"
+			},
+			"title": "current Hz Frequency and mapped Note",
+			"showProgressBar": true
+		},
+		"viz_fLVElHnI": {
+			"type": "splunk.column",
+			"options": {
+				"yAxisAbbreviation": "auto",
+				"y2AxisAbbreviation": "auto",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisLabelRotation": 0,
+				"xAxisTitleVisibility": "show",
+				"yAxisTitleVisibility": "hide",
+				"showYAxisWithZero": 1,
+				"yAxisMax": 100,
+				"yAxisMin": 0,
+				"yAxisScale": "log",
+				"showOverlayY2Axis": 1,
+				"y2AxisScale": "log",
+				"overlayFields": [
+					"max_f0"
+				],
+				"stackMode": "stacked100",
+				"seriesColorsByField": {
+					"Avg": "#1e93c6"
+				},
+				"showXMajorGridLines": 1,
+				"showIndependentYRanges": 0,
+				"legendDisplay": "right",
+				"dataValuesDisplay": "minmax",
+				"columnGrouping": "overlay",
+				"xAxisLabelVisibility": "show",
+				"y2AxisMajorTickVisibility": "hide",
+				"y2AxisMinorTickVisibility": "hide"
+			},
+			"dataSources": {
+				"primary": "ds_AP1JK2xq_ds_gI2LhSo2"
+			},
+			"title": "HZ Frequency time chart",
+			"showProgressBar": true
+		},
+		"viz_5XS9PcLk": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('deviceModel')"
+			},
+			"dataSources": {
+				"primary": "ds_oMndSczA"
+			}
+		},
+		"viz_OSu4qM51": {
+			"type": "splunk.table",
+			"options": {
+				"backgroundColor": "transparent",
+				"tableFormat": {
+					"rowBackgroundColors": "> table | seriesByIndex(0) | pick(tableAltRowBackgroundColorsByBackgroundColor)",
+					"headerBackgroundColor": "> backgroundColor | setColorChannel(tableHeaderBackgroundColorConfig)",
+					"rowColors": "> rowBackgroundColors | maxContrast(tableRowColorMaxContrast)",
+					"headerColor": "> headerBackgroundColor | maxContrast(tableRowColorMaxContrast)"
+				},
+				"headerVisibility": "none",
+				"columnFormat": {
+					"uniqueID": {
+						"data": "> table | seriesByName(\"uniqueID\") | formatByType(uniqueIDColumnFormatEditorConfig)"
+					}
+				},
+				"fontSize": "large",
+				"count": 4
+			},
+			"dataSources": {
+				"primary": "ds_tDlnKAS5_ds_oMndSczA"
+			},
+			"context": {
+				"uniqueIDColumnFormatEditorConfig": {
+					"string": {
+						"unitPosition": "after"
+					}
+				}
+			}
+		}
+	},
+	"dataSources": {
+		"ds_oMndSczA": {
+			"type": "ds.search",
+			"options": {
+				"query": "| mstats max(\"f0\") AS max_f0  WHERE index=\"s4c_phyphox_metrics\" by deviceModel, deviceBrand, uniqueID span=1s\n| eval max_f0 = round(max_f0, 0)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n",
+				"queryParameters": {
+					"earliest": "-1s",
+					"latest": "now"
+				},
+				"refresh": "1s",
+				"refreshType": "delay"
+			},
+			"name": "Peak Frequency in Hz"
+		},
+		"ds_gI2LhSo2": {
+			"type": "ds.search",
+			"options": {
+				"query": "| mstats max(\"f0\") prestats=true WHERE index=\"s4c_phyphox_metrics\" span=1s \n| timechart max(\"f0\") AS max_f0 span=1s \n| bin span=1s _time \n| fields - _span*\n| eval max_f0 = round(max_f0, 1)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n| eval note_{Note} = 1 \n| fields - Note note_",
+				"queryParameters": {
+					"earliest": "-1m",
+					"latest": "now"
+				},
+				"refresh": "1s",
+				"refreshType": "delay"
+			},
+			"name": "mapping of Hz Frequency to Notes - Column chart search"
+		},
+		"ds_tDlnKAS5_ds_oMndSczA": {
+			"type": "ds.search",
+			"options": {
+				"query": "| mstats max(\"f0\") AS max_f0  WHERE index=\"s4c_phyphox_metrics\" by deviceBrand, deviceModel, uniqueID span=1s\n| eval max_f0 = round(max_f0, 1)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n| fields - _time\n",
+				"queryParameters": {
+					"earliest": "-1s",
+					"latest": "now"
+				},
+				"refresh": "1s",
+				"refreshType": "delay"
+			},
+			"name": "latest data"
+		},
+		"ds_AP1JK2xq_ds_gI2LhSo2": {
+			"type": "ds.search",
+			"options": {
+				"query": "| mstats max(\"f0\") prestats=true WHERE index=\"s4c_phyphox_metrics\" span=1s \n| timechart max(\"f0\") AS max_f0 span=1s",
+				"queryParameters": {
+					"earliest": "-1m",
+					"latest": "now"
+				},
+				"refresh": "1s",
+				"refreshType": "delay"
+			},
+			"name": "Frequency time chart"
+		}
+	},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {}
+				}
+			}
+		}
+	},
+	"inputs": {},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"width": 1440,
+			"display": "auto"
+		},
+		"structure": [
+			{
+				"item": "viz_uVam74UN",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 1440,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_ZNjAV8KA",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 720,
+					"h": 240
+				}
+			},
+			{
+				"item": "viz_J4AL9HzO",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 240,
+					"w": 1440,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_joIXAGg3",
+				"type": "block",
+				"position": {
+					"x": 720,
+					"y": -10,
+					"w": 720,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_fLVElHnI",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 490,
+					"w": 1440,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_5XS9PcLk",
+				"type": "block",
+				"position": {
+					"x": 530,
+					"y": 30,
+					"w": 410,
+					"h": 50
+				}
+			},
+			{
+				"item": "viz_OSu4qM51",
+				"type": "block",
+				"position": {
+					"x": 180,
+					"y": 200,
+					"w": 1020,
+					"h": 110
+				}
+			}
+		],
+		"globalInputs": []
+	},
+	"description": "",
+	"title": "Phyphox_Audio_Notes"
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>
