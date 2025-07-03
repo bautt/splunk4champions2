@@ -588,16 +588,16 @@ const labs = {
                         ]
                     },
         {
-            "title": "7. Mobile & AR",
+            "title": "7. Mobile",
             "id": "seven",
-            "subtitle": "Splunk Mobile & AR",
+            "subtitle": "Splunk Mobile",
             "icon": <TbAugmentedReality2/>,
             "sections": [
                 {
                     "title": "Introduction",
                     "steps": [
                         {
-                            "title": "Splunk Mobile & AR",
+                            "title": "Splunk Mobile",
                             "content": "chapter7/mobileintro.mdx"
                         }
                     ]
