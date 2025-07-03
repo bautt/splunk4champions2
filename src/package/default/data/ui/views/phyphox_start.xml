@@ -1,0 +1,397 @@
+
+<dashboard version="2" theme="light">
+    <label>Phyphox - 4 Sensor Experiment</label>
+    <description>(1) accelerometer, (2) gyroscope, (3) light, (4) audio</description>
+    <definition><![CDATA[
+{
+	"visualizations": {
+		"viz_xZHoqlgl": {
+			"type": "splunk.image",
+			"options": {
+				"preserveAspectRatio": true,
+				"src": "/static/app/splunk4champions2/images/BG_4sensor_experiment.png"
+			}
+		},
+		"viz_dz3AOZS7": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "m/s^2",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('accX')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_8zJhE6Pw": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "m/s^2",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('accY')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			},
+			"containerOptions": {
+				"visibility": {}
+			}
+		},
+		"viz_tM2Ja4NK": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "m/s^2",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('accZ')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_nw7L2U4B": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "m/s^2",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('acc')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_bd6ILqXH": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "rad/s",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('gyrX')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_683rrpB2": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "rad/s",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('gyrZ')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_OdzUdZsk": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "rad/s",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('gyrY')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_3HTX0MkI": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "rad/s",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('gyr')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_H0Wa0wj0": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "hPa",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('illum')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_b8lMQeE4": {
+			"type": "splunk.singlevalue",
+			"options": {
+				"numberPrecision": 5,
+				"unit": "Hz",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"trendValue": "> sparklineValues | delta(-2)",
+				"sparklineValues": "> primary | seriesByName('f0')",
+				"trendDisplay": "off",
+				"sparklineDisplay": "off",
+				"majorColor": "#ffffff",
+				"backgroundColor": "transparent"
+			},
+			"dataSources": {
+				"primary": "ds_QSpi1a09"
+			}
+		},
+		"viz_W4mzaQB3": {
+			"type": "splunk.image",
+			"options": {
+				"preserveAspectRatio": true,
+				"src": "/static/app/splunk4champions2/images/button_start.png"
+			}
+		},
+		"viz_C8PDrrtH": {
+			"type": "splunk.image",
+			"options": {
+				"preserveAspectRatio": true,
+				"src": "/static/app/splunk4champions2/images/button_pause.png"
+			},
+			"dataSources": {
+				"primary": "ds_WO0520zb"
+			},
+			"hideWhenNoData": true
+		}
+	},
+	"dataSources": {
+		"ds_QSpi1a09": {
+			"type": "ds.search",
+			"options": {
+				"query": "| mstats avg(\"accX\") avg(\"accY\") avg(\"accZ\") avg(\"acc\") avg(\"gyrX\") avg(\"gyrY\") avg(\"gyrZ\") avg(\"gyr\") avg(pressure) avg(f0) prestats=true WHERE \"index\"=\"s4c_phyphox_metrics\" span=10s\n| stats avg(*) as * by _time\n| stats last(accX) as accX last(accY) as accY last(accZ) as accZ last(acc) as acc last(gyrX) as gyrX last(gyrY) as gyrY last(gyrZ) as gyrZ last(gyr) as gyr last(pressure) as illum last(f0) as f0",
+				"queryParameters": {
+					"earliest": "rt-20s",
+					"latest": "rt"
+				}
+			},
+			"name": "Last Values of 4 Sensors"
+		},
+		"ds_WO0520zb": {
+			"type": "ds.search",
+			"options": {
+				"query": "index=s4c_phyphox",
+				"queryParameters": {
+					"earliest": "rt-3s",
+					"latest": "rt"
+				}
+			},
+			"name": "Base - experiment running"
+		}
+	},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"latest": "$global_time.latest$",
+						"earliest": "$global_time.earliest$"
+					}
+				}
+			}
+		}
+	},
+	"inputs": {},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"width": 1440,
+			"height": 960,
+			"display": "auto",
+			"backgroundColor": "#000000"
+		},
+		"structure": [
+			{
+				"item": "viz_xZHoqlgl",
+				"type": "block",
+				"position": {
+					"x": 509.99999999999994,
+					"y": 40,
+					"w": 430,
+					"h": 900
+				}
+			},
+			{
+				"item": "viz_dz3AOZS7",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 160,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_8zJhE6Pw",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 200,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_tM2Ja4NK",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 250,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_nw7L2U4B",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 290,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_bd6ILqXH",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 350,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_683rrpB2",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 440,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_OdzUdZsk",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 400,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_3HTX0MkI",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 480,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_H0Wa0wj0",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 550,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_b8lMQeE4",
+				"type": "block",
+				"position": {
+					"x": 750,
+					"y": 610,
+					"w": 150,
+					"h": 60
+				}
+			},
+			{
+				"item": "viz_W4mzaQB3",
+				"type": "block",
+				"position": {
+					"x": 830,
+					"y": 87,
+					"w": 46,
+					"h": 46
+				}
+			},
+			{
+				"item": "viz_C8PDrrtH",
+				"type": "block",
+				"position": {
+					"x": 830,
+					"y": 87,
+					"w": 46,
+					"h": 46
+				}
+			}
+		],
+		"globalInputs": []
+	},
+	"description": "(1) accelerometer, (2) gyroscope, (3) light, (4) audio",
+	"title": "Phyphox - 4 Sensor Experiment"
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>
