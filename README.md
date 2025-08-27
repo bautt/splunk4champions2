@@ -32,6 +32,12 @@ Don't miss this opportunity to elevate your Splunk skills and become a true cham
 For simple installation just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
 If you have access to show.splunk.com - use the workshop on Splunk Show. 
 
+## Phyphox experiments
+
+After creating a hec for Phyphox data add following to the HEC config: 
+/etc/apps/splunk_httpinput/local/inputs.conf
+[http://phyphox]
+allowQueryStringAuth = true
 
 ### Selected screenshots:
 
