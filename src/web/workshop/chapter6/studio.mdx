@@ -1,40 +1,73 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## Dashboard Studio is the future of Splunk dashboards
+## Dashboard Studio: The Next Generation of Splunk Dashboards
 
-One of "Example Hub" dashboards: 
-<img src="/static/app/splunk4champions2/images/iot_factory.gif"/>
+Dashboard Studio offers a modern, flexible canvas for designing interactive dashboards with pixel-perfect control, built-in data-driven layouts, and advanced customization.
 
-## Pixel-perfect Layout 
+<img src="/static/app/splunk4champions2/images/iot_factory.gif" alt="Example Hub Dashboard"/>
 
+---
 
-### Visualizations
-* Unique ID -- e.g. viz_f49snx or viz_kpi1
-* Type -- e.g. column chart
-* Options -- e.g. stack mode, colors
-* Data Source -- referenced by ID
-### Data sources
-* Unique ID -- e.g. ds_j2kn9c or ds_kpi2
-* Type -- e.g. saved search
-* Options -- e.g. refresh rate 
-### Inputs
-* Unique ID -- e.g. input_poxm20 or input_host
-* Type -- e.g. dropdown
-* Options -- e.g. token name 
-### Layout
-* Type -- e.g. Grid or Absolute
-* Structure -- x,y viz location and w,h size (px)
-* Global Inputs -- display order of inputs 
-### Defaults
-* Visualizations - e.g. specific options, show last updated
-* Data Sources - e.g. time range, refresh rate 
-<img src="/static/app/splunk4champions2/images/studio_code.png" width="40%" />
+### Key Components
 
-___ 
-## Data Sources 
-* In-line searches 
-* Saved searches 
-** Ensure you have the proper sharing permissions before adding a saved search to a dashboard
-* Chain searches 
-You can now create chain searches in the UI
+#### Visualizations  
+- **ID**: Unique identifier (e.g. `viz_f49snx`)  
+- **Type**: Chart type (e.g. Column, Line, Gauge)  
+- **Options**: Presentation settings (stack mode, color palettes)  
+- **Data Source**: Referenced by data source ID  
+
+#### Data Sources  
+- **ID**: Unique identifier (e.g. `ds_j2kn9c`)  
+- **Type**: Search type (Inline, Saved Search, Chain Search)  
+- **Options**: Search parameters (time range, refresh interval)  
+
+#### Inputs  
+- **ID**: Unique identifier (e.g. `input_host`)  
+- **Type**: Input control (Dropdown, Textbox, Time Picker)  
+- **Options**: Token binding and default values  
+
+#### Layout  
+- **Type**: Grid or Absolute positioning  
+- **Structure**: Coordinates (x, y) and size (width, height) in pixels  
+- **Global Inputs**: Input display order and grouping  
+
+#### Defaults  
+- **Visualizations**: Default options (show last update time)  
+- **Data Sources**: Default time range and refresh rate  
+
+<img src="/static/app/splunk4champions2/images/studio_code.png" width="40%" alt="Studio JSON Example"/>
+
+---
+
+## Data Sources in Studio
+
+- **Inline Searches**: Ad-hoc SPL queries embedded directly in the dashboard.  
+- **Saved Searches**: Reuse existing scheduled searches; ensure proper sharing permissions.  
+- **Chain Searches**: Define dependent searches where one search feeds results into another, all configured via the UI.
+
+---
+
+## What’s New in Dashboard Studio
+
+### Splunk Enterprise 9.x  
+- **Advanced Theming**: Custom color palettes and responsive layouts  
+- **Chained Searches UI**: Drag-and-drop configuration for multi-stage queries  
+- **Enhanced Input Controls**: New slider and multi-select dropdown components  
+- **Dynamic Drilldowns**: Contextual navigation between panels without manual token wiring  
+
+### Splunk Enterprise 10.x  
+- **Vector Shapes & Annotations**: Add custom SVG shapes, arrows, and text overlays directly on visualizations  
+- **Conditional Formatting**: Apply rules to change visual appearance based on data thresholds  
+- **Custom Layout Breakpoints**: Define responsive behavior for different display sizes  
+- **Performance Insights**: Built-in metrics for panel render times and query performance profiling  
+
+---
+
+## Learn More
+
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashboardStudio/Overview" openInNewContext>"Splunk Docs – Dashboard Studio Overview"</Link>  
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashboardStudio/JSONReference" openInNewContext>"Studio JSON Reference"</Link>  
+* <Link to="https://www.splunk.com/en_us/blog/splunk/what-s-new-dashboard-studio-in-10-0.html" openInNewContext>"Blog – What’s New in Dashboard Studio 10.0"</Link>  
+* <Link to="https://conf.splunk.com/files/2025/slides/DS1001.html" openInNewContext>".conf25 – Dashboard Studio Deep Dive"</Link>  
+* <SplunkSearch default="index=_internal sourcetype=splunkd_ui_access | head 10"/>  
