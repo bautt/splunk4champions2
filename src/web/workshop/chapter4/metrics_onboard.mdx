@@ -1,21 +1,33 @@
+### 1. Universal Forwarder (File-Based)
+1. Write metric events to a local file in JSON or CSV format.  
+2. Extract `_time`, metric names, values, and dimension fields via props.conf/transforms.conf.  
+3. Configure the UF to send those events to a **metric index**.
 
-## Using Forwarders
-Write metrics to a file and extract _time, metric_name(s) and dim(s) fields and send it to the metrics index through UF
-___
-## Using HEC 
-Use a HEC to receive events send via HTTP(S). Send multivalue metric through curl to HEC example:
+### 2. HTTP Event Collector (HEC)
+1. Enable a HEC token in **Splunk Web** or **inputs.conf**.  
+2. Send multivalue JSON payloads
+    Example: 
+```
+curl -k https://v37823.1blu.de:8088/services/collector/event \
+  -H "Authorization: Splunk 2ba9b54d-ded3-430a-b7b8-14e1f4bace6a" \
+  -H "Content-Type: application/json" \
+  -d '{"time":1634367600.000,"event":"metric","index":"piano-metrics","fields":{"note":"C4","note_name":"C","octave":4,"velocity":78,"duration":0.425}}'
+```
 
-`curl -k https://SPLUNK_SERVER:8088/services/collector -H "Authorization: Splunk YOUR_HEC_ID" 
--d '{"time": 1486683865.000,"event":"metric","source":"disk","host":"host_1.splunk.com","fields"
-:{"region":"us-west-1","datacenter":"dc1","rack":"63","os":"Ubuntu16.10","arch":"x64","team":"LON",
-"service":"6","service_version":"0","service_environment":"test","path":"/dev/sda1","fstype":"ext3",
-"metric_name:cpu.usr": 11.12,"metric_name:cpu.sys": 12.23, "metric_name:cpu.idle": 13.34}}'`
-___
-## Log2metrics conversion
-### Log2metrics conversion at the ingest time
-Use “Log to Metrics” category and create a new source type
-json, csv, tsv, psv, w3c,field_extraction
-### Log2metrics conversion after ingest
-Use mcollect / meventcollect commands. New data will be written to metrics index after each search performed.
-mcollect converts events in to metric data points and inserts it into a metric index
-meventcollect takes streaming output and inserts events in to a metric index on indexers.
+### 3. Log-to-Metrics Conversion (Ingest-Time)
+1. Define a **source type** under “Log to Metrics” in **Data Inputs**.  
+2. Map JSON, CSV, or key=value fields to metric names, values, and dimensions.  
+3. Splunk extracts and indexes metrics as events arrive.
+
+### 4. Log-to-Metrics Conversion (Search-Time)
+- **mcollect**: Converts search results into metric data points and writes them to a metric index.  
+- **meventcollect**: Streams search results, converting and indexing them on the fly.
+
+### 5. Metric Builder App (UI-Driven)
+1. Install the **Metric Builder** dashboard.  
+2. Define rules to map event fields into metric names, values, and dimensions.  
+3. Apply in real time or schedule via saved searches.
+
+### 6. Third-Party Integrations & Apps
+- **Splunk Add-on for Infrastructure** and **Splunk Connect for Kubernetes** collect OS/container metrics.  
+- **Splunk DB Connect** ingests numeric time-series from databases into a metric index.  

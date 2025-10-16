@@ -1,34 +1,28 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## How to setup Splunk Mobile & Augmented Reality
+
+## How to Set Up Splunk Mobile
 
 ### 1. Download Splunk Mobile
-Download Splunk Mobile for the device you're using:
+Download the app suitable for your device:
 
-Download Splunk Mobile for iOS https://apps.apple.com/us/app/splunk-mobile/id1420299852
+- [iOS (iPhone)](https://apps.apple.com/us/app/splunk-mobile/id1420299852)
+- [Android](https://play.google.com/store/apps/details?id=com.splunk.android.alerts&hl=en_US&gl=US&pli=1)
+- [iPad](https://apps.apple.com/us/app/splunk-for-ipad/id1568523145)
 
-Download Splunk Mobile for Android https://play.google.com/store/apps/details?id=com.splunk.android.alerts&hl=en_US&gl=US&pli=1
+### 2. Set Up Splunk Secure Gateway (SSG)
+Included in Splunk Enterprise 8.1+ and Splunk Cloud Platform 8.1.2103+.
 
-Download Splunk Mobile for iPad https://apps.apple.com/us/app/splunk-for-ipad/id1568523145
+- Get started: <Link to="https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Requirements" openInNewContext>"Splunk Secure Gateway Requirements"</Link>
+- Security details: <Link to="https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Security" openInNewContext>"Secure Gateway Security"</Link>
+- Configure SAML auth: <Link to="https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/SAMLauth" openInNewContext>"SAML Authentication"</Link>
 
-### 2. Set up Splunk Secure Gateway
-Splunk Secure Gateway (SSG) is included with Splunk Enterprise version 8.1 and higher and Splunk Cloud Platform version 8.1.2103 and higher. SSG provides a secure method for connecting authorized mobile devices to your Splunk platform instance. See the following links in the Administer Splunk Secure Gateway manual to get started and learn more:
+### 3. Log Your Device into Splunk
+Use the instructions in the **Connected Experiences** app or the manual: <Link to="https://docs.splunk.com/Documentation/SecureGateway/3.4.251/User/RegisterorUnregisteraDevice" openInNewContext>"Register or Unregister a Device"</Link>
 
-Get started with Splunk Secure Gateway https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Requirements
+### 4. Use Splunk Mobile
+Once logged in, you can:
 
-About the Splunk Secure Gateway security process https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Security
-
-Set up SAML authentication for Splunk Secure Gateway https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/SAMLauth
-
-### 3. Log your device in to your Splunk platform instance
-After setting up SSG, you can log your device into the Splunk platform instance using several methods. See Log in to a Splunk platform instance in a 
-Connected Experiences app in the Use Splunk Secure Gateway manual to learn how. https://docs.splunk.com/Documentation/SecureGateway/3.4.251/User/RegisterorUnregisteraDevice
-
-
-### 4. Start using Splunk Mobile
-After logging into a Splunk platform instance from your device, you can start using Splunk Mobile. Here are some ways you can get started:
-
-Splunk Mobile for iOS features  https://docs.splunk.com/Documentation/Alerts/2.36.0/Alerts/About
-Send alerts and dashboards to Splunk Mobile users https://docs.splunk.com/Documentation/Alerts/2.36.0/Alerts/SendAlerts
-
+- Explore dashboards and alerts: <Link to="https://docs.splunk.com/Documentation/Alerts/2.36.0/Alerts/About" openInNewContext>"About Splunk Alerts"</Link>
+- Send alerts and dashboards to mobile devices: <Link to="https://docs.splunk.com/Documentation/Alerts/2.36.0/Alerts/SendAlerts" openInNewContext>"Send Alerts"</Link>
