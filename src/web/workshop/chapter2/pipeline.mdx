@@ -1,6 +1,36 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
+
+# Splunk Data Pipeline Overview
+
+The Splunk data pipeline processes incoming data through a series of queues and pipelines that transform raw data into searchable, indexed events.
+Here's what each component does:
+
+## ParsingQueue
+The ParsingQueue sits immediately after data input and holds raw data waiting to be parsed. It feeds into the Parsing Pipeline, where the first transformations occur.
+## Parsing Pipeline
+The Parsing Pipeline performs the initial event processing on raw data:
+* UTF-8 processor: Converts character encoding to UTF-8
+* Line Breaker: Splits raw data streams into individual events based on line breaking rules
+* Header Parsing: Processes headers for structured data (CSV, JSON)
+
+After parsing, data moves through intermediate queues (aggQueue for date parsing and line merging, typingQueue for regex transformations and metadata)
+
+## IndexQueue
+The IndexQueue is the final staging area before data reaches disk. It holds parsed events that are ready to be written to indexes.
+
+## Index Pipeline
+The Index Pipeline handles the final stage where events are written to disk:
+
+* TCP/Syslog/HTTP output processors: Forward data to other Splunk instances if configured
+* Block signing: Adds cryptographic signatures for data integrity
+* Indexing processor: Writes compressed raw data and creates TSIDX index files
+* Indexing metrics: Tracks indexing performance statistics
+
+Finally, data is stored in hot buckets on disk within the appropriate index folder
+
+
 The diagram represents a simplified view of the indexing architecture. 
 It provides a functional view of the architecture and does not fully describe Splunk software internals. 
 In particular, the parsing pipeline actually consists of three pipelines: parsing, merging, and typing, which together handle the parsing function. 

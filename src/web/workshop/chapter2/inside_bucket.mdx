@@ -33,12 +33,19 @@ Best way to understand the bloomfilter is to explore it in the interactive demo:
 
 
 ## TSIDX file
-A time-series index file, also called an index file. A tsidx file associates each unique keyword in your data with location references to events, 
-which are stored in a companion rawdata file. Together, the rawdata file and its related tsidx files make up the contents of an index bucket.
+A TSIDX file in Splunk is a time-series index file that stores an index of keywords or tokens extracted from event data. 
+It maps each unique keyword to its locations in the raw data file (journal.gz). 
+This indexing allows Splunk to quickly find and retrieve relevant events during searches, 
+significantly speeding up query performance by avoiding the need to scan or decompress raw data files.
+
+* It associates keywords with references to event locations.
+* It works with the raw data file to enable fast searches.
+* The TSIDX file makes search operations much more efficient by acting as an advanced, keyword-to-location directory.
+
 
 <img width="80%" src="/static/app/splunk4champions2/images/tsidx1.png"/>
 
-## journal.gz
+## journal.gz OR .zst
 
 A compressed file in an index bucket that contains event data, as well as journal information that the indexer can use to reconstitute the index’s index files.
 The rawdata file and the index files together constitute the files in a bucket. 
