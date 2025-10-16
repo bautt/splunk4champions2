@@ -1,16 +1,30 @@
 ## How is data stored? 
-Events are distributed across indexers and stored in sub-directories of index directories on the file system. 
+### Data Flow and Indexing
+* HEC or forwarders send data to indexers in the cluster, where the data is immediately parsed and indexed.
+* The indexed data is saved inside buckets, which are subdirectories under the folder for each Splunk index name.
+### Replication Process
+* The cluster's replication factor determines how many identical copies of each bucket are stored on separate indexers.
+* Copies of buckets are distributed such that no indexer stores more than one copy of the same bucket.
+### Folder structure
+* Each index has its own folder (e.g., /opt/splunk/var/lib/splunk/\<indexname\>/).
+* Each bucket folder name encodes its data time range and creation ID
+* Replicated buckets (e.g., hot_v2, hot_v3) exist on different peer indexers to satisfy the clusters replication factor.
+* Searchable copies contain both rawdata and index files, while non-searchable copies store only rawdata
+
 <img width="100%" src="/static/app/splunk4champions2/images/dataflow0.png"/>
 
 
 ## What is an Index? 
-The index is the repository for Splunk Enterprise data. Splunk Enterprise transforms incoming data into events, which it stores in indexes. 
+### A Splunk index folder is a dedicated on-disk repository where Splunk Enterprise stores and organizes indexed data.
+The index folder contains:
+* Compressed raw data files representing the original events.
+* Index files (e.g., .tsidx files) that map keywords to event locations for rapid searching.
+* Metadata supporting efficient data management and retrieval.
+
+
 ![Index](/static/app/splunk4champions2/images/index_folder.png)
 
 ___
 
 ## What is a Bucket?
-
-A bucket is a file system directory containing a portion of a Splunk Enterprise index. A Splunk Enterprise index typically consists of many buckets, organized by age.
-
-Note: The bucket search command is not related to the index buckets described here. Its purpose is to put continuous numerical values into discrete sets or bins. The bucket command is actually an alias for the bin command. See the bin command in the Search Reference.
+A bucket in Splunk is a directory within an index folder that stores both the raw event data and the associated index files needed for searching. Buckets organize data based on its age and lifecycle stage

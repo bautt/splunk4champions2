@@ -4,17 +4,20 @@ import Link from '@splunk/react-ui/Link';
 <table width="100%">
         <tr width="50%">           
         <td>
-          In a SmartStore setup, most data resides in remote object stores like AWS S3, Google GCS or  Azure Blob Storage 
-significantly reducing local storage usage. Indexing and searching are performed on local machines, similar to traditional setups. 
-Unlike "Classic" Architecture, where all data is stored on local or network file systems, SmartStore manages data differently. 
-Recent "Hot" data is kept locally and replicated for reliability. 
-As data transitions from "hot" to "warm," it is uploaded to remote object storage, accessed through API calls. 
-Once confirmed stored remotely, additional local copies can be removed and will be marked as "evictable". The primary copy will be kept locally to search the data until the space is needed by the Cache Manager. 
+SmartStore Architecture
 
-Splunk Enterprise can search only the data that is locally cached; if the required data is not present, it must first be downloaded from remote storage via API before it can be searched. 
-This architecture efficiently balances local and remote storage, optimizing both space utilization and data accessibility while eliminating the need for a separate frozen storage tier. It's "decoupling" compute from storage trading performance for cost efficiency. 
+SmartStore decouples compute from storage by maintaining most indexed data on remote object stores (AWS S3, Google GCS, Azure Blob Storage) while keeping a local cache on indexers for active searching.
 
-        </td>
+## How It Works
+* Hot Buckets: Newly indexed data resides locally and is replicated across indexers to meet the replication factor, exactly like traditional architecture.
+* Warm Buckets: When a hot bucket rolls to warm, the indexer uploads a copy to remote storage. Once confirmed uploaded, the remote copy becomes the master copy. The local copy remains cached on the indexer but becomes eligible for eviction.
+* Cache Manager: Manages local cache by fetching warm buckets from remote storage when needed for searches and evicting buckets based on recency, search frequency, and available space.
+* Search Process: Splunk can only search locally cached data. If a search requires buckets not in cache, the cache manager downloads them from remote storage first.
+* Indexer Clusters: Only hot buckets are replicated across peers. Warm buckets exist as a single copy on remote storage, with peers maintaining only metadata. This eliminates the need for multiple local copies and the cold bucket tier entirely.
+
+Result: Dramatically reduces local storage requirements, eliminates frozen storage tiers, enables independent scaling of compute and storage, and trades some search performance for significant cost efficiency.
+
+ </td>
         
         <td width="50%"><img src="/static/app/splunk4champions2/images/Cache_manager.jpg" width="90%"/></td>
 
