@@ -1,0 +1,308 @@
+
+<dashboard version="2" theme="dark">
+    <label>Piano SVG (overlays)</label>
+    <description>Dynamic mapping of midi notes to piano keys</description>
+    <definition><![CDATA[
+{
+	"title": "Piano SVG (overlays)",
+	"description": "Dynamic mapping of midi notes to piano keys",
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"earliest": "$global_time.earliest$",
+						"latest": "$global_time.latest$"
+					}
+				}
+			}
+		},
+		"visualizations": {
+			"global": {
+				"showProgressBar": true
+			}
+		}
+	},
+	"visualizations": {
+		"viz_5yX9mOQo": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"numberPrecision": 4,
+				"sparklineValues": "> primary | seriesByName('duration')",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Duration",
+			"type": "splunk.singlevalue"
+		},
+		"viz_DOyrBq9W": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"areaIds": "> primary | seriesByName('octave')",
+				"areaValues": "> primary | seriesByName('octave')",
+				"svg": "<svg width='50' height='10'><style>circle{fill:white;stroke:black;transition:fill 0.2s;}circle[data-note='$make_midi:result.octave$']{fill:red !important;}</style><circle cx='15' cy='10' r='6' data-note='1'/><circle cx='25' cy='10' r='6' data-note='2'/><circle cx='35' cy='10' r='6' data-note='3'/><circle cx='45' cy='10' r='6' data-note='4'/><circle cx='55' cy='10' r='6' data-note='5'/><circle cx='65' cy='10' r='6' data-note='6'/><circle cx='75' cy='10' r='6' data-note='7'/><circle cx='85' cy='10' r='6'/></svg>"
+			},
+			"type": "splunk.choropleth.svg"
+		},
+		"viz_Q3EAcQ6l": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"sparklineValues": "> primary | seriesByName('velocity')",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Velocity",
+			"type": "splunk.singlevalue"
+		},
+		"viz_SIaRpOS5": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"sparklineValues": "> primary | seriesByName('chord_type')",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Chord",
+			"type": "splunk.singlevalue"
+		},
+		"viz_VHkSc8mo": {
+			"containerOptions": {
+				"visibility": {}
+			},
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"sparklineValues": "> primary | seriesByName('octave')",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Octave",
+			"type": "splunk.singlevalue"
+		},
+		"viz_Vb8ZuWZu": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"sparklineValues": "> primary | seriesByName('midi_note')",
+				"trendDisplay": "off",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Midi_Note",
+			"type": "splunk.singlevalue"
+		},
+		"viz_YhPzgUbm": {
+			"dataSources": {},
+			"description": "",
+			"options": {
+				"areaIds": "> primary | seriesByName('midi_note')",
+				"areaValues": "> primary | seriesByName('midi_note')",
+				"backgroundColor": "transparent",
+				"svg": "<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='215.38'><style>rect.white{fill:transparent;stroke:transparent}rect.black{fill:transparent;stroke:transparent}rect.white[data-midi='$make_midi:result.midi_note$']{fill:rgba(139,0,0,0.7)!important;}rect.black[data-midi='$make_midi:result.midi_note$']{fill:rgba(139,0,0,0.9)!important;}</style><rect class='white' x='0' y='0' width='26.92' height='215.38' data-midi='21'/><rect class='white' x='26.92' y='0' width='26.92' height='215.38' data-midi='23'/><rect class='white' x='53.85' y='0' width='26.92' height='215.38' data-midi='24'/><rect class='white' x='80.77' y='0' width='26.92' height='215.38' data-midi='26'/><rect class='white' x='107.69' y='0' width='26.92' height='215.38' data-midi='28'/><rect class='white' x='134.62' y='0' width='26.92' height='215.38' data-midi='29'/><rect class='white' x='161.54' y='0' width='26.92' height='215.38' data-midi='31'/><rect class='white' x='188.46' y='0' width='26.92' height='215.38' data-midi='33'/><rect class='white' x='215.38' y='0' width='26.92' height='215.38' data-midi='35'/><rect class='white' x='242.31' y='0' width='26.92' height='215.38' data-midi='36'/><rect class='white' x='269.23' y='0' width='26.92' height='215.38' data-midi='38'/><rect class='white' x='296.15' y='0' width='26.92' height='215.38' data-midi='40'/><rect class='white' x='323.08' y='0' width='26.92' height='215.38' data-midi='41'/><rect class='white' x='350' y='0' width='26.92' height='215.38' data-midi='43'/><rect class='white' x='376.92' y='0' width='26.92' height='215.38' data-midi='45'/><rect class='white' x='403.85' y='0' width='26.92' height='215.38' data-midi='47'/><rect class='white' x='430.77' y='0' width='26.92' height='215.38' data-midi='48'/><rect class='white' x='457.69' y='0' width='26.92' height='215.38' data-midi='50'/><rect class='white' x='484.62' y='0' width='26.92' height='215.38' data-midi='52'/><rect class='white' x='511.54' y='0' width='26.92' height='215.38' data-midi='53'/><rect class='white' x='538.46' y='0' width='26.92' height='215.38' data-midi='55'/><rect class='white' x='565.38' y='0' width='26.92' height='215.38' data-midi='57'/><rect class='white' x='592.31' y='0' width='26.92' height='215.38' data-midi='59'/><rect class='white' x='619.23' y='0' width='26.92' height='215.38' data-midi='60'/><rect class='white' x='646.15' y='0' width='26.92' height='215.38' data-midi='62'/><rect class='white' x='673.08' y='0' width='26.92' height='215.38' data-midi='64'/><rect class='white' x='700' y='0' width='26.92' height='215.38' data-midi='65'/><rect class='white' x='726.92' y='0' width='26.92' height='215.38' data-midi='67'/><rect class='white' x='753.85' y='0' width='26.92' height='215.38' data-midi='69'/><rect class='white' x='780.77' y='0' width='26.92' height='215.38' data-midi='71'/><rect class='white' x='807.69' y='0' width='26.92' height='215.38' data-midi='72'/><rect class='white' x='834.62' y='0' width='26.92' height='215.38' data-midi='74'/><rect class='white' x='861.54' y='0' width='26.92' height='215.38' data-midi='76'/><rect class='white' x='888.46' y='0' width='26.92' height='215.38' data-midi='77'/><rect class='white' x='915.38' y='0' width='26.92' height='215.38' data-midi='79'/><rect class='white' x='942.31' y='0' width='26.92' height='215.38' data-midi='81'/><rect class='white' x='969.23' y='0' width='26.92' height='215.38' data-midi='83'/><rect class='white' x='996.15' y='0' width='26.92' height='215.38' data-midi='84'/><rect class='white' x='1023.08' y='0' width='26.92' height='215.38' data-midi='86'/><rect class='white' x='1050' y='0' width='26.92' height='215.38' data-midi='88'/><rect class='white' x='1076.92' y='0' width='26.92' height='215.38' data-midi='89'/><rect class='white' x='1103.85' y='0' width='26.92' height='215.38' data-midi='91'/><rect class='white' x='1130.77' y='0' width='26.92' height='215.38' data-midi='93'/><rect class='white' x='1157.69' y='0' width='26.92' height='215.38' data-midi='95'/><rect class='white' x='1184.62' y='0' width='26.92' height='215.38' data-midi='96'/><rect class='white' x='1211.54' y='0' width='26.92' height='215.38' data-midi='98'/><rect class='white' x='1238.46' y='0' width='26.92' height='215.38' data-midi='100'/><rect class='white' x='1265.38' y='0' width='26.92' height='215.38' data-midi='101'/><rect class='white' x='1292.31' y='0' width='26.92' height='215.38' data-midi='103'/><rect class='white' x='1319.23' y='0' width='26.92' height='215.38' data-midi='105'/><rect class='white' x='1346.15' y='0' width='26.92' height='215.38' data-midi='107'/><rect class='white' x='1373.08' y='0' width='26.92' height='215.38' data-midi='108'/><rect class='black' x='18.85' y='0' width='16.15' height='134.62' data-midi='22'/><rect class='black' x='72.69' y='0' width='16.15' height='134.62' data-midi='25'/><rect class='black' x='99.62' y='0' width='16.15' height='134.62' data-midi='27'/><rect class='black' x='153.46' y='0' width='16.15' height='134.62' data-midi='30'/><rect class='black' x='180.38' y='0' width='16.15' height='134.62' data-midi='32'/><rect class='black' x='207.31' y='0' width='16.15' height='134.62' data-midi='34'/><rect class='black' x='261.15' y='0' width='16.15' height='134.62' data-midi='37'/><rect class='black' x='288.08' y='0' width='16.15' height='134.62' data-midi='39'/><rect class='black' x='341.92' y='0' width='16.15' height='134.62' data-midi='42'/><rect class='black' x='368.85' y='0' width='16.15' height='134.62' data-midi='44'/><rect class='black' x='395.77' y='0' width='16.15' height='134.62' data-midi='46'/><rect class='black' x='449.62' y='0' width='16.15' height='134.62' data-midi='49'/><rect class='black' x='476.54' y='0' width='16.15' height='134.62' data-midi='51'/><rect class='black' x='530.38' y='0' width='16.15' height='134.62' data-midi='54'/><rect class='black' x='557.31' y='0' width='16.15' height='134.62' data-midi='56'/><rect class='black' x='584.23' y='0' width='16.15' height='134.62' data-midi='58'/><rect class='black' x='638.08' y='0' width='16.15' height='134.62' data-midi='61'/><rect class='black' x='665' y='0' width='16.15' height='134.62' data-midi='63'/><rect class='black' x='718.85' y='0' width='16.15' height='134.62' data-midi='66'/><rect class='black' x='745.77' y='0' width='16.15' height='134.62' data-midi='68'/><rect class='black' x='772.69' y='0' width='16.15' height='134.62' data-midi='70'/><rect class='black' x='826.54' y='0' width='16.15' height='134.62' data-midi='73'/><rect class='black' x='853.46' y='0' width='16.15' height='134.62' data-midi='75'/><rect class='black' x='907.31' y='0' width='16.15' height='134.62' data-midi='78'/><rect class='black' x='934.23' y='0' width='16.15' height='134.62' data-midi='80'/><rect class='black' x='961.15' y='0' width='16.15' height='134.62' data-midi='82'/><rect class='black' x='1015' y='0' width='16.15' height='134.62' data-midi='85'/><rect class='black' x='1041.92' y='0' width='16.15' height='134.62' data-midi='87'/><rect class='black' x='1095.77' y='0' width='16.15' height='134.62' data-midi='90'/><rect class='black' x='1122.69' y='0' width='16.15' height='134.62' data-midi='92'/><rect class='black' x='1149.62' y='0' width='16.15' height='134.62' data-midi='94'/><rect class='black' x='1203.46' y='0' width='16.15' height='134.62' data-midi='97'/><rect class='black' x='1230.38' y='0' width='16.15' height='134.62' data-midi='99'/><rect class='black' x='1284.23' y='0' width='16.15' height='134.62' data-midi='102'/><rect class='black' x='1311.15' y='0' width='16.15' height='134.62' data-midi='104'/><rect class='black' x='1338.08' y='0' width='16.15' height='134.62' data-midi='106'/></svg>"
+			},
+			"type": "splunk.choropleth.svg"
+		},
+		"viz_YkodajGF": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"backgroundColor": "#000000",
+				"majorValue": "> sparklineValues | lastPoint()",
+				"sparklineValues": "> primary | seriesByName('note_name')",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Note",
+			"type": "splunk.singlevalue"
+		},
+		"viz_bftcebRY": {
+			"dataSources": {
+				"primary": "ds_KLMnhHTF"
+			},
+			"options": {
+				"majorValue": "> sparklineValues | lastPoint()",
+				"sparklineValues": "> primary | seriesByName('chord_root')",
+				"trendValue": "> sparklineValues | delta(-2)"
+			},
+			"title": "Chord root",
+			"type": "splunk.singlevalue"
+		},
+		"viz_srluSUYE": {
+			"dataSources": {},
+			"description": "",
+			"options": {
+				"areaIds": "> primary | seriesByName('midi_note')",
+				"areaValues": "> primary | seriesByName('midi_note')",
+				"backgroundColor": "transparent",
+				"svg": "<svg xmlns='http://www.w3.org/2000/svg' width='1400' height='215.38'><style>rect.white{fill:white;stroke:black}rect.black{fill:black;stroke:black}rect.white[data-midi='']{fill:darkred!important;}rect.black[data-midi=]{fill:red!important;}</style><rect class='white' x='0' y='0' width='26.92' height='215.38' data-midi='21'/><rect class='white' x='26.92' y='0' width='26.92' height='215.38' data-midi='23'/><rect class='white' x='53.85' y='0' width='26.92' height='215.38' data-midi='24'/><rect class='white' x='80.77' y='0' width='26.92' height='215.38' data-midi='26'/><rect class='white' x='107.69' y='0' width='26.92' height='215.38' data-midi='28'/><rect class='white' x='134.62' y='0' width='26.92' height='215.38' data-midi='29'/><rect class='white' x='161.54' y='0' width='26.92' height='215.38' data-midi='31'/><rect class='white' x='188.46' y='0' width='26.92' height='215.38' data-midi='33'/><rect class='white' x='215.38' y='0' width='26.92' height='215.38' data-midi='35'/><rect class='white' x='242.31' y='0' width='26.92' height='215.38' data-midi='36'/><rect class='white' x='269.23' y='0' width='26.92' height='215.38' data-midi='38'/><rect class='white' x='296.15' y='0' width='26.92' height='215.38' data-midi='40'/><rect class='white' x='323.08' y='0' width='26.92' height='215.38' data-midi='41'/><rect class='white' x='350' y='0' width='26.92' height='215.38' data-midi='43'/><rect class='white' x='376.92' y='0' width='26.92' height='215.38' data-midi='45'/><rect class='white' x='403.85' y='0' width='26.92' height='215.38' data-midi='47'/><rect class='white' x='430.77' y='0' width='26.92' height='215.38' data-midi='48'/><rect class='white' x='457.69' y='0' width='26.92' height='215.38' data-midi='50'/><rect class='white' x='484.62' y='0' width='26.92' height='215.38' data-midi='52'/><rect class='white' x='511.54' y='0' width='26.92' height='215.38' data-midi='53'/><rect class='white' x='538.46' y='0' width='26.92' height='215.38' data-midi='55'/><rect class='white' x='565.38' y='0' width='26.92' height='215.38' data-midi='57'/><rect class='white' x='592.31' y='0' width='26.92' height='215.38' data-midi='59'/><rect class='white' x='619.23' y='0' width='26.92' height='215.38' data-midi='60'/><rect class='white' x='646.15' y='0' width='26.92' height='215.38' data-midi='62'/><rect class='white' x='673.08' y='0' width='26.92' height='215.38' data-midi='64'/><rect class='white' x='700' y='0' width='26.92' height='215.38' data-midi='65'/><rect class='white' x='726.92' y='0' width='26.92' height='215.38' data-midi='67'/><rect class='white' x='753.85' y='0' width='26.92' height='215.38' data-midi='69'/><rect class='white' x='780.77' y='0' width='26.92' height='215.38' data-midi='71'/><rect class='white' x='807.69' y='0' width='26.92' height='215.38' data-midi='72'/><rect class='white' x='834.62' y='0' width='26.92' height='215.38' data-midi='74'/><rect class='white' x='861.54' y='0' width='26.92' height='215.38' data-midi='76'/><rect class='white' x='888.46' y='0' width='26.92' height='215.38' data-midi='77'/><rect class='white' x='915.38' y='0' width='26.92' height='215.38' data-midi='79'/><rect class='white' x='942.31' y='0' width='26.92' height='215.38' data-midi='81'/><rect class='white' x='969.23' y='0' width='26.92' height='215.38' data-midi='83'/><rect class='white' x='996.15' y='0' width='26.92' height='215.38' data-midi='84'/><rect class='white' x='1023.08' y='0' width='26.92' height='215.38' data-midi='86'/><rect class='white' x='1050' y='0' width='26.92' height='215.38' data-midi='88'/><rect class='white' x='1076.92' y='0' width='26.92' height='215.38' data-midi='89'/><rect class='white' x='1103.85' y='0' width='26.92' height='215.38' data-midi='91'/><rect class='white' x='1130.77' y='0' width='26.92' height='215.38' data-midi='93'/><rect class='white' x='1157.69' y='0' width='26.92' height='215.38' data-midi='95'/><rect class='white' x='1184.62' y='0' width='26.92' height='215.38' data-midi='96'/><rect class='white' x='1211.54' y='0' width='26.92' height='215.38' data-midi='98'/><rect class='white' x='1238.46' y='0' width='26.92' height='215.38' data-midi='100'/><rect class='white' x='1265.38' y='0' width='26.92' height='215.38' data-midi='101'/><rect class='white' x='1292.31' y='0' width='26.92' height='215.38' data-midi='103'/><rect class='white' x='1319.23' y='0' width='26.92' height='215.38' data-midi='105'/><rect class='white' x='1346.15' y='0' width='26.92' height='215.38' data-midi='107'/><rect class='white' x='1373.08' y='0' width='26.92' height='215.38' data-midi='108'/><rect class='black' x='18.85' y='0' width='16.15' height='134.62' data-midi='22'/><rect class='black' x='72.69' y='0' width='16.15' height='134.62' data-midi='25'/><rect class='black' x='99.62' y='0' width='16.15' height='134.62' data-midi='27'/><rect class='black' x='153.46' y='0' width='16.15' height='134.62' data-midi='30'/><rect class='black' x='180.38' y='0' width='16.15' height='134.62' data-midi='32'/><rect class='black' x='207.31' y='0' width='16.15' height='134.62' data-midi='34'/><rect class='black' x='261.15' y='0' width='16.15' height='134.62' data-midi='37'/><rect class='black' x='288.08' y='0' width='16.15' height='134.62' data-midi='39'/><rect class='black' x='341.92' y='0' width='16.15' height='134.62' data-midi='42'/><rect class='black' x='368.85' y='0' width='16.15' height='134.62' data-midi='44'/><rect class='black' x='395.77' y='0' width='16.15' height='134.62' data-midi='46'/><rect class='black' x='449.62' y='0' width='16.15' height='134.62' data-midi='49'/><rect class='black' x='476.54' y='0' width='16.15' height='134.62' data-midi='51'/><rect class='black' x='530.38' y='0' width='16.15' height='134.62' data-midi='54'/><rect class='black' x='557.31' y='0' width='16.15' height='134.62' data-midi='56'/><rect class='black' x='584.23' y='0' width='16.15' height='134.62' data-midi='58'/><rect class='black' x='638.08' y='0' width='16.15' height='134.62' data-midi='61'/><rect class='black' x='665' y='0' width='16.15' height='134.62' data-midi='63'/><rect class='black' x='718.85' y='0' width='16.15' height='134.62' data-midi='66'/><rect class='black' x='745.77' y='0' width='16.15' height='134.62' data-midi='68'/><rect class='black' x='772.69' y='0' width='16.15' height='134.62' data-midi='70'/><rect class='black' x='826.54' y='0' width='16.15' height='134.62' data-midi='73'/><rect class='black' x='853.46' y='0' width='16.15' height='134.62' data-midi='75'/><rect class='black' x='907.31' y='0' width='16.15' height='134.62' data-midi='78'/><rect class='black' x='934.23' y='0' width='16.15' height='134.62' data-midi='80'/><rect class='black' x='961.15' y='0' width='16.15' height='134.62' data-midi='82'/><rect class='black' x='1015' y='0' width='16.15' height='134.62' data-midi='85'/><rect class='black' x='1041.92' y='0' width='16.15' height='134.62' data-midi='87'/><rect class='black' x='1095.77' y='0' width='16.15' height='134.62' data-midi='90'/><rect class='black' x='1122.69' y='0' width='16.15' height='134.62' data-midi='92'/><rect class='black' x='1149.62' y='0' width='16.15' height='134.62' data-midi='94'/><rect class='black' x='1203.46' y='0' width='16.15' height='134.62' data-midi='97'/><rect class='black' x='1230.38' y='0' width='16.15' height='134.62' data-midi='99'/><rect class='black' x='1284.23' y='0' width='16.15' height='134.62' data-midi='102'/><rect class='black' x='1311.15' y='0' width='16.15' height='134.62' data-midi='104'/><rect class='black' x='1338.08' y='0' width='16.15' height='134.62' data-midi='106'/></svg>"
+			},
+			"type": "splunk.choropleth.svg"
+		}
+	},
+	"dataSources": {
+		"ds_KLMnhHTF": {
+			"name": "make_midi",
+			"options": {
+				"enableSmartSources": true,
+				"query": "| gentimes start=-3 increment=300ms \n| eval midi_note = 36 + (random() % 48)\n| eval note_index = midi_note % 12\n| eval note_name = case(\n    note_index=0, \"C\",\n    note_index=1, \"C#\",\n    note_index=2, \"D\",\n    note_index=3, \"D#\",\n    note_index=4, \"E\",\n    note_index=5, \"F\",\n    note_index=6, \"F#\",\n    note_index=7, \"G\",\n    note_index=8, \"G#\",\n    note_index=9, \"A\",\n    note_index=10, \"A#\",\n    note_index=11, \"B\"\n)\n| eval octave = floor((midi_note / 12)) - 1\n| eval velocity = 40 + (random() % 80)\n| eval duration = (random() % 1500) / 1000.0 + 0.2\n| eval duration = round(duration, 3)\n| eval rand_chord = random() % 100\n| eval is_chord = if(rand_chord < 30, 1, 0)\n| eval chord_type_rand = random() % 100\n| eval chord_type = if(is_chord=1, case(\n    chord_type_rand < 35, \"maj\",\n    chord_type_rand < 65, \"min\",\n    chord_type_rand < 80, \"7\",\n    chord_type_rand < 90, \"maj7\",\n    chord_type_rand < 96, \"min7\",\n    1=1, \"sus4\"\n), \"\")\n| eval chord_root = if(is_chord=1, note_name, \"\")\n| fields - note_index, rand_chord, is_chord, chord_type_rand\n| table _time, midi_note, note_name, octave, velocity, duration, chord_root, chord_type",
+				"queryParameters": {
+					"earliest": "-15m",
+					"latest": "now"
+				},
+				"refresh": "1s",
+				"refreshType": "delay"
+			},
+			"type": "ds.search"
+		},
+		"ds_X2973uQ8": {
+			"name": "make_midi copy 1",
+			"options": {
+				"enableSmartSources": true,
+				"query": "| gentimes start=-3 increment=300ms \n| eval midi_note = 36 + (random() % 48)\n| eval note_index = midi_note % 12\n| eval note_name = case(\n    note_index=0, \"C\",\n    note_index=1, \"C#\",\n    note_index=2, \"D\",\n    note_index=3, \"D#\",\n    note_index=4, \"E\",\n    note_index=5, \"F\",\n    note_index=6, \"F#\",\n    note_index=7, \"G\",\n    note_index=8, \"G#\",\n    note_index=9, \"A\",\n    note_index=10, \"A#\",\n    note_index=11, \"B\"\n)\n| eval octave = floor((midi_note / 12)) - 1\n| eval velocity = 40 + (random() % 80)\n| eval duration = (random() % 1500) / 1000.0 + 0.2\n| eval duration = round(duration, 3)\n| eval rand_chord = random() % 100\n| eval is_chord = if(rand_chord < 30, 1, 0)\n| eval chord_type_rand = random() % 100\n| eval chord_type = if(is_chord=1, case(\n    chord_type_rand < 35, \"maj\",\n    chord_type_rand < 65, \"min\",\n    chord_type_rand < 80, \"7\",\n    chord_type_rand < 90, \"maj7\",\n    chord_type_rand < 96, \"min7\",\n    1=1, \"sus4\"\n), \"\")\n| eval chord_root = if(is_chord=1, note_name, \"\")\n| fields - note_index, rand_chord, is_chord, chord_type_rand\n| table _time, midi_note, note_name, octave, velocity, duration, chord_root, chord_type",
+				"queryParameters": {
+					"earliest": "-15m",
+					"latest": "now"
+				},
+				"refresh": "1s",
+				"refreshType": "delay"
+			},
+			"type": "ds.search"
+		}
+	},
+	"layout": {
+		"globalInputs": [],
+		"layoutDefinitions": {
+			"layout_1": {
+				"options": {
+					"backgroundColor": "#000000",
+					"display": "auto",
+					"height": 960,
+					"width": 1440
+				},
+				"structure": [
+					{
+						"item": "viz_YkodajGF",
+						"position": {
+							"h": 90,
+							"w": 120,
+							"x": 180,
+							"y": 50
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_VHkSc8mo",
+						"position": {
+							"h": 90,
+							"w": 120,
+							"x": 320,
+							"y": 50
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_Q3EAcQ6l",
+						"position": {
+							"h": 90,
+							"w": 150,
+							"x": 480,
+							"y": 50
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_5yX9mOQo",
+						"position": {
+							"h": 90,
+							"w": 200,
+							"x": 670,
+							"y": 60
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_Vb8ZuWZu",
+						"position": {
+							"h": 90,
+							"w": 120,
+							"x": 40,
+							"y": 50
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_DOyrBq9W",
+						"position": {
+							"h": 30,
+							"w": 120,
+							"x": 330,
+							"y": 130
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_SIaRpOS5",
+						"position": {
+							"h": 100,
+							"w": 250,
+							"x": 1180,
+							"y": 60
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_bftcebRY",
+						"position": {
+							"h": 100,
+							"w": 250,
+							"x": 910,
+							"y": 60
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_srluSUYE",
+						"position": {
+							"h": 250,
+							"w": 1430,
+							"x": 20,
+							"y": 200
+						},
+						"type": "block"
+					},
+					{
+						"item": "viz_YhPzgUbm",
+						"position": {
+							"h": 250,
+							"w": 1440,
+							"x": 20,
+							"y": 200
+						},
+						"type": "block"
+					}
+				],
+				"type": "absolute"
+			}
+		},
+		"options": {},
+		"tabs": {
+			"items": [
+				{
+					"label": "New tab",
+					"layoutId": "layout_1"
+				}
+			]
+		}
+	}
+}
+    ]]></definition>
+</dashboard>
