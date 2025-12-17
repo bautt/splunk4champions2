@@ -5,13 +5,13 @@ You may complete the * <Link to="https://docs.splunk.com/Documentation/Splunk/la
 in this App. The tutorial data is already uploaded to  `s4c_tutorial ` index and the lookup  `prices.csv ` is already configured. 
 
 1) Check the data (if you do not see any, try increasing the time range)
-<SplunkSearch earliest="-30d" latest="now" spl={`index=s4c_tutorial`}></SplunkSearch>
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_tutorial\``}></SplunkSearch>
 2) Check if automatic lookup is working: look for the fields like  `price` and  `product_name` 
 
 3) <Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/dashCanvas" openInNewContext>"Create a new dashboard"</Link>
 
 4) Follow steps 4-10 <Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/addTable" openInNewContext>"Tutorial Steps 4-10"</Link>
-Remember to adapt all the searches to our index (index=s4c_tutorial instead of index=main)
+Remember to adapt all the searches to our index (`s4c_index_tutorial` instead of index=main)
 
 5) At step 11: instead of simply uploading the images use the URL for the background image: https://docs.splunk.com/images/e/ed/Tutorialdash.png
 

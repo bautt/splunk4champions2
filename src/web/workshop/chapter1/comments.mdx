@@ -22,9 +22,9 @@ is not true for Splunk searches anymore.
 * Troubleshoot searches by running them with chunks of SPL "commented out".
 
 
-https://docs.splunk.com/Documentation/Splunk/9.0.1/Search/Comments
+https://docs.splunk.com/Documentation/Splunk/latest/Search/Comments
 
-<SplunkSearch earliest="-24h" latest="now" spl={`index=_internal host=* source="*metrics.log" sourcetype=splunkd group=per_Sourcetype_thruput 
+<SplunkSearch earliest="-24h" latest="now" spl={`\`s4c_index_internal\` host=* source="*metrics.log" sourcetype=splunkd group=per_Sourcetype_thruput 
 \`\`\`this search is borrowed from "Indexing Performance" in Monitoring Console\`\`\`
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") 
 | timechart minspan=30s per_second(kb) by series useother=false limit=5`}>

@@ -7,7 +7,7 @@ import Link from '@splunk/react-ui/Link'
 
 Try this simple search out in different modes: 
 
-<SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`index=s4c_weather`}>
+<SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`\`s4c_index_weather\``}>
 </SplunkSearch>
 
 * If you see no data in the s4c_data and s4c_stocks index, please go to section 0-Setup and follow the instructions (create indexes and add exanple data)

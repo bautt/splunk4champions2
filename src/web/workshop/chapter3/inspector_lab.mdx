@@ -3,7 +3,7 @@ import Link from '@splunk/react-ui/Link'
 
 Run the search, wait for it to finish, and click on "Job -> Inspect Job" to oberserve the details: 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" 
+<SplunkSearch earliest="-1y" latest="now"  spl={`\`s4c_index_weather\`
 |bucket span=4h _time
 |stats avg(main.temp) AS temp by name _time
 |where name=="Berlin" OR name=="London" OR name=="Paris"
@@ -40,7 +40,7 @@ In this example we see something like:
 
 
  Now compare the results with this search: 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
+<SplunkSearch earliest="-1y" latest="now"  spl={`\`s4c_index_weather\` Berlin OR London OR Paris 
 |timechart  span=4h  avg(main.temp) by name`}>
 </SplunkSearch>
 Here is an example comparison: 
@@ -53,7 +53,7 @@ What is different?
 after the first line? Check it out:
 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather" Berlin OR London OR Paris 
+<SplunkSearch earliest="-1y" latest="now"  spl={`\`s4c_index_weather\` Berlin OR London OR Paris 
 | fields name main.temp _time 
 | timechart  span=4h  avg(main.temp) by name`}>
 </SplunkSearch>
@@ -63,7 +63,7 @@ Lispy expressions are predicates Splunk® platform uses to locate events. Findin
 (scanned includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
 Lispy efficiency can be defined as `eventCount / scanCount`
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_audit\` search_id TERM(action=search) (info=granted OR info=completed)
 | stats earliest(_time) as _time earliest(total_run_time) as total_run_time earliest(event_count) as event_count earliest(scan_count) as scan_count earliest(user) as user earliest(savedsearch_name) as savedsearch_name earliest(search) as search by search_id
 | eval lispy_efficiency = event_count / scan_count|where scan_count > 100 AND total_run_time > 2
 | table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}>

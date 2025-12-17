@@ -2,7 +2,7 @@
   <label>Base Search - XML</label>
   <search id="singleValue_BaseSearch">
     <query>
- |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time
+ |tstats count WHERE `s4c_index_all` groupby sourcetype source index host _time
     </query>
     <earliest>$time_select.earliest$</earliest>
     <latest>$time_select.latest$</latest>
@@ -230,7 +230,7 @@
       </input>
       <table>
         <search>
-          <query>index=_* OR index=* sourcetype="$sourcetype_drilldown$"
+          <query>`s4c_index_all` sourcetype="$sourcetype_drilldown$"
 | head $size_resultset$
 | table _time log_level _raw</query>
           <earliest>$time_select.earliest$</earliest>

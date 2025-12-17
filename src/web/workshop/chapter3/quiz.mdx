@@ -9,7 +9,7 @@ import Link from '@splunk/react-ui/Link'
 ___
 
 ## 2. Which search is better? And why?
-<SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" Frankfurt
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_weather\` Frankfurt
 | rename "weather{}.description" as Description 
 | stats  count as eventcount by Description 
 | where eventcount > 5000 `}>
@@ -17,7 +17,7 @@ ___
 
 versus: 
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index="s4c_weather" Frankfurt
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_weather\` Frankfurt
 | stats  count as eventcount by "weather{}.description" 
 | where eventcount > 5000 
 | rename "weather{}.description" as Description`}>
@@ -26,18 +26,18 @@ versus:
 ___
 
 ## 3. Which search is better? And why?
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal 127.0.0.1 `}>
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_internal\` 127.0.0.1 `}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_internal\` TERM(127.0.0.1)`}>
 </SplunkSearch>
 
 ___
 
 ## 4. Which search is better? And why?
-<SplunkSearch earliest="-30d" latest="now" spl={`index="_introspection" component=PerProcess "data.process"=splunkd
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_introspection\` component=PerProcess "data.process"=splunkd
  | stats last(_time) as _time, count as eventcount by "data.pid"
  | rename "data.pid" as processId 
  | where eventcount > 10`}>
@@ -45,7 +45,7 @@ ___
 
 versus: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index="_introspection"  "data.process"=splunkd 
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_introspection\`  "data.process"=splunkd 
  | transaction "data.pid"
  | rename "data.pid" as processId 
  | table _time, processId, eventcount
@@ -55,14 +55,14 @@ versus:
 ___
 
 ## 5. Which search is better? And why?
-<SplunkSearch earliest="-30d" latest="now" spl={`index="_audit" 
-| join type=left host [search index="_audit" 
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_audit\`  
+| join type=left host [search \`s4c_index_audit\`  
 | stats count as eventcount by host]`}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index="_audit" 
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_audit\` 
 | eventstats count as host_count by host 
 | stats count by component, host_count, host`}>
 </SplunkSearch>
@@ -70,47 +70,47 @@ versus:
 ___
 
 ## 6. Which search is better? And why?
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_weather 
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_weather\` 
 | stats count by name `}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-1y" latest="now" spl={`|tstats count  WHERE index="s4c_weather" by name`}>
+<SplunkSearch earliest="-1y" latest="now" spl={`|tstats count  WHERE \`s4c_index_weather\` by name`}>
 </SplunkSearch>
 
 ___
 
 ## 7. Which search is better? And why?
 <SplunkSearch earliest="-1y" latest="now" spl={`|tstats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp) 
- WHERE index=s4c_weather by name`}>
+ WHERE \`s4c_index_weather\` by name`}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_weather 
+<SplunkSearch earliest="-1y" latest="now" spl={`\`s4c_index_weather\`
 |stats avg(main.temp) max(main.temp) min(main.temp)  median(main.temp) by name`}>
 </SplunkSearch>
 
 ___
 
 ## 8. Which search is better? And why?
-<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather"  name IN(Berlin Brussels Warsaw)`}>
+<SplunkSearch earliest="-2y" latest="now" spl={`\`s4c_index_weather\` name IN(Berlin Brussels Warsaw)`}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather"  
+<SplunkSearch earliest="-2y" latest="now" spl={`\`s4c_index_weather\`  
 | where name IN("Berlin", "Brussels", "Warsaw")`}>
 </SplunkSearch>
 
 ___
 
 ## 9. Which search is better? And why?
-<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather" *erlin`}>
+<SplunkSearch earliest="-2y" latest="now" spl={`\`s4c_index_weather\` *erlin`}>
 </SplunkSearch>
 
 versus: 
 
-<SplunkSearch earliest="-2y" latest="now" spl={`index="s4c_weather" Ber*`}>
+<SplunkSearch earliest="-2y" latest="now" spl={`\`s4c_index_weather\` Ber*`}>
 </SplunkSearch>

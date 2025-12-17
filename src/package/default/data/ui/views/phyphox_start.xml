@@ -208,7 +208,7 @@
 		"ds_QSpi1a09": {
 			"type": "ds.search",
 			"options": {
-				"query": "| mstats avg(\"accX\") avg(\"accY\") avg(\"accZ\") avg(\"acc\") avg(\"gyrX\") avg(\"gyrY\") avg(\"gyrZ\") avg(\"gyr\") avg(pressure) avg(f0) prestats=true WHERE \"index\"=\"s4c_phyphox_metrics\" span=10s\n| stats avg(*) as * by _time\n| stats last(accX) as accX last(accY) as accY last(accZ) as accZ last(acc) as acc last(gyrX) as gyrX last(gyrY) as gyrY last(gyrZ) as gyrZ last(gyr) as gyr last(pressure) as illum last(f0) as f0",
+				"query": "| mstats avg(\"accX\") avg(\"accY\") avg(\"accZ\") avg(\"acc\") avg(\"gyrX\") avg(\"gyrY\") avg(\"gyrZ\") avg(\"gyr\") avg(pressure) avg(f0) prestats=true WHERE \`s4c_index_phyphox_metrics\` span=10s\n| stats avg(*) as * by _time\n| stats last(accX) as accX last(accY) as accY last(accZ) as accZ last(acc) as acc last(gyrX) as gyrX last(gyrY) as gyrY last(gyrZ) as gyrZ last(gyr) as gyr last(pressure) as illum last(f0) as f0",
 				"queryParameters": {
 					"earliest": "rt-20s",
 					"latest": "rt"
