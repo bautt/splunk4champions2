@@ -32,10 +32,10 @@ Annotations are supported for charts, column charts, and area charts. In order t
   <row>
     <panel>
       <html>
-        <code>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</code>
+        <code>`s4c_index_audit` action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</code>
         <p>
           The additional annotation search used here looks like this: 
-          <code>index=_internal (log_level="WARN" OR log_level="ERROR") 
+          <code>`s4c_index_internal` (log_level="WARN" OR log_level="ERROR") 
 | fields _time log_level thread_name 
 | eval annotation_label = thread_name
 | eval annotation_category = log_level</code>
@@ -48,12 +48,12 @@ Annotations are supported for charts, column charts, and area charts. In order t
       <title>Average Search Run Time with WARN/ERROR event annotations</title>
       <chart>
         <search>
-          <query>index=_audit action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
+          <query>`s4c_index_audit` action=search result_count="*" | timechart avg(total_run_time) as avgRunTime</query>
           <earliest>$timetoken.earliest$</earliest>
           <latest>$timetoken.latest$</latest>
         </search>
         <search type="annotation">
-          <query>index=_internal (log_level="WARN" OR log_level="ERROR") 
+          <query>`s4c_index_internal` (log_level="WARN" OR log_level="ERROR") 
 | fields _time log_level thread_name 
 | eval annotation_label = thread_name
 | eval annotation_category = log_level</query>

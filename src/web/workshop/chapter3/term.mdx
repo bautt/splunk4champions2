@@ -5,12 +5,12 @@ import Link from '@splunk/react-ui/Link'
 
 ### Using term in a search
 Compare: 
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal 127.0.0.1`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_internal\` 127.0.0.1`}>
 </SplunkSearch>
 
 To: 
 
-<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal TERM(127.0.0.1)`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`\`s4c_index_internal\` TERM(127.0.0.1)`}>
 </SplunkSearch>
 
 The example search can be dangerous in some cases: if you have an event like this: 

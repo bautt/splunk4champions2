@@ -6,4 +6,4 @@ import Link from '@splunk/react-ui/Link'
 **Smart mode** is best when exploring data, as it will only pull back raw events if there are no transforming commands in the search, and will display any field extractions in the events. 
 If there are transforming commands like stats, chart, or timechart in the search, it will only return the aggregated/transformed events. 
 This saves on system resources and results in faster searches. Tip: use smart mode!
-<SplunkSearch earliest="-30d" latest="now" mode="smart" spl={`index=s4c_weather`}></SplunkSearch>
+<SplunkSearch earliest="-30d" latest="now" mode="smart" spl={`\`s4c_index_weather\``}></SplunkSearch>

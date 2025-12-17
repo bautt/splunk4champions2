@@ -3,17 +3,17 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
 ## Using mcatalog command
-<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=_*`}></SplunkSearch>
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE \`s4c_index_internal_metrics\``}></SplunkSearch>
 
 ## Using mstats command
-<SplunkSearch earliest="-30d" latest="now" spl={`| mstats avg("spl.mlog.thruput.thruput.average_kbps") prestats=true WHERE "index"="_metrics" span=15m
+<SplunkSearch earliest="-30d" latest="now" spl={`| mstats avg("spl.mlog.thruput.thruput.average_kbps") prestats=true WHERE \`s4c_index_internal_metrics\` span=15m
 | timechart avg("spl.mlog.thruput.thruput.average_kbps") AS Avg span=15m
 | sort - _time`}>
 </SplunkSearch>
 
 ## Using mpreview command
 Use mpreview to get an idea of the kinds of metric time series that are stored in your metrics indexes and to troubleshoot your metrics data.
-<SplunkSearch earliest="-30d" latest="now" spl={` | mpreview index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
+<SplunkSearch earliest="-30d" latest="now" spl={` | mpreview \`s4c_index_internal_metrics\` filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
 
 ## Best way to work with metrics is Analytics Workspace 
 

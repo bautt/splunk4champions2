@@ -5,7 +5,7 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## CONVERT WEATHER DATA TO METRICS
 
-<SplunkSearch earliest="-60d" latest="now" spl={`index=s4c_weather Orlando OR Vilnius OR Frankfurt OR Brussels OR Austin OR Warsaw OR Prague OR Sydney OR Stockholm OR London OR Bonn OR Copenhagen OR Zurich
+<SplunkSearch earliest="-60d" latest="now" spl={`\`s4c_index_weather\` Orlando OR Vilnius OR Frankfurt OR Brussels OR Austin OR Warsaw OR Prague OR Sydney OR Stockholm OR London OR Bonn OR Copenhagen OR Zurich
 | rename clouds.all AS weather.Clouds main.temp AS weather.Temperature main.temp_max AS weather.MaxTemp main.temp_min AS weather.MinTemp main.humidity AS weather.Humidity main.pressure AS weather.Pressure wind.speed AS weather.Windspeed visibility AS weather.Visibility wind.deg AS weather.WindDirection coord.lat AS weather.Lat coord.lon AS weather.Lon weather{}.id AS weather.Id
 | stats first(weather.*) by _time name
 | rename first(*) AS *
@@ -21,7 +21,7 @@ once the index is ready and you want the data to be saved in the metrics index.
 
 Here is an example: which search is better suitable to be used as a base search in a weather dashboard? 
 <SplunkSearch earliest="-2y" latest="now" spl={`
-index=s4c_weather 
+\`s4c_index_weather\`
 |bin _time span=4h
 | stats avg(main*) BY name _time
 `}></SplunkSearch>
@@ -29,7 +29,7 @@ index=s4c_weather
 OR 
 
 <SplunkSearch earliest="-2y" latest="now" spl={`
-| mstats avg(weather.*)  prestats=true WHERE "index"="s4c_metrics" span=4h BY name
+| mstats avg(weather.*)  prestats=true WHERE \`s4c_index_metrics\` span=4h BY name
 | stats avg(weather.*) BY name _time
 | fields - _span*
 `}></SplunkSearch>

@@ -5,7 +5,7 @@
       <title>Where should we go? (winter 2021)</title>
       <chart>
         <search>
-          <query>index="s4c_weather"  name="Frankfurt am Main" OR name="London" OR name="Vienna" OR name="Sydney" OR name="Stockholm" OR name="Munich" OR "Vilnius" OR "Riga" OR "Austin" OR "Warsaw" OR "Prague" 
+          <query>`s4c_index_weather` name="Frankfurt am Main" OR name="London" OR name="Vienna" OR name="Sydney" OR name="Stockholm" OR name="Munich" OR "Vilnius" OR "Riga" OR "Austin" OR "Warsaw" OR "Prague" 
 | top limit=20 "weather{}.main" by name
 |xyseries name "weather{}.main" count</query>
           <earliest>1630490400</earliest>

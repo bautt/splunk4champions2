@@ -40,7 +40,7 @@
       <title>Current state of distinct data sources</title>
       <single>
         <search>
-          <query>|tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time | timechart  dc(source)</query>
+          <query>|tstats count WHERE `s4c_index_all` groupby sourcetype source index host _time | timechart  dc(source)</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -67,7 +67,7 @@
       <title>Count of Events in internal indexes</title>
       <single>
         <search>
-          <query>|tstats count WHERE index=_*</query>
+          <query>|tstats count WHERE `s4c_index_internal`</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -126,7 +126,7 @@
       <title>Humidity</title>
       <chart>
         <search>
-          <query>|tstats max(main.humidity) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Prague))   groupby _time name span=2h 
+          <query>|tstats max(main.humidity) WHERE (`s4c_index_weather` AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Prague))   groupby _time name span=2h 
 |xyseries _time name max(main.humidity)</query>
           <earliest>1687557600</earliest>
           <latest>1688248800</latest>
@@ -170,7 +170,7 @@
       <title>Maximum Wind Speed</title>
       <chart>
         <search>
-          <query>|tstats max(wind.speed) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Prague))   groupby _time name span=12h
+          <query>|tstats max(wind.speed) WHERE (`s4c_index_weather` AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Prague))   groupby _time name span=12h
 |xyseries _time name max(wind.speed)</query>
           <earliest>-30d@d</earliest>
           <latest>now</latest>
@@ -216,7 +216,7 @@
       <title>Maximum temperature over a year</title>
       <chart>
         <search>
-          <query>|tstats max(main.temp) WHERE (index=s4c_weather AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=12h 
+          <query>|tstats max(main.temp) WHERE (`s4c_index_weather` AND (name=Frankfurt OR name=Munich OR name=Vienna OR name=Zurich OR name=Warsaw OR name=Stockholm  OR name=Paris OR name=Praha))   groupby _time name span=12h 
 |xyseries _time name max(main.temp)</query>
           <earliest>@y</earliest>
           <latest>now</latest>
@@ -260,7 +260,7 @@
       <title>Just some bubbles</title>
       <chart>
         <search>
-          <query>index = _internal sourcetype=splunkd_access | stats count sum(bytes) as "Total Bytes" by status, date_hour | table status date_hour count "Total Bytes"</query>
+          <query>`s4c_index_internal` sourcetype=splunkd_access | stats count sum(bytes) as "Total Bytes" by status, date_hour | table status date_hour count "Total Bytes"</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -304,7 +304,7 @@
       <title>Does a rise in temperature mean an increase in stock prices? Frankfurt DAX</title>
       <chart>
         <search>
-          <query>(index="s4c_weather"  name="Frankfurt am Main") OR (index="s4c_stocks") | eval price_increase = if(Close&gt;Open,1,-1) | timechart span=1d last(main.temp) as starttemp,first(main.temp) as lasttemp,first(price_increase) as priceincrease | eval tempincrease = if(starttemp &lt; lasttemp,1,-1) | timechart span=1d first(priceincrease) as priceincrease, first(tempincrease) as tempincrease</query>
+          <query>(`s4c_index_weather` name="Frankfurt am Main") OR (index="s4c_stocks") | eval price_increase = if(Close&gt;Open,1,-1) | timechart span=1d last(main.temp) as starttemp,first(main.temp) as lasttemp,first(price_increase) as priceincrease | eval tempincrease = if(starttemp &lt; lasttemp,1,-1) | timechart span=1d first(priceincrease) as priceincrease, first(tempincrease) as tempincrease</query>
           <earliest>@y</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -391,7 +391,7 @@
     <panel>
       <map>
         <search>
-          <query>index=s4c_tutorial sourcetype=access_* action=purchase status=200 productName="*"
+          <query>`s4c_index_tutorial` sourcetype=access_* action=purchase status=200 productName="*"
 | iplocation clientip
 | geostats latfield=lat longfield=lon count by categoryId</query>
           <earliest>0</earliest>

@@ -8,7 +8,7 @@
 		"ds_search_1": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=_audit action=search result_count=\"*\" | timechart span=1m avg(total_run_time) as avgRunTime avg(result_count) as result_count|eval result_count=result_count/20\n| table _time $filter$",
+				"query": "`s4c_index_audit` action=search result_count=\"*\" | timechart span=1m avg(total_run_time) as avgRunTime avg(result_count) as result_count|eval result_count=result_count/20\n| table _time $filter$",
 				"queryParameters": {
 					"earliest": "$global_time.earliest$",
 					"latest": "$global_time.latest$"
