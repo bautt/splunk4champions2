@@ -21,6 +21,7 @@ package: build
 	--exclude='__pycache__' \
 	--exclude='./splunk4champions2/local' \
 	--exclude='*.pyc' \
+	--exclude='dist' \
 	-cvzf splunk4champions2.tar.gz \
 	-C /tmp \
 	splunk4champions2/

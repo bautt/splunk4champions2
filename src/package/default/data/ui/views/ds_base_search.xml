@@ -199,7 +199,7 @@
 		"ds_singleValue_BaseSearch": {
 			"type": "ds.search",
 			"options": {
-				"query": "\n |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time\n    ",
+				"query": "\n |tstats count WHERE `s4c_index_all` groupby sourcetype source index host _time\n    ",
 				"queryParameters": {
 					"earliest": "$time_select.earliest$",
 					"latest": "$time_select.latest$"
@@ -266,7 +266,7 @@
 		"ds_kVaOclok": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=_* OR index=* sourcetype=\"$sourcetype_drilldown$\"\n| head $size_resultset$\n| table _time log_level _raw",
+				"query": "`s4c_index_all` sourcetype=\"$sourcetype_drilldown$\"\n| head $size_resultset$\n| table _time log_level _raw",
 				"queryParameters": {
 					"earliest": "$time_select.earliest$",
 					"latest": "$time_select.latest$"

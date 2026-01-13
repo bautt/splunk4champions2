@@ -234,7 +234,7 @@
 		"ds_oMndSczA": {
 			"type": "ds.search",
 			"options": {
-				"query": "| mstats max(\"f0\") AS max_f0  WHERE index=\"s4c_phyphox_metrics\" by deviceModel, deviceBrand, uniqueID span=1s\n| eval max_f0 = round(max_f0, 0)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n",
+				"query": "| mstats max(\"f0\") AS max_f0  WHERE \`s4c_index_phyphox_metrics\` by deviceModel, deviceBrand, uniqueID span=1s\n| eval max_f0 = round(max_f0, 0)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n",
 				"queryParameters": {
 					"earliest": "-1s",
 					"latest": "now"
@@ -247,7 +247,7 @@
 		"ds_gI2LhSo2": {
 			"type": "ds.search",
 			"options": {
-				"query": "| mstats max(\"f0\") prestats=true WHERE index=\"s4c_phyphox_metrics\" span=1s \n| timechart max(\"f0\") AS max_f0 span=1s \n| bin span=1s _time \n| fields - _span*\n| eval max_f0 = round(max_f0, 1)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n| eval note_{Note} = 1 \n| fields - Note note_",
+				"query": "| mstats max(\"f0\") prestats=true WHERE \`s4c_index_phyphox_metrics\` span=1s \n| timechart max(\"f0\") AS max_f0 span=1s \n| bin span=1s _time \n| fields - _span*\n| eval max_f0 = round(max_f0, 1)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n| eval note_{Note} = 1 \n| fields - Note note_",
 				"queryParameters": {
 					"earliest": "-1m",
 					"latest": "now"
@@ -260,7 +260,7 @@
 		"ds_tDlnKAS5_ds_oMndSczA": {
 			"type": "ds.search",
 			"options": {
-				"query": "| mstats max(\"f0\") AS max_f0  WHERE index=\"s4c_phyphox_metrics\" by deviceBrand, deviceModel, uniqueID span=1s\n| eval max_f0 = round(max_f0, 1)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n| fields - _time\n",
+				"query": "| mstats max(\"f0\") AS max_f0  WHERE \`s4c_index_phyphox_metrics\` by deviceBrand, deviceModel, uniqueID span=1s\n| eval max_f0 = round(max_f0, 1)\n| lookup notes_frequency_0_4000_tenth.csv max_f0\n| fields - _time\n",
 				"queryParameters": {
 					"earliest": "-1s",
 					"latest": "now"
@@ -273,7 +273,7 @@
 		"ds_AP1JK2xq_ds_gI2LhSo2": {
 			"type": "ds.search",
 			"options": {
-				"query": "| mstats max(\"f0\") prestats=true WHERE index=\"s4c_phyphox_metrics\" span=1s \n| timechart max(\"f0\") AS max_f0 span=1s",
+				"query": "| mstats max(\"f0\") prestats=true WHERE \`s4c_index_phyphox_metrics\` span=1s \n| timechart max(\"f0\") AS max_f0 span=1s",
 				"queryParameters": {
 					"earliest": "-1m",
 					"latest": "now"

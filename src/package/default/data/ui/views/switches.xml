@@ -44,7 +44,7 @@
     <panel depends="$Option1$">
       <chart>
         <search>
-          <query>index="_audit" | timechart count by host</query>
+          <query>`s4c_index_audit` | timechart count by host</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>
@@ -55,7 +55,7 @@
     <panel depends="$Option2$">
       <chart>
         <search>
-          <query>index="_internal" | stats count by component</query>
+          <query>`s4c_index_internal` | stats count by component</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
         </search>

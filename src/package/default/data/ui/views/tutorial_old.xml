@@ -167,7 +167,7 @@
 		"ds_ElnI4rip": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial  action=purchase status=200 \n| stats count as Purchases by productName price\n| table productName Purchases price\n| eval Revenue=Purchases*price\n| table productName Purchases Revenue\n| sort -Purchases | rename productName as \"Game\"\n| head 8",
+				"query": "`s4c_index_tutorial`  action=purchase status=200 \n| stats count as Purchases by productName price\n| table productName Purchases price\n| eval Revenue=Purchases*price\n| table productName Purchases Revenue\n| sort -Purchases | rename productName as \"Game\"\n| head 8",
 				"queryParameters": {
 					"earliest": "-30d@d",
 					"latest": "now"
@@ -178,7 +178,7 @@
 		"ds_vi26WU3b": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 categoryId=\"$category$\"\n\n| stats count values(price) as Price by productName productId \n| table productName productId count Price\n| eval revenue=count*Price \n| fields productName revenue\n| rename productName as \"Game\" revenue as \"Revenue\" \n| sort -Revenue",
+				"query": "`s4c_index_tutorial` sourcetype=access_* action=purchase status=200 categoryId=\"$category$\"\n\n| stats count values(price) as Price by productName productId \n| table productName productId count Price\n| eval revenue=count*Price \n| fields productName revenue\n| rename productName as \"Game\" revenue as \"Revenue\" \n| sort -Revenue",
 				"queryParameters": {
 					"earliest": "-30d@d",
 					"latest": "now"
@@ -189,7 +189,7 @@
 		"ds_7kYLQEg1": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* status=200 action=purchase categoryId!=NULL | fields _time categoryId clientip | timechart count by categoryId",
+				"query": "`s4c_index_tutorial` sourcetype=access_* status=200 action=purchase categoryId!=NULL | fields _time categoryId clientip | timechart count by categoryId",
 				"queryParameters": {
 					"earliest": "-30d@d",
 					"latest": "now"
@@ -208,7 +208,7 @@
 		"ds_I6ZhJN2N": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 productName=\"*\"\n| iplocation clientip\n| geostats latfield=lat longfield=lon count by categoryId",
+				"query": "`s4c_index_tutorial` sourcetype=access_* action=purchase status=200 productName=\"*\"\n| iplocation clientip\n| geostats latfield=lat longfield=lon count by categoryId",
 				"queryParameters": {
 					"earliest": "0",
 					"latest": ""

@@ -123,7 +123,7 @@
 		"ds_ei4Azbjj": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 \n| stats count as Purchases by productName categoryId price\n| table productName Purchases categoryId price\n| eval Revenue=Purchases*price\n| table productName Purchases Revenue categoryId\n| sort -Purchases | rename productName as \"Game\" categoryId as \"Category\"",
+				"query": "`s4c_index_tutorial` sourcetype=access_* action=purchase status=200 \n| stats count as Purchases by productName categoryId price\n| table productName Purchases categoryId price\n| eval Revenue=Purchases*price\n| table productName Purchases Revenue categoryId\n| sort -Purchases | rename productName as \"Game\" categoryId as \"Category\"",
 				"queryParameters": {
 					"earliest": "$global_time.earliest$",
 					"latest": "$global_time.latest$"
@@ -134,7 +134,7 @@
 		"ds_YNt79QBu": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* status=200 action=purchase categoryId!=NULL\n| fields _time categoryId clientip\n| timechart count by categoryId "
+				"query": "`s4c_index_tutorial` sourcetype=access_* status=200 action=purchase categoryId!=NULL\n| fields _time categoryId clientip\n| timechart count by categoryId "
 			},
 			"name": "Purchase Trends by Category"
 		},
@@ -149,14 +149,14 @@
 		"ds_FllKHCxW": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 categoryId=\"$category$\"\n productName=\"*\"\n| iplocation clientip\n| lookup geo_countries latitude AS lat longitude AS lon OUTPUT featureId AS country\n| stats count by country\n| geom geo_countries featureIdField=country"
+				"query": "`s4c_index_tutorial` sourcetype=access_* action=purchase status=200 categoryId=\"$category$\"\n productName=\"*\"\n| iplocation clientip\n| lookup geo_countries latitude AS lat longitude AS lon OUTPUT featureId AS country\n| stats count by country\n| geom geo_countries featureIdField=country"
 			},
 			"name": "Purchases by Location"
 		},
 		"ds_ti1jxtPv": {
 			"type": "ds.search",
 			"options": {
-				"query": "index=s4c_tutorial sourcetype=access_* action=purchase status=200 \n| stats count by categoryId\n",
+				"query": "`s4c_index_tutorial` sourcetype=access_* action=purchase status=200 \n| stats count by categoryId\n",
 				"queryParameters": {
 					"earliest": "$global_time.earliest$",
 					"latest": "$global_time.latest$"
