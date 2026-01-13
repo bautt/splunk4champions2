@@ -17,7 +17,7 @@ use job inspector and compare it to this "tstats" search:
 
 
 ## Simple example: index based tstats search (works with indexed fields)
-<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_* OR index=* by host`}>
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where \`s4c_index_internal\` by host`}>
 </SplunkSearch>
 
 ## Filter by indexed fields: 

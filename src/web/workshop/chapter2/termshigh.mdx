@@ -6,7 +6,7 @@ import Link from '@splunk/react-ui/Link'
 The easiest way to see minor and major breakers in action is to move the mouse over the log terms: 
 whatever you can highlight in one peace contains only minor breakers and can be used with TERM or PREFIX directives:
 
-<SplunkSearch earliest="-1h" latest="now" spl={`\`s4c_index_internal\``}></SplunkSearch>
+<SplunkSearch earliest="-1h" latest="now" spl={`\`s4c_index_internal\` sourcetype=splunkd`}></SplunkSearch>
 
 Open the search above and move the mouse slowly over the result TERMs: 
 <img src="/static/app/splunk4champions2/images/highlight_terms.png" width="100%" />
