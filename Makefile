@@ -13,6 +13,7 @@ build:
 	cd src/web && yarn build
 
 package: build
+	rm -rf /tmp/splunk4champions2
 	cp -r dist/ /tmp/splunk4champions2
 	COPYFILE_DISABLE=1 tar \
 	--exclude='.DS_Store' \
