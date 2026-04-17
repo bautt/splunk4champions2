@@ -78,8 +78,8 @@ const labs = {
                             "content": "chapter1/useful_links.mdx"
                         }, 
                         {
-                            "title": "",
-                            "content": "chapter7/standard.mdx"
+                            "title": "Splunk Navigation",
+                            "content": "chapter0/standard.mdx"
                         }
                     ]
                 },
@@ -100,7 +100,7 @@ const labs = {
                     "title": "Comments",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "Inline Comments",
                             "content": "chapter1/comments.mdx"
                         }, 
                         {
@@ -158,7 +158,7 @@ const labs = {
                             "content": "chapter2/segmentation.mdx"
                         },
                         {
-                            "title": "",
+                            "title": "Highlighting TERMs",
                             "content": "chapter2/termshigh.mdx"
                         },
                         {
@@ -269,20 +269,20 @@ const labs = {
                     "title": "Terms",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "Segmentation (Recap)",
                             "content": "chapter2/segmentation.mdx"
                         },
                         {
-                            "title": "",
+                            "title": "Walklex",
                             "content": "chapter3/walklex.mdx"
                         },
                         {
-                            "title": "",
+                            "title": "TERM Directive",
                             "content": "chapter3/term.mdx"
-                        }, 
-                        
+                        },
+
                         {
-                            "title": "",
+                            "title": "Highlighting TERMs",
                             "content": "chapter2/termshigh.mdx"
                         },
                         {
@@ -295,7 +295,7 @@ const labs = {
                     "title": "tstats",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "tstats and PREFIX",
                             "content": "chapter3/tstats.mdx"
                         },
                         {
@@ -382,6 +382,19 @@ const labs = {
                             "content": "chapter4/useful_links5.mdx"
                         }
                     
+                    ]
+                },
+                {
+                    "title": "Weather Data Reference",
+                    "steps": [
+                        {
+                            "title": "TA-open-meteo Data Schema",
+                            "content": "chapter4/meteo_data.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links5.mdx"
+                        }
                     ]
                 },
                 {
@@ -493,7 +506,7 @@ const labs = {
                     "title": "Dashboard Studio",
                     "steps": [
                         {
-                            "title": "",
+                            "title": "Dashboard Studio Overview",
                             "content": "chapter6/studio.mdx"
                         },
                         {

@@ -2,25 +2,49 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-## Using mcatalog command
-<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=_*`}></SplunkSearch>
+## Searching Metrics
 
-## Using mstats command
-<SplunkSearch earliest="-30d" latest="now" spl={`| mstats avg("spl.mlog.thruput.thruput.average_kbps") prestats=true WHERE "index"="_metrics" span=15m
-| timechart avg("spl.mlog.thruput.thruput.average_kbps") AS Avg span=15m
-| sort - _time`}>
+Metrics have their own set of search commands. Let's explore them using the TA-open-meteo weather data in `s4c_meteo_metrics`.
+
+## Using mcatalog
+
+The `mcatalog` command lets you discover what metric names and dimensions are available in a metrics index. Think of it as the metrics equivalent of `| metadata`.
+
+Discover all metric names in our weather metrics index:
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
+
+See which cities are reporting weather data:
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(city) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
+
+Combine metric names with dimensions to understand the data shape:
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) values(city) values(country) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
+
+## Using mstats
+
+The `mstats` command is the primary way to query metric data. It performs statistical aggregations directly on the metrics store, which is significantly faster than running `stats` on event data.
+
+Average temperature by city over the last 24 hours:
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city span=1h`}></SplunkSearch>
+
+Wind speed trends with timechart:
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.wind_speed_10m) as avg_wind prestats=true WHERE index=s4c_meteo_metrics BY city span=4h
+| timechart avg(weather.wind_speed_10m) as avg_wind BY city span=4h`}>
 </SplunkSearch>
 
-## Using mpreview command
-Use mpreview to get an idea of the kinds of metric time series that are stored in your metrics indexes and to troubleshoot your metrics data.
-<SplunkSearch earliest="-30d" latest="now" spl={` | mpreview index=_metrics filter="group=dutycycle name=ingest thread=udp"`}> </SplunkSearch>
+Humidity and temperature together:
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp avg(weather.relative_humidity_2m) as avg_humidity WHERE index=s4c_meteo_metrics BY city`}></SplunkSearch>
 
-## Best way to work with metrics is Analytics Workspace 
+## Using mpreview
 
-Just make sure you set "data ingested in last X days" setting according to your data and select the proper time setting. 
+Use `mpreview` to get a raw look at the metric time series stored in a metrics index. This is useful for troubleshooting and understanding the data structure.
+<SplunkSearch earliest="-1h" latest="now" spl={`| mpreview index=s4c_meteo_metrics`}></SplunkSearch>
+
+## Analytics Workspace
+
+The best way to interactively explore metrics is the **Analytics Workspace**. Make sure you set "data ingested in last X days" according to your data and select the proper time setting. 
 
 <img src="/static/app/splunk4champions2/images/Analytics1.png" width="600px"/>
 
-From here you can set most of the settings, than save to dashboard or open in the search and fine tune your search. 
+From here you can configure visualizations, then save to a dashboard or open in Search to fine-tune your SPL. 
 <img src="/static/app/splunk4champions2/images/Analytics2.png" width="600px"/>
 

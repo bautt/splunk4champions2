@@ -1,0 +1,94 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## TA-open-meteo Data Reference
+
+This page documents the data schema for the TA-open-meteo add-on. Use it as a quick reference when building searches, dashboards, or alerts against the weather data.
+
+---
+
+### Events Index: s4c_meteo
+
+| Property | Value |
+|----------|-------|
+| **Index** | `s4c_meteo` |
+| **Sourcetype** | `open_meteo:weather:json` |
+| **Format** | Raw JSON events |
+
+**Available fields:**
+
+| Field | Description | Example |
+|-------|-------------|---------|
+| `temperature_2m` | Temperature at 2m height (Celsius) | `18.5` |
+| `apparent_temperature` | Feels-like temperature (Celsius) | `16.2` |
+| `relative_humidity_2m` | Relative humidity at 2m (%) | `65` |
+| `precipitation` | Total precipitation (mm) | `0.3` |
+| `rain` | Rain amount (mm) | `0.2` |
+| `showers` | Shower amount (mm) | `0.0` |
+| `snowfall` | Snowfall amount (cm) | `0.0` |
+| `wind_speed_10m` | Wind speed at 10m (km/h) | `12.4` |
+| `wind_gusts_10m` | Wind gusts at 10m (km/h) | `24.1` |
+| `wind_direction_10m` | Wind direction at 10m (degrees) | `225` |
+| `weather_code` | WMO weather interpretation code | `3` |
+| `pressure_msl` | Sea-level pressure (hPa) | `1013.2` |
+| `surface_pressure` | Surface pressure (hPa) | `1010.5` |
+| `cloud_cover` | Cloud cover (%) | `75` |
+| `is_day` | Day/night indicator (1/0) | `1` |
+| `city` | City name | `Berlin` |
+| `country` | Country name | `Germany` |
+| `country_code` | ISO country code | `DE` |
+| `timezone` | Timezone string | `Europe/Berlin` |
+
+**Sample event query:**
+<SplunkSearch earliest="-24h" latest="now" spl={`index=s4c_meteo
+| stats avg(temperature_2m) as avg_temp avg(relative_humidity_2m) as avg_humidity by city
+| sort - avg_temp`}></SplunkSearch>
+
+**Explore raw events:**
+<SplunkSearch earliest="-1h" latest="now" spl={`index=s4c_meteo
+| head 10`}></SplunkSearch>
+
+---
+
+### Metrics Index: s4c_meteo_metrics
+
+| Property | Value |
+|----------|-------|
+| **Index** | `s4c_meteo_metrics` |
+| **Sourcetype** | `open_meteo:weather:metric` |
+| **Format** | Metric data points |
+
+**Available metric names:**
+
+| Metric Name | Description |
+|-------------|-------------|
+| `weather.temperature_2m` | Temperature at 2m height (Celsius) |
+| `weather.apparent_temperature` | Feels-like temperature (Celsius) |
+| `weather.relative_humidity_2m` | Relative humidity at 2m (%) |
+| `weather.precipitation` | Total precipitation (mm) |
+| `weather.rain` | Rain amount (mm) |
+| `weather.showers` | Shower amount (mm) |
+| `weather.snowfall` | Snowfall amount (cm) |
+| `weather.wind_speed_10m` | Wind speed at 10m (km/h) |
+| `weather.wind_gusts_10m` | Wind gusts at 10m (km/h) |
+| `weather.wind_direction_10m` | Wind direction at 10m (degrees) |
+| `weather.weather_code` | WMO weather interpretation code |
+| `weather.pressure_msl` | Sea-level pressure (hPa) |
+| `weather.surface_pressure` | Surface pressure (hPa) |
+| `weather.cloud_cover` | Cloud cover (%) |
+| `weather.is_day` | Day/night indicator (1/0) |
+
+**Dimensions:** `city`, `country`, `country_code`, `timezone`
+
+**Sample metric queries:**
+
+Discover all available metrics:
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
+
+Average temperature by city:
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
+| sort - avg_temp`}></SplunkSearch>
+
+Temperature over time:
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp prestats=true WHERE index=s4c_meteo_metrics BY city span=1h
+| timechart avg(weather.temperature_2m) as avg_temp BY city span=1h`}></SplunkSearch>

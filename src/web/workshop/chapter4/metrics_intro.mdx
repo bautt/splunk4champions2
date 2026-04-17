@@ -5,19 +5,38 @@ import Link from '@splunk/react-ui/Link'
 
 Splunk 7+ supports a dedicated **metric index** optimized for high-volume time-series data.
 
-A **metric** is a timestamped measurement enriched with one or more **dimensions**. Each data point can include multiple measurements (multi-value metrics) at a single timestamp[web:108].
+A **metric** is a timestamped measurement enriched with one or more **dimensions**. Each data point can include multiple measurements (multi-value metrics) at a single timestamp.
 
 ### Time  
 Default precision is seconds; millisecond timestamps are configurable per metric index.
 
 ### Metric Name  
-Dot-separated segments define a metric’s namespace[web:118].
+Dot-separated segments define a metric's namespace (e.g., `weather.temperature_2m`, `weather.wind_speed_10m`).
 
 ### Numeric Values  
-Integer or floating-point numbers representing each measurement (e.g., counts, gauges).
+Integer or floating-point numbers representing each measurement (e.g., temperature in Celsius, humidity percentage, wind speed in km/h).
 
 ### Measurements  
-Pairs of metric names and numeric values recorded at a given timestamp; supports multiple measurements per event (multi-value metrics)[web:108].
+Pairs of metric names and numeric values recorded at a given timestamp; supports multiple measurements per event (multi-value metrics).
 
 ### Dimensions  
-Key–value pairs that add contextual metadata to measurements (e.g., host, region, service).
+Key-value pairs that add contextual metadata to measurements (e.g., `city=Berlin`, `country=Germany`, `timezone=Europe/Berlin`).
+
+---
+
+### Workshop Data Source: TA-open-meteo
+
+In this chapter we use the **TA-open-meteo** add-on as our real-world data source. It collects live weather observations from the <Link to="https://open-meteo.com/" openInNewContext>Open-Meteo API</Link> for multiple cities around the world.
+
+The add-on writes data into two indexes:
+
+| Index | Sourcetype | Description |
+|-------|-----------|-------------|
+| `s4c_meteo` | `open_meteo:weather:json` | Raw weather events as JSON (event index) |
+| `s4c_meteo_metrics` | `open_meteo:weather:metric` | Pre-computed metric data points (metric index) |
+
+**Metric names** follow a `weather.*` namespace: `weather.temperature_2m`, `weather.relative_humidity_2m`, `weather.wind_speed_10m`, `weather.precipitation`, and more.
+
+**Dimensions** include: `city`, `country`, `country_code`, `timezone`.
+
+This gives us a perfect side-by-side comparison: the same weather data stored as both **events** and **metrics**, so you can see first-hand why metrics indexes exist and when they outperform traditional event searches.
