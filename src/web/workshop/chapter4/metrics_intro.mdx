@@ -11,7 +11,7 @@ A **metric** is a timestamped measurement enriched with one or more **dimensions
 Default precision is seconds; millisecond timestamps are configurable per metric index.
 
 ### Metric Name  
-Dot-separated segments define a metric's namespace (e.g., `weather.temperature_2m`, `weather.wind_speed_10m`).
+Dot-separated segments define a metric's namespace (e.g., `meteo.temperature_2m`, `meteo.wind_speed_10m`).
 
 ### Numeric Values  
 Integer or floating-point numbers representing each measurement (e.g., temperature in Celsius, humidity percentage, wind speed in km/h).
@@ -35,7 +35,7 @@ The add-on writes data into two indexes:
 | `s4c_meteo` | `open_meteo:weather:json` | Raw weather events as JSON (event index) |
 | `s4c_meteo_metrics` | `open_meteo:weather:metric` | Pre-computed metric data points (metric index) |
 
-**Metric names** follow a `weather.*` namespace: `weather.temperature_2m`, `weather.relative_humidity_2m`, `weather.wind_speed_10m`, `weather.precipitation`, and more.
+**Metric names** follow a `meteo.*` namespace: `meteo.temperature_2m`, `meteo.relative_humidity_2m`, `meteo.wind_speed_10m`, `meteo.precipitation`, and more.
 
 **Dimensions** include: `city`, `country`, `country_code`, `timezone`.
 

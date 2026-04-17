@@ -22,19 +22,19 @@ Now find all the dimensions (cities and countries) reporting data:
 ### Exercise 2: Query Weather Metrics with mstats
 
 **Average temperature by city:**
-<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
 | sort - avg_temp`}></SplunkSearch>
 
 **Humidity trends over the past week:**
-<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.relative_humidity_2m) as avg_humidity prestats=true WHERE index=s4c_meteo_metrics BY city span=4h
-| timechart avg(weather.relative_humidity_2m) as avg_humidity BY city span=4h`}></SplunkSearch>
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(meteo.relative_humidity_2m) as avg_humidity prestats=true WHERE index=s4c_meteo_metrics BY city span=4h
+| timechart avg(meteo.relative_humidity_2m) as avg_humidity BY city span=4h`}></SplunkSearch>
 
 **Wind speed and gusts by city:**
-<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.wind_speed_10m) as avg_wind max(weather.wind_gusts_10m) as max_gusts WHERE index=s4c_meteo_metrics BY city
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(meteo.wind_speed_10m) as avg_wind max(meteo.wind_gusts_10m) as max_gusts WHERE index=s4c_meteo_metrics BY city
 | sort - max_gusts`}></SplunkSearch>
 
 **Temperature with precipitation — which cities are cold and rainy?**
-<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp sum(weather.precipitation) as total_precip WHERE index=s4c_meteo_metrics BY city
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp sum(meteo.precipitation) as total_precip WHERE index=s4c_meteo_metrics BY city
 | sort - total_precip`}></SplunkSearch>
 
 ---
@@ -49,7 +49,7 @@ This is the key lesson: the **same data** queried from an event index vs. a metr
 | sort - avg_temp`}></SplunkSearch>
 
 **Metrics-based search (faster):**
-<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
 | sort - avg_temp`}></SplunkSearch>
 
 Open the **Job Inspector** (the "i" icon next to each search result) and compare:

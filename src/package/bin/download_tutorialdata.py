@@ -15,13 +15,15 @@ start = time.time()
 url = 'https://docs.splunk.com/images/Tutorial/tutorialdata.zip'
 target = (splunkhome + '/etc/apps/splunk4champions2/static/tutorialdata.zip')
 
-# getting size info from the file
-d = urllib.request.urlopen(url)
-# print(d.info())
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+req = urllib.request.Request(url, headers=headers)
+
+# getting size info and downloading in one request
+d = urllib.request.urlopen(req)
 content_length = (d.info()['Content-Length'])
 
-# this is downloading 
-urllib.request.urlretrieve(url, target)
+with open(target, 'wb') as f:
+    f.write(d.read())
 
 
 dauer = ('{0:0.1f}'.format(time.time() - start))

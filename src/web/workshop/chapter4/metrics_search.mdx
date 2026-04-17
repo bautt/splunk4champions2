@@ -24,15 +24,15 @@ Combine metric names with dimensions to understand the data shape:
 The `mstats` command is the primary way to query metric data. It performs statistical aggregations directly on the metrics store, which is significantly faster than running `stats` on event data.
 
 Average temperature by city over the last 24 hours:
-<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city span=1h`}></SplunkSearch>
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city span=1h`}></SplunkSearch>
 
 Wind speed trends with timechart:
-<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.wind_speed_10m) as avg_wind prestats=true WHERE index=s4c_meteo_metrics BY city span=4h
-| timechart avg(weather.wind_speed_10m) as avg_wind BY city span=4h`}>
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(meteo.wind_speed_10m) as avg_wind prestats=true WHERE index=s4c_meteo_metrics BY city span=4h
+| timechart avg(meteo.wind_speed_10m) as avg_wind BY city span=4h`}>
 </SplunkSearch>
 
 Humidity and temperature together:
-<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp avg(weather.relative_humidity_2m) as avg_humidity WHERE index=s4c_meteo_metrics BY city`}></SplunkSearch>
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp avg(meteo.relative_humidity_2m) as avg_humidity WHERE index=s4c_meteo_metrics BY city`}></SplunkSearch>
 
 ## Using mpreview
 
