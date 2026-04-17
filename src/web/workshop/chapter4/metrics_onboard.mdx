@@ -1,3 +1,10 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## Onboarding Metrics
+
+There are several ways to get metric data into Splunk. Here is how each method works, followed by how TA-open-meteo uses them in practice.
+
 ### 1. Universal Forwarder (File-Based)
 1. Write metric events to a local file in JSON or CSV format.  
 2. Extract `_time`, metric names, values, and dimension fields via props.conf/transforms.conf.  
@@ -5,17 +12,17 @@
 
 ### 2. HTTP Event Collector (HEC)
 1. Enable a HEC token in **Splunk Web** or **inputs.conf**.  
-2. Send multivalue JSON payloads
+2. Send multivalue JSON payloads.
     Example: 
 ```
-curl -k https://v37823.1blu.de:8088/services/collector/event \
-  -H "Authorization: Splunk 2ba9b54d-ded3-430a-b7b8-14e1f4bace6a" \
+curl -k https://YOUR_SPLUNK_SERVER:8088/services/collector/event \
+  -H "Authorization: Splunk YOUR_HEC_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"time":1634367600.000,"event":"metric","index":"piano-metrics","fields":{"note":"C4","note_name":"C","octave":4,"velocity":78,"duration":0.425}}'
+  -d '{"time":1634367600.000,"event":"metric","index":"s4c_meteo_metrics","fields":{"city":"Berlin","country":"Germany","metric_name:weather.temperature_2m":18.5,"metric_name:weather.relative_humidity_2m":65}}'
 ```
 
 ### 3. Log-to-Metrics Conversion (Ingest-Time)
-1. Define a **source type** under “Log to Metrics” in **Data Inputs**.  
+1. Define a **source type** under "Log to Metrics" in **Data Inputs**.  
 2. Map JSON, CSV, or key=value fields to metric names, values, and dimensions.  
 3. Splunk extracts and indexes metrics as events arrive.
 
@@ -23,11 +30,25 @@ curl -k https://v37823.1blu.de:8088/services/collector/event \
 - **mcollect**: Converts search results into metric data points and writes them to a metric index.  
 - **meventcollect**: Streams search results, converting and indexing them on the fly.
 
+We will use `mcollect` in the lab exercise to convert `s4c_meteo` events into metrics ourselves.
+
 ### 5. Metric Builder App (UI-Driven)
 1. Install the **Metric Builder** dashboard.  
 2. Define rules to map event fields into metric names, values, and dimensions.  
 3. Apply in real time or schedule via saved searches.
 
-### 6. Third-Party Integrations & Apps
+### 6. Scripted Inputs and Add-ons
+- **TA-open-meteo** uses a Python scripted input that runs on an interval, fetches weather data from the Open-Meteo API, and writes to both the `s4c_meteo` event index and the `s4c_meteo_metrics` metric index.
+- The scripted input handles timestamp assignment, field extraction, and metric name formatting automatically.
 - **Splunk Add-on for Infrastructure** and **Splunk Connect for Kubernetes** collect OS/container metrics.  
-- **Splunk DB Connect** ingests numeric time-series from databases into a metric index.  
+- **Splunk DB Connect** ingests numeric time-series from databases into a metric index.
+
+### How TA-open-meteo Onboards Data
+
+The TA-open-meteo add-on demonstrates two onboarding paths simultaneously:
+
+1. **Events path**: Raw JSON weather data lands in `s4c_meteo` with sourcetype `open_meteo:weather:json`. Each event contains fields like `temperature_2m`, `wind_speed_10m`, `city`, etc.
+
+2. **Metrics path**: The same data is also written as metric data points to `s4c_meteo_metrics` with sourcetype `open_meteo:weather:metric`. Each metric follows the `weather.*` naming convention with `city`, `country`, `country_code`, and `timezone` as dimensions.
+
+This dual-write approach lets us compare events vs. metrics performance head-to-head in the lab.

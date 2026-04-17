@@ -1,35 +1,131 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
 
+## Metrics Lab: TA-open-meteo Weather Data
 
-###  If you are not on Splunk Show: Create metrics index named “s4c_metrics”
+In this lab you will explore real weather metrics collected by the TA-open-meteo add-on, compare events vs. metrics performance, and convert event data into a metrics index using `mcollect`.
 
-## CONVERT WEATHER DATA TO METRICS
+---
 
-<SplunkSearch earliest="-60d" latest="now" spl={`index=s4c_weather Orlando OR Vilnius OR Frankfurt OR Brussels OR Austin OR Warsaw OR Prague OR Sydney OR Stockholm OR London OR Bonn OR Copenhagen OR Zurich
-| rename clouds.all AS weather.Clouds main.temp AS weather.Temperature main.temp_max AS weather.MaxTemp main.temp_min AS weather.MinTemp main.humidity AS weather.Humidity main.pressure AS weather.Pressure wind.speed AS weather.Windspeed visibility AS weather.Visibility wind.deg AS weather.WindDirection coord.lat AS weather.Lat coord.lon AS weather.Lon weather{}.id AS weather.Id
-| stats first(weather.*) by _time name
-| rename first(*) AS *
-| filldown
-\`\`\`| mcollect index=s4c_metrics split=true name\`\`\`
+### Exercise 1: Discover Available Metrics
+
+Use `mcatalog` to explore what weather metrics are available:
+
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
+
+Now find all the dimensions (cities and countries) reporting data:
+
+<SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) values(city) values(country) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
+
+---
+
+### Exercise 2: Query Weather Metrics with mstats
+
+**Average temperature by city:**
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
+| sort - avg_temp`}></SplunkSearch>
+
+**Humidity trends over the past week:**
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.relative_humidity_2m) as avg_humidity prestats=true WHERE index=s4c_meteo_metrics BY city span=4h
+| timechart avg(weather.relative_humidity_2m) as avg_humidity BY city span=4h`}></SplunkSearch>
+
+**Wind speed and gusts by city:**
+<SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(weather.wind_speed_10m) as avg_wind max(weather.wind_gusts_10m) as max_gusts WHERE index=s4c_meteo_metrics BY city
+| sort - max_gusts`}></SplunkSearch>
+
+**Temperature with precipitation — which cities are cold and rainy?**
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp sum(weather.precipitation) as total_precip WHERE index=s4c_meteo_metrics BY city
+| sort - total_precip`}></SplunkSearch>
+
+---
+
+### Exercise 3: Events vs. Metrics — Performance Comparison
+
+This is the key lesson: the **same data** queried from an event index vs. a metric index. Run both searches and compare the execution time in the Job Inspector.
+
+**Events-based search (slower):**
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo
+| stats avg(temperature_2m) as avg_temp by city
+| sort - avg_temp`}></SplunkSearch>
+
+**Metrics-based search (faster):**
+<SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(weather.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city
+| sort - avg_temp`}></SplunkSearch>
+
+Open the **Job Inspector** (the "i" icon next to each search result) and compare:
+- **Total execution time** — mstats should be significantly faster
+- **Scanned events / data points** — metrics scans are more efficient
+- **Disk usage** — metrics indexes are optimized for numeric time-series storage
+
+Why is `mstats` faster? Metric indexes store pre-extracted numeric values with dimensions already indexed. There is no need for field extraction, regex parsing, or full-text search at query time.
+
+---
+
+### Exercise 4: Convert Events to Metrics with mcollect
+
+This exercise teaches you how to take existing event data and convert it into metric data points. This is exactly what the TA-open-meteo add-on does automatically — but here you will do it manually to understand the process.
+
+**Step 1: Preview the event data you will convert**
+
+First, look at the raw events in `s4c_meteo` to understand the field structure:
+<SplunkSearch earliest="-1h" latest="now" spl={`index=s4c_meteo
+| head 5
+| table _time city country temperature_2m relative_humidity_2m wind_speed_10m precipitation`}></SplunkSearch>
+
+**Step 2: Build the conversion search**
+
+This search selects weather fields from the event index and prepares them for metric conversion:
+<SplunkSearch earliest="-1h" latest="now" spl={`index=s4c_meteo earliest=-1h
+| fields _time city country temperature_2m relative_humidity_2m wind_speed_10m precipitation`}></SplunkSearch>
+
+**Step 3: Run the mcollect conversion**
+
+Remove the backtick comments from the `mcollect` line below to actually write the data. This will create metric data points in `s4c_student_metrics` (a separate index so you do not duplicate data in the production metrics index).
+
+<SplunkSearch earliest="-1h" latest="now" spl={`index=s4c_meteo earliest=-1h
+| fields _time city country temperature_2m relative_humidity_2m wind_speed_10m precipitation
+\`\`\`| mcollect index=s4c_student_metrics prefix_field=city\`\`\`
 `}></SplunkSearch>
 
-Remove the comments from: 
-`| mcollect index=s4c_metrics split=true name` 
-once the index is ready and you want the data to be saved in the metrics index. 
+Remove the comments from:
+`| mcollect index=s4c_student_metrics prefix_field=city`
+once the index `s4c_student_metrics` is ready and you want the data to be written.
 
-## Quiz
+**What mcollect does:**
+- Takes each row from the search results
+- Converts numeric fields (`temperature_2m`, `relative_humidity_2m`, etc.) into metric name/value pairs
+- Uses `prefix_field=city` to prefix metric names with the city dimension
+- Writes the resulting metric data points to the target index
 
-Here is an example: which search is better suitable to be used as a base search in a weather dashboard? 
-<SplunkSearch earliest="-2y" latest="now" spl={`
-index=s4c_weather 
-|bin _time span=4h
-| stats avg(main*) BY name _time
-`}></SplunkSearch>
+**Step 4: Verify your converted metrics**
 
-OR 
+After running the mcollect, check that your metrics arrived:
+<SplunkSearch earliest="-1h" latest="now" spl={`| mcatalog values(metric_name) values(city) WHERE index=s4c_student_metrics`}></SplunkSearch>
 
-<SplunkSearch earliest="-2y" latest="now" spl={`
-| mstats avg(weather.*)  prestats=true WHERE "index"="s4c_metrics" span=4h BY name
-| stats avg(weather.*) BY name _time
-| fields - _span*
-`}></SplunkSearch>
+Query your newly created metrics:
+<SplunkSearch earliest="-1h" latest="now" spl={`| mstats avg(temperature_2m) as avg_temp WHERE index=s4c_student_metrics BY city`}></SplunkSearch>
+
+---
+
+### Why Metrics Indexes Matter
+
+Think about why a dedicated metrics index is better for time-series data:
+
+1. **Performance**: `mstats` queries on metrics indexes are dramatically faster than `stats` on event indexes because numeric values are pre-extracted and indexed.
+2. **Storage efficiency**: Metrics indexes store only the numeric values and dimensions — no raw text, no `_raw` field, no full-text index.
+3. **Scalability**: As data volumes grow, metrics indexes scale much better for aggregation queries (avg, sum, max, min, count).
+4. **Purpose-built**: The `mstats`, `mcatalog`, and `mpreview` commands are optimized for metric data patterns.
+
+The TA-open-meteo add-on automates this dual-write pattern: events for ad-hoc investigation, metrics for performant dashboards and alerting.
+
+---
+
+### Explore the TA-open-meteo Dashboards
+
+The TA-open-meteo add-on includes pre-built dashboards that demonstrate both events and metrics in action:
+
+- **Meteo Intro** — overview of the weather data collection
+- **Meteo Events** — dashboards powered by `index=s4c_meteo` event searches
+- **Meteo Metrics** — dashboards powered by `| mstats` on `s4c_meteo_metrics`
+
+Navigate to the TA-open-meteo app in Splunk to explore these dashboards and see how the same data looks when visualized from events vs. metrics.

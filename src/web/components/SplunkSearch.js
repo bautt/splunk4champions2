@@ -34,7 +34,7 @@ function CopyToClipBoardButton({search}) {
 
 }
 
-export default function SplunkSearch({spl, earliest, latest}) {
+export default function SplunkSearch({spl, earliest, latest, mode}) {
 
 
     const formInputTypes = ['relative', 'realTime', 'date', 'dateTime'];
@@ -85,10 +85,12 @@ export default function SplunkSearch({spl, earliest, latest}) {
     const onEventTrigger = (ev, value) => {
         console.log(options)
 
+        const searchMode = mode || 'smart'
         const params = new URLSearchParams({
             q: options.search,
             earliest: options.earliest,
-            latest: options.latest
+            latest: options.latest,
+            'dispatch.mode': searchMode
         })
 
         window.open(`search?${params.toString()}`)
