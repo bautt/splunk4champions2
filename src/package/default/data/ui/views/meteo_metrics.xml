@@ -1,0 +1,195 @@
+<dashboard version="1.1" theme="dark">
+  <label>Weather — Metrics Index</label>
+  <description>Open-Meteo weather analytics using mstats against s4c_meteo_metrics</description>
+
+  <fieldset submitButton="false" autoRun="true">
+
+    <input type="time" token="timerange" searchWhenChanged="true">
+      <label>Time Range</label>
+      <default>
+        <earliest>-6h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+
+    <input type="dropdown" token="city" searchWhenChanged="true">
+      <label>City</label>
+      <choice value="*">All Cities</choice>
+      <fieldForLabel>city</fieldForLabel>
+      <fieldForValue>city</fieldForValue>
+      <search>
+        <query>| mstats count WHERE index=s4c_meteo_metrics BY city | table city | sort city</query>
+        <earliest>-24h</earliest>
+        <latest>now</latest>
+      </search>
+      <default>*</default>
+    </input>
+
+    <input type="dropdown" token="metric" searchWhenChanged="true">
+      <label>Metric</label>
+      <choice value="meteo.temperature_2m">Temperature (°C)</choice>
+      <choice value="meteo.apparent_temperature">Feels Like (°C)</choice>
+      <choice value="meteo.relative_humidity_2m">Humidity (%)</choice>
+      <choice value="meteo.wind_speed_10m">Wind Speed (km/h)</choice>
+      <choice value="meteo.wind_gusts_10m">Wind Gusts (km/h)</choice>
+      <choice value="meteo.precipitation">Precipitation (mm)</choice>
+      <choice value="meteo.rain">Rain (mm)</choice>
+      <choice value="meteo.snowfall">Snowfall (cm)</choice>
+      <choice value="meteo.cloud_cover">Cloud Cover (%)</choice>
+      <choice value="meteo.pressure_msl">Pressure MSL (hPa)</choice>
+      <choice value="meteo.surface_pressure">Surface Pressure (hPa)</choice>
+      <default>meteo.temperature_2m</default>
+    </input>
+
+  </fieldset>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 1 — Current conditions overview table                              -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>Current Conditions — Latest Reading per City</title>
+      <table>
+        <search>
+          <query>
+| mstats latest(meteo.temperature_2m)      AS "Temp °C"
+         latest(meteo.apparent_temperature) AS "Feels Like °C"
+         latest(meteo.relative_humidity_2m) AS "Humidity %"
+         latest(meteo.wind_speed_10m)       AS "Wind km/h"
+         latest(meteo.wind_gusts_10m)       AS "Gusts km/h"
+         latest(meteo.precipitation)        AS "Precip mm"
+         latest(meteo.cloud_cover)          AS "Cloud %"
+         latest(meteo.pressure_msl)         AS "Pressure hPa"
+         latest(meteo.weather_code)         AS "WMO Code"
+  WHERE index=s4c_meteo_metrics
+  BY city, country
+| where "$city$"="*" OR city="$city$"
+| eval "Temp °C"      = round('Temp °C', 1)
+| eval "Feels Like °C"= round('Feels Like °C', 1)
+| eval "Humidity %"   = round('Humidity %', 0)
+| eval "Wind km/h"    = round('Wind km/h', 1)
+| eval "Gusts km/h"   = round('Gusts km/h', 1)
+| eval "Precip mm"    = round('Precip mm', 2)
+| eval "Cloud %"      = round('Cloud %', 0)
+| eval "Pressure hPa" = round('Pressure hPa', 1)
+| sort city
+| fields city, country, "Temp °C", "Feels Like °C", "Humidity %", "Wind km/h", "Gusts km/h", "Precip mm", "Cloud %", "Pressure hPa", "WMO Code"
+          </query>
+          <earliest>$timerange.earliest$</earliest>
+          <latest>$timerange.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">false</option>
+        <option name="dataOverlayMode">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 2 — Selected metric trend over time                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>$metric$ — Trend Over Time by City</title>
+      <chart>
+        <search>
+          <query>
+| mstats avg($metric$) AS value
+  WHERE index=s4c_meteo_metrics
+  BY city span=15m
+| where "$city$"="*" OR city="$city$"
+| chart avg(value) OVER _time BY city
+          </query>
+          <earliest>$timerange.earliest$</earliest>
+          <latest>$timerange.latest$</latest>
+        </search>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="height">300</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 3 — Bar ranking + min/max summary                                  -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>$metric$ — Latest Value per City</title>
+      <chart>
+        <search>
+          <query>
+| mstats latest($metric$) AS value
+  WHERE index=s4c_meteo_metrics
+  BY city, country
+| where "$city$"="*" OR city="$city$"
+| eval value=round(value, 2)
+| sort - value
+          </query>
+          <earliest>$timerange.earliest$</earliest>
+          <latest>$timerange.latest$</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="height">280</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>$metric$ — Statistics (Selected Period)</title>
+      <table>
+        <search>
+          <query>
+| mstats avg($metric$) AS avg
+         max($metric$) AS max
+         min($metric$) AS min
+         stdev($metric$) AS stdev
+  WHERE index=s4c_meteo_metrics
+  BY city
+| where "$city$"="*" OR city="$city$"
+| eval avg=round(avg,2), max=round(max,2), min=round(min,2), stdev=round(stdev,2)
+| sort city
+| rename avg AS "Avg", max AS "Max", min AS "Min", stdev AS "Std Dev"
+          </query>
+          <earliest>$timerange.earliest$</earliest>
+          <latest>$timerange.latest$</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 4 — Heatmap: hourly avg per city                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>$metric$ — Hourly Average by City</title>
+      <chart>
+        <search>
+          <query>
+| mstats avg($metric$) AS value
+  WHERE index=s4c_meteo_metrics
+  BY city span=1h
+| where "$city$"="*" OR city="$city$"
+| eval hour=strftime(_time, "%m-%d %H:00")
+| chart avg(value) OVER hour BY city
+          </query>
+          <earliest>$timerange.earliest$</earliest>
+          <latest>$timerange.latest$</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="height">280</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
