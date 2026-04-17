@@ -1,0 +1,49 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link';
+
+## What is SPL2?
+
+SPL2 is Splunk's next-generation search language, introduced as a preview in Splunk Enterprise 9.x and available in Splunk Platform 10.x. It features cleaner syntax, stricter typing, and is the foundation for Splunk's Federated Analytics platform. SPL2 is already the default language in Splunk Observability Cloud.
+
+**How to enable in Splunk Enterprise 10.x:**
+Settings → Search → SPL2, or use the language selector dropdown in the search bar.
+
+---
+
+## Key syntax differences
+
+| SPL1 | SPL2 |
+|---|---|
+| `index=s4c_meteo` | `FROM s4c_meteo` |
+| `\| stats count BY city` | `\| STATS count() BY city` |
+| `\| eval x = y + 1` | `SET x = y + 1` |
+| `\| where x > 5` | `\| WHERE x > 5` |
+| `\| head 10` | `\| LIMIT 10` |
+| `sourcetype=access_combined` | `FROM sourcetype:access_combined` |
+| Implicit string quoting | Requires backticks for fields with spaces |
+
+SPL2 keywords are **case-insensitive** but conventionally written in UPPERCASE for readability.
+
+---
+
+## Simple SPL2 example
+
+If SPL2 is enabled on your instance, try this equivalent of a basic SPL1 search:
+
+<SplunkSearch earliest="-24h" latest="now" spl={`FROM s4c_meteo | STATS avg(temperature_2m) AS avg_temp BY city | SORT -avg_temp | LIMIT 10`}>
+</SplunkSearch>
+
+---
+
+## Important caveats
+
+- **SPL2 is not a full replacement for SPL1 yet** — many SPL1 commands are not available in SPL2
+- **SPL1 and SPL2 cannot be mixed** in a single search pipeline
+- **Most existing apps, dashboards and saved searches use SPL1** — SPL2 adoption is gradual
+- SPL2 is the default in **Splunk Observability Cloud** and **Splunk Cloud Platform** new deployments
+
+---
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/UnderstandingSPL2" openInNewContext>SPL2 Overview documentation</Link>
+<br/>
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/SPL2SyntaxReference" openInNewContext>SPL2 Syntax Reference</Link>

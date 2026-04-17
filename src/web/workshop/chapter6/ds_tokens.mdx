@@ -1,5 +1,6 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
 
 ## Tokens from inputs
 Tokens from inputs work the same way like in xml dashboards. Inputs can be used above and inside canvas. Inputs with no data available can be hidden. 
@@ -20,4 +21,110 @@ The logic behind it can also be used to make panels dependent on a particular to
 
 * <Link to="https://www.splunk.com/en_us/blog/tips-and-tricks/dashboard-studio-how-to-configure-show-hide-and-token-eval-in-dashboard-studio.html" openInNewContext> "Dashboard Studio: How to Configure Show/Hide and Token Eval in Dashboard Studio" </Link>
 
-Here is an example dashboard for tokens in DS: <Link to="ds_tokens" openInNewContext>Using Tokens (Dashboard Studio)</Link>
+Here is an example dashboard for tokens in DS:
+
+<SplunkPanel dashboard="ds_tokens" height="500px" />
+
+---
+
+## Button Input and Token Reset (New in Splunk 10.0)
+
+Splunk 10.0 introduced a native **Button input** (`input.button`) in Dashboard Studio. Buttons set token values when clicked — no custom JavaScript required. A Reset button can return the dashboard to its default state.
+
+### Configuring a Button
+
+```json
+"input_btn_web": {
+  "type": "input.button",
+  "options": { "label": "Web" },
+  "eventHandlers": [
+    {
+      "type": "drilldown.setToken",
+      "options": {
+        "tokens": [
+          { "token": "category_filter", "value": "web" }
+        ]
+      }
+    }
+  ]
+}
+```
+
+A **Reset button** uses the same mechanism — it simply sets the token back to its default value (`"all"`):
+
+```json
+"input_btn_reset": {
+  "type": "input.button",
+  "options": { "label": "Reset" },
+  "eventHandlers": [
+    {
+      "type": "drilldown.setToken",
+      "options": {
+        "tokens": [ { "token": "category_filter", "value": "all" } ]
+      }
+    }
+  ]
+}
+```
+
+Set default token values in the `tokens` section so the dashboard renders correctly on first load:
+
+```json
+"tokens": {
+  "defaultTokenValues": {
+    "category_filter": { "value": "all" }
+  }
+}
+```
+
+---
+
+## Conditional Panel Visibility with expressions
+
+In Splunk 10.0, panels can be shown or hidden based on **named conditions** evaluated against token values. This replaces the older search-result-empty approach with a cleaner, more readable syntax.
+
+### Define conditions in the `expressions` section:
+
+```json
+"expressions": {
+  "conditions": {
+    "cond_is_web": {
+      "name": "show web",
+      "value": "$category_filter$ = \"web\""
+    },
+    "cond_is_all": {
+      "name": "show all",
+      "value": "$category_filter$ = \"all\""
+    }
+  }
+}
+```
+
+### Reference conditions in `containerOptions.visibility`:
+
+```json
+"viz_web_panel": {
+  "type": "splunk.line",
+  "dataSources": { "primary": "ds_web_data" },
+  "title": "Web Server: Request Trend",
+  "containerOptions": {
+    "visibility": {
+      "showConditions": ["cond_is_web", "cond_is_all"]
+    }
+  }
+}
+```
+
+The panel is visible when **any** of the listed conditions is true. Panels not matching any condition are hidden — no data is fetched for hidden panels, so this also improves performance.
+
+### Complete Pattern: Button Filter with Conditional Panels
+
+1. Add `input.button` inputs to `globalInputs`
+2. Each button sets a `category_filter` token via `drilldown.setToken`
+3. Define named conditions in `expressions.conditions`
+4. Each panel references the relevant conditions in `containerOptions.visibility`
+5. The Reset button restores the token to `"all"` so all panels reappear
+
+<SplunkPanel dashboard="feature_token" height="640px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/conditionallyVisiblePanels" openInNewContext>Conditionally Visible Panels Documentation</Link>

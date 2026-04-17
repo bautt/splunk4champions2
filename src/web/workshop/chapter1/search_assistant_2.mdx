@@ -1,10 +1,23 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link';
-
 
 <img src="/static/app/splunk4champions2/images/task-1.gif"/>
 
-A reference guide for the Search Processing Language commands and syntax that you can access from the search bar. When search assistant is active it displays typeahead information as you type terms into the bar. When you type a search command into the bar, search assistant displays information for how to use the command, usage examples, a history of recent searches you built that use the command, and so on. Search assistant also includes a link to the search command's documentation.
+A reference guide for Search Processing Language commands and syntax, accessible directly from the search bar. When active, Search Assistant displays typeahead suggestions as you type — command syntax, usage examples, a history of recent searches using that command, and a link to documentation.
 
-Search Assistant has three modes: Full, Compact and None
+**Search Assistant has three modes:**
 
-Click here for more information: <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Usingthesearchassistant" openInNewContext>Using the Search Assistant </Link>
+| Mode | Behaviour |
+|---|---|
+| **Full** | Shows command syntax, usage examples, and recent search history |
+| **Compact** | Shows typeahead only — less screen space used |
+| **None** | Disables Search Assistant entirely |
+
+**How to change:** Settings (gear icon in search bar) → Search Preferences → **Search assistant**
+
+Try typing an incomplete search below and watch Search Assistant offer suggestions:
+
+<SplunkSearch earliest="-24h" latest="now" spl={`index=s4c_meteo | stats `}>
+</SplunkSearch>
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Usingthesearchassistant" openInNewContext>Using the Search Assistant</Link>

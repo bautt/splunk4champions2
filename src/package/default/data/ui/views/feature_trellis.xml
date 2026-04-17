@@ -1,0 +1,121 @@
+<dashboard version="2" theme="dark">
+  <label>Feature Demo – Trellis Layout for All Chart Types</label>
+  <description>Trellis layout is no longer limited to Single Value – Line, Area, Bar and Column Charts now supported (Splunk 10.0+)</description>
+  <definition><![CDATA[{
+  "visualizations": {
+    "viz_trellis_line": {
+      "type": "splunk.line",
+      "dataSources": { "primary": "ds_trellis_host_time" },
+      "title": "Trellis: Line Chart – Requests per Host",
+      "options": {
+        "backgroundColor": "transparent",
+        "trellis.enabled": true,
+        "trellis.splitBy": "host",
+        "trellis.size": "medium",
+        "legendDisplay": "off"
+      }
+    },
+    "viz_trellis_area": {
+      "type": "splunk.area",
+      "dataSources": { "primary": "ds_trellis_cpu_time" },
+      "title": "Trellis: Area Chart – CPU % per Host",
+      "options": {
+        "backgroundColor": "transparent",
+        "trellis.enabled": true,
+        "trellis.splitBy": "host",
+        "trellis.size": "medium",
+        "legendDisplay": "off"
+      }
+    },
+    "viz_trellis_bar": {
+      "type": "splunk.bar",
+      "dataSources": { "primary": "ds_trellis_errors" },
+      "title": "Trellis: Bar Chart – Errors per Hour",
+      "options": {
+        "backgroundColor": "transparent",
+        "trellis.enabled": true,
+        "trellis.splitBy": "host",
+        "trellis.size": "medium",
+        "legendDisplay": "off"
+      }
+    },
+    "viz_trellis_column": {
+      "type": "splunk.column",
+      "dataSources": { "primary": "ds_trellis_response" },
+      "title": "Trellis: Column Chart – Response Time per Host",
+      "options": {
+        "backgroundColor": "transparent",
+        "trellis.enabled": true,
+        "trellis.splitBy": "host",
+        "trellis.size": "medium",
+        "legendDisplay": "off"
+      }
+    },
+    "viz_no_trellis": {
+      "type": "splunk.line",
+      "dataSources": { "primary": "ds_trellis_host_time" },
+      "title": "Comparison: Same Data WITHOUT Trellis",
+      "options": {
+        "backgroundColor": "transparent",
+        "legendDisplay": "bottom"
+      }
+    },
+    "viz_info_text": {
+      "type": "splunk.markdown",
+      "options": {
+        "markdown": "## Trellis Layout – What's New?\n\nUntil Splunk 9.3, trellis layout was only available for **Single Value** visualizations.\n\nStarting with **Splunk Enterprise 10.0**, trellis now also works for:\n- ✅ **Line Charts** (time series per subgroup)\n- ✅ **Area Charts** (stacked trends per host)\n- ✅ **Bar Charts** (horizontal comparisons)\n- ✅ **Column Charts** (vertical comparisons)\n\n**Tip:** Ideal for comparing many hosts/entities side by side without having to decipher a legend.",
+        "backgroundColor": "transparent"
+      }
+    }
+  },
+  "dataSources": {
+    "ds_trellis_host_time": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h sum(count) by host",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_trellis_cpu_time": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h avg(cpu_pct) by host",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_trellis_errors": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h sum(errors) by host",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_trellis_response": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | stats avg(response_time_ms) as AvgResponse by host | eval AvgResponse=round(AvgResponse,1)",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    }
+  },
+  "layout": {
+    "type": "absolute",
+    "options": {
+      "width": 1440,
+      "height": 1200,
+      "display": "auto-scale",
+      "backgroundColor": "#1a1a2e"
+    },
+    "structure": [
+      { "item": "viz_info_text", "type": "block", "position": { "x": 20, "y": 20, "w": 1400, "h": 200 } },
+      { "item": "viz_no_trellis", "type": "block", "position": { "x": 20, "y": 240, "w": 680, "h": 260 } },
+      { "item": "viz_trellis_line", "type": "block", "position": { "x": 720, "y": 240, "w": 700, "h": 260 } },
+      { "item": "viz_trellis_area", "type": "block", "position": { "x": 20, "y": 520, "w": 680, "h": 280 } },
+      { "item": "viz_trellis_bar", "type": "block", "position": { "x": 720, "y": 520, "w": 700, "h": 280 } },
+      { "item": "viz_trellis_column", "type": "block", "position": { "x": 20, "y": 820, "w": 1400, "h": 300 } }
+    ]
+  },
+  "title": "Feature Demo – Trellis Layout for All Chart Types",
+  "description": "Trellis layout is no longer limited to Single Value – now supports Line, Area, Bar and Column Charts"
+}]]></definition>
+</dashboard>

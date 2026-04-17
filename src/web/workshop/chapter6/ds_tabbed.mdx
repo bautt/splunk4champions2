@@ -1,0 +1,94 @@
+import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
+
+## Tabbed Dashboards (New in Splunk 9.4)
+
+Dashboard Studio now supports multiple tabs within a single dashboard. Each tab has its own layout and panels, while sharing data sources, inputs, and tokens across the entire dashboard.
+
+---
+
+### Why Use Tabs?
+
+Before tabs, large dashboards required either scrolling through a very long page or splitting content into multiple separate dashboards. With tabs you can:
+
+- Group related visualizations logically (e.g. Overview / Performance / Database)
+- Share a single time range picker that filters all tabs simultaneously
+- Reduce the number of dashboards to manage
+- Keep context when navigating between views
+
+---
+
+### How Tabs Work
+
+Tabs are configured in the `layout` section of the Dashboard Studio JSON. The key property is `tabs`, which references named `layoutDefinitions`:
+
+```json
+"layout": {
+  "type": "absolute",
+  "globalInputs": ["input_global_time"],
+  "tabs": {
+    "items": [
+      { "layoutId": "layout_overview", "label": "Overview" },
+      { "layoutId": "layout_performance", "label": "Performance" },
+      { "layoutId": "layout_database", "label": "Database" }
+    ],
+    "options": { "barPosition": "top" }
+  },
+  "layoutDefinitions": {
+    "layout_overview": {
+      "type": "absolute",
+      "options": { "width": 1440, "height": 960 },
+      "structure": [ ... ]
+    },
+    "layout_performance": { ... }
+  }
+}
+```
+
+Each `layoutDefinition` has its own `structure` array with panel positions, but all reference the same visualizations and data sources defined at the top level.
+
+---
+
+### Synchronized Time Range
+
+The most powerful pattern with tabs is a **global time input** that automatically applies to all data sources. This works through the `defaults` section:
+
+```json
+"inputs": {
+  "input_global_time": {
+    "type": "input.timerange",
+    "title": "Time Range",
+    "options": {
+      "token": "global_time",
+      "defaultValue": "-24h@h,now"
+    }
+  }
+},
+"defaults": {
+  "dataSources": {
+    "ds.search": {
+      "options": {
+        "queryParameters": {
+          "earliest": "$global_time.earliest$",
+          "latest": "$global_time.latest$"
+        }
+      }
+    }
+  }
+}
+```
+
+With this pattern, every `ds.search` data source on **every tab** automatically uses the selected time range — no per-panel token wiring needed.
+
+---
+
+### Tips
+
+- Place the time range input in `globalInputs` so it appears in the toolbar above all tabs
+- Data sources are shared across tabs — you can reference `ds_cpu_by_host` from both the Overview and Performance tabs
+- Each `layoutDefinition` can have different canvas dimensions (`width` / `height`)
+- The `tabs.options.barPosition` can be `"top"` or `"left"`
+
+<SplunkPanel dashboard="feature_tabbed" height="640px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/tabsDashboard" openInNewContext>Tabbed Dashboards Documentation</Link>

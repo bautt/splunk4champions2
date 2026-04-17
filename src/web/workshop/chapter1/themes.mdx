@@ -1,3 +1,20 @@
+import Link from '@splunk/react-ui/Link';
+
 ![](/static/app/splunk4champions2/images/themes.png)
 
-If you prefer dark theme, change the theme. 
+## Themes
+
+Splunk offers two built-in themes:
+- **Enterprise Light** (default) — white background, standard Splunk look
+- **Enterprise Dark** — dark background, easier on the eyes in low-light environments
+
+**How to change:** Click your username in the top-right corner → **Preferences** → **Appearance**
+
+Theme is **per-user** and stored in `user-prefs.conf` under your user profile. It does not affect other users.
+
+**Things to know:**
+- Theme affects the Splunk UI and Search app — dashboards built in **Dashboard Studio** may render differently in dark mode if they use custom background colors or hardcoded hex values
+- Classic XML dashboards do not fully respect the dark theme — they retain their own styling
+- If you build dashboards intended for public use, test them in both themes
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Changesearchpreferences" openInNewContext>Search Preferences documentation</Link>

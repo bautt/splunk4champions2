@@ -5,7 +5,7 @@ import Link from '@splunk/react-ui/Link'
 You can add inline comments to the search string of a saved 
 search by enclosing the comments in backtick characters (\`\`\`)
 
-<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'font-color': '#FFFFFF', 'color': '#FFFFFF', 'font-size': '2rem'}}>
+<div style={{padding: '1rem', backgroundColor: '#DAD7CD', 'font-family': 'Courier', 'color': '#333333', 'color': '#FFFFFF', 'font-size': '2rem'}}>
 \`\`\` the code is documentation enough  \`\`\`
 </div>
 
@@ -22,7 +22,7 @@ is not true for Splunk searches anymore.
 * Troubleshoot searches by running them with chunks of SPL "commented out".
 
 
-https://docs.splunk.com/Documentation/Splunk/latest/Search/Comments
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Comments" openInNewContext>Inline Comments Documentation</Link>
 
 <SplunkSearch earliest="-24h" latest="now" spl={`index=_internal host=* source="*metrics.log" sourcetype=splunkd group=per_Sourcetype_thruput 
 \`\`\`this search is borrowed from "Indexing Performance" in Monitoring Console\`\`\`

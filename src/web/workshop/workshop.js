@@ -32,16 +32,8 @@ const labs = {
                             "content": "chapter1/line_numbers.mdx"
                         },
                         {
-                            "title": "Search auto-format",
-                            "content": "chapter1/search_auto_format.mdx"
-                        },
-                        {
                             "title": "Themes",
                             "content": "chapter1/themes.mdx"
-                        },
-                        {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
                         }
                     ]
                 },
@@ -59,27 +51,23 @@ const labs = {
                         {
                             "title": "Verbose Mode",
                             "content": "chapter1/verbose_mode.mdx"
-                        },
-                        {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Reformat Search",
+                    "title": "SPL Readability",
                     "steps": [
                         {
-                            "title": "Make searches easier to read",
+                            "title": "Auto-format",
+                            "content": "chapter1/search_auto_format.mdx"
+                        },
+                        {
+                            "title": "Keyboard Shortcuts",
                             "content": "chapter1/make_searches_easier_to_read.mdx"
-                        }, 
+                        },
                         {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
-                        }, 
-                        {
-                            "title": "Splunk Navigation",
-                            "content": "chapter0/standard.mdx"
+                            "title": "Inline Comments",
+                            "content": "chapter1/comments.mdx"
                         }
                     ]
                 },
@@ -89,22 +77,27 @@ const labs = {
                         {
                             "title": "User language and locale",
                             "content": "chapter1/user_language_locale.mdx"
-                        }, 
-                        {
-                            "title": "Useful links",
-                            "content": "chapter1/useful_links.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Comments",
+                    "title": "SPL2",
                     "steps": [
                         {
-                            "title": "Inline Comments",
-                            "content": "chapter1/comments.mdx"
-                        }, 
+                            "title": "SPL2 Overview",
+                            "content": "chapter1/spl2_overview.mdx"
+                        },
                         {
-                            "title": "Useful links",
+                            "title": "SPL2 Modules",
+                            "content": "chapter1/spl2_modules.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Useful Links",
+                    "steps": [
+                        {
+                            "title": "Useful Links",
                             "content": "chapter1/useful_links.mdx"
                         }
                     ]
@@ -503,10 +496,10 @@ const labs = {
             "icon": <TbLayoutDashboard/>,
             "sections": [
                 {
-                    "title": "Dashboard Studio",
+                    "title": "Overview",
                     "steps": [
                         {
-                            "title": "Dashboard Studio Overview",
+                            "title": "Dashboard Studio Concepts",
                             "content": "chapter6/studio.mdx"
                         },
                         {
@@ -516,10 +509,10 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "DS Tutorial",
+                    "title": "Tutorial",
                     "steps": [
                         {
-                            "title": "Dashboard Studio Tutorial",
+                            "title": "Build Your First Dashboard",
                             "content": "chapter6/ds_tutorial.mdx"
                         },
                         {
@@ -529,24 +522,10 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "DS Annotations",
+                    "title": "Data Sources",
                     "steps": [
                         {
-                            "title": "DS Annotations",
-                            "content": "chapter6/ds_annotations.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
-                        }
-                    ]
-                },
-                
-                {
-                    "title": "DS Base",
-                    "steps": [
-                        {
-                            "title": "DS Base",
+                            "title": "Base & Chain Searches",
                             "content": "chapter6/ds_base.mdx"
                         },
                         {
@@ -556,25 +535,10 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "DS Images",
+                    "title": "Interactivity",
                     "steps": [
                         {
-                            "title": "Working with images in DS",
-                            "content": "chapter6/ds_images.mdx"
-                        },
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links6.mdx"
-                        }
-                    ]
-                },
-
-
-                {
-                    "title": "DS Tokens",
-                    "steps": [
-                        {
-                            "title": "DS Tokens",
+                            "title": "Tokens, Buttons & Conditional Panels",
                             "content": "chapter6/ds_tokens.mdx"
                         },
                         {
@@ -584,22 +548,71 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Pseudonymization",
+                    "title": "Layout & Visualizations",
                     "steps": [
                         {
-                            "title": "Hide user names",
-                            "content": "chapter6/pseudonymization.mdx"
+                            "title": "Working with Images",
+                            "content": "chapter6/ds_images.mdx"
+                        },
+                        {
+                            "title": "Annotations",
+                            "content": "chapter6/ds_annotations.mdx"
+                        },
+                        {
+                            "title": "Tabbed Dashboards",
+                            "content": "chapter6/ds_tabbed.mdx"
+                        },
+                        {
+                            "title": "Trellis Layout",
+                            "content": "chapter6/ds_trellis.mdx"
                         },
                         {
                             "title": "Useful Links",
-                            "content": "chapter5/useful_links5.mdx"
+                            "content": "chapter6/useful_links6.mdx"
                         }
-
+                    ]
+                },
+                {
+                    "title": "Custom Visualizations",
+                    "steps": [
+                        {
+                            "title": "Custom Viz — Three Approaches",
+                            "content": "chapter6/ds_customviz.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Canvas Viz Library",
+                    "steps": [
+                        {
+                            "title": "Canvas Visualizations by rcastley",
+                            "content": "chapter6/ds_rcastley_vizs.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Sharing & Security",
+                    "steps": [
+                        {
+                            "title": "Publish without Login",
+                            "content": "chapter6/ds_publish.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter6/useful_links6.mdx"
+                        }
                     ]
                 }
-                
-                        ]
-                    },
+            ]
+        },
         {
             "title": "7. Mobile",
             "id": "seven",

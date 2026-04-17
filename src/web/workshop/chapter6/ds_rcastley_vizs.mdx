@@ -1,0 +1,108 @@
+import Link from '@splunk/react-ui/Link'
+
+## Canvas-Based Custom Visualizations
+
+<Link to="https://github.com/rcastley/splunk-custom-visualizations" openInNewContext>splunk-custom-visualizations</Link> by Ryan Castley is a library of production-ready Splunk visualizations built on the Canvas 2D API. Every example in the repo can be **cloned, built, and installed directly** — no Splunk development experience or Claude Code required.
+
+<img src="/static/app/splunk4champions2/images/canvas_viz_examples.jpg" width="100%" alt="Data Pipeline and Index Universe visualizations"/>
+
+<Link to="https://rcastley.github.io/splunk-custom-visualizations/" openInNewContext>Try the interactive demo (no Splunk needed)</Link>
+
+---
+
+### Ready to Install — No Development Required
+
+All visualizations are pre-built. The only tool you need is `git` and `Node.js` to run the build script (Node.js handles the webpack bundle — it is not needed at runtime inside Splunk).
+
+**Install the full health dashboard:**
+
+```bash
+git clone https://github.com/rcastley/splunk-custom-visualizations
+cd splunk-custom-visualizations
+./splunk_health/build.sh
+# → dist/splunk_health.tar.gz
+```
+
+**Install any standalone visualization:**
+
+```bash
+./build.sh gauge
+./build.sh network_topology
+./build.sh forwarder_heatmap
+# → dist/<name>-1.0.0.tar.gz
+```
+
+Then upload via **Apps → Manage Apps → Install app from file**. The visualization immediately appears in Dashboard Studio's visualization picker under your custom category.
+
+---
+
+### Splunk Health Dashboard
+
+Eight glass-themed visualizations bundled into a single ready-to-use app with a pre-built Dashboard Studio dashboard. Panels auto-refresh every 60 seconds and include `appendpipe` fallbacks so nothing goes blank when data is absent.
+
+| Visualization | SPL data source | What it shows |
+|---|---|---|
+| **Splunk Status Board** | `\| rest /services/server/health` | Component health tiles — Indexer, Search Head, KV Store, … |
+| **License Gauge** | `\| rest /services/licenser/pools` | Daily consumption vs quota, arc gauge |
+| **Resource Gauge** | `index=_introspection` | Triple-arc: CPU / Memory / Swap |
+| **Indexing Pipeline Flow** | `index=_internal group=queue` | Animated queue fill: parsing → merging → typing → indexing |
+| **Forwarder Heatmap** | `index=_internal group=tcpin_connections` | Staleness grid — green (recent) → yellow → red (missing) |
+| **Search Activity** | `\| rest /services/server/status` | Slot utilization: scheduled / ad-hoc / other vs max concurrent |
+| **Scheduler Health** | `index=_internal sourcetype=scheduler` | Success rate, skip rate, average runtime |
+| **Index Storage** | `\| rest /services/data/indexes` | Per-index capacity with hot / warm / cold layers |
+
+All eight vizzes share the same glass-tube design language. Animated effects intensify as conditions worsen. Three colour themes: **default**, **dark**, **neon**.
+
+---
+
+### General Purpose Visualizations
+
+| Visualization | Description |
+|---|---|
+| **Gauge** | 4 modes: Arc, Donut, Bar, Status pill — 8 colour schemes, configurable thresholds |
+| **Component Status Board** | NOC grid — critical tiles glow and sort to top |
+| **Custom Single Value** | Configurable glow, alignment, and label |
+| **Radar / Spider Chart** | Multi-axis comparison |
+| **Network Topology** | Node/edge graph with force layout |
+| **Line Trend Chart** | Sparkline with min / max / avg annotations |
+| **Live Ticker** | Scrolling ticker tape |
+| **Data Pipeline** | Animated Sankey-style flow |
+| **Index Universe** | Bubble explorer for index sizes |
+| **Forwarder Heatmap** | Cell grid by staleness age |
+| **F1 ERS Gauge** | Energy recovery system arc |
+| **Goal Timeline** | Match event timeline |
+| **World Cup Bracket** | Tournament bracket |
+
+---
+
+### Building Your Own with Claude Code
+
+The repo includes a `/splunk-viz` Claude Code skill. Describe what you want and it scaffolds the entire app:
+
+```text
+Using /splunk-viz, create a visualization that shows a donut chart
+with a center label. It should accept "label" and "value" columns.
+```
+
+Claude generates `visualization_source.js`, `formatter.html`, `visualizations.conf`, webpack config, and `build.sh`. Build and install with:
+
+```bash
+./build.sh my_viz_name
+$SPLUNK_HOME/bin/splunk install app dist/my_viz_name-1.0.0.tar.gz
+```
+
+---
+
+### Requirements
+
+| | Required for |
+|---|---|
+| Splunk Enterprise 10.2+ or Splunk Cloud | Running visualizations |
+| Node.js 18+ | Running `build.sh` (not needed at Splunk runtime) |
+| Claude Code | Optional — only for generating new vizzes from scratch |
+
+---
+
+<Link to="https://github.com/rcastley/splunk-custom-visualizations" openInNewContext>GitHub Repository</Link>
+
+<Link to="https://rcastley.github.io/splunk-custom-visualizations/" openInNewContext>Live Test Harness Demo</Link>

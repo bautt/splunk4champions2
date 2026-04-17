@@ -1,0 +1,126 @@
+import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
+
+## Custom Visualizations in Dashboard Studio
+
+When the built-in chart types are not enough, Dashboard Studio supports three approaches to custom visualizations — ranging from installing a community app to writing your own React component.
+
+---
+
+### Variant 1: Legacy App Custom Viz (Splunkbase)
+
+Older custom visualizations distributed as standalone Splunk apps from Splunkbase. They were designed for Classic SimpleXML dashboards but have limited Dashboard Studio support.
+
+**File structure:**
+```
+appserver/static/visualizations/
+  my_gauge/
+    visualization.js    ← D3 / Highcharts rendering code
+    package.json
+    preview.png
+default/
+  visualizations.conf   ← registers the viz with Splunk
+```
+
+**Usage in SimpleXML:**
+```xml
+<viz type="my_app.my_gauge">
+  <search>...</search>
+</viz>
+```
+
+| Pro | Con |
+|---|---|
+| Easy to install from Splunkbase | No native Dashboard Studio support |
+| No build pipeline needed | Deprecated API |
+| Works immediately in Classic dashboards | No React support |
+
+**Known apps:** Force Directed App, Splunk 3D Graph, Parallel Coordinates
+
+---
+
+### Variant 2: Custom Viz in Your Own App
+
+Build a custom visualization as part of your own Splunk app. This is the current recommended approach and supports Dashboard Studio natively via `@splunk/visualizations`.
+
+**File structure:**
+```
+my_app/
+  appserver/static/visualizations/
+    my_viz/
+      src/
+        MyViz.jsx       ← React component
+        index.js
+      webpack.config.js
+      package.json
+  default/
+    visualizations.conf
+```
+
+**visualizations.conf:**
+```ini
+[my_gauge]
+label = My Custom Gauge
+description = Custom D3 Gauge
+allow_user_selection = true
+source_type = json
+data_sources.primary = required
+```
+
+| Pro | Con |
+|---|---|
+| Native Dashboard Studio integration | Requires Webpack/Rollup build pipeline |
+| React + D3 + TypeScript possible | Higher initial setup effort |
+| CSS variable theming support | |
+
+---
+
+### Variant 3: React Framework Viz (Recommended)
+
+Full use of the `@splunk/visualizations` React framework including the Splunk UI Toolkit. Highest integration, automatic theming, and best long-term maintainability.
+
+**Tech stack:**
+```
+@splunk/visualizations     ← base viz types and registration API
+@splunk/react-ui           ← UI components
+@splunk/themes             ← Enterprise / Dark theme
+@splunk/splunk-utils       ← Splunk utilities
+d3 / echarts / THREE.js    ← rendering libraries
+```
+
+**Minimal component:**
+```jsx
+import { registerVisualization } from '@splunk/visualizations';
+
+const MyGauge = ({ dataSources, options }) => {
+  const { data, fields } = dataSources.primary;
+  // render with D3, Canvas, SVG...
+  return <svg>...</svg>;
+};
+
+registerVisualization('my_gauge', MyGauge);
+```
+
+| Pro | Con |
+|---|---|
+| Full Dashboard Studio API | More complex setup |
+| Enterprise / Dark theme automatic | Splunk UI Toolkit license dependency |
+| Token integration out of the box | |
+| Drilldown support | |
+
+---
+
+### When to Use Which?
+
+| Scenario | Recommended approach |
+|---|---|
+| Quick prototype or one-off | Variant 2 (own app, simple component) |
+| Reusable across multiple apps | Variant 3 (framework, full API) |
+| Using an existing Splunkbase viz in Classic dashboard | Variant 1 (legacy) |
+| Migrating legacy viz to Dashboard Studio | Variant 2 or 3 |
+
+---
+
+<SplunkPanel dashboard="feature_customviz" height="560px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/customViz" openInNewContext>Custom Visualizations Documentation</Link>

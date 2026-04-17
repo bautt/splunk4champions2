@@ -1,3 +1,20 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
 ![](/static/app/splunk4champions2/images/lab1_task1_howto3.png)
 
-AutoFormat makes SPL more readable
+## Search Auto-format
+
+Auto-format automatically reformats your SPL when you submit a search — it adds line breaks after each pipe `|` and indents sub-searches. This makes searches readable without any manual effort.
+
+**How to enable:** Settings (gear icon in search bar) → Search Preferences → **Auto-format search on run**
+
+**Auto-format vs. the keyboard shortcut:**
+- **Auto-format** (this setting) — formats automatically every time you run a search
+- **Ctrl+Shift+F / Cmd+Shift+F** — formats on demand without running the search (covered in the next section)
+
+Both use the same formatting engine. If you prefer to format manually, keep auto-format off and use the shortcut instead.
+
+Try pasting this single-line search and running it — with auto-format enabled it will be reformatted automatically:
+
+<SplunkSearch earliest="-24h" latest="now" spl={`index=s4c_meteo | rex field=city "(?<city_short>^\\w+)" | stats avg(temperature_2m) as avg_temp avg(wind_speed_10m) as avg_wind by city | sort -avg_temp | head 10`}>
+</SplunkSearch>
