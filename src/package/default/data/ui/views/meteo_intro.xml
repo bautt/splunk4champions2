@@ -1,0 +1,333 @@
+<dashboard version="1.1" theme="dark">
+  <label>Open-Meteo Setup &amp; Overview</label>
+  <description>TA-open-meteo — Current weather from the free Open-Meteo API, indexed into s4c_meteo (events) and s4c_meteo_metrics (metrics). No API key required. Scheduled every 5–60 min via Splunk scripted input.</description>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 1 — Health check                                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>Health — Events Index (s4c_meteo)</title>
+      <table>
+        <search>
+          <query>
+index=s4c_meteo sourcetype=open_meteo:weather:json
+| stats count AS events_total
+        dc(city) AS cities_reporting
+        max(_time) AS last_ingest
+        min(_time) AS first_ingest
+| eval age_min  = round((now() - last_ingest) / 60, 1)
+| eval status   = case(
+    isnull(last_ingest),     "✗  No data — check inputs.conf and index name",
+    age_min &lt;= 10,        "✓  Healthy — last event " . age_min . " min ago",
+    age_min &lt;= 60,        "⚠  Warning — last event " . age_min . " min ago",
+    true(),                  "✗  Stale — last event "   . age_min . " min ago")
+| eval last_ingest  = strftime(last_ingest,  "%Y-%m-%d %H:%M:%S %Z")
+| eval first_ingest = strftime(first_ingest, "%Y-%m-%d %H:%M:%S %Z")
+| fields status, events_total, cities_reporting, last_ingest, first_ingest
+| rename status AS "Status",
+         events_total AS "Total Events",
+         cities_reporting AS "Cities Reporting",
+         last_ingest AS "Last Ingest",
+         first_ingest AS "First Ingest"
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>Health — Metrics Index (s4c_meteo_metrics)</title>
+      <table>
+        <search>
+          <query>
+| mstats count AS dp_count latest_time(_value) AS last_ingest
+  WHERE index=s4c_meteo_metrics AND metric_name=*
+  BY city
+| stats sum(dp_count) AS dp_total
+        count AS cities_reporting
+        max(last_ingest) AS last_ingest
+| eval age_min  = round((now() - last_ingest) / 60, 1)
+| eval status   = case(
+    dp_total=0 OR isnull(dp_total), "✗  No data — check inputs.conf and index name",
+    age_min &lt;= 10,               "✓  Healthy — last point " . age_min . " min ago",
+    age_min &lt;= 60,               "⚠  Warning — last point " . age_min . " min ago",
+    true(),                         "✗  Stale — last point "   . age_min . " min ago")
+| eval last_ingest = strftime(last_ingest, "%Y-%m-%d %H:%M:%S %Z")
+| fields status, dp_total, cities_reporting, last_ingest
+| rename status AS "Status",
+         dp_total AS "Total Data Points",
+         cities_reporting AS "Cities Reporting",
+         last_ingest AS "Last Ingest"
+          </query>
+          <earliest>-7d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 2 — Ingest activity                                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>Events per City (last 24 h)</title>
+      <chart>
+        <search>
+          <query>
+index=s4c_meteo sourcetype=open_meteo:weather:json
+| stats count BY city
+| sort - count
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+        <option name="charting.chart.showDataLabels">all</option>
+        <option name="charting.legend.placement">none</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="height">220</option>
+      </chart>
+    </panel>
+
+    <panel>
+      <title>Ingest Rate — Events Index (last 24 h)</title>
+      <chart>
+        <search>
+          <query>
+index=s4c_meteo sourcetype=open_meteo:weather:json
+| timechart span=30m count BY city
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.legend.placement">bottom</option>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="height">220</option>
+      </chart>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 3 — Required indexes                                               -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>Required Splunk Indexes</title>
+      <table>
+        <search>
+          <query>
+| makeresults count=2
+| streamstats count AS row
+| eval "Index Name"  = if(row=1, "s4c_meteo_metrics", "s4c_meteo")
+| eval "Type"        = if(row=1, "Metrics", "Events")
+| eval "Used By"     = if(row=1,
+    "mstats queries, Metrics Dashboard",
+    "Regular search, Events Dashboard")
+| eval "How to Create" = if(row=1,
+    "Settings → Indexes → New Index → Index Data Type: Metrics",
+    "Settings → Indexes → New Index → Index Data Type: Events")
+| table "Index Name", "Type", "Used By", "How to Create"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 4 — Cities monitored + metrics collected                           -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>Cities Currently Monitored</title>
+      <table>
+        <search>
+          <query>
+index=s4c_meteo sourcetype=open_meteo:weather:json
+| stats latest(temperature_2m)      AS "Temp °C"
+        latest(relative_humidity_2m) AS "Humidity %"
+        latest(wind_speed_10m)       AS "Wind km/h"
+        latest(weather_code)         AS "WMO Code"
+        max(_time)                   AS "Last Seen"
+  BY city, country, country_code, timezone
+| eval "Temp °C"    = round('Temp °C', 1)
+| eval "Humidity %" = round('Humidity %', 0)
+| eval "Wind km/h"  = round('Wind km/h', 1)
+| eval "Last Seen"  = strftime('Last Seen', "%H:%M:%S")
+| sort city
+| rename city AS "City", country AS "Country",
+         country_code AS "CC", timezone AS "Timezone"
+          </query>
+          <earliest>-2h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>Metrics Collected (15 fields)</title>
+      <table>
+        <search>
+          <query>
+| makeresults count=15
+| streamstats count AS row
+| eval "Events Index Field" = case(
+    row=1,  "temperature_2m",
+    row=2,  "apparent_temperature",
+    row=3,  "relative_humidity_2m",
+    row=4,  "precipitation",
+    row=5,  "rain",
+    row=6,  "showers",
+    row=7,  "snowfall",
+    row=8,  "wind_speed_10m",
+    row=9,  "wind_gusts_10m",
+    row=10, "wind_direction_10m",
+    row=11, "weather_code",
+    row=12, "pressure_msl",
+    row=13, "surface_pressure",
+    row=14, "cloud_cover",
+    row=15, "is_day")
+| eval "Metrics Index Key" = "meteo." . 'Events Index Field'
+| eval "Unit" = case(
+    row=1,  "°C",
+    row=2,  "°C  (feels like)",
+    row=3,  "%",
+    row=4,  "mm",
+    row=5,  "mm",
+    row=6,  "mm",
+    row=7,  "cm",
+    row=8,  "km/h",
+    row=9,  "km/h",
+    row=10, "°  (0 – 360)",
+    row=11, "WMO code",
+    row=12, "hPa",
+    row=13, "hPa",
+    row=14, "%",
+    row=15, "1 = day  /  0 = night")
+| table "Events Index Field", "Metrics Index Key", "Unit"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 5 — How to add / remove cities                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>How to Add or Remove Cities</title>
+      <table>
+        <search>
+          <query>
+| makeresults count=4
+| streamstats count AS row
+| eval "Step" = case(
+    row=1, "1  Open the script",
+    row=2, "2  Edit CITIES list",
+    row=3, "3  Delete geocoding cache",
+    row=4, "4  Restart Splunk")
+| eval "Detail" = case(
+    row=1, "$SPLUNK_HOME/etc/apps/TA-open-meteo/bin/open_meteo_weather.py",
+    row=2, "Add:  {\"name\": \"Tokyo\", \"country_code\": \"JP\"}     Remove: delete or comment out the entry",
+    row=3, "rm $SPLUNK_HOME/etc/apps/TA-open-meteo/bin/.geocache.json   (forces fresh geocoding on next run)",
+    row=4, "sudo systemctl restart Splunkd")
+| table "Step", "Detail"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>How to Add or Remove Metrics</title>
+      <table>
+        <search>
+          <query>
+| makeresults count=4
+| streamstats count AS row
+| eval "Step" = case(
+    row=1, "1  Open the script",
+    row=2, "2  Edit METRIC_FIELDS list",
+    row=3, "3  Update dashboard dropdowns",
+    row=4, "4  Restart Splunk")
+| eval "Detail" = case(
+    row=1, "$SPLUNK_HOME/etc/apps/TA-open-meteo/bin/open_meteo_weather.py",
+    row=2, "Add any field from https://open-meteo.com/en/docs  (current section).  Remove: delete or comment out.",
+    row=3, "Add the new field to the Metric dropdown in meteo_metrics.xml and meteo_events.xml",
+    row=4, "sudo systemctl restart Splunkd")
+| table "Step", "Detail"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 6 — How to change interval + index names                          -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <row>
+    <panel>
+      <title>How to Change the Collection Interval</title>
+      <table>
+        <search>
+          <query>
+| makeresults count=5
+| streamstats count AS row
+| eval "Setting" = case(
+    row=1, "File",
+    row=2, "Stanza (metrics)",
+    row=3, "Stanza (events)",
+    row=4, "Supported numeric values",
+    row=5, "Cron example")
+| eval "Value" = case(
+    row=1, "$SPLUNK_HOME/etc/apps/TA-open-meteo/default/inputs.conf",
+    row=2, "[script://./bin/open_meteo_weather.py metrics]   interval = 300",
+    row=3, "[script://./bin/open_meteo_weather.py events]    interval = 300",
+    row=4, "300 (5 min)  600 (10 min)  900 (15 min)  1800 (30 min)  3600 (60 min)",
+    row=5, "*/15 * * * *    (every 15 minutes via cron expression)")
+| table "Setting", "Value"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+
+    <panel>
+      <title>How to Change Index Names</title>
+      <table>
+        <search>
+          <query>
+| makeresults count=5
+| streamstats count AS row
+| eval "What" = case(
+    row=1, "File to edit",
+    row=2, "Metrics index field",
+    row=3, "Events index field",
+    row=4, "Also update",
+    row=5, "Requirement")
+| eval "Detail" = case(
+    row=1, "$SPLUNK_HOME/etc/apps/TA-open-meteo/default/inputs.conf",
+    row=2, "index = s4c_meteo_metrics   (in the metrics stanza)",
+    row=3, "index = s4c_meteo           (in the events stanza)",
+    row=4, "Dashboard search queries in meteo_metrics.xml and meteo_events.xml",
+    row=5, "New index must exist and be the correct type (Metrics or Events) before restarting")
+| table "What", "Detail"
+          </query>
+        </search>
+        <option name="drilldown">none</option>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>
