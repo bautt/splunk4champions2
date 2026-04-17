@@ -1,3 +1,27 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
 ![](/static/app/splunk4champions2/images/lab1_task1_howto2.png)
 
-Line numbers make it easier to document and refer to SPL code lines.
+## Line Numbers in the Search Bar
+
+Line numbers make it easier to navigate, document, and debug multi-line SPL. When Splunk error messages reference a problem in your search, they often cite a line number — without line numbers displayed you have to count manually.
+
+**How to enable:** Settings (gear icon in search bar) → Search Preferences → **Show line numbers**
+
+Line numbers are especially useful when:
+- Writing long multi-pipe searches (10+ commands)
+- Sharing searches with colleagues and discussing specific steps
+- Reading error messages that reference line N of your search
+
+Try this multi-line search and observe how line numbers help navigate each step:
+
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo
+| rex field=city "(?<city_short>^\\w+)"
+| stats avg(temperature_2m) as avg_temp
+       avg(relative_humidity_2m) as avg_humidity
+       max(wind_speed_10m) as max_wind
+    by city
+| eval avg_temp = round(avg_temp, 1)
+| eval avg_humidity = round(avg_humidity, 1)
+| sort -avg_temp`}>
+</SplunkSearch>

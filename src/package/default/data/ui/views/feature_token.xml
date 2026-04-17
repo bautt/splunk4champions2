@@ -1,0 +1,299 @@
+<dashboard version="2" theme="dark">
+  <label>Feature Demo - Token Filter and Conditional Panel Visibility</label>
+  <description>Buttons set tokens, panels controlled via expressions/conditions and containerOptions visibility</description>
+  <definition><![CDATA[{
+  "title": "Feature Demo - Token Filter and Conditional Panel Visibility",
+  "description": "Buttons set tokens, panels controlled via containerOptions.visibility",
+  "inputs": {
+    "input_btn_all": {
+      "type": "input.button",
+      "options": {
+        "label": "Show All"
+      },
+      "eventHandlers": [
+        {
+          "type": "drilldown.setToken",
+          "options": {
+            "tokens": [
+              { "token": "category_filter", "value": "all" }
+            ]
+          }
+        }
+      ]
+    },
+    "input_btn_web": {
+      "type": "input.button",
+      "options": {
+        "label": "Web"
+      },
+      "eventHandlers": [
+        {
+          "type": "drilldown.setToken",
+          "options": {
+            "tokens": [
+              { "token": "category_filter", "value": "web" }
+            ]
+          }
+        }
+      ]
+    },
+    "input_btn_app": {
+      "type": "input.button",
+      "options": {
+        "label": "Application"
+      },
+      "eventHandlers": [
+        {
+          "type": "drilldown.setToken",
+          "options": {
+            "tokens": [
+              { "token": "category_filter", "value": "app" }
+            ]
+          }
+        }
+      ]
+    },
+    "input_btn_db": {
+      "type": "input.button",
+      "options": {
+        "label": "Database"
+      },
+      "eventHandlers": [
+        {
+          "type": "drilldown.setToken",
+          "options": {
+            "tokens": [
+              { "token": "category_filter", "value": "db" }
+            ]
+          }
+        }
+      ]
+    },
+    "input_btn_reset": {
+      "type": "input.button",
+      "options": {
+        "label": "Reset"
+      },
+      "eventHandlers": [
+        {
+          "type": "drilldown.setToken",
+          "options": {
+            "tokens": [
+              { "token": "category_filter", "value": "all" }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "expressions": {
+    "conditions": {
+      "cond_is_all": {
+        "name": "show all",
+        "value": "$category_filter$ = \"all\""
+      },
+      "cond_is_web": {
+        "name": "show web",
+        "value": "$category_filter$ = \"web\""
+      },
+      "cond_is_app": {
+        "name": "show app",
+        "value": "$category_filter$ = \"app\""
+      },
+      "cond_is_db": {
+        "name": "show db",
+        "value": "$category_filter$ = \"db\""
+      }
+    }
+  },
+  "tokens": {
+    "defaultTokenValues": {
+      "category_filter": {
+        "value": "all"
+      }
+    }
+  },
+  "visualizations": {
+    "viz_intro": {
+      "type": "splunk.markdown",
+      "options": {
+        "markdown": "## Button Input, Token Reset and Conditional Panel Visibility\n\n**Feature:** `input.button` inputs set a token value via `drilldown.setToken`. Panels are dynamically shown and hidden via `containerOptions.visibility` and `expressions.conditions`.\n\nClick one of the buttons above to select a category. **Reset** returns everything to the initial state.",
+        "backgroundColor": "transparent"
+      }
+    },
+    "viz_web_kpi": {
+      "type": "splunk.singlevalue",
+      "dataSources": { "primary": "ds_web_kpi" },
+      "title": "Web: Gesamt-Requests",
+      "options": { "majorColor": "#68d391", "backgroundColor": "#0d2137", "majorFontSize": 48 },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_web", "cond_is_all"]
+        }
+      }
+    },
+    "viz_web_panel": {
+      "type": "splunk.line",
+      "dataSources": { "primary": "ds_web_data" },
+      "title": "Web-Server: Request-Verlauf",
+      "options": { "backgroundColor": "#0d2137", "legendDisplay": "bottom" },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_web", "cond_is_all"]
+        }
+      }
+    },
+    "viz_app_kpi": {
+      "type": "splunk.singlevalue",
+      "dataSources": { "primary": "ds_app_kpi" },
+      "title": "Application: Error Rate",
+      "options": { "majorColor": "#fc8181", "backgroundColor": "#1a0d37", "majorFontSize": 48, "unit": "%" },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_app", "cond_is_all"]
+        }
+      }
+    },
+    "viz_app_panel": {
+      "type": "splunk.column",
+      "dataSources": { "primary": "ds_app_data" },
+      "title": "Application: Error Analysis",
+      "options": { "backgroundColor": "#1a0d37", "legendDisplay": "bottom" },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_app", "cond_is_all"]
+        }
+      }
+    },
+    "viz_db_kpi": {
+      "type": "splunk.singlevalue",
+      "dataSources": { "primary": "ds_db_kpi" },
+      "title": "DB: Avg Response Time",
+      "options": { "majorColor": "#63b3ed", "backgroundColor": "#0d1a37", "majorFontSize": 48, "unit": "ms" },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_db", "cond_is_all"]
+        }
+      }
+    },
+    "viz_db_panel": {
+      "type": "splunk.area",
+      "dataSources": { "primary": "ds_db_data" },
+      "title": "Database: Response Times",
+      "options": { "backgroundColor": "#0d1a37", "legendDisplay": "bottom" },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_db", "cond_is_all"]
+        }
+      }
+    },
+    "viz_all_panel": {
+      "type": "splunk.table",
+      "dataSources": { "primary": "ds_all_table" },
+      "title": "All Categories - Full Overview",
+      "options": { "backgroundColor": "transparent", "count": 15 },
+      "context": {},
+      "containerOptions": {
+        "visibility": {
+          "showConditions": ["cond_is_all"]
+        }
+      }
+    }
+  },
+  "dataSources": {
+    "ds_web_data": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Web\" | timechart span=1h sum(count) by host",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_web_kpi": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Web\" | stats sum(count) as total_requests",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_app_data": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Application\" | timechart span=1h sum(errors) by host",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_app_kpi": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Application\" | stats sum(errors) as errors sum(count) as total | eval error_rate=round(errors/total*100,1) | table error_rate",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_db_data": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Database\" | timechart span=1h avg(response_time_ms) by host",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_db_kpi": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Database\" | stats avg(response_time_ms) as avg_response | eval avg_response=round(avg_response,1)",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    },
+    "ds_all_table": {
+      "type": "ds.search",
+      "options": {
+        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | stats sum(count) as Requests sum(errors) as Errors avg(response_time_ms) as AvgResponseMs by host category | eval AvgResponseMs=round(AvgResponseMs,1) | sort -Requests",
+        "queryParameters": { "earliest": "-48h", "latest": "now" }
+      }
+    }
+  },
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "earliest": "-48h",
+            "latest": "now"
+          }
+        }
+      }
+    }
+  },
+  "layout": {
+    "type": "absolute",
+    "globalInputs": [
+      "input_btn_all",
+      "input_btn_web",
+      "input_btn_app",
+      "input_btn_db",
+      "input_btn_reset"
+    ],
+    "options": {
+      "width": 1440,
+      "height": 1100,
+      "display": "auto-scale",
+      "backgroundColor": "#1a1a2e"
+    },
+    "structure": [
+      { "item": "viz_intro", "type": "block", "position": { "x": 20, "y": 10, "w": 1400, "h": 160 } },
+      { "item": "viz_web_kpi", "type": "block", "position": { "x": 20, "y": 190, "w": 440, "h": 130 } },
+      { "item": "viz_app_kpi", "type": "block", "position": { "x": 480, "y": 190, "w": 440, "h": 130 } },
+      { "item": "viz_db_kpi", "type": "block", "position": { "x": 940, "y": 190, "w": 480, "h": 130 } },
+      { "item": "viz_web_panel", "type": "block", "position": { "x": 20, "y": 340, "w": 1400, "h": 300 } },
+      { "item": "viz_app_panel", "type": "block", "position": { "x": 20, "y": 340, "w": 1400, "h": 300 } },
+      { "item": "viz_db_panel", "type": "block", "position": { "x": 20, "y": 340, "w": 1400, "h": 300 } },
+      { "item": "viz_all_panel", "type": "block", "position": { "x": 20, "y": 660, "w": 1400, "h": 400 } }
+    ]
+  }
+}]]></definition>
+</dashboard>

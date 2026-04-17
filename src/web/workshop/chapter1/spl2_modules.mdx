@@ -1,0 +1,71 @@
+import Link from '@splunk/react-ui/Link';
+
+## What are SPL2 Modules?
+
+SPL2 Modules are reusable, named SPL2 code blocks stored in Splunk apps. They can be imported and called like functions, allowing you to package and share common search logic across searches and dashboards. Think of them as the SPL2 successor to SPL1 macros — but with proper named parameters, type safety, and versioning.
+
+---
+
+## SPL2 Modules vs. SPL1 Macros
+
+| Feature | SPL1 Macros | SPL2 Modules |
+|---|---|---|
+| Definition | `macros.conf` | `.spl2` files in the app |
+| Parameters | Positional text substitution | Named, typed parameters |
+| Type safety | None — raw text replacement | Enforced (`string`, `number`, `boolean`) |
+| Return type | Inline text fragment | Full dataset (streaming or generating) |
+| Syntax to call | `` `macro_name(arg)` `` | `IMPORT … CALL module_name(…)` |
+| Versioning | Not supported | Supported |
+| Discoverability | Hard — must know the name | Via `IMPORT` statement |
+
+---
+
+## Module structure
+
+Modules live in `$SPLUNK_HOME/etc/apps/<appname>/spl2/` as `.spl2` files.
+
+```
+MODULE weatherSummary(idx: string, lookback: string = "-24h")
+  FROM $idx$
+  | WHERE _time >= relative_time(now(), $lookback$)
+  | STATS avg(temperature_2m) AS avg_temp,
+          max(wind_speed_10m)  AS max_wind
+      BY city
+  | SORT -avg_temp
+END
+```
+
+- **`MODULE`** declares the module name and typed parameters
+- **Default values** are supported (e.g. `lookback = "-24h"`)
+- The body is a standard SPL2 pipeline
+- **`END`** closes the module
+
+---
+
+## Using a module
+
+```
+IMPORT weatherSummary FROM app:splunk4champions2
+
+| CALL weatherSummary(idx="s4c_meteo", lookback="-7d")
+```
+
+`IMPORT` brings the module into scope. `CALL` executes it with the provided arguments.
+
+---
+
+## When to use modules vs macros
+
+| Situation | Use |
+|---|---|
+| Building new SPL2 pipelines | **Modules** |
+| Targeting Splunk Cloud Platform | **Modules** |
+| Need type-safe, self-documenting parameters | **Modules** |
+| Existing SPL1 codebase, backwards compatibility | **Macros** |
+| Splunk version without full SPL2 support | **Macros** |
+
+---
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/SPL2Modules" openInNewContext>SPL2 Modules documentation</Link>
+<br/>
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/CreateSPL2Module" openInNewContext>Creating SPL2 Modules</Link>

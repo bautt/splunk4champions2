@@ -1,10 +1,68 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
 
-<Link to ="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/dsSec" openInNewContext>Documentation on DS annotations</Link>
+## Annotations in Dashboard Studio
 
+Annotations mark specific points on a time-series chart — for example, a deployment, an alert, or a maintenance window. In Dashboard Studio the annotation data comes from a separate SPL search that produces a table with specific column names.
 
-You can also use annotations in Dashboard Studio. The syntax is a bit different: you will need a search which produces a table with 
-following columns: annotationX e.g. time, annotationLabel - message or label and annotationColor.  See following example for the DS dashbaord: 
+---
 
-<Link to="ds_annotations" openInNewContext>Annotations example page (Dashboard Studio)</Link>
+### Required Fields
+
+Your annotation search must produce a table with these columns:
+
+| Column | Description | Example |
+|---|---|---|
+| `annotationX` | X-axis position — usually a timestamp | `_time` |
+| `annotationLabel` | Text shown on hover | `"Deployment v2.3"` |
+| `annotationColor` | Hex color or named color | `"#e94560"` |
+
+---
+
+### Connecting Annotations to a Visualization
+
+In Dashboard Studio JSON, add the annotation data source as a second binding on the visualization:
+
+```json
+"viz_requests": {
+  "type": "splunk.line",
+  "dataSources": {
+    "primary": "ds_requests",
+    "annotation": "ds_deployments"
+  }
+}
+```
+
+The annotation data source is a regular `ds.search` entry — it just needs to return the three required columns.
+
+---
+
+### Example: Mark Deployments on a Timechart
+
+**Main chart search:**
+```spl
+index=s4c_www
+| timechart count by status
+```
+
+**Annotation search:**
+```spl
+index=s4c_www action=deploy
+| table _time as annotationX, version as annotationLabel
+| eval annotationColor="#f6ad55"
+```
+
+---
+
+### Tips
+
+- Annotations only render on time-series types: Line, Area, Column
+- Use `annotationColor` to distinguish types — red for incidents, orange for deployments, green for fixes
+- Keep the annotation search lightweight — it runs on every dashboard refresh
+- The annotation source must be a **separate** data source, not shared with the chart
+
+---
+
+<SplunkPanel dashboard="ds_annotations" height="480px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/dsSec" openInNewContext>Annotations Documentation</Link>

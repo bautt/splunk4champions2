@@ -1,0 +1,241 @@
+<dashboard version="1.1" theme="dark" embed="enabled">
+  <label>Custom Visualizations – All Three Variants</label>
+  <description>Demo: Legacy App Custom Viz, Own App Custom Viz, React/D3 Framework Viz</description>
+
+  <row>
+    <panel>
+      <html>
+        <style>
+          .viz-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; padding: 8px; }
+          .viz-card {
+            background: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #2d3748;
+          }
+          .viz-card.variant-1 { border-color: #e94560; }
+          .viz-card.variant-2 { border-color: #f6ad55; }
+          .viz-card.variant-3 { border-color: #68d391; }
+          .viz-card h2 { font-size: 16px; margin: 0 0 4px 0; }
+          .viz-card .tag {
+            display: inline-block; font-size: 11px; padding: 2px 8px;
+            border-radius: 12px; font-weight: 700; margin-bottom: 12px;
+          }
+          .variant-1 .tag { background: #e94560; color: white; }
+          .variant-2 .tag { background: #f6ad55; color: #1a1a2e; }
+          .variant-3 .tag { background: #68d391; color: #1a1a2e; }
+          .viz-card p { color: #a0aec0; font-size: 13px; line-height: 1.6; margin: 0 0 12px 0; }
+          .code-block {
+            background: #0d1117; color: #79c0ff; font-family: monospace;
+            font-size: 12px; padding: 12px; border-radius: 6px;
+            white-space: pre-wrap; margin: 8px 0;
+          }
+          .pro { color: #68d391; } .con { color: #fc8181; }
+          h3 { color: #e2e8f0; font-size: 14px; margin: 12px 0 6px 0; }
+          ul { color: #a0aec0; font-size: 13px; padding-left: 18px; margin: 0; }
+          li { margin-bottom: 4px; }
+        </style>
+
+        <div class="viz-grid">
+
+          <!-- VARIANT 1: Legacy Custom Viz App -->
+          <div class="viz-card variant-1">
+            <h2>Variant 1: Legacy App Custom Viz</h2>
+            <span class="tag">Splunk 6.4 – 8.x Style</span>
+            <p>Older custom visualizations distributed as standalone Splunk apps, installed via Splunkbase. Works in Classic SimpleXML dashboards.</p>
+
+            <h3>File structure</h3>
+            <div class="code-block">appserver/static/
+  visualizations/
+    my_gauge/
+      visualization.js   ← D3/Highcharts code
+      package.json
+      preview.png
+default/
+  visualizations.conf    ← registration
+</div>
+
+            <h3>Usage (SimpleXML)</h3>
+            <div class="code-block">&lt;viz type="my_app.my_gauge"&gt;
+  &lt;search&gt;...&lt;/search&gt;
+&lt;/viz&gt;</div>
+
+            <h3>Pros &amp; Cons</h3>
+            <ul>
+              <li class="pro">✅ Easy to install from Splunkbase</li>
+              <li class="pro">✅ No build pipeline needed</li>
+              <li class="con">⚠️ No native Dashboard Studio support</li>
+              <li class="con">⚠️ Deprecated API</li>
+              <li class="con">⚠️ No React support</li>
+            </ul>
+            <h3>Well-known apps</h3>
+            <ul>
+              <li>Force Directed App for Splunk</li>
+              <li>Splunk 3D Graph</li>
+              <li>Parallel Coordinates</li>
+            </ul>
+          </div>
+
+          <!-- VARIANT 2: Own App Custom Viz -->
+          <div class="viz-card variant-2">
+            <h2>Variant 2: Own App – Custom Viz</h2>
+            <span class="tag">Current method</span>
+            <p>Custom visualizations as part of your own Splunk app, placed directly in the <code>appserver/static/visualizations/</code> folder. Supports Dashboard Studio via <code>@splunk/visualizations</code>.</p>
+
+            <h3>File structure</h3>
+            <div class="code-block">my_app/
+  appserver/static/
+    visualizations/
+      my_viz/
+        src/
+          MyViz.jsx      ← React component
+          index.js
+        webpack.config.js
+        package.json
+  default/
+    visualizations.conf</div>
+
+            <h3>visualizations.conf</h3>
+            <div class="code-block">[my_gauge]
+label = My Custom Gauge
+description = Custom D3 Gauge
+allow_user_selection = true
+source_type = json
+data_sources.primary = required</div>
+
+            <h3>Pros &amp; Cons</h3>
+            <ul>
+              <li class="pro">✅ Native Dashboard Studio integration</li>
+              <li class="pro">✅ React + D3 + TypeScript possible</li>
+              <li class="pro">✅ Theming via CSS variables</li>
+              <li class="con">⚠️ Build pipeline (Webpack/Rollup) required</li>
+              <li class="con">⚠️ Higher initial setup effort</li>
+            </ul>
+          </div>
+
+          <!-- VARIANT 3: Framework Custom Viz -->
+          <div class="viz-card variant-3">
+            <h2>Variant 3: Custom Viz Framework</h2>
+            <span class="tag">Modern / Recommended</span>
+            <p>Full use of the <strong>@splunk/visualizations</strong> React framework including the Splunk UI Toolkit. Highest integration, theming support, and long-term maintainability.</p>
+
+            <h3>Tech stack</h3>
+            <div class="code-block">@splunk/visualizations     ← base viz types
+@splunk/react-ui          ← UI components
+@splunk/themes            ← Enterprise theming
+@splunk/splunk-utils      ← Splunk utilities
+d3 / echarts / THREE.js   ← rendering libraries</div>
+
+            <h3>React component example</h3>
+            <div class="code-block">import { registerVisualization }
+  from '@splunk/visualizations';
+
+const MyGauge = ({ dataSources, options }) =&gt; {
+  const data = dataSources.primary.data;
+  return (
+    &lt;svg&gt;...&lt;/svg&gt;  // D3 or Canvas
+  );
+};
+
+registerVisualization('my_gauge', MyGauge);</div>
+
+            <h3>Pros &amp; Cons</h3>
+            <ul>
+              <li class="pro">✅ Full Dashboard Studio API</li>
+              <li class="pro">✅ Enterprise/Dark theme automatic</li>
+              <li class="pro">✅ Token integration out of the box</li>
+              <li class="pro">✅ Drilldown support</li>
+              <li class="con">⚠️ More complex setup</li>
+              <li class="con">⚠️ Splunk UI Toolkit license dependency</li>
+            </ul>
+          </div>
+
+        </div>
+      </html>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <html>
+        <style>
+          .demo-section {
+            background: #16213e; border-radius: 10px; padding: 24px;
+            margin: 8px; border: 1px solid #2d3748;
+          }
+          .demo-section h2 { color: #e2e8f0; margin: 0 0 16px 0; font-size: 18px; }
+          .demo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+          .chart-label { color: #718096; font-size: 12px; text-align: center; margin-top: 6px; }
+        </style>
+
+        <div class="demo-section">
+          <h2>🎨 Live Demo: Custom Visualizations (Variant 3 – SVG Rendering)</h2>
+          <p style="color:#a0aec0;font-size:13px;margin-bottom:16px;">
+            The following visualizations are built as pure SVG — this is how they would be embedded as custom viz in Dashboard Studio. In a real Splunk app they receive their data via <code>dataSources.primary</code>.
+          </p>
+          <div class="demo-row">
+            <div>
+              <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#0d1117;border-radius:8px;">
+                <!-- Radial Gauge - 72% CPU -->
+                <!-- Background arc -->
+                <path d="M 80 180 A 100 100 0 1 1 320 180" fill="none" stroke="#2d3748" stroke-width="24" stroke-linecap="round"/>
+                <!-- Value arc (72%) -->
+                <path d="M 80 180 A 100 100 0 1 1 304.7 126.8" fill="none" stroke="#f6ad55" stroke-width="24" stroke-linecap="round"/>
+                <!-- Center text -->
+                <text x="200" y="160" text-anchor="middle" fill="#ffffff" font-size="42" font-weight="bold">72%</text>
+                <text x="200" y="190" text-anchor="middle" fill="#718096" font-size="12">CPU Usage – web-02</text>
+                <!-- Scale marks -->
+                <text x="72" y="198" text-anchor="middle" fill="#4a5568" font-size="10">0</text>
+                <text x="200" y="58" text-anchor="middle" fill="#4a5568" font-size="10">50</text>
+                <text x="328" y="198" text-anchor="middle" fill="#4a5568" font-size="10">100</text>
+              </svg>
+              <p class="chart-label">Radial Gauge – Custom Viz (SVG)</p>
+            </div>
+            <div>
+              <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#0d1117;border-radius:8px;">
+                <!-- Heatmap - 6 hosts x 8 hours -->
+                <!-- Row labels -->
+                <text x="4" y="38" fill="#718096" font-size="9">web-01</text>
+                <text x="4" y="68" fill="#718096" font-size="9">web-02</text>
+                <text x="4" y="98" fill="#718096" font-size="9">app-01</text>
+                <text x="4" y="128" fill="#718096" font-size="9">app-02</text>
+                <text x="4" y="158" fill="#718096" font-size="9">db-01</text>
+                <text x="4" y="188" fill="#718096" font-size="9">db-02</text>
+                <!-- Col labels -->
+                <text x="75" y="16" fill="#718096" font-size="8" text-anchor="middle">0h</text>
+                <text x="115" y="16" fill="#718096" font-size="8" text-anchor="middle">2h</text>
+                <text x="155" y="16" fill="#718096" font-size="8" text-anchor="middle">4h</text>
+                <text x="195" y="16" fill="#718096" font-size="8" text-anchor="middle">6h</text>
+                <text x="235" y="16" fill="#718096" font-size="8" text-anchor="middle">8h</text>
+                <text x="275" y="16" fill="#718096" font-size="8" text-anchor="middle">10h</text>
+                <text x="315" y="16" fill="#718096" font-size="8" text-anchor="middle">12h</text>
+                <text x="355" y="16" fill="#718096" font-size="8" text-anchor="middle">14h</text>
+                <!-- Row 1: web-01 (low-med) -->
+                <rect x="56" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="96" y="22" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="136" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="176" y="22" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="216" y="22" width="36" height="26" rx="2" fill="#5a2030"/><rect x="256" y="22" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="296" y="22" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="336" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <!-- Row 2: web-02 (med) -->
+                <rect x="56" y="52" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="96" y="52" width="36" height="26" rx="2" fill="#5a2030"/><rect x="136" y="52" width="36" height="26" rx="2" fill="#7a2838"/><rect x="176" y="52" width="36" height="26" rx="2" fill="#6a2434"/><rect x="216" y="52" width="36" height="26" rx="2" fill="#9a3040"/><rect x="256" y="52" width="36" height="26" rx="2" fill="#7a2838"/><rect x="296" y="52" width="36" height="26" rx="2" fill="#5a2030"/><rect x="336" y="52" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <!-- Row 3: app-01 (low) -->
+                <rect x="56" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="96" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="136" y="82" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="176" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="216" y="82" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="256" y="82" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="296" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="336" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <!-- Row 4: app-02 (high!) -->
+                <rect x="56" y="112" width="36" height="26" rx="2" fill="#9a3040"/><rect x="96" y="112" width="36" height="26" rx="2" fill="#ba3848"/><rect x="136" y="112" width="36" height="26" rx="2" fill="#e94560"/><rect x="176" y="112" width="36" height="26" rx="2" fill="#da4058"/><rect x="216" y="112" width="36" height="26" rx="2" fill="#e94560"/><rect x="256" y="112" width="36" height="26" rx="2" fill="#ba3848"/><rect x="296" y="112" width="36" height="26" rx="2" fill="#da4058"/><rect x="336" y="112" width="36" height="26" rx="2" fill="#9a3040"/>
+                <!-- Row 5: db-01 (med) -->
+                <rect x="56" y="142" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="96" y="142" width="36" height="26" rx="2" fill="#5a2030"/><rect x="136" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="176" y="142" width="36" height="26" rx="2" fill="#6a2434"/><rect x="216" y="142" width="36" height="26" rx="2" fill="#5a2030"/><rect x="256" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="296" y="142" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="336" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <!-- Row 6: db-02 (low-med) -->
+                <rect x="56" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="96" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="136" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="176" y="172" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="216" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="256" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="296" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="336" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <!-- Legend -->
+                <text x="56" y="214" fill="#718096" font-size="9">Low</text>
+                <rect x="80" y="206" width="20" height="10" rx="1" fill="#0d2137"/>
+                <rect x="104" y="206" width="20" height="10" rx="1" fill="#3a1a2e"/>
+                <rect x="128" y="206" width="20" height="10" rx="1" fill="#7a2838"/>
+                <rect x="152" y="206" width="20" height="10" rx="1" fill="#e94560"/>
+                <text x="178" y="214" fill="#718096" font-size="9">High</text>
+              </svg>
+              <p class="chart-label">Heatmap – Custom Viz (SVG)</p>
+            </div>
+          </div>
+        </div>
+      </html>
+    </panel>
+  </row>
+
+</dashboard>

@@ -1,20 +1,72 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
 
- <img width="30%" src="/static/app/splunk4champions2/images/ds_base.png"/>
+## Base & Chain Searches in Dashboard Studio
 
-## Visual Editor
-Base search handling is improved in Dashboard Studio. You do not need to edit the source, base and chain searches can be created and assigned in
- the UI making it much easier to create and understand. 
+Base and chain searches let multiple visualizations share a single underlying search, avoiding redundant queries and improving dashboard performance.
 
-## Multiple searches
- Dashboard Studio allows multiple chain searches in a chain. 
+<img width="40%" src="/static/app/splunk4champions2/images/ds_base.png"/>
 
-## Use a transforming base search or fields
-The base search itself has to be transforming (using stats, chart, timechart). If the base search is a non-transforming search, 
-you must explicitly state in the base search what fields will be used in the chain search using the | fields command. 
+---
 
+### How It Works
 
+A **base search** runs once and feeds its results to one or more **chain searches**. Each chain search filters, transforms, or aggregates the base results differently — each driving a separate visualization.
 
+```
+Base Search (runs once)
+  ├── Chain Search A  →  viz_summary_table
+  ├── Chain Search B  →  viz_timechart
+  └── Chain Search C  →  viz_top_hosts
+```
 
-Here is an example dashboard for base and chain searches  in DS: <Link to="ds_base_search" openInNewContext>Base search (Dashboard Studio)</Link>
+---
+
+### Transforming vs. Non-Transforming Base Searches
+
+The base search **must** be transforming (using `stats`, `timechart`, `chart`, `top`, etc.) **or** you must explicitly declare which fields chain searches can use:
+
+```spl
+/* Transforming — works directly as a base */
+index=s4c_www | stats count sum(bytes) avg(response_time) by host status
+
+/* Non-transforming — must add | fields to declare available fields */
+index=s4c_www
+| fields host, status, bytes, response_time, _time
+```
+
+Chain searches then filter or aggregate further:
+
+```spl
+/* Chain search A — summary */
+| stats sum(count) as total_requests by host
+
+/* Chain search B — top errors */
+| where status>=400
+| stats sum(count) as errors by status
+```
+
+---
+
+### Visual Editor
+
+Base and chain searches are configured in the **Visual Editor** without editing JSON source:
+
+1. Create your base search as a data source
+2. Create chain searches — set **Base** to your base data source
+3. Assign each chain search to a visualization as its **primary** data source
+
+Dashboard Studio validates the chain at edit time and shows warnings if field references break.
+
+---
+
+### Why Use Base Searches?
+
+- A dashboard with 6 panels all querying `index=s4c_www` could run 6 identical base queries. With base/chain, that collapses to **1 base search + 6 lightweight transformations**.
+- Especially valuable for high-cardinality indexes or dashboards with many panels sharing the same time range and filters.
+
+---
+
+<SplunkPanel dashboard="ds_base_search" height="500px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/chainSearch" openInNewContext>Chain Searches Documentation</Link>

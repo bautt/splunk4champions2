@@ -3,7 +3,7 @@ import Link from '@splunk/react-ui/Link'
 
 ![](/static/app/splunk4champions2/images/lab1_task2_verbose.png)
 
-**Verbose mode** returns as much information as possible from the data, including all events and field information.
+**Verbose mode** forces full field extraction on every event, even when transforming commands (`stats`, `chart`, `timechart`) are present. It always generates the Events tab alongside Statistics and Visualizations. This gives you the most complete view of your data — but at the cost of speed and system resources. Avoid Verbose mode on large datasets or in production dashboards.
 
-<SplunkSearch earliest="-30d" latest="now" mode="Verbose mode" spl={`index=s4c_weather`}>
+<SplunkSearch earliest="-30d" latest="now" mode="verbose" spl={`index=s4c_meteo | stats count by city`}>
 </SplunkSearch>

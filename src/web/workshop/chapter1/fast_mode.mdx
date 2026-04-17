@@ -3,11 +3,11 @@ import Link from '@splunk/react-ui/Link'
 
 ![](/static/app/splunk4champions2/images/lab1_task2_fast.png)
 
-**Fast mode** uses the least amount of system resources. It is great to use Fast Mode when merely checking if data is present or not or after a search is already built.
+**Fast mode** uses the least amount of system resources by skipping field extraction entirely — only indexed fields and default fields (`host`, `source`, `sourcetype`, `_time`, `_raw`) are available. It is ideal when checking whether data is present, or after a search is already built and you just need results quickly.
 
-Try this simple search out in different modes: 
+Try this search in Fast mode and compare with Smart or Verbose:
 
-<SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`index=s4c_weather`}>
+<SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`index=s4c_meteo | stats count by city`}>
 </SplunkSearch>
 
-* If you see no data in the s4c_weather index, please go to section 0-Setup and follow the instructions (create indexes and add example data)
+* If you see no data in the s4c_meteo index, go to section 0-Setup and follow the instructions to create indexes and add example data.

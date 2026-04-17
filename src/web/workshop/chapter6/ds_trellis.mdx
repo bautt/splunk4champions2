@@ -1,0 +1,88 @@
+import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
+
+## Trellis Layout (New in Splunk 10.0)
+
+Trellis layout splits a single visualization into a grid of small multiples — one panel per category (e.g. one chart per host). This makes it easy to compare many entities at a glance without a crowded multi-series chart.
+
+---
+
+### What Changed in 10.0?
+
+In Splunk 9.x and earlier, trellis layout was only available for **Single Value** visualizations. Starting with **Splunk Enterprise 10.0**, trellis is now supported for:
+
+| Chart Type | Trellis Support |
+|---|---|
+| Single Value | Supported since 9.x |
+| Line Chart | New in 10.0 |
+| Area Chart | New in 10.0 |
+| Bar Chart | New in 10.0 |
+| Column Chart | New in 10.0 |
+
+---
+
+### Without vs. With Trellis
+
+**Without trellis** — a single line chart with 6 hosts produces a crowded legend that is hard to read when the lines overlap.
+
+**With trellis** — the same data becomes a clean grid where each host gets its own mini-chart. Outliers are immediately visible.
+
+---
+
+### Enabling Trellis in Dashboard Studio
+
+Set these options on any supported visualization:
+
+```json
+"viz_cpu_per_host": {
+  "type": "splunk.area",
+  "dataSources": { "primary": "ds_cpu_by_host" },
+  "title": "CPU % per Host",
+  "options": {
+    "trellis.enabled": true,
+    "trellis.splitBy": "host",
+    "trellis.size": "medium",
+    "legendDisplay": "off"
+  }
+}
+```
+
+| Option | Values | Description |
+|---|---|---|
+| `trellis.enabled` | `true` / `false` | Turn trellis on/off |
+| `trellis.splitBy` | field name | Column to split into panels |
+| `trellis.size` | `small` / `medium` / `large` | Size of each mini-chart |
+| `legendDisplay` | `off` / `bottom` | Usually `off` with trellis — the panel title identifies each category |
+
+---
+
+### Search Pattern for Trellis
+
+Use a `timechart ... by <field>` search — the `by` clause creates the columns that trellis splits on:
+
+```spl
+| inputlookup demo_metrics.csv
+| eval _time=tonumber(_time)
+| timechart span=1h avg(cpu_pct) by host
+```
+
+For a static comparison (bar/column), use `stats ... by <field>`:
+
+```spl
+| inputlookup demo_metrics.csv
+| stats avg(response_time_ms) as AvgResponse by host
+| eval AvgResponse=round(AvgResponse,1)
+```
+
+---
+
+### Tips
+
+- Trellis works best with 4–12 categories. With too many, the mini-charts become unreadably small.
+- Choose `trellis.size` based on how many categories you have: `large` for 2–4, `medium` for 4–8, `small` for 8+.
+- Combine trellis with a time input to let users interactively explore time windows across all panels.
+- Trellis is configured in the JSON source — the visual editor in Splunk 10.0 also exposes it in the Format panel.
+
+<SplunkPanel dashboard="feature_trellis" height="700px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/trellisLayout" openInNewContext>Trellis Layout Documentation</Link>

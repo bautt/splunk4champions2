@@ -1,0 +1,136 @@
+<dashboard version="1.1" theme="dark" embed="enabled">
+  <label>Feature: Sharing Dashboards without Login (Publish)</label>
+  <description>Guide and background on the Publish feature in Splunk Enterprise 10.0</description>
+  <row>
+    <panel>
+      <html>
+        <style>
+          .pub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 8px; }
+          .pub-card { background: #16213e; border-radius: 10px; padding: 24px; border: 1px solid #2d3748; }
+          .pub-card h2 { color: #ffffff; font-size: 18px; margin: 0 0 12px 0; }
+          .pub-card p { color: #a0aec0; font-size: 13px; line-height: 1.65; }
+          .step { display: flex; gap: 12px; margin-bottom: 14px; }
+          .step-num {
+            background: #e94560; color: white; border-radius: 50%;
+            width: 28px; height: 28px; min-width: 28px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: bold;
+          }
+          .step-text { color: #e2e8f0; font-size: 13px; line-height: 1.5; }
+          .step-text strong { color: #ffffff; }
+          .info-box {
+            background: #0f3460; border-radius: 8px; padding: 14px;
+            margin-top: 16px; border-left: 3px solid #63b3ed;
+          }
+          .info-box p { color: #bee3f8; font-size: 13px; margin: 0; }
+          .warn-box {
+            background: #3d2010; border-radius: 8px; padding: 14px;
+            margin-top: 12px; border-left: 3px solid #f6ad55;
+          }
+          .warn-box p { color: #fbd38d; font-size: 13px; margin: 0; }
+          .feature-badge {
+            display: inline-block; background: #1a3a1a; color: #68d391;
+            font-size: 11px; padding: 3px 10px; border-radius: 12px;
+            font-weight: 700; margin-bottom: 14px;
+          }
+          .comparison-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+          .comparison-table th { background: #0f3460; color: #bee3f8; padding: 8px 12px; text-align: left; font-size: 12px; }
+          .comparison-table td { padding: 8px 12px; color: #a0aec0; font-size: 12px; border-bottom: 1px solid #2d3748; }
+          .yes { color: #68d391; font-weight: bold; }
+          .no { color: #fc8181; font-weight: bold; }
+        </style>
+
+        <div class="pub-grid">
+          <div class="pub-card">
+            <span class="feature-badge">NEW in Splunk Enterprise 10.0</span>
+            <h2>📤 Sharing Dashboards without Login</h2>
+            <p>The most-requested dashboard feature on Splunk Ideas: share dashboards externally without a Splunk account. Ideal for C-level reporting, external teams, and read-only displays.</p>
+
+            <div class="step">
+              <div class="step-num">1</div>
+              <div class="step-text">Open the dashboard in <strong>Dashboard Studio</strong> (only available there — not in Classic Dashboards)</div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div class="step-text">Click <strong>"Publish"</strong> in the top right (Splunk 10.0+)</div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div class="step-text">Choose the <strong>refresh interval</strong>: 5 min / 15 min / 1 hour / manual</div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div class="step-text">Set an <strong>expiry</strong>: e.g. 7 days, 30 days, or no expiry</div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div class="step-text"><strong>Copy the link</strong> and share it — recipients see live data without logging in</div>
+            </div>
+
+            <div class="info-box">
+              <p>💡 <strong>Demo tip:</strong> Open a published link in the browser — no Splunk login required. The link works in any browser, on monitors, dashboards, or tablets.</p>
+            </div>
+            <div class="warn-box">
+              <p>⚠️ <strong>Requirement:</strong> Splunk Enterprise 10.0+. The Splunk admin does not need to explicitly enable the Publish feature in <code>web.conf</code> — it is available by default.</p>
+            </div>
+          </div>
+
+          <div class="pub-card">
+            <h2>📊 Sharing Methods Comparison</h2>
+            <table class="comparison-table">
+              <tr>
+                <th>Method</th>
+                <th>Login required</th>
+                <th>Live data</th>
+                <th>Interactive</th>
+                <th>Expiry</th>
+              </tr>
+              <tr>
+                <td>Splunk Login (classic)</td>
+                <td class="no">Yes</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Never</td>
+              </tr>
+              <tr>
+                <td>PDF Export (Scheduler)</td>
+                <td class="yes">No</td>
+                <td class="no">Snapshot</td>
+                <td class="no">No</td>
+                <td>–</td>
+              </tr>
+              <tr>
+                <td>Embedded Report (iFrame)</td>
+                <td class="no">Yes*</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Yes</td>
+                <td class="yes">Never</td>
+              </tr>
+              <tr>
+                <td><strong>Publish (10.0)</strong></td>
+                <td class="yes" style="color:#68d391">No ✅</td>
+                <td class="yes">Yes</td>
+                <td style="color:#f6ad55">Partial</td>
+                <td>Configurable</td>
+              </tr>
+            </table>
+            <p style="margin-top:12px;font-size:12px;">*iFrame requires an auth token in embed mode</p>
+
+            <h2 style="margin-top:20px">🎯 Use Cases</h2>
+            <ul style="color:#a0aec0;font-size:13px;padding-left:18px">
+              <li>C-Suite / Management reporting without Splunk licenses</li>
+              <li>NOC walls and digital signage (kiosk mode)</li>
+              <li>External partner / customer dashboards</li>
+              <li>Read-only views for business departments</li>
+              <li>Automated report links via email</li>
+            </ul>
+
+            <div class="info-box" style="margin-top:16px">
+              <p>🔐 <strong>Security:</strong> Published links execute searches under the context of the publishing user. The link contains a signed token. RBAC and data access controls remain in effect.</p>
+            </div>
+          </div>
+        </div>
+      </html>
+    </panel>
+  </row>
+</dashboard>
