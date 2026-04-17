@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import Link from '@splunk/react-ui/Link';
 
 /**
- * Embeds a Splunk dashboard (Classic XML or Dashboard Studio) via the
- * Splunk embed URL. Classic dashboards need embed="enabled" in their XML.
+ * Embeds a Splunk dashboard (Classic XML or Dashboard Studio) in an iframe.
  *
  * Props:
  *   dashboard  - view name, e.g. "feature_tabbed"
+ *   embed      - (optional) set true for Classic XML dashboards with embed="enabled"
+ *                to use the /embed/ URL; default false (uses /app/ URL which works
+ *                for Dashboard Studio v2 and requires the user to be logged in)
  *   panelId    - (optional) panel id for Classic single-panel embed
  *   height     - iframe height, default "500px"
  *   app        - Splunk app context, default "splunk4champions2"
  */
-export default function SplunkPanel({ dashboard, panelId, height = '500px', app = 'splunk4champions2' }) {
+export default function SplunkPanel({ dashboard, embed = false, panelId, height = '500px', app = 'splunk4champions2' }) {
     const [loaded, setLoaded] = useState(false);
 
     // Derive locale from the current URL so the component works on any locale setting
@@ -20,7 +22,11 @@ export default function SplunkPanel({ dashboard, panelId, height = '500px', app 
         : 'en-GB';
 
     const query = panelId ? `?panelId=${encodeURIComponent(panelId)}` : '';
-    const embedUrl = `/${locale}/embed/${app}/${dashboard}${query}`;
+    // Classic XML dashboards with embed="enabled" can use the /embed/ URL (no login needed).
+    // Dashboard Studio v2 dashboards do not support /embed/ — use the regular /app/ URL instead.
+    const iframeUrl = embed
+        ? `/${locale}/embed/${app}/${dashboard}${query}`
+        : `/${locale}/app/${app}/${dashboard}${query}`;
     const fullUrl  = `/${locale}/app/${app}/${dashboard}`;
 
     return (
@@ -43,7 +49,7 @@ export default function SplunkPanel({ dashboard, panelId, height = '500px', app 
                 </div>
             )}
             <iframe
-                src={embedUrl}
+                src={iframeUrl}
                 width="100%"
                 height={height}
                 onLoad={() => setLoaded(true)}
