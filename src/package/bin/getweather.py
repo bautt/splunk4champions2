@@ -15,41 +15,36 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from __future__ import (absolute_import, division, print_function,
-                        unicode_literals)
+from __future__ import absolute_import, division, print_function, unicode_literals
 
+import gzip
 import os
 import sys
-import tarfile
-import time
-
-import requests
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "lib"))
-from splunklib.searchcommands import (Configuration, GeneratingCommand, Option,
-                                      dispatch, validators)
-from splunklib.six.moves import range
+from splunklib.searchcommands import Configuration, GeneratingCommand, dispatch
 
 
 @Configuration()
-class GeneratingCSC(GeneratingCommand):
+class GetWeatherCommand(GeneratingCommand):
     """
-    The getweather command downloads example weather data and extracts it in to the search. 
-    Use |collect
+    Streams weather event data from the bundled static file into the search
+    pipeline. Use with collect to load data into an index.
 
     Example:
 
     ``| getweather | collect index=s4c_weather sourcetype=s4c_weather``
-
     """
+
     def generate(self):
-#       link='https://github.com/bautt/splunk4champions/raw/master/splunk4champions/static/current_2023.log.gz' 
-        link='https://github.com/bautt/splunk4champions2/raw/main/src/package/static/current.log.gz'
-        with requests.get(link, stream=True, verify=True) as rx, tarfile.open(fileobj=rx.raw, mode="r:gz") as tarobj:
-            for entry in tarobj:
-               fileobj=tarobj.extractfile(entry)
-               for line in fileobj:
-                   yield { '_raw': line.decode('utf-8') }
+        splunkhome = os.environ.get('SPLUNK_HOME', '')
+        data_file = os.path.join(splunkhome, 'etc', 'apps', 'splunk4champions2', 'static', 'current_2026.log.gz')
+        try:
+            with gzip.open(data_file, 'rt', encoding='utf-8', errors='replace') as f:
+                for line in f:
+                    yield {'_raw': line.rstrip('\n')}
+        except Exception as e:
+            yield {'_raw': 'getweather error: ' + str(e)}
 
 
-dispatch(GeneratingCSC, sys.argv, sys.stdin, sys.stdout, __name__)
+dispatch(GetWeatherCommand, sys.argv, sys.stdin, sys.stdout, __name__)

@@ -18,7 +18,7 @@ There are several ways to get metric data into Splunk. Here is how each method w
 curl -k https://YOUR_SPLUNK_SERVER:8088/services/collector/event \
   -H "Authorization: Splunk YOUR_HEC_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"time":1634367600.000,"event":"metric","index":"s4c_meteo_metrics","fields":{"city":"Berlin","country":"Germany","metric_name:weather.temperature_2m":18.5,"metric_name:weather.relative_humidity_2m":65}}'
+  -d '{"time":1634367600.000,"event":"metric","index":"s4c_meteo_metrics","fields":{"city":"Berlin","country":"Germany","metric_name:meteo.temperature_2m":18.5,"metric_name:meteo.relative_humidity_2m":65}}'
 ```
 
 ### 3. Log-to-Metrics Conversion (Ingest-Time)
@@ -49,6 +49,6 @@ The TA-open-meteo add-on demonstrates two onboarding paths simultaneously:
 
 1. **Events path**: Raw JSON weather data lands in `s4c_meteo` with sourcetype `open_meteo:weather:json`. Each event contains fields like `temperature_2m`, `wind_speed_10m`, `city`, etc.
 
-2. **Metrics path**: The same data is also written as metric data points to `s4c_meteo_metrics` with sourcetype `open_meteo:weather:metric`. Each metric follows the `weather.*` naming convention with `city`, `country`, `country_code`, and `timezone` as dimensions.
+2. **Metrics path**: The same data is also written as metric data points to `s4c_meteo_metrics` with sourcetype `open_meteo:weather:metric`. Each metric follows the `meteo.*` naming convention with `city`, `country`, `country_code`, and `timezone` as dimensions.
 
 This dual-write approach lets us compare events vs. metrics performance head-to-head in the lab.
