@@ -6,8 +6,9 @@ const INDEXES = [
     { name: 's4c_stocks',        label: 'Stocks',           type: 'event'  },
     { name: 's4c_www',           label: 'Web Server Logs',  type: 'event'  },
     { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event'  },
-    { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event'  },
-    { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric' },
+    { name: 's4c_meteo',          label: 'Meteo Events',     type: 'event'  },
+    { name: 's4c_meteo_metrics',  label: 'Meteo Metrics',    type: 'metric' },
+    { name: 's4c_meteo_historic', label: 'Historic Weather', type: 'event'  },
 ];
 
 // Splunk may return minTime/maxTime as Unix epoch (float) OR ISO-8601 string.

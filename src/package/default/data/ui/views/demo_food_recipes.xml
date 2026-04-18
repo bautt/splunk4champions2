@@ -908,7 +908,7 @@
 			"name": "job",
 			"options": {
 				"enableSmartSources": true,
-				"query": "| rest /services/search/jobs \n| eval user=\"$env:user$\"\n| eval a=\"$Recipe_HM:result.ai_result_1$\"\n| eval eval product_name=\"$Products_list:result.product_name$\"\n| eval people=$number$\n| eval start=substr(title,4,13)\n| where user==author\n| where start==\"makeresults 1\"\n| where 'request.provenance'==\"UI:dashboard:food__recipe\"\n| where isnull(runDuration)\n| eval message=\"Suche nach neuem Rezept laeuft...\"\n| table message\n| appendpipe [| stats count | where count=0 | eval message=\"  \" | fields message]",
+				"query": "| rest /services/search/jobs \n| eval user=\"$env:user$\"\n| eval a=\"$Recipe_HM:result.ai_result_1$\"\n| eval eval product_name=\"$Products_list:result.product_name$\"\n| eval people=$number$\n| eval start=substr(title,4,13)\n| where user==author\n| where start==\"makeresults 1\"\n| where 'request.provenance'==\"UI:dashboard:demo_food_recipes\"\n| where isnull(runDuration)\n| eval message=\"Suche nach neuem Rezept laeuft...\"\n| table message\n| appendpipe [| stats count | where count=0 | eval message=\"  \" | fields message]",
 				"queryParameters": {
 					"earliest": "-15m",
 					"latest": "now"
