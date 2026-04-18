@@ -1,0 +1,12 @@
+.splunk-hemicycle-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.splunk-hemicycle-3d canvas {
+    display: block;
+    margin: 0 auto;
+    cursor: crosshair;
+}

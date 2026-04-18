@@ -1,0 +1,75 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
+## Stock Index Data
+
+The workshop includes 10 years of daily OHLCV data for 10 major global indexes loaded into `s4c_stocks`. Each event is one trading day for one index.
+
+**Available indexes:** DAX, S&P 500, NASDAQ, Dow Jones, FTSE 100, CAC 40, Euro Stoxx 50, Nikkei 225, Hang Seng, SMI
+
+**Fields:** `symbol` `index_name` `stocks.open` `stocks.high` `stocks.low` `stocks.close` `stocks.volume`
+
+---
+
+### Basic Search
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_student_metrics symbol=^GDAXI
+| table _time index_name stocks.open stocks.high stocks.low stocks.close stocks.volume
+| sort -_time`}></SplunkSearch>
+
+---
+
+### Closing Price Over Time
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_student_metrics
+| timechart span=1w avg(stocks.close) by index_name`}></SplunkSearch>
+
+---
+
+### Compare All Indexes — Latest Close
+
+<SplunkSearch earliest="-3d" latest="now" spl={`index=s4c_student_metrics
+| stats latest(stocks.close) as close latest(stocks.volume) as volume by index_name symbol
+| sort -close`}></SplunkSearch>
+
+---
+
+### Biggest Daily Moves (absolute)
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_student_metrics
+| eval daily_change = stocks.close - stocks.open
+| eval daily_pct = round((daily_change / stocks.open) * 100, 2)
+| stats max(daily_pct) as best_day min(daily_pct) as worst_day by index_name
+| sort -best_day`}></SplunkSearch>
+
+---
+
+### tstats — Fast Summary (no field extraction)
+
+`tstats` runs against the index-time data only — much faster than a regular search, especially over years of data.
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count min(_time) as oldest max(_time) as newest
+    WHERE index=s4c_student_metrics
+    BY index_name, symbol
+| eval oldest=strftime(oldest, "%Y-%m-%d"), newest=strftime(newest, "%Y-%m-%d")
+| sort index_name`}></SplunkSearch>
+
+---
+
+### tstats — Aggregated Metrics
+
+`tstats` can aggregate numeric fields that are indexed as metrics:
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats avg(stocks.close) as avg_close max(stocks.high) as all_time_high min(stocks.low) as all_time_low
+    WHERE index=s4c_student_metrics
+    BY index_name
+| eval avg_close=round(avg_close, 2)
+| sort -avg_close`}></SplunkSearch>
+
+---
+
+### tstats — Daily Volume by Index (last 30 days)
+
+<SplunkSearch earliest="-30d" latest="now" spl={`| tstats sum(stocks.volume) as total_volume
+    WHERE index=s4c_student_metrics
+    BY index_name _time span=1d
+| timechart span=1d sum(total_volume) by index_name`}></SplunkSearch>

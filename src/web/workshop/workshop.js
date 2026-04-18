@@ -94,6 +94,19 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "Stock Index Search",
+                    "steps": [
+                        {
+                            "title": "Stocks — SPL & tstats",
+                            "content": "chapter1/stocks_search.mdx"
+                        },
+                        {
+                            "title": "Stocks — Weather Correlation",
+                            "content": "chapter1/stocks_weather.mdx"
+                        }
+                    ]
+                },
+                {
                     "title": "Useful Links",
                     "steps": [
                         {
@@ -396,6 +409,19 @@ const labs = {
                         {
                             "title": "Metrics Lab",
                             "content": "chapter4/metrics_lab.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter4/useful_links5.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Stock Index Metrics",
+                    "steps": [
+                        {
+                            "title": "Stocks — Events to Metrics",
+                            "content": "chapter4/stocks_metrics.mdx"
                         },
                         {
                             "title": "Useful Links",
