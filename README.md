@@ -1,84 +1,117 @@
 ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_schwarz_trans_150x150.png#gh-light-mode-only) ![](https://github.com/bautt/splunk4champions2/blob/main/src/package/appserver/static/images/champignon_weiss_trans_150x150.png#gh-dark-mode-only)
 
- # Welcome to the Splunk4Champions Workshop!
-Discover the new and improved Splunk4Champions workshop, now featuring an upgraded content management system powered by React.js, Splunk UI, and MDX files. This workshop is designed to provide advanced Splunk users (champions) with an opportunity to enhance their skills and delve deeper into the intricacies of Splunk search.
+# Welcome to the Splunk4Champions Workshop!
 
-Join us for an engaging and interactive hands-on experience where you'll not only learn new tricks but also gain a comprehensive understanding of how Splunk searches work. We will share invaluable hints and techniques to help you maximize the efficiency of your Splunk searches, complemented by the underlying theory behind them. As a participant, your active involvement will be required, and you'll be provided with numerous follow-up links to explore further information at your own pace.
+An interactive, hands-on Splunk workshop delivered as a Splunk app. Participants follow guided labs through a React UI embedded directly in Splunk — no slides, everything runs inside the platform.
 
-## Who should attend:
+Built for experienced Splunk users: admins, use case developers, and champions who want to go deeper.
+
+## Who should attend
+
 - Experienced and ambitious Splunk users
-- Splunk use case owners, use case developers
+- Use case owners and developers
 - Splunk admins
 
-## Workshop Highlights:
-- Exploring Options and GUI Settings for optimal customization
-- Harnessing the power of the Job Inspector for advanced search analysis
-- Understanding the intricacies of data storage in Splunk
-- Mastering search performance: identifying good and bad search practices
-- Unleashing the potential of converting log data into metrics
-- Crafting compelling dashboards using XML expert hints
-- Introduction and tutorial on Dashboard Studio, your gateway to stunning visualizations
-- Introduction and demo of Splunk Mobile 
+## What's covered
 
-## Benefits of attending:
-- Achieve sustainable and energy-saving Splunk usage practices
-- Gain fresh insights and inspiration for leveraging Splunk's capabilities
+| Chapter | Topics |
+|---------|--------|
+| **0 · Setup** | Health Check — verify indexes and app/Splunk version at a glance |
+| **1 · Settings** | GUI options, Search Assistant, SPL2, Stock Index Search & tstats |
+| **2 · Data** | Indexes, buckets, data pipeline, distributed architecture, data aging |
+| **3 · Search** | Search basics, command types, Job Inspector, terms/segmentation, tstats, tips & quiz |
+| **4 · Metrics** | Log-to-metrics, mcollect, mcatalog, mstats, weather data reference, stock index metrics lab |
+| **5 · XML Dashboards** | Base search, drilldown, annotations, colors, post-processing |
+| **6 · Dashboard Studio** | Tutorial, data sources, interactivity, layout, custom visualizations, canvas viz library, sharing |
+| **7 · Mobile** | Splunk Mobile overview and demo |
 
-No more boring PowerPoint slides! All the necessary information is included directly in the app, ensuring an engaging and immersive learning experience.
+## Installation
 
-Don't miss this opportunity to elevate your Splunk skills and become a true champion in harnessing the power of Splunk. Join us at the Splunk4Champions Workshop and unlock a world of endless possibilities!
+Download the latest release from the [Releases page](https://github.com/bautt/splunk4champions2/releases/) and install as a standard Splunk app.
 
-## Download and installation:
-For simple installation just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
-If you have access to show.splunk.com - use the workshop on Splunk Show. 
+- Compatible with Splunk 8+
+- Works on Splunk Cloud
+- Not intended for production systems — no warranty
+
+If you have access to **show.splunk.com**, the workshop is available on Splunk Show.
+
+## Included datasets
+
+The app ships with real historical data used across the labs:
+
+- **`s4c_stocks`** — 10 years of daily OHLCV for 10 global stock indexes (DAX, S&P 500, NASDAQ, Dow Jones, FTSE 100, CAC 40, EuroStoxx 50, Nikkei 225, Hang Seng, SMI). Updated daily via scripted input.
+- **`s4c_meteo_historic`** — Daily historical weather (2016–present) for the cities hosting each exchange. Used for weather/market correlation exercises.
+- **`s4c_weather`** — Real-time OpenWeatherMap data for metrics labs.
+- **`s4c_tutorial`** — Web server logs for search and dashboard exercises.
 
 ## Phyphox experiments
 
-After creating a hec for Phyphox data add following to the HEC config: 
+After creating a HEC for Phyphox data, add to the HEC config:
+
+```
 /etc/apps/splunk_httpinput/local/inputs.conf
 [http://phyphox]
 allowQueryStringAuth = true
+```
 
-### Selected screenshots:
+---
 
-#### Inspector
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_inspector.png)
-#### Data
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_data.png)
-#### Search
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_search.png)
-#### Metrics
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_metrics.png)
-#### Dashboards
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_base.png)
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_colors.png)
-#### Mobile
-![](https://github.com/bautt/splunk4champions2/blob/main/Screenshot_mobile.png)
+## Screenshots
 
-___
+#### Setup — Health Check
+Verify index status, event counts, and date ranges. Shows Splunk and app version at a glance.
+
+![Health Check](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch0_setup_health_check.png)
+
+#### Chapter 1 — Settings: Search Assistant
+![Search Assistant](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch1_settings_search_assistant.png)
+
+#### Chapter 1 — Settings: Stock Index Search (SPL & tstats)
+![Stock Index SPL](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch1_settings_stock_index_spl.png)
+
+#### Chapter 2 — Data: Index and Buckets
+![Data Index Buckets](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch2_data_index_buckets.png)
+
+#### Chapter 3 — Search: Search Basics
+![Search Basics](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_basics.png)
+
+#### Chapter 3 — Search: Job Inspector
+![Inspector](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_inspector.png)
+
+#### Chapter 3 — Search: Terms & Segmentation
+![Segmentation](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_terms_segmentation.png)
+
+#### Chapter 3 — Search: tstats
+![tstats](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_tstats.png)
+
+#### Chapter 4 — Metrics: Searching Metrics
+![Metrics](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch4_metrics_searching.png)
+
+#### Chapter 5 — XML Dashboards: Base Search
+![XML Dashboards](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch5_xml_dashboards_base_search.png)
+
+#### Chapter 6 — Dashboard Studio: Overview
+![Dashboard Studio](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_overview.png)
+
+#### Chapter 6 — Dashboard Studio: Canvas Visualizations by rcastley
+Production-ready Splunk Canvas 2D API visualizations — cloned, built, and invoked directly with no Splunk experience required. No future development dependency or Claude Code needed.
+
+![Canvas Viz](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_canvas_viz.png)
+
+---
+
 ## Credits
 
-Large part of the workshop content is collected, recycled and consolidated from publicly available .conf 
-presentations, blog articles and Splunk Docs.  All information in this app is provided "as is", with no guarantee of completeness, accuracy, 
-timeliness or of the results obtained from the use of this information.
+Workshop content is collected, consolidated, and adapted from public .conf presentations, blog articles, and Splunk Docs. All information is provided "as is" with no guarantee of completeness, accuracy, or timeliness.
 
+- Originally created by **Andreas Greeske** and **Tomas Baublys** in 2020
+- Version 2.0 rebuilt by **Tomas Baublys** on the Splunk UI template by **Daniel Federschmidt**
+- Suggestions and improvements welcome: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)
 
-* This workshop was initially created by Andreas Greeske</Link> and Tomas Baublys in 2020
-* The new 2.0 version is built by Tomas Baublys on the Splunk-UI template which was created by Daniel Federschmidt
-* Any suggestions or improvements for workshop content are highly appreciated: [Tomas Baublys](mailto:tbaublys@splunk.com)
-  
+**Canvas Visualizations** section powered by [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) by **Ryan Castley (rcastley)** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
 
+### Special thanks for public content
+Martin Müller · Clara Merriman · Richard Morgan · and many others linked throughout the app
 
-### Special Thanks for the public content to:
-*  Martin Müller
-*  Clara Merriman
-*  Richard Morgan
-...
-and many others mentioned in the links in each section! 
-
-
-### Special Thanks for problem solving and content improvements: 
-*  Dirk Nitschke
-*  Holger Sesterhenn
-*  Henri Mak
-*  Lukas Utz 
+### Special thanks for improvements and problem solving
+Dirk Nitschke · Holger Sesterhenn · Henri Mak · Lukas Utz

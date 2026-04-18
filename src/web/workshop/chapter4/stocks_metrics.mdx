@@ -1,0 +1,73 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
+## Stock Index Metrics — Convert Events to Metrics
+
+The `s4c_stocks` index contains 10 years of daily OHLCV data for 10 global indexes as **events**.  
+In this exercise you will use `mcollect` to push that data into `s4c_student_metrics` as proper metrics.
+
+**Fields in `s4c_stocks`:** `symbol` `index_name` `open` `high` `low` `close` `volume`  
+**Available indexes:** DAX, S&P 500, NASDAQ, Dow Jones, FTSE 100, CAC 40, Euro Stoxx 50, Nikkei 225, Hang Seng, SMI
+
+---
+
+### Step 1: Explore the raw event data
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+| stats count min(_time) as oldest max(_time) as newest by index_name symbol
+| eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
+| sort index_name`}></SplunkSearch>
+
+---
+
+### Step 2: Preview what will become metrics
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+| table _time symbol index_name open high low close volume
+| sort -_time | head 20`}></SplunkSearch>
+
+---
+
+### Step 3: Convert to metrics with mcollect
+
+The search below reads all stock events and writes them into `s4c_student_metrics`.  
+The `prefix=stocks.` argument makes fields appear as `stocks.open`, `stocks.close` etc. in the Analytics Workspace.  
+`index_name` and `symbol` become **dimensions**.
+
+Remove the backtick comments from the `mcollect` line to actually write the data — **run once only**.
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+| fields _time symbol index_name open high low close volume
+\`\`\`| mcollect index=s4c_student_metrics prefix=stocks.\`\`\``}></SplunkSearch>
+
+> The full command when ready:  
+> `| mcollect index=s4c_student_metrics prefix=stocks.`
+
+---
+
+### Step 4: Verify metrics arrived
+
+After running mcollect, confirm the data is in the metrics index:
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| mcatalog values(metric_name) values(index_name) values(symbol)
+    WHERE index=s4c_student_metrics metric_name=stocks.*`}></SplunkSearch>
+
+---
+
+### Step 5: Query with mstats
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| mstats avg(stocks.close) as avg_close
+    WHERE index=s4c_student_metrics
+    BY index_name span=1y
+| timechart span=1y avg(avg_close) by index_name`}></SplunkSearch>
+
+---
+
+### Step 6: Analytics Workspace
+
+1. Go to **Search → Analytics Workspace**
+2. Select index `s4c_student_metrics`
+3. Browse metrics under the `stocks.*` prefix
+4. Add `index_name` as a split-by dimension
+5. Compare `stocks.close` across indexes on the same chart
+
+> **Tip:** Try `stocks.volume` with the **Baseline** overlay — volume spikes often coincide with market events (crashes, election results, rate decisions).

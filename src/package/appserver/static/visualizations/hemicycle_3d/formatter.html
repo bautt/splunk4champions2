@@ -1,0 +1,61 @@
+<form class="splunk-formatter-section" section-label="3D Hemicycle Settings">
+    <div class="control-group">
+        <label class="control-label">Tilt angle (degrees)</label>
+        <div class="controls">
+            <input type="text" name="display.visualizations.custom.splunk4champions2.hemicycle_3d.tiltAngle"
+                   pattern="[0-9]*" value="35" />
+            <span class="help-block">Perspective tilt angle (10-55)</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">3D depth factor</label>
+        <div class="controls">
+            <input type="text" name="display.visualizations.custom.splunk4champions2.hemicycle_3d.depthFactor"
+                   pattern="[0-9]*" value="10" />
+            <span class="help-block">Depth exaggeration (2-20)</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Rotation angle (degrees)</label>
+        <div class="controls">
+            <input type="text" name="display.visualizations.custom.splunk4champions2.hemicycle_3d.rotationAngle"
+                   pattern="-?[0-9]*" value="0" />
+            <span class="help-block">Horizontal rotation (-30 to 30)</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Number of rows</label>
+        <div class="controls">
+            <input type="text" name="display.visualizations.custom.splunk4champions2.hemicycle_3d.numRows"
+                   pattern="[0-9]*" value="14" />
+            <span class="help-block">Seat rows in the hemicycle (5-25)</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Seat size</label>
+        <div class="controls">
+            <input type="text" name="display.visualizations.custom.splunk4champions2.hemicycle_3d.seatSize"
+                   pattern="[0-9]*" value="7" />
+            <span class="help-block">Base radius of each seat dot (3-12)</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Fill mode</label>
+        <div class="controls">
+            <select name="display.visualizations.custom.splunk4champions2.hemicycle_3d.fillMode">
+                <option value="rows" selected>Rows (left to right)</option>
+                <option value="sectors">Sectors (top to bottom)</option>
+            </select>
+            <span class="help-block">How parties fill the hemicycle</span>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label">Show legend</label>
+        <div class="controls">
+            <select name="display.visualizations.custom.splunk4champions2.hemicycle_3d.showLegend">
+                <option value="yes" selected>Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+    </div>
+</form>
