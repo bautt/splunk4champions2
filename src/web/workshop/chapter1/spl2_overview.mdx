@@ -1,49 +1,94 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link';
 
 ## What is SPL2?
 
-SPL2 is Splunk's next-generation search language, introduced as a preview in Splunk Enterprise 9.x and available in Splunk Platform 10.x. It features cleaner syntax, stricter typing, and is the foundation for Splunk's Federated Analytics platform. SPL2 is already the default language in Splunk Observability Cloud.
+SPL2 is Splunk's next-generation search and data preparation language, reaching worldwide general availability on **January 16, 2026**. It is a single, unified language that works across both search and stream contexts — the same syntax you use to query indexed data also powers in-stream processing in Edge Processor and Ingest Processor.
 
-**How to enable in Splunk Enterprise 10.x:**
-Settings → Search → SPL2, or use the language selector dropdown in the search bar.
+> *"Learn once, use everywhere"* — SPL2 logic written for search can be reused directly in stream processing pipelines.
 
 ---
 
-## Key syntax differences
+### Availability
+
+| Platform | Version | OS |
+|---|---|---|
+| Splunk Enterprise | 10.2+ | Unix / Linux only |
+| Splunk Cloud Platform | 10.2.0.2511+ | All operating systems |
+
+SPL2 is **not enabled by default** — select it from the language picker in the Search bar, or use the Module Editor (see next section).
+
+---
+
+### Multi-modal Syntax
+
+SPL2 supports two syntax styles in the same language. Use whichever fits your background:
+
+**SPL-like syntax** (familiar to existing Splunk users):
+```
+FROM s4c_meteo
+| WHERE city="Berlin"
+| STATS avg(temperature_2m) AS avg_temp BY city
+| SORT -avg_temp
+| LIMIT 10
+```
+
+**SQL-like syntax** (familiar to database users):
+```sql
+SELECT avg(temperature_2m) AS avg_temp, city
+FROM s4c_meteo
+WHERE city = "Berlin"
+GROUP BY city
+ORDER BY avg_temp DESC
+LIMIT 10
+```
+
+Both styles produce identical results.
+
+<img src="https://www.splunk.com/content/dam/splunk-blogs/images/media_1370add8779ce1e21c05f394ef6d3c385c5a3301c.avif" width="100%" alt="SPL2 SQL-like syntax in Splunk"/>
+
+---
+
+### SPL1 → SPL2 Quick Reference
 
 | SPL1 | SPL2 |
 |---|---|
 | `index=s4c_meteo` | `FROM s4c_meteo` |
-| `\| stats count BY city` | `\| STATS count() BY city` |
-| `\| eval x = y + 1` | `SET x = y + 1` |
+| `\| stats count by city` | `\| STATS count() BY city` |
 | `\| where x > 5` | `\| WHERE x > 5` |
 | `\| head 10` | `\| LIMIT 10` |
-| `sourcetype=access_combined` | `FROM sourcetype:access_combined` |
-| Implicit string quoting | Requires backticks for fields with spaces |
+| `\| sort -avg_temp` | `\| SORT -avg_temp` |
 
-SPL2 keywords are **case-insensitive** but conventionally written in UPPERCASE for readability.
-
----
-
-## Simple SPL2 example
-
-If SPL2 is enabled on your instance, try this equivalent of a basic SPL1 search:
-
-<SplunkSearch earliest="-24h" latest="now" spl={`FROM s4c_meteo | STATS avg(temperature_2m) AS avg_temp BY city | SORT -avg_temp | LIMIT 10`}>
-</SplunkSearch>
+SPL2 keywords are **case-insensitive** but conventionally written in UPPERCASE. Switching from SPL1 requires **minimal or no rewriting** of existing queries and delivers equivalent performance.
 
 ---
 
-## Important caveats
+### Where to Use SPL2
 
-- **SPL2 is not a full replacement for SPL1 yet** — many SPL1 commands are not available in SPL2
-- **SPL1 and SPL2 cannot be mixed** in a single search pipeline
-- **Most existing apps, dashboards and saved searches use SPL1** — SPL2 adoption is gradual
-- SPL2 is the default in **Splunk Observability Cloud** and **Splunk Cloud Platform** new deployments
+| Interface | How |
+|---|---|
+| **Search & Reporting — Search bar** | Select *SPL2* from the language picker next to the search field |
+| **Search & Reporting — Module Editor** | Apps → Search & Reporting → **Modules** tab → New module |
+| **Edge Processor / Ingest Processor** | Pipeline editor (SPL2 compatibility profile) |
+| **VS Code** | Splunk Extension for Visual Studio Code |
+| **REST API** | Programmatic module management and search execution |
 
 ---
 
-<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/UnderstandingSPL2" openInNewContext>SPL2 Overview documentation</Link>
+### Key New Capabilities
+
+| Capability | Description |
+|---|---|
+| **Modules** | Multi-statement investigation notebooks — write, name, chain, and share multiple searches in one file |
+| **Data views** | Admin-controlled, permissioned views over indexes — share subsets of data without granting full index access |
+| **Custom functions** | Reusable function declarations shareable across the ecosystem |
+| **SPL embedding** | Embed legacy SPL1 searches within an SPL2 pipeline for gradual migration |
+| **JSON lambda expressions** | `map`, `reduce`, `filter` operations for modern JSON handling |
+| **Custom data types** | Define data types for quality validation at search time |
+
+---
+
+<Link to="https://www.splunk.com/en_us/blog/platform/introducing-spl2-the-next-generation-search-data-preparation-language-for-splunk.html" openInNewContext>Introducing SPL2 — Splunk Blog</Link>
 <br/>
-<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/SPL2SyntaxReference" openInNewContext>SPL2 Syntax Reference</Link>
+<Link to="https://help.splunk.com/en/splunk-enterprise/search/spl2-overview/where-can-i-use-spl2" openInNewContext>Where can I use SPL2? — Splunk Docs</Link>
+<br/>
+<Link to="https://help.splunk.com/en/splunk-enterprise/search/spl2-overview/how-can-i-learn-spl2" openInNewContext>How can I learn SPL2? — Splunk Docs</Link>

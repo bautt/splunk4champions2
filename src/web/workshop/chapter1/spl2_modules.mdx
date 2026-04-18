@@ -1,71 +1,96 @@
 import Link from '@splunk/react-ui/Link';
 
-## What are SPL2 Modules?
+## SPL2 Module Editor
 
-SPL2 Modules are reusable, named SPL2 code blocks stored in Splunk apps. They can be imported and called like functions, allowing you to package and share common search logic across searches and dashboards. Think of them as the SPL2 successor to SPL1 macros — but with proper named parameters, type safety, and versioning.
+The **Module Editor** is the primary SPL2 interface in the Search & Reporting app. Unlike the classic search bar — which runs one search at a time — the Module Editor lets you write, name, and run **multiple searches within a single file**, switching between their results without leaving the page.
 
----
-
-## SPL2 Modules vs. SPL1 Macros
-
-| Feature | SPL1 Macros | SPL2 Modules |
-|---|---|---|
-| Definition | `macros.conf` | `.spl2` files in the app |
-| Parameters | Positional text substitution | Named, typed parameters |
-| Type safety | None — raw text replacement | Enforced (`string`, `number`, `boolean`) |
-| Return type | Inline text fragment | Full dataset (streaming or generating) |
-| Syntax to call | `` `macro_name(arg)` `` | `IMPORT … CALL module_name(…)` |
-| Versioning | Not supported | Supported |
-| Discoverability | Hard — must know the name | Via `IMPORT` statement |
+Think of it as a Jupyter notebook for Splunk: your searches, documentation, and results all in one place.
 
 ---
 
-## Module structure
+### How to Access
 
-Modules live in `$SPLUNK_HOME/etc/apps/<appname>/spl2/` as `.spl2` files.
+1. Open **Search & Reporting** from the Splunk home screen
+2. Click the **Modules** tab (next to Search and Dashboards)
+3. Click **New module**
 
-```
-MODULE weatherSummary(idx: string, lookback: string = "-24h")
-  FROM $idx$
-  | WHERE _time >= relative_time(now(), $lookback$)
-  | STATS avg(temperature_2m) AS avg_temp,
-          max(wind_speed_10m)  AS max_wind
-      BY city
-  | SORT -avg_temp
-END
-```
-
-- **`MODULE`** declares the module name and typed parameters
-- **Default values** are supported (e.g. `lookback = "-24h"`)
-- The body is a standard SPL2 pipeline
-- **`END`** closes the module
+Or from the Search page: select **Get started with guided help** for an interactive tutorial.
 
 ---
 
-## Using a module
+### Module Editor Interface
 
-```
-IMPORT weatherSummary FROM app:splunk4champions2
+The editor has eight components:
 
-| CALL weatherSummary(idx="s4c_meteo", lookback="-7d")
-```
-
-`IMPORT` brings the module into scope. `CALL` executes it with the provided arguments.
-
----
-
-## When to use modules vs macros
-
-| Situation | Use |
+| Component | Purpose |
 |---|---|
-| Building new SPL2 pipelines | **Modules** |
-| Targeting Splunk Cloud Platform | **Modules** |
-| Need type-safe, self-documenting parameters | **Modules** |
-| Existing SPL1 codebase, backwards compatibility | **Macros** |
-| Splunk version without full SPL2 support | **Macros** |
+| **Outline panel** | Lists all named searches in the module for quick navigation; add new searches here |
+| **SPL2 panel** | Write your searches, commands, and functions |
+| **Search results panel** | Displays the output of the currently selected search |
+| **Time range picker** | Sets the time window (default: Last 24 hours) |
+| **Run icon** | Executes the selected search (also `Ctrl+Enter` / `Cmd+Enter`) |
+| **Data list** | Browse and select datasets — indexes, data views, lookups |
+| **Actions panel** | Point-and-click data manipulation; updates your SPL2 automatically |
+| **Fields panel** | Field metrics and summaries for the current result set |
 
 ---
 
-<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/SPL2Modules" openInNewContext>SPL2 Modules documentation</Link>
+### What Modules Enable
+
+**Multi-statement investigations**
+
+A module contains multiple named searches. You run them individually, in sequence, or conditionally — each building on previous results. This is particularly powerful for incident response: work from alert → investigation → root cause → documentation without switching tabs or losing context.
+
+<img src="https://www.splunk.com/content/dam/splunk-blogs/images/media_1c635ae4e16b1b1b978f49af268e151c8f86b5fba.avif" width="100%" alt="SPL2 Module Editor showing incident analysis with chained searches"/>
+
+**Named search branching**
+
+Name a search result, then reference it in downstream searches. Instead of rerunning the same base query multiple times, you define it once and branch from it — similar to base/chain searches in Dashboard Studio, but within a single investigation workflow.
+
+**Inline documentation**
+
+Add comments and notes directly alongside your searches. When you hand the module to another analyst or close the ticket, the thought process is already embedded in the file.
+
+**Collaboration and sharing**
+
+Modules can be exported and shared across teams with configurable permissions. Other analysts can import your module, build on top of your searches, and extend the investigation — creating a single source of truth for incident closure.
+
+---
+
+### Data Views
+
+SPL2 introduces **data views** — admin-defined, permissioned projections over indexes. Instead of granting users access to an entire index, an admin creates a view that exposes only specific fields and time ranges.
+
+<img src="https://www.splunk.com/content/dam/splunk-blogs/images/media_13234e04f9c37ffa76f73ad22069ef6d9f66295a4.avif" width="100%" alt="SPL2 data views — create and export permissioned views over indexes"/>
+
+Users search against the view name using `FROM view_name` — the underlying index and its full data remain protected.
+
+This enables:
+- Sharing data with teams who only need a subset of an index
+- Enforcing field-level access control without complex transforms
+- Creating purpose-built datasets for dashboards or external teams
+
+---
+
+### Keyboard Shortcuts
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+Enter` / `Cmd+Enter` | Run selected search |
+| `Ctrl+Space` | Trigger autocomplete / help |
+| `Ctrl+/` | Comment / uncomment line |
+| `Ctrl+F` | Find terms in the editor |
+
+---
+
+### SPL Embedding
+
+If you have existing SPL1 searches you want to keep, SPL2 supports **embedding legacy SPL** within an SPL2 pipeline. This allows gradual migration — wrap your existing search in SPL2 syntax without rewriting it, and incrementally modernize over time.
+
+---
+
+<Link to="https://help.splunk.com/en/splunk-enterprise/search/spl2-search-manual/getting-started/spl2-module-editor-overview" openInNewContext>Module Editor Overview — Splunk Docs</Link>
 <br/>
-<Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/CreateSPL2Module" openInNewContext>Creating SPL2 Modules</Link>
+<Link to="https://community.splunk.com/t5/Community-Blog/How-to-Streamline-Incident-Response-with-the-SPL2-Module-Editor/ba-p/758124" openInNewContext>Streamline Incident Response with SPL2 Module Editor — Community Blog</Link>
+<br/>
+<Link to="https://lantern.splunk.com/Platform_Data_Management/Transform_Data/Using_SPL2_to_improve_incident_investigation_and_root_cause_analysis" openInNewContext>Using SPL2 for Incident Investigation — Splunk Lantern</Link>
