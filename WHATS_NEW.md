@@ -116,3 +116,22 @@ Highlights:
 | Scheduler Health | `index=_internal sourcetype=scheduler` | Success rate and skip rate |
 
 All examples can be cloned, built, and installed directly — no Splunk development experience required. A [live demo](https://rcastley.github.io/splunk-custom-visualizations/) is available without Splunk.
+
+---
+
+### Navigation: Browser Back/Forward + Prev/Next Buttons
+
+The workshop URL now reflects your current position via a hash fragment:
+
+```
+/en-GB/app/splunk4champions2/lab#ch=three&sec=threeInspector
+```
+
+**What this means for participants:**
+
+- **Browser back/forward** works — navigating between sections adds history entries
+- **Bookmarks** work — you can bookmark any chapter/section and return directly to it
+- **Shareable links** — send a colleague a direct link to a specific section
+- **Page refresh** — restores your exact position instead of dropping you back to Setup
+
+**Prev / Next buttons** appear at the right end of the section tab bar — two small arrow buttons (`‹` `›`) with a position counter (e.g. `4/1` = chapter 4, section 1). They navigate linearly through all sections across all chapters, so you can step through the entire workshop in order without touching the tab menus.
