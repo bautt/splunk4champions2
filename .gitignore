@@ -4,3 +4,6 @@ dist/
 venv/
 .github
 splunk4champions2.tar.gz
+__pycache__/
+*.pyc
+*.pyo
