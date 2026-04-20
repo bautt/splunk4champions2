@@ -26,5 +26,14 @@ package: build
 	-C /tmp \
 	splunk4champions2/
 
+deploy:
+	scp splunk4champions2.tar.gz tbaublys@v37823.1blu.de:~
+	ssh tbaublys@v37823.1blu.de "\
+		cd /opt/splunk/etc/apps && \
+		sudo tar xzf ~/splunk4champions2.tar.gz && \
+		sudo chown -R splunk:splunk /opt/splunk/etc/apps/splunk4champions2 && \
+		sudo systemctl restart Splunkd && \
+		echo done"
+
 appinspect:
 	venv/bin/splunk-appinspect inspect splunk4champions2.tar.gz
