@@ -4,25 +4,38 @@
 
 ---
 
-### Setup: Health Check
+### Setup — Health Check (Improved)
 
-The **Setup** tab now opens with a **Health Check** table instead of a plain list of instructions.
+The **Setup** tab opens with a redesigned **Health Check** table that now performs two independent checks per index and provides actionable hints when something is wrong.
 
-At a glance you can see:
+**Two status columns per index:**
 
-| Column | What it tells you |
-|--------|-------------------|
-| Index | The index name |
-| Label | Human-readable purpose |
-| Type | Event or Metric index |
-| Status | OK (green) or No data / Missing (red) |
-| Oldest event | Earliest record in the index |
-| Latest event | Most recent record |
-| Event count | Total events indexed |
+| Column | Green | Orange | Red |
+|--------|-------|--------|-----|
+| **Index exists** | Yes — index is present in Splunk | — | No — index has not been created |
+| **Has data** | Yes — events or metrics found | Empty — index exists but contains no data | — |
+
+**Additional columns:**
+
+| Column | What it shows |
+|--------|---------------|
+| Oldest event | Date of the earliest record in the index |
+| Latest event | Relative time of the most recent record (e.g. `2d ago`, `5h ago`) |
+| Count | Total number of events or metric data points |
 
 The header also shows the current **Splunk version** and **App version**, plus an overall **ALL OK / NEEDS ATTENTION** badge.
 
-If an index shows red, go to **Settings → Data → Indexes** to create it, then enable its data source under **Settings → Data Inputs → Files & Directories**.
+**Context-sensitive hints** appear below the table when issues are detected:
+
+- **Index missing (red)** → lists the exact index names and types to create under Settings → Data → Indexes
+- **Index empty (orange)** → lists the correct data input per index (monitor path or script name) so you know exactly where to look:
+  - `s4c_weather` → monitor: `.../static/current*`
+  - `s4c_stocks` → monitor: `.../static/stocks_history.csv` + Scripts: `update_stocks.py` (daily)
+  - `s4c_www` → monitor: `.../static/www*`
+  - `s4c_tutorial` → monitor: `.../static/tutorialdata.zip`
+  - `s4c_meteo` → Scripts: `open_meteo_weather.py events` (every 5 min)
+  - `s4c_meteo_metrics` → run the `mcollect` search in Chapter 4 → Metrics Lab
+  - `s4c_meteo_historic` → monitor: `.../static/meteo_historic.csv`
 
 ---
 
@@ -43,7 +56,7 @@ If an index shows red, go to **Settings → Data → Indexes** to create it, the
 | Hang Seng | ^HSI |
 | SMI | ^SSMI |
 
-Data is pre-loaded into the event index `s4c_stocks`. A scripted input updates it daily with the latest trading day.
+Data is pre-loaded into the event index `s4c_stocks`. A scripted input (`update_stocks.py`) updates it daily with the latest trading day automatically.
 
 **Fields:** `_time` `symbol` `index_name` `open` `high` `low` `close` `volume`
 
@@ -51,55 +64,56 @@ Data is pre-loaded into the event index `s4c_stocks`. A scripted input updates i
 
 ### New Dataset: Historical Weather for Exchange Cities (`s4c_meteo_historic`)
 
-Daily weather records from **2016 to present** for the city hosting each stock exchange. Used for correlation exercises in Chapter 1.
+Daily weather records from **2016 to present** for the city hosting each stock exchange. Used for weather/market correlation exercises in Chapter 3.
 
 **Cities covered:** Frankfurt, New York, London, Paris, Tokyo, Hong Kong, Zürich
 
 **Fields:** `temperature_2m_mean` `temperature_2m_max` `temperature_2m_min` `precipitation_sum` `wind_speed_10m_max` `sunshine_duration` `weather_code` `city` `country` `exchange`
 
-The `exchange` field matches `index_name` in `s4c_stocks` — use it as the join key.
+The `exchange` field matches `index_name` in `s4c_stocks` — use it as the join key for correlation searches.
 
 ---
 
-### Chapter 1 — New: Stock Index Search
+### Chapter 3 — New: Stock Index Search
 
-New sub-section in **Chapter 1 (Settings)** with practical SPL exercises on the stocks dataset:
+New sub-section in **Chapter 3 (Search)**, placed right after the tstats section, with practical SPL exercises on the stocks dataset:
 
-- Basic table search filtered by symbol
-- `timechart` of weekly closing prices across all indexes
-- `stats latest()` to compare current closing prices
-- Daily % move calculation to find biggest up/down days
-- `tstats` for fast date-range and count summaries without field extraction
+- Basic `table` search filtered by symbol and time range
+- `timechart` of weekly closing prices across all 10 indexes
+- `stats latest()` to compare current closing prices side by side
+- Daily % move calculation to find the biggest up and down days
+- `tstats` for fast date-range and count summaries without loading raw events
 
 ---
 
-### Chapter 1 — New: Weather & Stock Correlation
+### Chapter 3 — New: Weather & Stock Correlation
 
 New sub-section showing how to join `s4c_stocks` with `s4c_meteo_historic` using `date` and `exchange` as keys:
 
 - Inventory of available weather data by city
 - Full join: stocks + weather on date and exchange city
-- DAX close vs Frankfurt temperature (monthly average)
-- FTSE 100 volume on rainy vs dry London days
-- Sunshine hours vs daily price change across all exchanges
+- DAX closing price vs. Frankfurt temperature (monthly average)
+- FTSE 100 trading volume on rainy vs. dry London days
+- Sunshine hours vs. daily price change across all exchanges
 - Extreme weather events (storm / heavy rain) and index performance
 
 ---
 
 ### Chapter 3 — Improved: Interactive Quiz
 
-The Chapter 3 quiz has been rebuilt as a fully interactive React component.
+The Chapter 3 quiz has been completely rebuilt as an interactive React component — no more static text questions.
 
-Each of the 9 questions shows:
+**Each of the 9 questions includes:**
 
-- **Two runnable search bars** (A and B) — participants can execute both in Splunk before deciding
-- **"Reveal Answer" button** — shows the correct answer immediately with a colour-coded explanation
-- **A/B badges** turn green (correct) or red (wrong) on reveal so the answer is visually obvious
-- One question is marked as a **trick question** (Q7 — tstats on a search-time-only index) with an orange callout
+- **Two live search bars (A and B)** — participants can run both searches directly in Splunk and compare results before deciding which is better
+- **Reveal Answer button** — shows the correct answer immediately with a colour-coded explanation panel
+- **A/B badges** turn green (correct) or red (wrong) on reveal, making the answer obvious at a glance
+- **Trick question callout** — Q7 (tstats on a search-time-only index) is flagged in orange with an explanation of why tstats fails without `INDEXED_EXTRACTIONS`
 
-A **progress counter** (`3 / 9 revealed`) and a **Reset Quiz** button at the top let instructors reuse the quiz across groups without a page reload.
+**Quiz controls:**
 
-The quiz also moved to **Chapter 3 (Search)**, right after the Stock Index Search section.
+- Progress counter at the top: `3 / 9 revealed`
+- **Reset Quiz** button clears all answers — instructors can reuse the quiz with different groups without a page reload
 
 ---
 
@@ -107,13 +121,27 @@ The quiz also moved to **Chapter 3 (Search)**, right after the Stock Index Searc
 
 New sub-section showing students how to convert the stocks event data into metrics using `mcollect`:
 
-1. Explore `s4c_stocks` events
-2. Preview the data shape
+1. Explore `s4c_stocks` events and understand the data shape
+2. Preview how fields will map to metric dimensions
 3. Push to `s4c_student_metrics` with `| mcollect index=s4c_student_metrics prefix=stocks.`
-4. Verify with `| mcatalog`
+4. Verify ingestion with `| mcatalog`
 5. Query with `| mstats` and visualize in Analytics Workspace
 
-> The `mcollect` command is intentionally commented out in the search — students uncomment and run it themselves as the exercise.
+> The `mcollect` command is intentionally commented out — students uncomment and run it themselves as the hands-on exercise.
+
+---
+
+### Chapter 6 — New: Inline SVG in Dashboard Studio
+
+New section in **Chapter 6 → Working with Images** explaining how to embed raw SVG markup directly as a Dashboard Studio visualization type (`viz.svg`).
+
+Key points covered:
+- SVG elements can be bound to search results via token expressions (`fill`, `stroke`, `width`, `transform`)
+- Fully self-contained in the dashboard JSON — no external image files or dependencies
+- Ideal for floor plans, network diagrams, instrument panels, and domain-specific graphics
+- Scales perfectly at any resolution
+
+The **[Piano Generator dashboard](ch6_ds_piano_gen)** is used as a live example: a full piano keyboard rendered in SVG where each key's fill color is driven by MIDI note search results in real time.
 
 ---
 
@@ -121,18 +149,31 @@ New sub-section showing students how to convert the stocks event data into metri
 
 New sub-section in **Chapter 6 (Dashboard Studio)** covering production-ready Canvas 2D API visualizations from the [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) library by **Robert Castley**.
 
-Highlights:
+All examples can be cloned, built, and installed directly — no Splunk development experience required. A [live demo](https://rcastley.github.io/splunk-custom-visualizations/) is available without a Splunk instance.
 
 | Visualization | Data source | Description |
 |---|---|---|
-| Data Pipeline | Any index | Animated Sankey-style flow |
-| Index Universe | `index=*` | Circular bubble map of all indexes |
-| Resource Gauge | `index=_introspection` | Triple-arc: CPU / Memory / Swap |
-| Indexing Pipeline Flow | `index=_internal group=queue` | Animated queue fill |
-| Forwarder Heatmap | `index=_internal group=tcpin_connections` | Staleness grid |
-| Scheduler Health | `index=_internal sourcetype=scheduler` | Success rate and skip rate |
+| Data Pipeline | Any index | Animated Sankey-style flow diagram |
+| Index Universe | `index=*` | Circular bubble map of all indexes and their sizes |
+| Resource Gauge | `index=_introspection` | Triple-arc gauge: CPU / Memory / Swap |
+| Indexing Pipeline Flow | `index=_internal group=queue` | Animated queue fill visualization |
+| Forwarder Heatmap | `index=_internal group=tcpin_connections` | Forwarder staleness grid |
+| Scheduler Health | `index=_internal sourcetype=scheduler` | Saved search success and skip rates |
 
-All examples can be cloned, built, and installed directly — no Splunk development experience required. A [live demo](https://rcastley.github.io/splunk-custom-visualizations/) is available without Splunk.
+---
+
+### Dashboard Naming Convention
+
+All dashboard XML files have been renamed to follow a consistent `chN_type_description` scheme and their internal labels updated to match. Old files have been removed from the app.
+
+| Prefix | Chapter | Dashboard type |
+|--------|---------|----------------|
+| `ch3_` | 3 · Search | Search optimization examples |
+| `ch4_` | 4 · Metrics | Metrics and Phyphox dashboards |
+| `ch5_xml_` | 5 · XML Dashboards | Classic SimpleXML dashboards |
+| `ch6_ds_` | 6 · Dashboard Studio | Dashboard Studio (JSON) dashboards |
+| `ch7_` | 7 · Mobile | Mobile examples |
+| `demo_` | — | Standalone demo dashboards |
 
 ---
 
@@ -146,9 +187,9 @@ The workshop URL now reflects your current position via a hash fragment:
 
 **What this means for participants:**
 
-- **Browser back/forward** works — navigating between sections adds history entries
-- **Bookmarks** work — you can bookmark any chapter/section and return directly to it
-- **Shareable links** — send a colleague a direct link to a specific section
+- **Browser back/forward** works — every section navigation adds a history entry so the back button takes you to the previous section
+- **Bookmarks** work — bookmark any chapter/section and return directly to it
+- **Shareable links** — paste a URL into Slack to send a colleague directly to a specific section
 - **Page refresh** — restores your exact position instead of dropping you back to Setup
 
-**Prev / Next buttons** appear at the right end of the section tab bar — two small arrow buttons (`‹` `›`) with a position counter (e.g. `4/1` = chapter 4, section 1). They navigate linearly through all sections across all chapters, so you can step through the entire workshop in order without touching the tab menus.
+**Prev / Next buttons** appear at the right end of the section tab bar — two small arrow buttons (`‹` `›`) with a position counter showing `chapter/section` (e.g. `3/5` = Chapter 3, section 5). They navigate linearly through all sections across all chapters so you can step through the entire workshop in order without using the tab menus.

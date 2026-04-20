@@ -35,5 +35,9 @@ deploy:
 		sudo systemctl restart Splunkd && \
 		echo done"
 
+deploy_show:
+	cp splunk4champions2.tar.gz /opt/code/s4cshow/
+	s4cshow.sh
+
 appinspect:
 	venv/bin/splunk-appinspect inspect splunk4champions2.tar.gz
