@@ -1,5 +1,5 @@
 <dashboard version="1.1" theme="dark" embed="enabled">
-  <label>Feature: Sharing Dashboards without Login (Publish)</label>
+  <label>Ch5 — Publish without Login (XML)</label>
   <description>Guide and background on the Publish feature in Splunk Enterprise 10.0</description>
   <row>
     <panel>

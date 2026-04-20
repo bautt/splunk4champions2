@@ -93,7 +93,7 @@ Verify index status, event counts, and date ranges. Shows Splunk and app version
 #### Chapter 6 — Dashboard Studio: Overview
 ![Dashboard Studio](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_overview.png)
 
-#### Chapter 6 — Dashboard Studio: Canvas Visualizations by rcastley
+#### Chapter 6 — Dashboard Studio: Canvas Visualizations by Robert Castley
 Production-ready Splunk Canvas 2D API visualizations — cloned, built, and invoked directly with no Splunk experience required. No future development dependency or Claude Code needed.
 
 ![Canvas Viz](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_canvas_viz.png)
@@ -108,7 +108,11 @@ Workshop content is collected, consolidated, and adapted from public .conf prese
 - Version 2.0 rebuilt by **Tomas Baublys** on the Splunk UI template by **Daniel Federschmidt**
 - Suggestions and improvements welcome: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)
 
+<<<<<<< HEAD
 **Canvas Visualizations** section powered by [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) by **Robert Castley (rcastley)** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
+=======
+**Canvas Visualizations** section powered by [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) by **Robert Castley** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
+>>>>>>> 6042130 (credits)
 
 ### Special thanks for public content
 Martin Müller · Clara Merriman · Richard Morgan · and many others linked throughout the app

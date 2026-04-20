@@ -1,5 +1,5 @@
 <dashboard version="1.1" theme="dark">
-  <label>Weather — Metrics Index</label>
+  <label>Ch4 — Weather Metrics Index</label>
   <description>Open-Meteo weather analytics using mstats against s4c_meteo_metrics</description>
 
   <fieldset submitButton="false" autoRun="true">

@@ -1,5 +1,5 @@
 <dashboard version="1.1">
-  <label>Default Tokens - XML</label>
+  <label>Ch5 — Default Tokens (XML)</label>
   <init>
     <eval token="timezone">strftime(now(),"%Z %z")</eval>
     <unset token="lang="></unset>
