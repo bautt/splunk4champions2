@@ -2,13 +2,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Button from '@splunk/react-ui/Button';
 
 const INDEXES = [
-    { name: 's4c_weather',       label: 'Weather Events',   type: 'event',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py' },
-    { name: 's4c_stocks',        label: 'Stocks',           type: 'event',  input: 'Settings → Data Inputs → Scripts → update_stocks.py' },
-    { name: 's4c_www',           label: 'Web Server Logs',  type: 'event',  input: 'Settings → Data Inputs → Files & Directories → s4c_www' },
-    { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event',  input: 'Settings → Data Inputs → Files & Directories → s4c_tutorial' },
-    { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py' },
-    { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric', input: 'Run the mcollect command in Chapter 4 → Metrics Lab to populate this index from s4c_meteo' },
-    { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  input: 'Settings → Data Inputs → Files & Directories → s4c_meteo_historic' },
+    { name: 's4c_weather',       label: 'Weather Events',   type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/current*' },
+    { name: 's4c_stocks',        label: 'Stocks',           type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/stocks_history.csv and gdax_download* | Scripts → update_stocks.py (runs daily)' },
+    { name: 's4c_www',           label: 'Web Server Logs',  type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/www*' },
+    { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/tutorialdata.zip' },
+    { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event',  inputType: 'script',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py events (runs every 5 min)' },
+    { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric', inputType: 'mcollect',input: 'Run the mcollect search in Chapter 4 → Metrics Lab to push data from s4c_meteo into this index' },
+    { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/meteo_historic.csv' },
 ];
 
 function parseTime(ts) {
@@ -24,6 +24,19 @@ function formatDate(ts) {
     const n = parseTime(ts);
     if (n === null) return '—';
     return new Date(n * 1000).toISOString().slice(0, 10);
+}
+
+function formatRelative(ts) {
+    const n = parseTime(ts);
+    if (n === null) return '—';
+    const diffSec = Math.floor(Date.now() / 1000) - n;
+    if (diffSec < 0)        return 'just now';
+    if (diffSec < 60)       return `${diffSec}s ago`;
+    if (diffSec < 3600)     return `${Math.floor(diffSec / 60)}m ago`;
+    if (diffSec < 86400)    return `${Math.floor(diffSec / 3600)}h ago`;
+    if (diffSec < 86400 * 30) return `${Math.floor(diffSec / 86400)}d ago`;
+    if (diffSec < 86400 * 365) return `${Math.floor(diffSec / (86400 * 30))}mo ago`;
+    return `${Math.floor(diffSec / (86400 * 365))}y ago`;
 }
 
 function formatCount(n) {
@@ -245,7 +258,7 @@ export default function IndexHealth() {
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                     <tr style={{ backgroundColor: C.subHeaderBg }}>
-                        {['Index', 'Label', 'Type', 'Index exists', 'Has data', 'Oldest event', 'Latest event', 'Event count'].map((h, i) => (
+                        {['Index', 'Label', 'Type', 'Index exists', 'Has data', 'Oldest event', 'Latest event', 'Count'].map((h, i) => (
                             <th key={h} style={{
                                 padding: '10px 16px',
                                 fontWeight: 700,
@@ -311,7 +324,7 @@ export default function IndexHealth() {
                                     {s ? formatDate(s.minTime) : '…'}
                                 </td>
                                 <td style={{ padding: '11px 16px', textAlign: 'right', color: '#4a7c59', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>
-                                    {s ? formatDate(s.maxTime) : '…'}
+                                    {s ? formatRelative(s.maxTime) : '…'}
                                 </td>
                                 <td style={{ padding: '11px 16px', textAlign: 'right', color: '#1e4d2b', fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
                                     {s ? formatCount(s.count) : '…'}
