@@ -1,5 +1,5 @@
 <dashboard version="1.1" theme="dark" embed="enabled">
-  <label>Custom Visualizations – All Three Variants</label>
+  <label>Ch5 — Custom Visualizations (XML)</label>
   <description>Demo: Legacy App Custom Viz, Own App Custom Viz, React/D3 Framework Viz</description>
 
   <row>

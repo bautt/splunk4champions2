@@ -1,11 +1,13 @@
 <dashboard version="2" theme="dark">
-  <label>Feature Demo – Trellis Layout for All Chart Types</label>
+  <label>Ch5 — Trellis Layout (XML)</label>
   <description>Trellis layout is no longer limited to Single Value – Line, Area, Bar and Column Charts now supported (Splunk 10.0+)</description>
   <definition><![CDATA[{
   "visualizations": {
     "viz_trellis_line": {
       "type": "splunk.line",
-      "dataSources": { "primary": "ds_trellis_host_time" },
+      "dataSources": {
+        "primary": "ds_trellis_host_time"
+      },
       "title": "Trellis: Line Chart – Requests per Host",
       "options": {
         "backgroundColor": "transparent",
@@ -17,7 +19,9 @@
     },
     "viz_trellis_area": {
       "type": "splunk.area",
-      "dataSources": { "primary": "ds_trellis_cpu_time" },
+      "dataSources": {
+        "primary": "ds_trellis_cpu_time"
+      },
       "title": "Trellis: Area Chart – CPU % per Host",
       "options": {
         "backgroundColor": "transparent",
@@ -29,7 +33,9 @@
     },
     "viz_trellis_bar": {
       "type": "splunk.bar",
-      "dataSources": { "primary": "ds_trellis_errors" },
+      "dataSources": {
+        "primary": "ds_trellis_errors"
+      },
       "title": "Trellis: Bar Chart – Errors per Hour",
       "options": {
         "backgroundColor": "transparent",
@@ -41,7 +47,9 @@
     },
     "viz_trellis_column": {
       "type": "splunk.column",
-      "dataSources": { "primary": "ds_trellis_response" },
+      "dataSources": {
+        "primary": "ds_trellis_response"
+      },
       "title": "Trellis: Column Chart – Response Time per Host",
       "options": {
         "backgroundColor": "transparent",
@@ -53,7 +61,9 @@
     },
     "viz_no_trellis": {
       "type": "splunk.line",
-      "dataSources": { "primary": "ds_trellis_host_time" },
+      "dataSources": {
+        "primary": "ds_trellis_host_time"
+      },
       "title": "Comparison: Same Data WITHOUT Trellis",
       "options": {
         "backgroundColor": "transparent",
@@ -73,28 +83,40 @@
       "type": "ds.search",
       "options": {
         "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h sum(count) by host",
-        "queryParameters": { "earliest": "-48h", "latest": "now" }
+        "queryParameters": {
+          "earliest": "-48h",
+          "latest": "now"
+        }
       }
     },
     "ds_trellis_cpu_time": {
       "type": "ds.search",
       "options": {
         "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h avg(cpu_pct) by host",
-        "queryParameters": { "earliest": "-48h", "latest": "now" }
+        "queryParameters": {
+          "earliest": "-48h",
+          "latest": "now"
+        }
       }
     },
     "ds_trellis_errors": {
       "type": "ds.search",
       "options": {
         "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h sum(errors) by host",
-        "queryParameters": { "earliest": "-48h", "latest": "now" }
+        "queryParameters": {
+          "earliest": "-48h",
+          "latest": "now"
+        }
       }
     },
     "ds_trellis_response": {
       "type": "ds.search",
       "options": {
         "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | stats avg(response_time_ms) as AvgResponse by host | eval AvgResponse=round(AvgResponse,1)",
-        "queryParameters": { "earliest": "-48h", "latest": "now" }
+        "queryParameters": {
+          "earliest": "-48h",
+          "latest": "now"
+        }
       }
     }
   },
@@ -107,15 +129,69 @@
       "backgroundColor": "#1a1a2e"
     },
     "structure": [
-      { "item": "viz_info_text", "type": "block", "position": { "x": 20, "y": 20, "w": 1400, "h": 200 } },
-      { "item": "viz_no_trellis", "type": "block", "position": { "x": 20, "y": 240, "w": 680, "h": 260 } },
-      { "item": "viz_trellis_line", "type": "block", "position": { "x": 720, "y": 240, "w": 700, "h": 260 } },
-      { "item": "viz_trellis_area", "type": "block", "position": { "x": 20, "y": 520, "w": 680, "h": 280 } },
-      { "item": "viz_trellis_bar", "type": "block", "position": { "x": 720, "y": 520, "w": 700, "h": 280 } },
-      { "item": "viz_trellis_column", "type": "block", "position": { "x": 20, "y": 820, "w": 1400, "h": 300 } }
+      {
+        "item": "viz_info_text",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 20,
+          "w": 1400,
+          "h": 200
+        }
+      },
+      {
+        "item": "viz_no_trellis",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 240,
+          "w": 680,
+          "h": 260
+        }
+      },
+      {
+        "item": "viz_trellis_line",
+        "type": "block",
+        "position": {
+          "x": 720,
+          "y": 240,
+          "w": 700,
+          "h": 260
+        }
+      },
+      {
+        "item": "viz_trellis_area",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 520,
+          "w": 680,
+          "h": 280
+        }
+      },
+      {
+        "item": "viz_trellis_bar",
+        "type": "block",
+        "position": {
+          "x": 720,
+          "y": 520,
+          "w": 700,
+          "h": 280
+        }
+      },
+      {
+        "item": "viz_trellis_column",
+        "type": "block",
+        "position": {
+          "x": 20,
+          "y": 820,
+          "w": 1400,
+          "h": 300
+        }
+      }
     ]
   },
-  "title": "Feature Demo – Trellis Layout for All Chart Types",
+  "title": "Ch5 — Trellis Layout (XML)",
   "description": "Trellis layout is no longer limited to Single Value – now supports Line, Area, Bar and Column Charts"
 }]]></definition>
 </dashboard>

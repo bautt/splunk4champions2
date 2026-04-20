@@ -1,5 +1,5 @@
 <form version="1.1" theme="light" hideExport="true" hideEdit="false">
-  <label>Pseudonymize user names and reveal on click - XML</label>
+  <label>Ch5 — Pseudonymization (XML)</label>
   <init>
     <set token="postprocess">| eval username="user_" . substr(sha256(username), 1, 10)</set>
   </init>

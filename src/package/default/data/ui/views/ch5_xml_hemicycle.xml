@@ -1,69 +1,74 @@
 <dashboard version="2" theme="light">
-    <label>Custom Viz: Hemicycle 3D</label>
+    <label>Ch5 — Hemicycle 3D Custom Viz (XML)</label>
     <description>Example of a custom visualization from Splunkbase: splunk_hemicycle_3d. Requires the Hemicycle 3D app to be installed.</description>
-    <definition><![CDATA[
-{
-	"visualizations": {
-		"viz_hemicycle": {
-			"type": "splunk4champions2.hemicycle_3d",
-			"options": {
-				"backgroundColor": "#faf9f5"
-			},
-			"dataSources": {
-				"primary": "ds_parties"
-			},
-			"title": "Parliament Seat Distribution"
-		}
-	},
-	"defaults": {
-		"dataSources": {
-			"ds.search": {
-				"options": {
-					"queryParameters": {
-						"latest": "$global_time.latest$",
-						"earliest": "$global_time.earliest$"
-					}
-				}
-			}
-		}
-	},
-	"inputs": {
-		"input_global_trp": {
-			"type": "input.timerange",
-			"options": {
-				"token": "global_time",
-				"defaultValue": "-24h@h,now"
-			},
-			"title": "Global Time Range"
-		}
-	},
-	"layout": {
-		"globalInputs": ["input_global_trp"],
-		"type": "absolute",
-		"options": {
-			"width": 1440,
-			"height": 960,
-			"backgroundColor": "#faf9f5"
-		},
-		"structure": [
-			{
-				"item": "viz_hemicycle",
-				"type": "block",
-				"position": { "x": 220, "y": 60, "w": 1000, "h": 820 }
-			}
-		]
-	},
-	"description": "Example custom visualization: Hemicycle 3D from Splunkbase",
-	"title": "Custom Viz: Hemicycle 3D",
-	"dataSources": {
-		"ds_parties": {
-			"type": "ds.search",
-			"options": {
-				"query": "| makeresults count=8\n| streamstats count as idx\n| eval party=case(\n    idx=1, \"Party Alpha\",\n    idx=2, \"Party Beta\",\n    idx=3, \"Party Gamma\",\n    idx=4, \"Party Delta\",\n    idx=5, \"Party Epsilon\",\n    idx=6, \"Party Zeta\",\n    idx=7, \"Party Eta\",\n    idx=8, \"Party Theta\")\n| eval color=case(\n    idx=1, \"#2080B8\",\n    idx=2, \"#E3000F\",\n    idx=3, \"#64A12D\",\n    idx=4, \"#F5A623\",\n    idx=5, \"#C2185B\",\n    idx=6, \"#00ACC1\",\n    idx=7, \"#7B1FA2\",\n    idx=8, \"#E65100\")\n| eval seats=round((random() % 200) + 10)\n| table party seats color"
-			},
-			"name": "Party Seats"
-		}
-	}
-}
-    ]]></definition>
+    <definition><![CDATA[{
+  "visualizations": {
+    "viz_hemicycle": {
+      "type": "splunk4champions2.hemicycle_3d",
+      "options": {
+        "backgroundColor": "#faf9f5"
+      },
+      "dataSources": {
+        "primary": "ds_parties"
+      },
+      "title": "Parliament Seat Distribution"
+    }
+  },
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      }
+    }
+  },
+  "inputs": {
+    "input_global_trp": {
+      "type": "input.timerange",
+      "options": {
+        "token": "global_time",
+        "defaultValue": "-24h@h,now"
+      },
+      "title": "Global Time Range"
+    }
+  },
+  "layout": {
+    "globalInputs": [
+      "input_global_trp"
+    ],
+    "type": "absolute",
+    "options": {
+      "width": 1440,
+      "height": 960,
+      "backgroundColor": "#faf9f5"
+    },
+    "structure": [
+      {
+        "item": "viz_hemicycle",
+        "type": "block",
+        "position": {
+          "x": 220,
+          "y": 60,
+          "w": 1000,
+          "h": 820
+        }
+      }
+    ]
+  },
+  "description": "Example custom visualization: Hemicycle 3D from Splunkbase",
+  "title": "Ch5 — Hemicycle 3D Custom Viz (XML)",
+  "dataSources": {
+    "ds_parties": {
+      "type": "ds.search",
+      "options": {
+        "query": "| makeresults count=8\n| streamstats count as idx\n| eval party=case(\n    idx=1, \"Party Alpha\",\n    idx=2, \"Party Beta\",\n    idx=3, \"Party Gamma\",\n    idx=4, \"Party Delta\",\n    idx=5, \"Party Epsilon\",\n    idx=6, \"Party Zeta\",\n    idx=7, \"Party Eta\",\n    idx=8, \"Party Theta\")\n| eval color=case(\n    idx=1, \"#2080B8\",\n    idx=2, \"#E3000F\",\n    idx=3, \"#64A12D\",\n    idx=4, \"#F5A623\",\n    idx=5, \"#C2185B\",\n    idx=6, \"#00ACC1\",\n    idx=7, \"#7B1FA2\",\n    idx=8, \"#E65100\")\n| eval seats=round((random() % 200) + 10)\n| table party seats color"
+      },
+      "name": "Party Seats"
+    }
+  }
+}]]></definition>
 </dashboard>

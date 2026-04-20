@@ -94,19 +94,6 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Stock Index Search",
-                    "steps": [
-                        {
-                            "title": "Stocks — SPL & tstats",
-                            "content": "chapter1/stocks_search.mdx"
-                        },
-                        {
-                            "title": "Stocks — Weather Correlation",
-                            "content": "chapter1/stocks_weather.mdx"
-                        }
-                    ]
-                },
-                {
                     "title": "Useful Links",
                     "steps": [
                         {
@@ -307,6 +294,19 @@ const labs = {
                         {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links4.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Stock Index Search",
+                    "steps": [
+                        {
+                            "title": "Stocks — SPL & tstats",
+                            "content": "chapter3/stocks_search.mdx"
+                        },
+                        {
+                            "title": "Stocks — Weather Correlation",
+                            "content": "chapter3/stocks_weather.mdx"
                         }
                     ]
                 },

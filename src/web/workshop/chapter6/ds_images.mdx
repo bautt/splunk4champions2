@@ -29,3 +29,24 @@ import Link from '@splunk/react-ui/Link'
 
 
 <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/DashStudio/chartsImage" openInNewContext>Splunk Docs on Images in DS</Link>
+
+---
+
+## 5) Inline SVG as a Visualization
+
+Dashboard Studio supports embedding raw SVG markup directly as a visualization type. This unlocks fully data-driven graphics — you can bind search results to SVG attributes like `fill`, `stroke`, `width`, or `transform` using token expressions, creating custom shapes, diagrams, and layouts without any external image files.
+
+**Why SVG?**
+- Vector-based — scales perfectly at any resolution
+- Fully packaged with the dashboard JSON — no external dependencies
+- Individual SVG elements can be targeted by tokens or dynamic expressions
+- Great for floor plans, network diagrams, instrument panels, or any domain-specific graphic
+
+**Example: Piano Generator**
+
+The <Link to="/en-GB/app/splunk4champions2/ch6_ds_piano_gen" openInNewContext>Piano Generator dashboard</Link> uses inline SVG to render a full piano keyboard. Each key is an SVG `rect` element whose fill color is driven by a search result — MIDI note data is mapped dynamically to the corresponding key, lighting it up in real time.
+
+This demonstrates the pattern:
+1. Build the SVG structure in the dashboard JSON (`"type": "viz.svg"`)
+2. Reference search fields via token expressions inside SVG attributes
+3. The result is a fully interactive, data-driven graphic with no image files at all

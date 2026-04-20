@@ -1,5 +1,5 @@
 <form version="1.1" theme="dark">
-  <label>Base Search - XML</label>
+  <label>Ch5 — Base Search (XML)</label>
   <search id="singleValue_BaseSearch">
     <query>
  |tstats count WHERE index=* OR index=_* groupby sourcetype source index host _time

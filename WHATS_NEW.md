@@ -86,6 +86,23 @@ New sub-section showing how to join `s4c_stocks` with `s4c_meteo_historic` using
 
 ---
 
+### Chapter 3 — Improved: Interactive Quiz
+
+The Chapter 3 quiz has been rebuilt as a fully interactive React component.
+
+Each of the 9 questions shows:
+
+- **Two runnable search bars** (A and B) — participants can execute both in Splunk before deciding
+- **"Reveal Answer" button** — shows the correct answer immediately with a colour-coded explanation
+- **A/B badges** turn green (correct) or red (wrong) on reveal so the answer is visually obvious
+- One question is marked as a **trick question** (Q7 — tstats on a search-time-only index) with an orange callout
+
+A **progress counter** (`3 / 9 revealed`) and a **Reset Quiz** button at the top let instructors reuse the quiz across groups without a page reload.
+
+The quiz also moved to **Chapter 3 (Search)**, right after the Stock Index Search section.
+
+---
+
 ### Chapter 4 — New: Stock Index Metrics Lab
 
 New sub-section showing students how to convert the stocks event data into metrics using `mcollect`:
@@ -100,9 +117,9 @@ New sub-section showing students how to convert the stocks event data into metri
 
 ---
 
-### Chapter 6 — New: Canvas Visualizations (rcastley)
+### Chapter 6 — New: Canvas Visualizations (Robert Castley)
 
-New sub-section in **Chapter 6 (Dashboard Studio)** covering production-ready Canvas 2D API visualizations from the [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) library by **Ryan Castley**.
+New sub-section in **Chapter 6 (Dashboard Studio)** covering production-ready Canvas 2D API visualizations from the [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) library by **Robert Castley**.
 
 Highlights:
 

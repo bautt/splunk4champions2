@@ -1,8 +1,8 @@
 <dashboard version="2" theme="dark">
-  <label>Feature Demo - Tabbed Dashboards and Synchronized Time Range</label>
+  <label>Ch5 — Tabbed Dashboards (XML)</label>
   <description>Native tabs via layoutDefinitions, global time filter synchronizes all charts</description>
   <definition><![CDATA[{
-  "title": "Feature Demo - Tabbed Dashboards and Synchronized Time Range",
+  "title": "Ch5 — Tabbed Dashboards (XML)",
   "description": "Tabs via layoutDefinitions, global time filter synchronizes all charts",
   "inputs": {
     "input_global_time": {
@@ -29,69 +29,127 @@
   "visualizations": {
     "viz_total_requests": {
       "type": "splunk.singlevalue",
-      "dataSources": { "primary": "ds_totals" },
+      "dataSources": {
+        "primary": "ds_totals"
+      },
       "title": "Total Requests",
-      "options": { "majorColor": "#68d391", "backgroundColor": "transparent", "majorFontSize": 48 }
+      "options": {
+        "majorColor": "#68d391",
+        "backgroundColor": "transparent",
+        "majorFontSize": 48
+      }
     },
     "viz_total_errors": {
       "type": "splunk.singlevalue",
-      "dataSources": { "primary": "ds_totals_errors" },
+      "dataSources": {
+        "primary": "ds_totals_errors"
+      },
       "title": "Total Errors",
-      "options": { "majorColor": "#fc8181", "backgroundColor": "transparent", "majorFontSize": 48 }
+      "options": {
+        "majorColor": "#fc8181",
+        "backgroundColor": "transparent",
+        "majorFontSize": 48
+      }
     },
     "viz_avg_response": {
       "type": "splunk.singlevalue",
-      "dataSources": { "primary": "ds_avg_response" },
+      "dataSources": {
+        "primary": "ds_avg_response"
+      },
       "title": "Avg Response Time",
-      "options": { "majorColor": "#63b3ed", "backgroundColor": "transparent", "majorFontSize": 48, "unit": "ms" }
+      "options": {
+        "majorColor": "#63b3ed",
+        "backgroundColor": "transparent",
+        "majorFontSize": 48,
+        "unit": "ms"
+      }
     },
     "viz_requests_line": {
       "type": "splunk.line",
-      "dataSources": { "primary": "ds_requests_by_host" },
+      "dataSources": {
+        "primary": "ds_requests_by_host"
+      },
       "title": "Requests per Host (hourly)",
-      "options": { "backgroundColor": "transparent", "legendDisplay": "bottom" }
+      "options": {
+        "backgroundColor": "transparent",
+        "legendDisplay": "bottom"
+      }
     },
     "viz_table_overview": {
       "type": "splunk.table",
-      "dataSources": { "primary": "ds_table" },
+      "dataSources": {
+        "primary": "ds_table"
+      },
       "title": "Host Overview",
-      "options": { "backgroundColor": "transparent", "count": 10 }
+      "options": {
+        "backgroundColor": "transparent",
+        "count": 10
+      }
     },
     "viz_cpu_area": {
       "type": "splunk.area",
-      "dataSources": { "primary": "ds_cpu_by_host" },
+      "dataSources": {
+        "primary": "ds_cpu_by_host"
+      },
       "title": "CPU % per Host",
-      "options": { "backgroundColor": "transparent", "legendDisplay": "bottom" }
+      "options": {
+        "backgroundColor": "transparent",
+        "legendDisplay": "bottom"
+      }
     },
     "viz_mem_line": {
       "type": "splunk.line",
-      "dataSources": { "primary": "ds_mem_by_host" },
+      "dataSources": {
+        "primary": "ds_mem_by_host"
+      },
       "title": "Memory % per Host",
-      "options": { "backgroundColor": "transparent", "legendDisplay": "bottom" }
+      "options": {
+        "backgroundColor": "transparent",
+        "legendDisplay": "bottom"
+      }
     },
     "viz_response_col": {
       "type": "splunk.column",
-      "dataSources": { "primary": "ds_response_by_host" },
+      "dataSources": {
+        "primary": "ds_response_by_host"
+      },
       "title": "Response Time (ms) per Host",
-      "options": { "backgroundColor": "transparent" }
+      "options": {
+        "backgroundColor": "transparent"
+      }
     },
     "viz_db_errors_sv": {
       "type": "splunk.singlevalue",
-      "dataSources": { "primary": "ds_db_errors" },
+      "dataSources": {
+        "primary": "ds_db_errors"
+      },
       "title": "DB Errors Total",
-      "options": { "majorColor": "#fc8181", "backgroundColor": "transparent", "majorFontSize": 48 }
+      "options": {
+        "majorColor": "#fc8181",
+        "backgroundColor": "transparent",
+        "majorFontSize": 48
+      }
     },
     "viz_db_response": {
       "type": "splunk.line",
-      "dataSources": { "primary": "ds_db_response" },
+      "dataSources": {
+        "primary": "ds_db_response"
+      },
       "title": "DB Response Time",
-      "options": { "backgroundColor": "transparent", "legendDisplay": "bottom" }
+      "options": {
+        "backgroundColor": "transparent",
+        "legendDisplay": "bottom"
+      }
     },
     "viz_db_cpu": {
       "type": "splunk.area",
-      "dataSources": { "primary": "ds_db_cpu" },
+      "dataSources": {
+        "primary": "ds_db_cpu"
+      },
       "title": "DB CPU Usage",
-      "options": { "backgroundColor": "transparent" }
+      "options": {
+        "backgroundColor": "transparent"
+      }
     }
   },
   "dataSources": {
@@ -164,44 +222,174 @@
   },
   "layout": {
     "type": "absolute",
-    "globalInputs": ["input_global_time"],
-    "options": { "display": "auto-scale", "backgroundColor": "#1a1a2e" },
+    "globalInputs": [
+      "input_global_time"
+    ],
+    "options": {
+      "display": "auto-scale",
+      "backgroundColor": "#1a1a2e"
+    },
     "tabs": {
       "items": [
-        { "layoutId": "layout_overview", "label": "Overview" },
-        { "layoutId": "layout_performance", "label": "Performance" },
-        { "layoutId": "layout_database", "label": "Database" }
+        {
+          "layoutId": "layout_overview",
+          "label": "Overview"
+        },
+        {
+          "layoutId": "layout_performance",
+          "label": "Performance"
+        },
+        {
+          "layoutId": "layout_database",
+          "label": "Database"
+        }
       ],
-      "options": { "barPosition": "top" }
+      "options": {
+        "barPosition": "top"
+      }
     },
     "layoutDefinitions": {
       "layout_overview": {
         "type": "absolute",
-        "options": { "display": "auto-scale", "width": 1440, "height": 960, "backgroundColor": "#1a1a2e" },
+        "options": {
+          "display": "auto-scale",
+          "width": 1440,
+          "height": 960,
+          "backgroundColor": "#1a1a2e"
+        },
         "structure": [
-          { "item": "viz_total_requests", "type": "block", "position": { "x": 20, "y": 10, "w": 440, "h": 130 } },
-          { "item": "viz_total_errors", "type": "block", "position": { "x": 480, "y": 10, "w": 440, "h": 130 } },
-          { "item": "viz_avg_response", "type": "block", "position": { "x": 940, "y": 10, "w": 480, "h": 130 } },
-          { "item": "viz_requests_line", "type": "block", "position": { "x": 20, "y": 160, "w": 1400, "h": 300 } },
-          { "item": "viz_table_overview", "type": "block", "position": { "x": 20, "y": 480, "w": 1400, "h": 360 } }
+          {
+            "item": "viz_total_requests",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 10,
+              "w": 440,
+              "h": 130
+            }
+          },
+          {
+            "item": "viz_total_errors",
+            "type": "block",
+            "position": {
+              "x": 480,
+              "y": 10,
+              "w": 440,
+              "h": 130
+            }
+          },
+          {
+            "item": "viz_avg_response",
+            "type": "block",
+            "position": {
+              "x": 940,
+              "y": 10,
+              "w": 480,
+              "h": 130
+            }
+          },
+          {
+            "item": "viz_requests_line",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 160,
+              "w": 1400,
+              "h": 300
+            }
+          },
+          {
+            "item": "viz_table_overview",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 480,
+              "w": 1400,
+              "h": 360
+            }
+          }
         ]
       },
       "layout_performance": {
         "type": "absolute",
-        "options": { "display": "auto-scale", "width": 1440, "height": 800, "backgroundColor": "#1a1a2e" },
+        "options": {
+          "display": "auto-scale",
+          "width": 1440,
+          "height": 800,
+          "backgroundColor": "#1a1a2e"
+        },
         "structure": [
-          { "item": "viz_cpu_area", "type": "block", "position": { "x": 20, "y": 10, "w": 700, "h": 320 } },
-          { "item": "viz_mem_line", "type": "block", "position": { "x": 740, "y": 10, "w": 680, "h": 320 } },
-          { "item": "viz_response_col", "type": "block", "position": { "x": 20, "y": 350, "w": 1400, "h": 300 } }
+          {
+            "item": "viz_cpu_area",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 10,
+              "w": 700,
+              "h": 320
+            }
+          },
+          {
+            "item": "viz_mem_line",
+            "type": "block",
+            "position": {
+              "x": 740,
+              "y": 10,
+              "w": 680,
+              "h": 320
+            }
+          },
+          {
+            "item": "viz_response_col",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 350,
+              "w": 1400,
+              "h": 300
+            }
+          }
         ]
       },
       "layout_database": {
         "type": "absolute",
-        "options": { "display": "auto-scale", "width": 1440, "height": 700, "backgroundColor": "#1a1a2e" },
+        "options": {
+          "display": "auto-scale",
+          "width": 1440,
+          "height": 700,
+          "backgroundColor": "#1a1a2e"
+        },
         "structure": [
-          { "item": "viz_db_errors_sv", "type": "block", "position": { "x": 20, "y": 10, "w": 440, "h": 130 } },
-          { "item": "viz_db_response", "type": "block", "position": { "x": 20, "y": 160, "w": 860, "h": 300 } },
-          { "item": "viz_db_cpu", "type": "block", "position": { "x": 900, "y": 160, "w": 520, "h": 300 } }
+          {
+            "item": "viz_db_errors_sv",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 10,
+              "w": 440,
+              "h": 130
+            }
+          },
+          {
+            "item": "viz_db_response",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 160,
+              "w": 860,
+              "h": 300
+            }
+          },
+          {
+            "item": "viz_db_cpu",
+            "type": "block",
+            "position": {
+              "x": 900,
+              "y": 160,
+              "w": 520,
+              "h": 300
+            }
+          }
         ]
       }
     }
