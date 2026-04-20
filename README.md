@@ -108,7 +108,7 @@ Workshop content is collected, consolidated, and adapted from public .conf prese
 - Version 2.0 rebuilt by **Tomas Baublys** on the Splunk UI template by **Daniel Federschmidt**
 - Suggestions and improvements welcome: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)
 
-**Canvas Visualizations** section powered by [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) by **Ryan Castley (rcastley)** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
+**Canvas Visualizations** section powered by [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) by **Robert Castley (rcastley)** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
 
 ### Special thanks for public content
 Martin Müller · Clara Merriman · Richard Morgan · and many others linked throughout the app
