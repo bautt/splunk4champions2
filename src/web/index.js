@@ -200,7 +200,7 @@ function App() {
                     position: 'absolute',
                     top: 0,
                     right: 8,
-                    height: 40,
+                    height: 36,
                     display: 'flex',
                     alignItems: 'center',
                     gap: 4,

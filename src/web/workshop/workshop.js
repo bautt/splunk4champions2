@@ -1,14 +1,14 @@
 import React from 'react';
-import Settings from '@splunk/react-icons/Settings';
-import Activity from '@splunk/react-icons/Activity';
-import Search from  '@splunk/react-icons/Search';
+import Settings from '@splunk/react-icons/Cog';
+import Activity from '@splunk/react-icons/Pulse';
+import Search from  '@splunk/react-icons/Magnifier';
 import Metrics from  '@splunk/react-icons/Metrics';
-import Dashboard from  '@splunk/react-icons/Dashboard';
-import Images from  '@splunk/react-icons/Images';
+import Dashboard from  '@splunk/react-icons/LayoutPanels';
+import Images from  '@splunk/react-icons/Picture';
 import ChartScatter from  '@splunk/react-icons/ChartScatter';
-import Tool from  '@splunk/react-icons/Tool';
-import Data from  '@splunk/react-icons/Data';
-import GaugeRadial from '@splunk/react-icons/GaugeRadial';
+import Tool from  '@splunk/react-icons/Wrench';
+import Data from  '@splunk/react-icons/Cylinder';
+import GaugeRadial from '@splunk/react-icons/ChartSingleValueRadial';
 import { TbAugmentedReality2, TbLayoutDashboard, TbDatabase } from "react-icons/tb";
 import {GrConfigure} from "react-icons/gr";
 

@@ -4,14 +4,26 @@
  /*   background-color: #c3cbd4; */
   /*background-color: #edede9;*/
   background-color: #F0FBFF;
+  padding-left: 8px !important;
+  padding-right: 0 !important;
+  height: 36px !important;
 }
 
 .sectionBar {
     margin-top: 0 !important;
-    height: 40px;
+}
+
+.sectionBar button:focus,
+.sectionBar button:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .sectionBar button {
-    padding-top: 5px;
-    padding-bottom: 5px;
+    height: 36px;
+    box-sizing: border-box;
+    display: flex !important;
+    align-items: center !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
