@@ -26,7 +26,7 @@ SPL2 supports two syntax styles in the same language. Use whichever fits your ba
 **SPL-like syntax** (familiar to existing Splunk users):
 ```
 FROM s4c_meteo
-| WHERE city="Berlin"
+| WHERE city="Bonn"
 | STATS avg(temperature_2m) AS avg_temp BY city
 | SORT -avg_temp
 | LIMIT 10
@@ -36,7 +36,7 @@ FROM s4c_meteo
 ```sql
 SELECT avg(temperature_2m) AS avg_temp, city
 FROM s4c_meteo
-WHERE city = "Berlin"
+WHERE city = "Bonn"
 GROUP BY city
 ORDER BY avg_temp DESC
 LIMIT 10
