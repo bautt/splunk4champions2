@@ -6,7 +6,7 @@ Run the search, wait for it to finish, and click on "Job -> Inspect Job" to ober
 <SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" 
 |bucket span=4h _time
 |stats avg(temperature_2m) AS temp by city _time
-|where city=="Berlin" OR city=="London" OR city=="Paris"
+|where city=="Bonn" OR city=="London" OR city=="Paris"
 |xyseries _time, city, temp`}>
 </SplunkSearch>
 
@@ -40,7 +40,7 @@ In this example we see something like:
 
 
  Now compare the results with this search: 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" Berlin OR London OR Paris 
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" Bonn OR London OR Paris 
 |timechart  span=4h  avg(temperature_2m) by city`}>
 </SplunkSearch>
 Here is an example comparison: 
@@ -53,7 +53,7 @@ What is different?
 after the first line? Check it out:
 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" Berlin OR London OR Paris 
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" Bonn OR London OR Paris 
 | fields city temperature_2m _time 
 | timechart  span=4h  avg(temperature_2m) by city`}>
 </SplunkSearch>
