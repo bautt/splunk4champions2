@@ -18,11 +18,10 @@
     color: #1a6c37;
 }
 
-/* ── 3. Content area max-width + centering ─────────────────────────────────── */
+/* ── 3. Content area max-width ─────────────────────────────────────────────── */
 .workshopContent {
     max-width: 960px;
-    margin: 0 auto;
-    padding: 24px 32px;
+    padding: 16px 24px;
     box-sizing: border-box;
 }
 
