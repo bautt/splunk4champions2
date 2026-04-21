@@ -81,6 +81,16 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "Splunk AI Assistant",
+                    "steps": [
+                        {
+                            "title": "Splunk AI Assistant",
+                            "content": "chapter1/ai_assistant.mdx"
+                        }
+                    ]
+                },
+
+                {
                     "title": "SPL2",
                     "steps": [
                         {
@@ -337,7 +347,7 @@ const labs = {
                             "title": "Useful Links",
                             "content": "chapter3/useful_links4.mdx"
                         }
-                        
+
                     ]
                 },
                 
