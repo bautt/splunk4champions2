@@ -1,0 +1,73 @@
+/* ── 1. Smooth tab transitions ─────────────────────────────────────────────── */
+.chapterBar div[role=tabpanel],
+.sectionBar div[role=tabpanel] {
+    animation: fadeIn 0.18s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── 2. Active chapter stronger highlight ──────────────────────────────────── */
+.chapterBar > div[role=tablist] button[aria-selected=true] {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.chapterBar > div[role=tablist] button[aria-selected=true] svg {
+    color: #1a6c37;
+}
+
+/* ── 3. Content area max-width + centering ─────────────────────────────────── */
+.workshopContent {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    box-sizing: border-box;
+}
+
+/* ── 4. Code block styling ─────────────────────────────────────────────────── */
+.workshopContent code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.875em;
+    background-color: #f0f4f8;
+    border: 1px solid #d8e2ec;
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: #1a3a52;
+}
+
+.workshopContent pre {
+    background-color: #1e2d3d;
+    border-radius: 6px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    margin: 16px 0;
+    border-left: 3px solid #5cc05c;
+}
+
+.workshopContent pre code {
+    background: none;
+    border: none;
+    padding: 0;
+    color: #d4e8ff;
+    font-size: 0.9em;
+    line-height: 1.6;
+}
+
+/* ── 5. Chapter bar Splunk-brand background ────────────────────────────────── */
+/* (colour kept in ChapterBar.css — no change needed here) */
+
+/* ── 6. Scrollable chapter + section bars on narrow screens ───────────────── */
+.chapterBar > div[role=tablist],
+.sectionBar > div[role=tablist] {
+    overflow-x: auto;
+    scrollbar-width: none;       /* Firefox */
+    -ms-overflow-style: none;    /* IE/Edge */
+    flex-wrap: nowrap !important;
+}
+
+.chapterBar > div[role=tablist]::-webkit-scrollbar,
+.sectionBar > div[role=tablist]::-webkit-scrollbar {
+    display: none;               /* Chrome/Safari */
+}
