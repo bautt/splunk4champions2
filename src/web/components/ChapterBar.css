@@ -25,6 +25,11 @@
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
+    color: #1a2a3a !important;
+}
+
+.chapterBar > div[role=tablist] button svg {
+    color: #1a2a3a;
 }
 
 .chapterBar > div[role=tablist] {

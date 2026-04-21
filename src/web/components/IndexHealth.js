@@ -248,7 +248,8 @@ export default function IndexHealth() {
                     </span>
                 )}
                 <Button onClick={check} disabled={loading} appearance="secondary"
-                    label={loading ? 'Checking…' : 'Refresh'} />
+                    label={loading ? 'Checking…' : 'Refresh'}
+                    style={{ color: '#ffffff', borderColor: '#ffffff' }} />
                 {checkedAt && !loading && (
                     <span style={{ fontSize: '12px', opacity: 0.65 }}>checked {checkedAt}</span>
                 )}
