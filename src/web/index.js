@@ -9,6 +9,7 @@ import workshop from './workshop/workshop'
 import Section from './components/Section';
 
 import "./components/SectionBar.css";
+import "./components/workshop.css";
 import ToastMessages from '@splunk/react-toast-notifications/ToastMessages'
 import Toaster, { makeCreateToast } from '@splunk/react-toast-notifications/Toaster';
 import ToastContext from './context'
@@ -189,7 +190,9 @@ function App() {
                             style={{ marginBottom: 15 }}
                         >
                             <ToastContext.Provider value={createToast}>
-                                <Section chapter={chapter} section={section} />
+                                <div className="workshopContent">
+                                    <Section chapter={chapter} section={section} />
+                                </div>
                             </ToastContext.Provider>
                         </TabLayout.Panel>
                     ))}

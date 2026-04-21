@@ -3,8 +3,7 @@
 }
 
 .chapterBar > div[role=tablist] {
-  /*  background-color: #dad7cd; */
-  background-color: #DEEBE8;
+  background-color: #E8F4EE;
 }
 
 .chapterBar > div[role=tablist] button svg {
