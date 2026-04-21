@@ -10,7 +10,7 @@ dev:
 	cd src/web && yarn build --watch
 
 build:
-	cd src/web && yarn build
+	cd src/ && NODE_ENV=production yarn build
 
 package: build
 	rm -rf /tmp/splunk4champions2

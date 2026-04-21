@@ -30,6 +30,6 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "build": "webpack --config webpack.config.mjs"
+    "build": "NODE_ENV=production webpack --config webpack.config.mjs"
   }
 }
