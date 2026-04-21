@@ -1,0 +1,67 @@
+import Link from '@splunk/react-ui/Link';
+
+<img src="/static/app/splunk4champions2/images/ch3_search_aia.png" width="100%" />
+
+**Splunk AI Assistant** is an AI-powered companion for writing, explaining, and optimising SPL through natural language conversation. Instead of memorising command syntax you describe what you want — the Assistant translates it into a working search, explains what it does, and can refine it on request.
+
+---
+
+## What it can do
+
+| Capability | Description |
+|---|---|
+| **SPL Generation** | Turn plain-English questions into ready-to-run searches |
+| **SPL Explanation** | Paste any search and get a plain-language breakdown |
+| **SPL Optimisation** | Identify and fix performance issues in existing searches |
+| **Search Execution & Analysis** | Run a search and summarise the results |
+| **Knowledge Object Discovery** | Find dashboards, saved searches, reports and lookups by description |
+| **Teach AI (Beta)** | Add organisation-specific instructions so answers reflect your environment |
+| **Agent Mode** | Reason through multi-step requests and execute parallel queries automatically |
+
+---
+
+## Availability
+
+| Deployment | Status |
+|---|---|
+| Splunk Cloud (AWS & Azure commercial) | Available — full feature set |
+| Splunk Cloud FedRAMP IL2 | Available |
+| **Splunk Enterprise (on-premises)** | **Available via Cloud Connected integration** |
+| Agent Mode | AWS commercial Splunk Cloud only (currently) |
+
+### On-premises (Splunk Enterprise) — important note
+
+Splunk AI Assistant **does run on Splunk Enterprise** — but it requires an **outgoing internet connection** to Splunk's cloud service. The AI models are hosted by Splunk (or optionally Azure OpenAI); your Splunk instance calls out to them at query time. There is no fully air-gapped / offline option today.
+
+**What this means in practice:**
+- Install the app from Splunkbase on your Enterprise instance
+- Configure the **Cloud Connected integration** (accept the licence, provide credentials)
+- Your Splunk server needs outbound HTTPS access to Splunk's cloud endpoints
+- Data sent to the LLM is limited to your SPL query text and result summaries — raw event data does not leave your environment
+
+---
+
+## Installation on Splunk Enterprise
+
+1. Download **Splunk AI Assistant** (app ID 7245) from Splunkbase
+2. Install it on your Search Head
+3. Open the app and accept the licence agreement
+4. Navigate to **Settings → Cloud Connected** and complete the registration
+5. Once connected, the AI Assistant panel appears in the Search bar
+
+---
+
+## Compatibility
+
+- Splunk Enterprise & Splunk Cloud: versions **9.3, 9.4, 10.0, 10.1, 10.2, 10.3**
+- Current version: **2.0.0** (released April 2026)
+
+---
+
+## Links
+
+<Link to="https://splunkbase.splunk.com/app/7245" openInNewContext>Splunk AI Assistant on Splunkbase</Link>
+
+<Link to="https://www.splunk.com/en_us/resources/videos/set-up-splunk-ai-assistant-for-spl-in-enterprise-environments-with-cloud-connected-integration.html" openInNewContext>Setup video: AI Assistant in Enterprise with Cloud Connected</Link>
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/AIAssistant" openInNewContext>Splunk Docs — AI Assistant</Link>

@@ -79,8 +79,8 @@ Input → Parsing → Indexing → Search
 | **Search** | Bloom filter check → tsidx scan → rawdata read |
 
 ### Links
-- [.conf2017 — How Splunk Stores Data](https://conf.splunk.com/files/2017/slides/how-splunk-stores-your-data.pdf)
 - [Docs: How the Indexer Stores Indexes](https://docs.splunk.com/Documentation/Splunk/latest/Indexer/HowSplunkstoresindexes)
+- [.conf2017 — Data Life Cycle: When and Where to Roll Data](https://conf.splunk.com/files/2017/slides/splunk-data-life-cycle-determining-when-and-where-to-roll-data.pdf)
 - [Interactive Bloom Filter Demo](https://llimllib.github.io/bloomfilter-tutorial/)
 - [TSIDX in Splexicon](https://docs.splunk.com/Splexicon:Tsidx)
 - [Splunk Validated Architectures](https://www.splunk.com/en_us/form/splunk-validated-architectures.html)
@@ -200,12 +200,12 @@ Completed: 2,169 results by scanning 1,355,725 events in 6.535 seconds
 - [Docs: Job Inspector Execution Costs](https://docs.splunk.com/Documentation/Splunk/latest/Search/ViewsearchjobpropertieswiththeJobInspector#Execution_costs)
 - [Clara-fication: Job Inspector (conf20)](https://conf.splunk.com/files/2020/slides/TRU1143C.pdf)
 - [Martin Müller — Suchen verstehen mit dem Job Inspector](https://www.youtube.com/watch?v=3vDn5IHiMbs)
-- [TSTATS and PREFIX — Richard Morgan (.conf)](https://conf.splunk.com/files/2019/slides/FN1117.pdf)
+- [TSTATS and PREFIX — Richard Morgan (.conf20)](https://conf.splunk.com/files/2020/slides/PLA1089C.pdf)
 - [tstats and PREFIX — Tyler Quinlivan blog](https://www.tylerquinlivan.com/posts/exploring_splunk_prefix/)
 - [Docs: Write Better Searches](https://docs.splunk.com/Documentation/Splunk/latest/Search/Writebettersearches)
 - [Docs: TERM directive](https://docs.splunk.com/Documentation/Splunk/latest/Search/UseCASEandTERMtomatchphrases)
-- [.conf — Fields, Indexed Tokens and You (Martin Müller)](https://conf.splunk.com/files/2019/slides/FN1380.pdf)
-- [.conf — Finding and Improving Expensive Searches (Clara Merriman, Martin Müller)](https://conf.splunk.com/files/2019/slides/PLA1466B.pdf)
+- [Fields, Indexed Tokens and You — Martin Müller (.conf19 recap)](https://idelta.co.uk/splunk-conf-2019-fields-indexed-tokens-and-you/)
+- [Clara-fication: Finding Expensive Searches (Clara Merriman)](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-clara-fication-job-inspector.html)
 
 ---
 
@@ -230,7 +230,7 @@ Completed: 2,169 results by scanning 1,355,725 events in 6.535 seconds
 
 ### Links
 - [Docs: Get Started with Metrics](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/GetStarted)
-- [Blog: Metrics to the Max!](https://www.splunk.com/en_us/blog/tips-and-tricks/metrics-to-the-max.html)
+- [Docs: Search and Monitor Metrics](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/Search)
 - [Sending Metrics with OpenTelemetry Collector](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/SendMetrics)
 - [Analytics Workspace](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/NavigateWorkspace)
 
