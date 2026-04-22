@@ -154,6 +154,17 @@
 /* Fine-tune SearchBar control vertical alignment in workshop content */
 .workshopSearchBar [data-test="search-button"] {
     margin-top: 16px !important;
+    transition: box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.workshopSearchBar [data-test="search-button"]:hover {
+    filter: brightness(1.03);
+}
+
+.workshopSearchBar [data-test="search-button"]:focus,
+.workshopSearchBar [data-test="search-button"]:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(26, 137, 41, 0.25) !important;
 }
 
 /* TimeRangePicker wrapper sits right before the search button */

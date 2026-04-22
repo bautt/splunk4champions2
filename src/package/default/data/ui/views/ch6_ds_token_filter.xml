@@ -1,8 +1,8 @@
 <dashboard version="2" theme="dark">
-  <label>Ch5 — Token Filter & Conditional Panels (XML)</label>
+  <label>Ch6 — Token Filter & Conditional Panels (DS)</label>
   <description>Buttons set tokens, panels controlled via expressions/conditions and containerOptions visibility</description>
   <definition><![CDATA[{
-  "title": "Ch5 — Token Filter & Conditional Panels (XML)",
+  "title": "Ch6 — Token Filter & Conditional Panels (DS)",
   "description": "Buttons set tokens, panels controlled via containerOptions.visibility",
   "inputs": {
     "input_btn_all": {
