@@ -1,8 +1,8 @@
 <dashboard version="2" theme="dark">
-  <label>Ch5 — Tabbed Dashboards (XML)</label>
+  <label>Ch6 — Tabbed Dashboards (DS)</label>
   <description>Native tabs via layoutDefinitions, global time filter synchronizes all charts</description>
   <definition><![CDATA[{
-  "title": "Ch5 — Tabbed Dashboards (XML)",
+  "title": "Ch6 — Tabbed Dashboards (DS)",
   "description": "Tabs via layoutDefinitions, global time filter synchronizes all charts",
   "inputs": {
     "input_global_time": {

@@ -1,5 +1,5 @@
 <dashboard version="2" theme="light">
-    <label>Ch5 — Hemicycle 3D Custom Viz (XML)</label>
+    <label>Ch6 — Hemicycle 3D Custom Viz (DS)</label>
     <description>Example of a custom visualization from Splunkbase: splunk_hemicycle_3d. Requires the Hemicycle 3D app to be installed.</description>
     <definition><![CDATA[{
   "visualizations": {
@@ -11,7 +11,7 @@
       "dataSources": {
         "primary": "ds_parties"
       },
-      "title": "Parliament Seat Distribution"
+      "title": "Ch6 — Hemicycle 3D Custom Viz (DS)"
     }
   },
   "defaults": {

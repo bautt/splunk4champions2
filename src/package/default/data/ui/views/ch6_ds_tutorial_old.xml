@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="light">
-    <label>Ch5 — Tutorial Old (XML)</label>
+    <label>Ch6 — Tutorial Legacy (DS)</label>
     <description></description>
     <definition><![CDATA[{
   "visualizations": {
@@ -92,7 +92,7 @@
           }
         }
       ],
-      "title": "Revenue for $game$",
+      "title": "Ch6 — Tutorial Legacy (DS)",
       "description": "Select a game to display revenue."
     },
     "viz_UwEResxu": {

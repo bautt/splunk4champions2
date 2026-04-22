@@ -1,5 +1,5 @@
 <dashboard version="2" theme="dark">
-  <label>Ch5 — Trellis Layout (XML)</label>
+  <label>Ch6 — Trellis Layout (DS)</label>
   <description>Trellis layout is no longer limited to Single Value – Line, Area, Bar and Column Charts now supported (Splunk 10.0+)</description>
   <definition><![CDATA[{
   "visualizations": {
@@ -8,7 +8,7 @@
       "dataSources": {
         "primary": "ds_trellis_host_time"
       },
-      "title": "Trellis: Line Chart – Requests per Host",
+      "title": "Ch6 — Trellis Layout (DS)",
       "options": {
         "backgroundColor": "transparent",
         "trellis.enabled": true,
