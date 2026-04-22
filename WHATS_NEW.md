@@ -4,6 +4,13 @@
 
 ---
 
+### s4c_stocks — fix wrong `_time` and drop DAX file ingest
+
+- **DAX `static/gdax_download*`** file monitor, **`[s4c:quotes]`** props, and the **`s4c_quotes_drop_csv_header`** transform are **removed**. `s4c_stocks` OHLCV (including 10+ year index history) comes only from the **`update_stocks.py`** scripted input (and the optional one-shot **`stocks_history.csv`** monitor).
+- **`[s4c:stocks:csv]`** (optional `stocks_history.csv` monitor): BOM strip, header `nullQueue`, and slightly longer timestamp lookahead.
+- **`ch7_mobile_example`** still uses `coalesce(Close,close)` / `Open` / `open` / `Volume` / `volume` so any very old `s4c:quotes` rows left in the index (capitalized columns) and current JSON/CSV (lowercase) both resolve.
+- **Removing already-indexed bad rows:** in Search (with `delete` capability), e.g. narrow to the bad window, then `| delete` (or a delete by query in a sandbox). Re-ingest is not automatic for old data; clear only if policy allows.
+
 ### Data inputs and lookups
 
 - **Stocks — one-shot `stocks_history.csv` monitor** added in `default/inputs.conf` (sourcetype `s4c:stocks:csv`, **disabled = true** by default). Set `disabled = false`, restart once to index the shipped CSV baseline, then set back to `true` so the same days are not also doubled by `update_stocks.py` (JSON + file append).

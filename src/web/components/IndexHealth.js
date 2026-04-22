@@ -3,7 +3,7 @@ import Button from '@splunk/react-ui/Button';
 
 const INDEXES = [
     { name: 's4c_weather',       label: 'Weather Events',   type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/current*' },
-    { name: 's4c_stocks',        label: 'Stocks',           type: 'event',  inputType: 'monitor', input: 'One-shot monitor: .../static/stocks_history.csv (disabled in default; enable once for CSV baseline) & gdax_download* | Scripts → update_stocks.py (daily JSON + CSV append)' },
+    { name: 's4c_stocks',        label: 'Stocks',           type: 'event',  inputType: 'script',  input: '…/stocks_history.csv (optional one-shot monitor, default off) | Scripts: update_stocks.py (daily JSON, 10y+ OHLCV via Yahoo chart API; CSV append for state)' },
     { name: 's4c_www',           label: 'Web Server Logs',  type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/www*' },
     { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/tutorialdata.zip' },
     { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event',  inputType: 'script',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py events (runs every 5 min)' },
