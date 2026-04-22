@@ -17,6 +17,9 @@ import ToastContext from './context'
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 const chapters = workshop.chapters
+const DISPLAY_MODE_KEY = 's4c_display_mode';
+const DISPLAY_MODE_EVENT = 's4c-display-mode-change';
+const LARGE_MODE_CLASS = 's4c-large-room';
 
 // Build a flat ordered list of {chapterId, sectionId} for prev/next navigation
 const allSections = chapters.flatMap(ch =>
@@ -91,6 +94,42 @@ function navBtnStyle(disabled) {
     }
 }
 
+function readDisplayModeFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('view') === 'large' ? 'large' : null;
+}
+
+function readStoredDisplayMode() {
+    try {
+        const value = window.localStorage.getItem(DISPLAY_MODE_KEY);
+        return value === 'large' ? 'large' : value === 'default' ? 'default' : null;
+    } catch (error) {
+        return null;
+    }
+}
+
+function applyDisplayMode(mode) {
+    document.body.classList.toggle(LARGE_MODE_CLASS, mode === 'large');
+}
+
+function persistDisplayMode(mode) {
+    try {
+        window.localStorage.setItem(DISPLAY_MODE_KEY, mode);
+    } catch (error) {
+        // Ignore storage failures (private browsing or blocked local storage)
+    }
+}
+
+function syncDisplayModeInUrl(mode) {
+    const url = new URL(window.location.href);
+    if (mode === 'large') {
+        url.searchParams.set('view', 'large');
+    } else {
+        url.searchParams.delete('view');
+    }
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+}
+
 // ── App ───────────────────────────────────────────────────────────────────────
 
 function App() {
@@ -114,6 +153,23 @@ function App() {
         map[chapterId] = sectionId
         return map
     })
+
+    useEffect(() => {
+        const initialMode = readDisplayModeFromUrl() || readStoredDisplayMode() || 'default';
+        applyDisplayMode(initialMode);
+        persistDisplayMode(initialMode);
+        syncDisplayModeInUrl(initialMode);
+
+        const onModeChange = (event) => {
+            const nextMode = event?.detail?.mode === 'large' ? 'large' : 'default';
+            applyDisplayMode(nextMode);
+            persistDisplayMode(nextMode);
+            syncDisplayModeInUrl(nextMode);
+        };
+
+        window.addEventListener(DISPLAY_MODE_EVENT, onModeChange);
+        return () => window.removeEventListener(DISPLAY_MODE_EVENT, onModeChange);
+    }, []);
 
     // isMounted: false on first effect run (initial mount → replaceState, no new history entry)
     // isHashNav: true when hashchange fired the state update (URL already correct, skip push)
