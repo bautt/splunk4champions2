@@ -1,11 +1,11 @@
-symbol,index_full_name,exchange_city
-^DJI,Dow Jones Industrial Average,New York City
+symbol,index_name,exchange_city
+^DJI,Dow Jones Industrial Average,New York
 ^FCHI,CAC 40,Paris
 ^FTSE,FTSE 100,London
 ^GDAXI,DAX,Frankfurt
-^GSPC,S&P 500,New York City
-^HSI,Hang Seng Index,Hong Kong
-^IXIC,Nasdaq Composite,New York City
+^GSPC,S&P 500,New York
+^HSI,Hang Seng,Hong Kong
+^IXIC,Nasdaq Composite,New York
 ^N225,Nikkei 225,Tokyo
 ^SSMI,Swiss Market Index,Zurich
 ^STOXX50E,EURO STOXX 50,Brussels
