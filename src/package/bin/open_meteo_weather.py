@@ -87,11 +87,7 @@ def build_ssl_context():
         cafile = os.environ.get(env_var)
         if cafile and os.path.isfile(cafile):
             return ssl.create_default_context(cafile=cafile)
-    try:
-        import certifi
-        return ssl.create_default_context(cafile=certifi.where())
-    except Exception:
-        return ssl.create_default_context()
+    return ssl.create_default_context()
 
 
 def get_ssl_context():
@@ -327,7 +323,7 @@ def main():
         if mode == MODE_EVENTS:
             sys.stdout.write(json.dumps(error_event, separators=(",", ":")) + "\n")
         else:
-            sys.stderr.write(json.dumps(error_event, separators=(",", ":")) + "\n" + "\n")
+            sys.stderr.write(json.dumps(error_event, separators=(",", ":")) + "\n")
 
         return 1
 

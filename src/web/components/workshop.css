@@ -108,7 +108,8 @@
 /* ── 4. Code block styling ─────────────────────────────────────────────────── */
 .workshopContent code {
     font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-    font-size: 0.875em;
+    font-size: 0.95em;
+    font-weight: 600;
     background-color: #f0f4f8;
     border: 1px solid #d8e2ec;
     border-radius: 3px;
@@ -130,7 +131,8 @@
     border: none;
     padding: 0;
     color: #d4e8ff;
-    font-size: 0.9em;
+    font-size: 1.1em;
+    font-weight: 650;
     line-height: 1.6;
 }
 
@@ -257,4 +259,9 @@
 
 .s4c-large-room .workshopSearchBar .ace_editor {
     font-size: 18px !important;
+}
+
+.s4c-large-room .workshopContent pre code {
+    font-size: 1.2em;
+    font-weight: 650;
 }

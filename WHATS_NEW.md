@@ -4,6 +4,19 @@
 
 ---
 
+### Scripted input: `update_stocks.py` (no PyPI dependencies)
+
+- The daily stock index updater no longer requires **yfinance** or **pandas**. It uses Python 3’s standard library only (`urllib` + `json` + `csv`) and the same Yahoo **chart** JSON API the old flow relied on, so you do not need to `pip install` anything into the Splunk Python environment for this input.
+- Outbound HTTPS to `query1.finance.yahoo.com` is still required when new data is fetched.
+
+### Scripted input: `open_meteo_weather.py` (dependency cleanup)
+
+- Removed optional `certifi` import path so the script now stays fully standard-library based in Splunk runtime.
+- TLS trust handling now uses either explicit CA bundle env vars (`OPEN_METEO_CA_BUNDLE`, `SSL_CERT_FILE`, `REQUESTS_CA_BUNDLE`) or the platform/system CA store.
+- Normalized error logging to avoid extra blank lines in scripted input stderr output.
+
+---
+
 ### Workshop UI Readability + Trainer Display Mode + SPL Highlighting
 
 The workshop UI has been tuned for live delivery quality and better readability in both desktop and projector settings.

@@ -3,9 +3,6 @@
 deps:
 	cd src/ && yarn install
 
-package:
-	echo "not implemented yet"
-
 dev:
 	cd src/web && yarn build --watch
 
@@ -15,7 +12,9 @@ build:
 package: build
 	rm -rf /tmp/splunk4champions2
 	cp -r dist/ /tmp/splunk4champions2
-	COPYFILE_DISABLE=1 tar \
+	COPYFILE_DISABLE=1 COPY_EXTENDED_ATTRIBUTES_DISABLE=1 tar \
+	--format=ustar \
+	--no-xattrs \
 	--exclude='.DS_Store' \
 	--exclude='.gitkeep' \
 	--exclude='local.meta' \

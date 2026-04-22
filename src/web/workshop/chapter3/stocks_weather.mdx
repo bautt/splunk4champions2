@@ -5,7 +5,7 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 Historical daily weather data for each exchange city (2016–present) is stored in `s4c_meteo_historic`. Combined with `s4c_stocks`, you can explore whether temperature, precipitation, or sunshine hours correlate with index performance.
 
 **Weather fields:** `temperature_2m_mean` `temperature_2m_max` `precipitation_sum` `wind_speed_10m_max` `sunshine_duration` `weather_code`  
-**Link key:** `exchange` field in `s4c_meteo_historic` matches `index_name` in `s4c_stocks`
+**Link key:** `city` in `s4c_meteo_historic` matches `exchange_city` in `s4c_stocks`
 
 ---
 
@@ -22,13 +22,13 @@ Historical daily weather data for each exchange city (2016–present) is stored 
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
 | eval date=strftime(_time,"%Y-%m-%d")
-| rename index_name as exchange
-| join type=left date exchange [
+| join type=left date exchange_city [
     search index=s4c_meteo_historic
     | eval date=strftime(_time,"%Y-%m-%d")
-    | fields date exchange temperature_2m_mean precipitation_sum sunshine_duration
+    | rename city as exchange_city
+    | fields date exchange_city temperature_2m_mean precipitation_sum sunshine_duration
 ]
-| table date exchange close temperature_2m_mean precipitation_sum sunshine_duration
+| table date exchange_city close temperature_2m_mean precipitation_sum sunshine_duration
 | sort -date`}></SplunkSearch>
 
 ---
@@ -38,7 +38,7 @@ Historical daily weather data for each exchange city (2016–present) is stored 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks index_name=DAX
 | eval month=strftime(_time,"%Y-%m"), date=strftime(_time,"%Y-%m-%d")
 | join type=left date [
-    search index=s4c_meteo_historic exchange=DAX
+    search index=s4c_meteo_historic city=Frankfurt
     | eval date=strftime(_time,"%Y-%m-%d")
     | fields date temperature_2m_mean sunshine_duration
 ]
@@ -51,10 +51,10 @@ Historical daily weather data for each exchange city (2016–present) is stored 
 
 Do traders trade less on rainy London days?
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks index_name=FTSE100
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks index_name="FTSE 100"
 | eval date=strftime(_time,"%Y-%m-%d")
 | join type=left date [
-    search index=s4c_meteo_historic exchange=FTSE100
+    search index=s4c_meteo_historic city=London
     | eval date=strftime(_time,"%Y-%m-%d")
     | fields date precipitation_sum
 ]
@@ -67,14 +67,14 @@ Do traders trade less on rainy London days?
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
 | eval date=strftime(_time,"%Y-%m-%d"), daily_pct=round(((close-open)/open)*100,2)
-| rename index_name as exchange
-| join type=left date exchange [
+| join type=left date exchange_city [
     search index=s4c_meteo_historic
     | eval date=strftime(_time,"%Y-%m-%d")
-    | fields date exchange sunshine_duration temperature_2m_mean
+    | rename city as exchange_city
+    | fields date exchange_city sunshine_duration temperature_2m_mean
 ]
 | eval sunshine_h=round(sunshine_duration/3600,1)
-| stats avg(daily_pct) as avg_change avg(sunshine_h) as avg_sunshine by exchange
+| stats avg(daily_pct) as avg_change avg(sunshine_h) as avg_sunshine by exchange_city
 | sort -avg_change`}></SplunkSearch>
 
 ---
@@ -87,11 +87,11 @@ Do traders trade less on rainy London days?
     wind_speed_10m_max>60,"storm",
     precipitation_sum>40,"heavy rain",
     1=1,"other")
-| join type=left date exchange [
+ | rename city as exchange_city
+ | join type=left date exchange_city [
     search index=s4c_stocks
-    | rename index_name as exchange
     | eval date=strftime(_time,"%Y-%m-%d"), daily_pct=round(((close-open)/open)*100,2)
-    | fields date exchange close daily_pct volume
+    | fields date exchange_city close daily_pct volume
 ]
-| table date city exchange weather_event wind_speed_10m_max precipitation_sum close daily_pct
+| table date city exchange_city weather_event wind_speed_10m_max precipitation_sum close daily_pct
 | sort -date`}></SplunkSearch>
