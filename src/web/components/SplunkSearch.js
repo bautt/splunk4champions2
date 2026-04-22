@@ -1,12 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '@splunk/react-ui/Button'
 import SearchBar from '@splunk/react-search/components/Bar';
+import fetchSearchBNFs from '@splunk/react-search/utils/searchBNFs';
 import ClipBoard from '@splunk/react-icons/Clipboard';
 import { TOAST_TYPES } from '@splunk/react-toast-notifications/ToastConstants';
 import ToastContext from '../context'
 
 function CopyToClipBoardButton({search}) {
     const createToast = useContext(ToastContext)
+
+    const copyButtonStyle = {
+        maxWidth: '30px',
+        marginLeft: '-40px',
+        marginTop: '0',
+        height: '30px',
+        lineHeight: '1',
+        marginRight: '10px',
+        alignSelf: 'center',
+    };
 
 
     const onClick = (e, value) => {
@@ -24,12 +35,7 @@ function CopyToClipBoardButton({search}) {
     return (
     <Button 
     onClick={onClick}
-    style={{maxWidth: '30px',
-        marginLeft: '-40px',
-        marginTop: '20px',
-        height: '30px',
-        lineHeight: '1',
-        marginRight: '10px'}} icon={<ClipBoard screenReaderText={null} />} appearance='pill' label="Copy to Clipboard"/>
+    style={copyButtonStyle} icon={<ClipBoard screenReaderText={null} />} appearance='pill' label="Copy to Clipboard"/>
     )
 
 }
@@ -68,11 +74,31 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
         timePickerAdvancedInputTypes: advancedInputTypes,
         search: spl,
         enabled: false,
-        componentAppendToInput: <CopyToClipBoardButton search={spl}></CopyToClipBoardButton>,
-        syntax: {}
+        componentAppendToInput: <CopyToClipBoardButton search={spl}></CopyToClipBoardButton>
     }
 
     const [options, setOptions] = useState(initialOptions)
+
+    useEffect(() => {
+        let isMounted = true;
+
+        fetchSearchBNFs(true)
+            .then((parsedSyntax) => {
+                if (isMounted) {
+                    setOptions((prevState) => ({
+                        ...prevState,
+                        syntax: parsedSyntax,
+                    }));
+                }
+            })
+            .catch((error) => {
+                console.warn('Could not load Search BNF syntax for workshop highlighting.', error);
+            });
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     
     const onOptionsChange = (newOptions) => {
@@ -96,11 +122,10 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
         window.open(`search?${params.toString()}`)
     }
 
-    const syntax = "{}"
     return (
-        <>
-        <SearchBar onOptionsChange={onOptionsChange} onEventTrigger={onEventTrigger} options={options} syntax={syntax}/>
-        </>
+        <div className="workshopSearchBar">
+            <SearchBar onOptionsChange={onOptionsChange} onEventTrigger={onEventTrigger} options={options}/>
+        </div>
     )
 }
 

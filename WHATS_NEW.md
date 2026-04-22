@@ -4,6 +4,37 @@
 
 ---
 
+### Workshop UI Readability + Trainer Display Mode + SPL Highlighting
+
+The workshop UI has been tuned for live delivery quality and better readability in both desktop and projector settings.
+
+**Search bar alignment fixes**
+
+- Fixed vertical alignment of the time picker and search button so controls are visually aligned with the search editor.
+- Scoped section-bar button CSS to avoid leaking style rules into embedded search controls.
+
+**Typography improvements**
+
+- Increased default workshop body/list/table text for better readability in labs.
+- Harmonized explanatory text size with search editor text so examples and instructions feel consistent.
+
+**Trainer-friendly display toggle (Setup section)**
+
+- Added a new **Trainer Display Mode** toggle in **Setup → Setup Task**:
+  - **Standard**
+  - **Large Room**
+- Mode is persisted in browser local storage.
+- Mode can also be shared via URL: `?view=large`.
+- Large Room mode now uses larger typography (18px body/search) for projector-friendly workshops.
+
+**SPL syntax highlighting upgrade in workshop search examples**
+
+- Restored and improved token-based syntax highlighting in embedded search bars.
+- Wired `react-search` syntax parsing to Search BNF (`configs/conf-searchbnf`) for richer command/function/modifier tokenization.
+- Added workshop-scoped token color tuning for closer visual parity with native Splunk Search.
+
+---
+
 ### Setup — Health Check (Improved)
 
 The **Setup** tab opens with a redesigned **Health Check** table that now performs two independent checks per index and provides actionable hints when something is wrong.

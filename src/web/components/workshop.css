@@ -32,7 +32,7 @@
 .workshopContent li,
 .workshopContent td,
 .workshopContent th {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.7;
     color: #2c3e50;
 }
@@ -149,4 +149,101 @@
 .chapterBar > div[role=tablist]::-webkit-scrollbar,
 .sectionBar > div[role=tablist]::-webkit-scrollbar {
     display: none;               /* Chrome/Safari */
+}
+
+/* Fine-tune SearchBar control vertical alignment in workshop content */
+.workshopSearchBar [data-test="search-button"] {
+    margin-top: 16px !important;
+}
+
+/* TimeRangePicker wrapper sits right before the search button */
+.workshopSearchBar [data-test="workflow-components:Search"] > div:nth-last-child(2) {
+    margin-top: 16px !important;
+}
+
+/* Slightly larger search text for workshop readability */
+.workshopSearchBar .ace_editor {
+    font-size: 16px !important;
+}
+
+/* Phase 1: SPL token color tuning for better syntax readability */
+.workshopSearchBar .ace_command {
+    color: #1f66ff !important;
+    font-weight: 600;
+}
+
+.workshopSearchBar .ace_function {
+    color: #cc26e0 !important;
+}
+
+.workshopSearchBar .ace_argument {
+    color: #2f3844 !important;
+}
+
+.workshopSearchBar .ace_modifier {
+    color: #f08c2e !important;
+}
+
+.workshopSearchBar .ace_comment {
+    color: #5c6773 !important;
+    font-style: normal;
+}
+
+.workshopSearchBar .ace_number {
+    color: #2f3844 !important;
+}
+
+.workshopSearchBar .ace_quoted,
+.workshopSearchBar .ace_string {
+    color: #2f612e !important; /* syntaxGreen */
+}
+
+/* Setup utility for trainers to switch readability mode */
+.displayModeToggle {
+    border: 1px solid #d8e2ec;
+    border-radius: 6px;
+    background: #f8fbff;
+    padding: 14px 16px;
+    margin: 8px 0 18px;
+}
+
+.displayModeToggle h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+}
+
+.displayModeToggle p {
+    margin: 0 0 10px;
+}
+
+.displayModeToggleActions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.displayModeHint {
+    color: #5a6b7c;
+    font-size: 13px;
+}
+
+/* Large-room mode tuned for training/projector readability */
+.s4c-large-room .workshopContent {
+    max-width: 900px;
+}
+
+.s4c-large-room .workshopContent p,
+.s4c-large-room .workshopContent li,
+.s4c-large-room .workshopContent td,
+.s4c-large-room .workshopContent th {
+    font-size: 18px;
+    line-height: 1.75;
+}
+
+.s4c-large-room .workshopContent h1 { font-size: 26px; }
+.s4c-large-room .workshopContent h2 { font-size: 22px; }
+.s4c-large-room .workshopContent h3 { font-size: 19px; }
+
+.s4c-large-room .workshopSearchBar .ace_editor {
+    font-size: 18px !important;
 }

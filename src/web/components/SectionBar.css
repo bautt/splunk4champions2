@@ -13,13 +13,13 @@
     margin-top: 0 !important;
 }
 
-.sectionBar button:focus,
-.sectionBar button:focus-visible {
+.sectionBar > div[role=tablist] button:focus,
+.sectionBar > div[role=tablist] button:focus-visible {
     outline: none !important;
     box-shadow: none !important;
 }
 
-.sectionBar button {
+.sectionBar > div[role=tablist] button {
     height: 36px;
     box-sizing: border-box;
     display: flex !important;
