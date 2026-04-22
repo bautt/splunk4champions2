@@ -1,0 +1,174 @@
+
+<dashboard version="2" theme="dark">
+    <label>Meaningful Charts 0</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"visualizations": {
+		"viz_5APnbrpC": {
+			"type": "splunk.pie",
+			"options": {
+				"collapseThreshold": 0.01,
+				"seriesColorsByField": {},
+				"seriesColors": [
+					"#00BFFF",
+					"#704214",
+					"#FFBF00"
+				]
+			},
+			"dataSources": {
+				"primary": "ds_yIf9emks"
+			},
+			"title": "Pyramid",
+			"showProgressBar": true
+		},
+		"viz_If3v47DR": {
+			"type": "splunk.pie",
+			"options": {
+				"collapseThreshold": 0.01,
+				"seriesColors": "[#fdff00,0x000000,0xfdff00]"
+			},
+			"dataSources": {
+				"primary": "ds_VNV8DYhc"
+			},
+			"title": "Pacman",
+			"showProgressBar": true
+		},
+		"viz_5PFqNgvG": {
+			"type": "splunk.line",
+			"options": {
+				"yAxisAbbreviation": "off",
+				"y2AxisAbbreviation": "off",
+				"showRoundedY2AxisLabels": false,
+				"legendTruncation": "ellipsisMiddle",
+				"showY2MajorGridLines": true,
+				"xAxisTitleVisibility": "hide",
+				"yAxisTitleVisibility": "hide",
+				"nullValueDisplay": "connect",
+				"legendDisplay": "off",
+				"seriesColors": [
+					"#FFFFFF",
+					"#009CEB",
+					"#00CDAF",
+					"#DD9900",
+					"#FF677B",
+					"#CB2196",
+					"#813193",
+					"#0051B5",
+					"#008C80",
+					"#99B100",
+					"#FFA476",
+					"#FF6ACE",
+					"#AE8CFF",
+					"#00689D",
+					"#00490A",
+					"#465D00",
+					"#9D6300",
+					"#F6540B",
+					"#FF969E",
+					"#E47BFE"
+				]
+			},
+			"dataSources": {
+				"primary": "ds_YQzLRisV"
+			},
+			"title": "Dog"
+		}
+	},
+	"dataSources": {
+		"ds_yIf9emks": {
+			"type": "ds.search",
+			"options": {
+				"query": "|makeresults\n|eval \"1. Sky\"=35, \"4. Sky\"=35, \"2. Shady side of pyramide\"=15, \"3. Sunny side of pyramide\"=15\n| eval _time=now()\n| untable _time color count\n| fields - _time\n| sort  color",
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				}
+			},
+			"name": "Pyramid - Pyramid search"
+		},
+		"ds_VNV8DYhc": {
+			"type": "ds.search",
+			"options": {
+				"query": "|makeresults\n|eval \"1. Resembles pacman\"=15, \"2. Resembles pacman too\"=15,\"3. Resembles pacman\"=60\n| eval _time=now()\n| untable _time color count\n| fields - _time\n| sort  color",
+				"queryParameters": {
+					"earliest": "-24h@h",
+					"latest": "now"
+				}
+			},
+			"name": "Pacman - Pacman search"
+		},
+		"ds_YQzLRisV": {
+			"type": "ds.search",
+			"options": {
+				"query": "|inputlookup dog.csv\n|timechart values(y) span=15m",
+				"queryParameters": {
+					"earliest": "0"
+				}
+			},
+			"name": "Dog - Dog search"
+		}
+	},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {}
+				}
+			}
+		}
+	},
+	"inputs": {},
+	"layout": {
+		"type": "absolute",
+		"options": {
+			"height": 680,
+			"width": 1024,
+			"display": "auto"
+		},
+		"structure": [
+			{
+				"item": "viz_5APnbrpC",
+				"type": "block",
+				"position": {
+					"x": 0,
+					"y": 0,
+					"w": 510,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_If3v47DR",
+				"type": "block",
+				"position": {
+					"x": 510,
+					"y": 0,
+					"w": 510,
+					"h": 250
+				}
+			},
+			{
+				"item": "viz_5PFqNgvG",
+				"type": "block",
+				"position": {
+					"x": 10,
+					"y": 260,
+					"w": 1010,
+					"h": 420
+				}
+			}
+		],
+		"globalInputs": []
+	},
+	"description": "",
+	"title": "Meaningful Charts 0"
+}
+    ]]></definition>
+    <meta type="hiddenElements"><![CDATA[
+{
+	"hideEdit": false,
+	"hideOpenInSearch": false,
+	"hideExport": false
+}
+    ]]></meta>
+</dashboard>
