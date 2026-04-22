@@ -1,0 +1,65 @@
+
+<dashboard version="2" theme="dark">
+    <label>Phyphox Iphone Screen</label>
+    <description></description>
+    <definition><![CDATA[
+{
+	"visualizations": {},
+	"dataSources": {},
+	"defaults": {
+		"dataSources": {
+			"ds.search": {
+				"options": {
+					"queryParameters": {
+						"latest": "$global_time.latest$",
+						"earliest": "$global_time.earliest$"
+					}
+				}
+			}
+		},
+		"visualizations": {
+			"global": {
+				"showProgressBar": true
+			}
+		}
+	},
+	"inputs": {
+		"input_global_trp": {
+			"type": "input.timerange",
+			"options": {
+				"token": "global_time",
+				"defaultValue": "-24h@h,now"
+			},
+			"title": "Global Time Range"
+		}
+	},
+	"layout": {
+		"options": {},
+		"globalInputs": [
+			"input_global_trp"
+		],
+		"tabs": {
+			"items": [
+				{
+					"layoutId": "layout_1",
+					"label": "New tab"
+				}
+			]
+		},
+		"layoutDefinitions": {
+			"layout_1": {
+				"type": "absolute",
+				"structure": [],
+				"options": {
+					"width": 1440,
+					"height": 960,
+					"display": "auto"
+				}
+			}
+		}
+	},
+	"description": "",
+	"title": "Phyphox Iphone Screen"
+}
+    ]]></definition>
+</dashboard>
