@@ -4,6 +4,22 @@
 
 ---
 
+### Data inputs and lookups
+
+- **Stocks — one-shot `stocks_history.csv` monitor** added in `default/inputs.conf` (sourcetype `s4c:stocks:csv`, **disabled = true** by default). Set `disabled = false`, restart once to index the shipped CSV baseline, then set back to `true` so the same days are not also doubled by `update_stocks.py` (JSON + file append).
+- **Lookup:** removed `lookups/product_code.csv` (ambiguous name vs `product_codes.csv`); food-barcode data lives in `lookups/food_barcodes.csv` and food demo dashboards use `| inputlookup food_barcodes.csv`.
+
+### Config audit (`default/*.conf`)
+
+- Removed an invalid `app.conf` top-level stanza (not a valid Splunk `app.conf` key; risked ignore/warn on load) and kept maintainer as a file comment.
+- `savedsearches.conf` alert deep-link: dashboard id updated from `7_Mobile_Example` to `ch7_mobile_example` to match the actual `data/ui/views/ch7_mobile_example.xml` object name.
+
+### Index configuration (Splunk startup fix)
+
+- `default/indexes.conf` now includes **homePath / coldPath / thawedPath** (and size limits) for all workshop indexes, not only `frozenTimePeriodInSecs`. Partial stanzas caused Splunk to fail parsing with: `Required parameter=homePath not configured` for `s4c_meteo_historic` (and would have affected `s4c_stocks` the same way).
+
+---
+
 ### Scripted input: `update_stocks.py` (no PyPI dependencies)
 
 - The daily stock index updater no longer requires **yfinance** or **pandas**. It uses Python 3’s standard library only (`urllib` + `json` + `csv`) and the same Yahoo **chart** JSON API the old flow relied on, so you do not need to `pip install` anything into the Splunk Python environment for this input.

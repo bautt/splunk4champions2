@@ -746,7 +746,7 @@
     "ds_8pBnPCMV": {
       "name": "products",
       "options": {
-        "query": "| inputlookup product_code.csv",
+        "query": "| inputlookup food_barcodes.csv",
         "queryParameters": {
           "earliest": "-24h@h",
           "latest": "now"
