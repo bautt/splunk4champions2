@@ -1,5 +1,5 @@
 <dashboard version="1.1" theme="dark" embed="enabled">
-  <label>Ch5 — Publish without Login (XML)</label>
+  <label>Ch5 — Publish without Login DS</label>
   <description>Guide and background on the Publish feature in Splunk Enterprise 10.0</description>
   <row>
     <panel>
@@ -64,7 +64,8 @@
             </div>
             <div class="step">
               <div class="step-num">5</div>
-              <div class="step-text"><strong>Copy the link</strong> and share it — recipients see live data without logging in</div>
+              <div class="step-text">
+                <strong>Copy the link</strong> and share it — recipients see live data without logging in</div>
             </div>
 
             <div class="info-box">
@@ -107,7 +108,9 @@
                 <td class="yes">Never</td>
               </tr>
               <tr>
-                <td><strong>Publish (10.0)</strong></td>
+                <td>
+                  <strong>Publish (10.0)</strong>
+                </td>
                 <td class="yes" style="color:#68d391">No ✅</td>
                 <td class="yes">Yes</td>
                 <td style="color:#f6ad55">Partial</td>

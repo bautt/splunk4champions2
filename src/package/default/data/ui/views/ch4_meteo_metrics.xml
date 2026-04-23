@@ -1,9 +1,19 @@
-<dashboard version="1.1" theme="dark">
+<form version="1.1" theme="dark">
   <label>Ch4 — Weather Metrics Index</label>
   <description>Open-Meteo weather analytics using mstats against s4c_meteo_metrics</description>
-
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 1 — Current conditions overview table                              -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 2 — Selected metric trend over time                                -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 3 — Bar ranking + min/max summary                                  -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Row 4 — Heatmap: hourly avg per city                                   -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <fieldset submitButton="false" autoRun="true">
-
     <input type="time" token="timerange" searchWhenChanged="true">
       <label>Time Range</label>
       <default>
@@ -11,20 +21,21 @@
         <latest>now</latest>
       </default>
     </input>
-
     <input type="dropdown" token="city" searchWhenChanged="true">
       <label>City</label>
       <choice value="*">All Cities</choice>
       <fieldForLabel>city</fieldForLabel>
       <fieldForValue>city</fieldForValue>
       <search>
-        <query>| mstats count WHERE index=s4c_meteo_metrics BY city | table city | sort city</query>
+        <query>| mpreview index=s4c_meteo_metrics
+|table city
+|dedup city
+|sort - city</query>
         <earliest>-24h</earliest>
         <latest>now</latest>
       </search>
       <default>*</default>
     </input>
-
     <input type="dropdown" token="metric" searchWhenChanged="true">
       <label>Metric</label>
       <choice value="meteo.temperature_2m">Temperature (°C)</choice>
@@ -40,12 +51,7 @@
       <choice value="meteo.surface_pressure">Surface Pressure (hPa)</choice>
       <default>meteo.temperature_2m</default>
     </input>
-
   </fieldset>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-  <!-- Row 1 — Current conditions overview table                              -->
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <row>
     <panel>
       <title>Current Conditions — Latest Reading per City</title>
@@ -84,10 +90,6 @@
       </table>
     </panel>
   </row>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-  <!-- Row 2 — Selected metric trend over time                                -->
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <row>
     <panel>
       <title>$metric$ — Trend Over Time by City</title>
@@ -112,10 +114,6 @@
       </chart>
     </panel>
   </row>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-  <!-- Row 3 — Bar ranking + min/max summary                                  -->
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <row>
     <panel>
       <title>$metric$ — Latest Value per City</title>
@@ -139,7 +137,6 @@
         <option name="height">280</option>
       </chart>
     </panel>
-
     <panel>
       <title>$metric$ — Statistics (Selected Period)</title>
       <table>
@@ -163,10 +160,6 @@
       </table>
     </panel>
   </row>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
-  <!-- Row 4 — Heatmap: hourly avg per city                                   -->
-  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <row>
     <panel>
       <title>$metric$ — Hourly Average by City</title>
@@ -191,5 +184,4 @@
       </chart>
     </panel>
   </row>
-
-</dashboard>
+</form>

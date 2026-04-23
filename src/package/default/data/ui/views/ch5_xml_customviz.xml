@@ -1,7 +1,6 @@
 <dashboard version="1.1" theme="dark" embed="enabled">
-  <label>Ch5 — Custom Visualizations (XML)</label>
+  <label>Ch5 — Custom Visualizations DS</label>
   <description>Demo: Legacy App Custom Viz, Own App Custom Viz, React/D3 Framework Viz</description>
-
   <row>
     <panel>
       <html>
@@ -154,7 +153,6 @@ registerVisualization('my_gauge', MyGauge);</div>
       </html>
     </panel>
   </row>
-
   <row>
     <panel>
       <html>
@@ -175,7 +173,7 @@ registerVisualization('my_gauge', MyGauge);</div>
           </p>
           <div class="demo-row">
             <div>
-              <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#0d1117;border-radius:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" style="width:100%;background:#0d1117;border-radius:8px;">
                 <!-- Radial Gauge - 72% CPU -->
                 <!-- Background arc -->
                 <path d="M 80 180 A 100 100 0 1 1 320 180" fill="none" stroke="#2d3748" stroke-width="24" stroke-linecap="round"/>
@@ -192,7 +190,7 @@ registerVisualization('my_gauge', MyGauge);</div>
               <p class="chart-label">Radial Gauge – Custom Viz (SVG)</p>
             </div>
             <div>
-              <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;background:#0d1117;border-radius:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" style="width:100%;background:#0d1117;border-radius:8px;">
                 <!-- Heatmap - 6 hosts x 8 hours -->
                 <!-- Row labels -->
                 <text x="4" y="38" fill="#718096" font-size="9">web-01</text>
@@ -211,17 +209,59 @@ registerVisualization('my_gauge', MyGauge);</div>
                 <text x="315" y="16" fill="#718096" font-size="8" text-anchor="middle">12h</text>
                 <text x="355" y="16" fill="#718096" font-size="8" text-anchor="middle">14h</text>
                 <!-- Row 1: web-01 (low-med) -->
-                <rect x="56" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="96" y="22" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="136" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="176" y="22" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="216" y="22" width="36" height="26" rx="2" fill="#5a2030"/><rect x="256" y="22" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="296" y="22" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="336" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="56" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="96" y="22" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="136" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="176" y="22" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="216" y="22" width="36" height="26" rx="2" fill="#5a2030"/>
+                <rect x="256" y="22" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="296" y="22" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="336" y="22" width="36" height="26" rx="2" fill="#1a2a3e"/>
                 <!-- Row 2: web-02 (med) -->
-                <rect x="56" y="52" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="96" y="52" width="36" height="26" rx="2" fill="#5a2030"/><rect x="136" y="52" width="36" height="26" rx="2" fill="#7a2838"/><rect x="176" y="52" width="36" height="26" rx="2" fill="#6a2434"/><rect x="216" y="52" width="36" height="26" rx="2" fill="#9a3040"/><rect x="256" y="52" width="36" height="26" rx="2" fill="#7a2838"/><rect x="296" y="52" width="36" height="26" rx="2" fill="#5a2030"/><rect x="336" y="52" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <rect x="56" y="52" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <rect x="96" y="52" width="36" height="26" rx="2" fill="#5a2030"/>
+                <rect x="136" y="52" width="36" height="26" rx="2" fill="#7a2838"/>
+                <rect x="176" y="52" width="36" height="26" rx="2" fill="#6a2434"/>
+                <rect x="216" y="52" width="36" height="26" rx="2" fill="#9a3040"/>
+                <rect x="256" y="52" width="36" height="26" rx="2" fill="#7a2838"/>
+                <rect x="296" y="52" width="36" height="26" rx="2" fill="#5a2030"/>
+                <rect x="336" y="52" width="36" height="26" rx="2" fill="#4a1a2e"/>
                 <!-- Row 3: app-01 (low) -->
-                <rect x="56" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="96" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="136" y="82" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="176" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="216" y="82" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="256" y="82" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="296" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/><rect x="336" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="56" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="96" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="136" y="82" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="176" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="216" y="82" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="256" y="82" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="296" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
+                <rect x="336" y="82" width="36" height="26" rx="2" fill="#1a2a3e"/>
                 <!-- Row 4: app-02 (high!) -->
-                <rect x="56" y="112" width="36" height="26" rx="2" fill="#9a3040"/><rect x="96" y="112" width="36" height="26" rx="2" fill="#ba3848"/><rect x="136" y="112" width="36" height="26" rx="2" fill="#e94560"/><rect x="176" y="112" width="36" height="26" rx="2" fill="#da4058"/><rect x="216" y="112" width="36" height="26" rx="2" fill="#e94560"/><rect x="256" y="112" width="36" height="26" rx="2" fill="#ba3848"/><rect x="296" y="112" width="36" height="26" rx="2" fill="#da4058"/><rect x="336" y="112" width="36" height="26" rx="2" fill="#9a3040"/>
+                <rect x="56" y="112" width="36" height="26" rx="2" fill="#9a3040"/>
+                <rect x="96" y="112" width="36" height="26" rx="2" fill="#ba3848"/>
+                <rect x="136" y="112" width="36" height="26" rx="2" fill="#e94560"/>
+                <rect x="176" y="112" width="36" height="26" rx="2" fill="#da4058"/>
+                <rect x="216" y="112" width="36" height="26" rx="2" fill="#e94560"/>
+                <rect x="256" y="112" width="36" height="26" rx="2" fill="#ba3848"/>
+                <rect x="296" y="112" width="36" height="26" rx="2" fill="#da4058"/>
+                <rect x="336" y="112" width="36" height="26" rx="2" fill="#9a3040"/>
                 <!-- Row 5: db-01 (med) -->
-                <rect x="56" y="142" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="96" y="142" width="36" height="26" rx="2" fill="#5a2030"/><rect x="136" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="176" y="142" width="36" height="26" rx="2" fill="#6a2434"/><rect x="216" y="142" width="36" height="26" rx="2" fill="#5a2030"/><rect x="256" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="296" y="142" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="336" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <rect x="56" y="142" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="96" y="142" width="36" height="26" rx="2" fill="#5a2030"/>
+                <rect x="136" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <rect x="176" y="142" width="36" height="26" rx="2" fill="#6a2434"/>
+                <rect x="216" y="142" width="36" height="26" rx="2" fill="#5a2030"/>
+                <rect x="256" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <rect x="296" y="142" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="336" y="142" width="36" height="26" rx="2" fill="#4a1a2e"/>
                 <!-- Row 6: db-02 (low-med) -->
-                <rect x="56" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="96" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="136" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="176" y="172" width="36" height="26" rx="2" fill="#4a1a2e"/><rect x="216" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="256" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/><rect x="296" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/><rect x="336" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="56" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="96" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="136" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="176" y="172" width="36" height="26" rx="2" fill="#4a1a2e"/>
+                <rect x="216" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="256" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/>
+                <rect x="296" y="172" width="36" height="26" rx="2" fill="#3a1a2e"/>
+                <rect x="336" y="172" width="36" height="26" rx="2" fill="#2a1a2e"/>
                 <!-- Legend -->
                 <text x="56" y="214" fill="#718096" font-size="9">Low</text>
                 <rect x="80" y="206" width="20" height="10" rx="1" fill="#0d2137"/>
@@ -237,5 +277,4 @@ registerVisualization('my_gauge', MyGauge);</div>
       </html>
     </panel>
   </row>
-
 </dashboard>
