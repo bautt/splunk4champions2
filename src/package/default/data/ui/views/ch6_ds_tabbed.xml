@@ -156,67 +156,67 @@
     "ds_requests_by_host": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | timechart span=1h sum(count) by host"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | timechart span=1h sum(count) by host"
       }
     },
     "ds_totals": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats sum(count) as total"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats sum(count) as total"
       }
     },
     "ds_totals_errors": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats sum(errors) as total_errors"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats sum(errors) as total_errors"
       }
     },
     "ds_avg_response": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats avg(response_time_ms) as avg_response | eval avg_response=round(avg_response,1)"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats avg(response_time_ms) as avg_response | eval avg_response=round(avg_response,1)"
       }
     },
     "ds_table": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats sum(count) as Requests sum(errors) as Errors avg(response_time_ms) as AvgResponseMs avg(cpu_pct) as AvgCPU by host category | eval AvgResponseMs=round(AvgResponseMs,1) | eval AvgCPU=round(AvgCPU,1) | sort -Requests"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats sum(count) as Requests sum(errors) as Errors avg(response_time_ms) as AvgResponseMs avg(cpu_pct) as AvgCPU by host category | eval AvgResponseMs=round(AvgResponseMs,1) | eval AvgCPU=round(AvgCPU,1) | sort -Requests"
       }
     },
     "ds_cpu_by_host": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | timechart span=1h avg(cpu_pct) by host"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | timechart span=1h avg(cpu_pct) by host"
       }
     },
     "ds_mem_by_host": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | timechart span=1h avg(mem_pct) by host"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | timechart span=1h avg(mem_pct) by host"
       }
     },
     "ds_response_by_host": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats avg(response_time_ms) as avg_response by host | eval avg_response=round(avg_response,1) | sort -avg_response"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") | stats avg(response_time_ms) as avg_response by host | eval avg_response=round(avg_response,1) | sort -avg_response"
       }
     },
     "ds_db_errors": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") AND category=\"Database\" | stats sum(errors) as db_errors"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") AND category=\"Database\" | stats sum(errors) as db_errors"
       }
     },
     "ds_db_response": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") AND category=\"Database\" | timechart span=1h avg(response_time_ms) by host"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") AND category=\"Database\" | timechart span=1h avg(response_time_ms) by host"
       }
     },
     "ds_db_cpu": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") AND category=\"Database\" | timechart span=1h avg(cpu_pct) by host"
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where _time>=relative_time(now(),\"$global_time.earliest$\") AND category=\"Database\" | timechart span=1h avg(cpu_pct) by host"
       }
     }
   },

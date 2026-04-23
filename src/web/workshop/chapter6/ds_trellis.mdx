@@ -60,7 +60,7 @@ Set these options on any supported visualization:
 Use a `timechart ... by <field>` search — the `by` clause creates the columns that trellis splits on:
 
 ```spl
-| inputlookup demo_metrics.csv
+| inputlookup demo_metrics
 | eval _time=tonumber(_time)
 | timechart span=1h avg(cpu_pct) by host
 ```
@@ -68,7 +68,7 @@ Use a `timechart ... by <field>` search — the `by` clause creates the columns 
 For a static comparison (bar/column), use `stats ... by <field>`:
 
 ```spl
-| inputlookup demo_metrics.csv
+| inputlookup demo_metrics
 | stats avg(response_time_ms) as AvgResponse by host
 | eval AvgResponse=round(AvgResponse,1)
 ```
