@@ -8,7 +8,7 @@ const INDEXES = [
     { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/tutorialdata.zip' },
     { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event',  inputType: 'script',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py events (runs every 5 min)' },
     { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric', inputType: 'mcollect',input: 'Run the mcollect search in Chapter 4 → Metrics Lab to push data from s4c_meteo into this index' },
-    { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  inputType: 'mixed',  input: 'Monitor: .../static/meteo_historic.csv | Daily: `update_meteo_historic_csv.py` (7 cities = index `exchange_city`; Open-Meteo archive extends dates)' },
+    { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  inputType: 'mixed',  input: 'Monitor: .../lookups/meteo_historic.csv | Daily: `update_meteo_historic_csv.py` (7 cities = index `exchange_city`; Open-Meteo archive extends dates)' },
 ];
 
 function parseTime(ts) {

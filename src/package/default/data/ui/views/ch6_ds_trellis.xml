@@ -82,7 +82,7 @@
     "ds_trellis_host_time": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h sum(count) by host",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | timechart span=1h sum(count) by host",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -92,7 +92,7 @@
     "ds_trellis_cpu_time": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h avg(cpu_pct) by host",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | timechart span=1h avg(cpu_pct) by host",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -102,7 +102,7 @@
     "ds_trellis_errors": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | timechart span=1h sum(errors) by host",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | timechart span=1h sum(errors) by host",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -112,7 +112,7 @@
     "ds_trellis_response": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | stats avg(response_time_ms) as AvgResponse by host | eval AvgResponse=round(AvgResponse,1)",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | stats avg(response_time_ms) as AvgResponse by host | eval AvgResponse=round(AvgResponse,1)",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"

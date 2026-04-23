@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Keep static/meteo_historic.csv aligned with s4c_stock_indices:
+Keep lookups/meteo_historic.csv aligned with s4c_stock_indices:
 
 * **Seven** cities (exchange locations) — legacy Paris / CAC rows are removed.
 * **Daily append** of missing dates through **yesterday (UTC)** via
@@ -28,11 +28,11 @@ USER_AGENT = 'splunk4champions2-meteo-historic/1.0 (stdlib urllib)'
 SPLUNK_HOME = os.environ.get('SPLUNK_HOME', '')
 if SPLUNK_HOME:
     METEO_CSV = os.path.join(
-        SPLUNK_HOME, 'etc', 'apps', 'splunk4champions2', 'static', 'meteo_historic.csv'
+        SPLUNK_HOME, 'etc', 'apps', 'splunk4champions2', 'lookups', 'meteo_historic.csv'
     )
 else:
     METEO_CSV = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), '..', 'static', 'meteo_historic.csv'
+        os.path.dirname(os.path.abspath(__file__)), '..', 'lookups', 'meteo_historic.csv'
     )
 
 # Blocks on disk: matches historical file order, minus Paris

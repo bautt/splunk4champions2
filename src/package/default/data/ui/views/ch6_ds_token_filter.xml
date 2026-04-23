@@ -285,7 +285,7 @@
     "ds_web_data": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Web\" | timechart span=1h sum(count) by host",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where category=\"Web\" | timechart span=1h sum(count) by host",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -295,7 +295,7 @@
     "ds_web_kpi": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Web\" | stats sum(count) as total_requests",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where category=\"Web\" | stats sum(count) as total_requests",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -305,7 +305,7 @@
     "ds_app_data": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Application\" | timechart span=1h sum(errors) by host",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where category=\"Application\" | timechart span=1h sum(errors) by host",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -315,7 +315,7 @@
     "ds_app_kpi": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Application\" | stats sum(errors) as errors sum(count) as total | eval error_rate=round(errors/total*100,1) | table error_rate",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where category=\"Application\" | stats sum(errors) as errors sum(count) as total | eval error_rate=round(errors/total*100,1) | table error_rate",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -325,7 +325,7 @@
     "ds_db_data": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Database\" | timechart span=1h avg(response_time_ms) by host",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where category=\"Database\" | timechart span=1h avg(response_time_ms) by host",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -335,7 +335,7 @@
     "ds_db_kpi": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | where category=\"Database\" | stats avg(response_time_ms) as avg_response | eval avg_response=round(avg_response,1)",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | where category=\"Database\" | stats avg(response_time_ms) as avg_response | eval avg_response=round(avg_response,1)",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"
@@ -345,7 +345,7 @@
     "ds_all_table": {
       "type": "ds.search",
       "options": {
-        "query": "| inputlookup demo_metrics.csv | eval _time=tonumber(_time) | stats sum(count) as Requests sum(errors) as Errors avg(response_time_ms) as AvgResponseMs by host category | eval AvgResponseMs=round(AvgResponseMs,1) | sort -Requests",
+        "query": "| inputlookup demo_metrics | eval _time=tonumber(_time) | stats sum(count) as Requests sum(errors) as Errors avg(response_time_ms) as AvgResponseMs by host category | eval AvgResponseMs=round(AvgResponseMs,1) | sort -Requests",
         "queryParameters": {
           "earliest": "-48h",
           "latest": "now"

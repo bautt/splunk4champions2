@@ -4,6 +4,11 @@
 
 ---
 
+### 2.10.83 — `meteo_historic` path + `demo_metrics` lookup
+
+- **`meteo_historic.csv`** moved from `static/` to **`lookups/`** (file monitor in `default/inputs.conf` and `update_meteo_historic_csv.py` updated). If you overrode the monitor path in `local/inputs.conf`, point it at `.../lookups/meteo_historic.csv`.
+- **`demo_metrics`**: new **`[demo_metrics]`** stanza in `default/transforms.conf` (`filename = demo_metrics.csv`). Chapter 6 Data Source views (`ch6_ds_tabbed` and related) and `ds_trellis.mdx` use `| inputlookup demo_metrics` so the lookup is explicit and works with the shipped CSV in `lookups/`.
+
 ### 2.10.79 — `s4c_meteo_historic` alignment with index cities
 
 - **`static/meteo_historic.csv`**: removed legacy **Paris** (CAC) rows; **7 cities** match `exchange_city` in `s4c_stock_indices` (Frankfurt, New York, London, Tokyo, Hong Kong, Zurich, Brussels).
@@ -115,7 +120,7 @@ The header also shows the current **Splunk version** and **App version**, plus a
   - `s4c_tutorial` → monitor: `.../static/tutorialdata.zip`
   - `s4c_meteo` → Scripts: `open_meteo_weather.py events` (every 5 min)
   - `s4c_meteo_metrics` → run the `mcollect` search in Chapter 4 → Metrics Lab
-  - `s4c_meteo_historic` → monitor: `.../static/meteo_historic.csv`
+  - `s4c_meteo_historic` → monitor: `.../lookups/meteo_historic.csv`
 
 ---
 
