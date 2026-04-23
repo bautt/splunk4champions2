@@ -304,7 +304,7 @@
       <title>Does a rise in temperature mean an increase in stock prices? Frankfurt DAX</title>
       <chart>
         <search>
-          <query>(index="s4c_weather"  name="Frankfurt am Main") OR (index="s4c_stocks") | eval c=coalesce(Close,close) | eval o=coalesce(Open,open) | eval price_increase = if(c&gt;o,1,-1) | timechart span=1d last(main.temp) as starttemp,first(main.temp) as lasttemp,first(price_increase) as priceincrease | eval tempincrease = if(starttemp &lt; lasttemp,1,-1) | timechart span=1d first(priceincrease) as priceincrease, first(tempincrease) as tempincrease</query>
+          <query>(index="s4c_weather"  name="Frankfurt am Main") OR (index="s4c_stock_indices" index_name="DAX") | eval c=coalesce(Close,close) | eval o=coalesce(Open,open) | eval price_increase = if(c&gt;o,1,-1) | timechart span=1d last(main.temp) as starttemp,first(main.temp) as lasttemp,first(price_increase) as priceincrease | eval tempincrease = if(starttemp &lt; lasttemp,1,-1) | timechart span=1d first(priceincrease) as priceincrease, first(tempincrease) as tempincrease</query>
           <earliest>@y</earliest>
           <latest>now</latest>
           <sampleRatio>1</sampleRatio>
@@ -347,7 +347,7 @@
       <title>Frankfurt: Volume by Weekday</title>
       <chart>
         <search>
-          <query>index="s4c_stocks"
+          <query>index="s4c_stock_indices" index_name="DAX"
 | eval vol=coalesce(Volume,volume)
 | stats max(vol) as max_vol by date_wday</query>
           <earliest>@y</earliest>

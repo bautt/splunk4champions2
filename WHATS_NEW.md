@@ -4,7 +4,20 @@
 
 ---
 
-### s4c_stocks — fix wrong `_time` and drop DAX file ingest
+### 2.10.79 — `s4c_meteo_historic` alignment with index cities
+
+- **`static/meteo_historic.csv`**: removed legacy **Paris** (CAC) rows; **7 cities** match `exchange_city` in `s4c_stock_indices` (Frankfurt, New York, London, Tokyo, Hong Kong, Zurich, Brussels).
+- **New** scripted input **`update_meteo_historic_csv.py`** (Open-Meteo Archive API) appends daily weather through **yesterday UTC** so the calendar can track rolling index history; ship updated CSV + enable script on the indexer. Stdout is one JSON line to `_internal` (`splunk4champions2:setup`).
+
+### 2.10.77 — `s4c_stock_indices` + `update_stock_indices.py`
+
+- **Replaced** event index `s4c_stocks` with **`s4c_stock_indices`**. The old `update_stocks.py`, one-shot `stocks_history.csv` monitor, and shipped `stocks_history.csv` / `stocks_symbols.csv` are **removed**.
+- **New** scripted input: **`update_stock_indices.py`**. Fetches the **last 10 years** of daily open/high/low/close/volume for **9** major indices (DAX, Dow, EURO STOXX 50, FTSE 100, Hang Seng, Nasdaq, Nikkei, S&P 500, SMI) via the Yahoo **chart** API (Python 3 stdlib only). State for incremental runs: `static/stock_indices_history.csv` (appended alongside stdout JSON).
+- **Timestamp:** events use **Unix epoch seconds** in JSON `_time` with sourcetype **`s4c:stock_indices:json`**, `TIME_FORMAT = %s`, and `MAX_DAYS_AGO` so indextime does not clobber trading days.
+- **Enrichment:** each line includes `index_name`, `exchange_city` (for joins to `s4c_meteo_historic`), and human **`date`** (`YYYY-MM-DD`). Lookup: `lookups/stock_indices_symbols.csv` (replaces `stocks_symbols.csv`).
+- **On upgrade:** remove the old `s4c_stocks` index and data paths if you no longer need them; re-run the scripted input or let the first schedule populate `s4c_stock_indices` (can take a while for the 10y backfill).
+
+### s4c_stocks (historical) — fix wrong `_time` and drop DAX file ingest
 
 - **DAX `static/gdax_download*`** file monitor, **`[s4c:quotes]`** props, and the **`s4c_quotes_drop_csv_header`** transform are **removed**. `s4c_stocks` OHLCV (including 10+ year index history) comes only from the **`update_stocks.py`** scripted input (and the optional one-shot **`stocks_history.csv`** monitor).
 - **`[s4c:stocks:csv]`** (optional `stocks_history.csv` monitor): BOM strip, header `nullQueue`, and slightly longer timestamp lookahead.
@@ -27,7 +40,7 @@
 
 ---
 
-### Scripted input: `update_stocks.py` (no PyPI dependencies)
+### Scripted input: `update_stock_indices.py` (replaces `update_stocks.py`; no PyPI dependencies)
 
 - The daily stock index updater no longer requires **yfinance** or **pandas**. It uses Python 3’s standard library only (`urllib` + `json` + `csv`) and the same Yahoo **chart** JSON API the old flow relied on, so you do not need to `pip install` anything into the Splunk Python environment for this input.
 - Outbound HTTPS to `query1.finance.yahoo.com` is still required when new data is fetched.
@@ -97,7 +110,7 @@ The header also shows the current **Splunk version** and **App version**, plus a
 - **Index missing (red)** → lists the exact index names and types to create under Settings → Data → Indexes
 - **Index empty (orange)** → lists the correct data input per index (monitor path or script name) so you know exactly where to look:
   - `s4c_weather` → monitor: `.../static/current*`
-  - `s4c_stocks` → monitor: `.../static/stocks_history.csv` + Scripts: `update_stocks.py` (daily)
+  - `s4c_stock_indices` → Script: `update_stock_indices.py` (daily)
   - `s4c_www` → monitor: `.../static/www*`
   - `s4c_tutorial` → monitor: `.../static/tutorialdata.zip`
   - `s4c_meteo` → Scripts: `open_meteo_weather.py events` (every 5 min)
@@ -106,7 +119,7 @@ The header also shows the current **Splunk version** and **App version**, plus a
 
 ---
 
-### New Dataset: Stock Index Data (`s4c_stocks`)
+### New Dataset: Stock Index Data (`s4c_stock_indices`, replaces former `s4c_stocks`)
 
 10 years of daily OHLCV (open / high / low / close / volume) for **10 global stock indexes**:
 
@@ -123,7 +136,7 @@ The header also shows the current **Splunk version** and **App version**, plus a
 | Hang Seng | ^HSI |
 | SMI | ^SSMI |
 
-Data is pre-loaded into the event index `s4c_stocks`. A scripted input (`update_stocks.py`) updates it daily with the latest trading day automatically.
+Data is written to the event index `s4c_stock_indices`. A scripted input (`update_stock_indices.py`) updates it daily; first run backfills up to 10 years.
 
 **Fields:** `_time` `symbol` `index_name` `open` `high` `low` `close` `volume`
 
@@ -137,7 +150,7 @@ Daily weather records from **2016 to present** for the city hosting each stock e
 
 **Fields:** `temperature_2m_mean` `temperature_2m_max` `temperature_2m_min` `precipitation_sum` `wind_speed_10m_max` `sunshine_duration` `weather_code` `city` `country` `exchange`
 
-The `exchange` field matches `index_name` in `s4c_stocks` — use it as the join key for correlation searches.
+The `exchange` / `index_name` fields match `s4c_stock_indices` — use with `date` and `city` for correlation searches.
 
 ---
 
@@ -155,7 +168,7 @@ New sub-section in **Chapter 3 (Search)**, placed right after the tstats section
 
 ### Chapter 3 — New: Weather & Stock Correlation
 
-New sub-section showing how to join `s4c_stocks` with `s4c_meteo_historic` using `date` and `exchange` as keys:
+Sub-section: join `s4c_stock_indices` with `s4c_meteo_historic` using `date` and `city` / `exchange_city` as keys:
 
 - Inventory of available weather data by city
 - Full join: stocks + weather on date and exchange city
@@ -188,7 +201,7 @@ The Chapter 3 quiz has been completely rebuilt as an interactive React component
 
 New sub-section showing students how to convert the stocks event data into metrics using `mcollect`:
 
-1. Explore `s4c_stocks` events and understand the data shape
+1. Explore `s4c_stock_indices` events and understand the data shape
 2. Preview how fields will map to metric dimensions
 3. Push to `s4c_student_metrics` with `| mcollect index=s4c_student_metrics prefix=stocks.`
 4. Verify ingestion with `| mcatalog`

@@ -2,17 +2,17 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## Stock Index Metrics — Convert Events to Metrics
 
-The `s4c_stocks` index contains 10 years of daily OHLCV data for 10 global indexes as **events**.  
+The `s4c_stock_indices` index contains 10 years of daily OHLCV data for 9 global indexes as **events**.  
 In this exercise you will use `mcollect` to push that data into `s4c_student_metrics` as proper metrics.
 
-**Fields in `s4c_stocks`:** `symbol` `index_name` `open` `high` `low` `close` `volume`  
-**Available indexes:** DAX, S&P 500, NASDAQ, Dow Jones, FTSE 100, CAC 40, Euro Stoxx 50, Nikkei 225, Hang Seng, SMI
+**Fields in `s4c_stock_indices`:** `date` `symbol` `index_name` `exchange_city` `open` `high` `low` `close` `volume` ( `_time` = Unix epoch from the scripted input)  
+**Available index names (9):** DAX, Dow Jones Industrial Average, EURO STOXX 50, FTSE 100, Hang Seng, Nasdaq Composite, Nikkei 225, S&P 500, Swiss Market Index
 
 ---
 
 ### Step 1: Explore the raw event data
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | stats count min(_time) as oldest max(_time) as newest by index_name symbol
 | eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
 | sort index_name`}></SplunkSearch>
@@ -21,7 +21,7 @@ In this exercise you will use `mcollect` to push that data into `s4c_student_met
 
 ### Step 2: Preview what will become metrics
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | table _time symbol index_name open high low close volume
 | sort -_time | head 20`}></SplunkSearch>
 
@@ -35,7 +35,7 @@ The `prefix=stocks.` argument makes fields appear as `stocks.open`, `stocks.clos
 
 Remove the backtick comments from the `mcollect` line to actually write the data — **run once only**.
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | fields _time symbol index_name open high low close volume
 \`\`\`| mcollect index=s4c_student_metrics prefix=stocks.\`\`\``}></SplunkSearch>
 

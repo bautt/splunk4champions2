@@ -20,7 +20,7 @@
 
 /* ── 3. Content area max-width ─────────────────────────────────────────────── */
 .workshopContent {
-    max-width: 960px;
+    max-width: 1200px;
     padding: 16px 24px;
     box-sizing: border-box;
 }
@@ -103,6 +103,26 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     margin: 12px 0;
     display: block;
+}
+
+/* Tan shortcut / callout blocks (#DAD7CD) — must read larger & bolder than body (16px) */
+.workshopContent .s4c-kbd-callout {
+    display: block;
+    padding: 1rem 1.25rem;
+    margin: 0.6rem 0 1rem;
+    background-color: #dad7cd;
+    color: #1a2a3a;
+    font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.35;
+    border-radius: 6px;
+    letter-spacing: 0.03em;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
+}
+.s4c-large-room .workshopContent .s4c-kbd-callout {
+    font-size: 1.55rem;
+    padding: 1.1rem 1.35rem;
 }
 
 /* ── 4. Code block styling ─────────────────────────────────────────────────── */
@@ -242,7 +262,7 @@
 
 /* Large-room mode tuned for training/projector readability */
 .s4c-large-room .workshopContent {
-    max-width: 900px;
+    max-width: 1200px;
 }
 
 .s4c-large-room .workshopContent p,
@@ -264,4 +284,32 @@
 .s4c-large-room .workshopContent pre code {
     font-size: 1.2em;
     font-weight: 650;
+}
+
+/* Index health check: keep table dense so all columns fit (overrides large-room 18px on td/th) */
+.s4c-index-health {
+    font-size: 12px;
+    line-height: 1.35;
+    max-width: 100%;
+}
+.s4c-index-health__scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+.s4c-index-health table {
+    font-size: 12px;
+}
+.s4c-index-health th,
+.s4c-index-health td {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+.s4c-large-room .s4c-index-health th,
+.s4c-large-room .s4c-index-health td {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+.s4c-large-room .s4c-index-health {
+    font-size: 12px;
 }

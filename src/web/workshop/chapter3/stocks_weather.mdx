@@ -2,10 +2,10 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## Weather & Stock Index Correlation
 
-Historical daily weather data for each exchange city (2016–present) is stored in `s4c_meteo_historic`. Combined with `s4c_stocks`, you can explore whether temperature, precipitation, or sunshine hours correlate with index performance.
+Daily historical weather for the **same seven cities** as `exchange_city` in `s4c_stock_indices` is stored in `s4c_meteo_historic` (from the shipped CSV, extended on schedule by `update_meteo_historic_csv.py` via Open-Meteo). Together with `s4c_stock_indices`, you can explore whether temperature, precipitation, or sunshine hours correlate with index performance.
 
 **Weather fields:** `temperature_2m_mean` `temperature_2m_max` `precipitation_sum` `wind_speed_10m_max` `sunshine_duration` `weather_code`  
-**Link key:** `city` in `s4c_meteo_historic` matches `exchange_city` in `s4c_stocks`
+**Link key:** `city` in `s4c_meteo_historic` matches `exchange_city` in `s4c_stock_indices`
 
 ---
 
@@ -20,7 +20,7 @@ Historical daily weather data for each exchange city (2016–present) is stored 
 
 ### Join stocks + weather on date and exchange city
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | eval date=strftime(_time,"%Y-%m-%d")
 | join type=left date exchange_city [
     search index=s4c_meteo_historic
@@ -35,7 +35,7 @@ Historical daily weather data for each exchange city (2016–present) is stored 
 
 ### DAX close vs Frankfurt temperature (monthly average)
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks index_name=DAX
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
 | eval month=strftime(_time,"%Y-%m"), date=strftime(_time,"%Y-%m-%d")
 | join type=left date [
     search index=s4c_meteo_historic city=Frankfurt
@@ -51,7 +51,7 @@ Historical daily weather data for each exchange city (2016–present) is stored 
 
 Do traders trade less on rainy London days?
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks index_name="FTSE 100"
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices index_name="FTSE 100"
 | eval date=strftime(_time,"%Y-%m-%d")
 | join type=left date [
     search index=s4c_meteo_historic city=London
@@ -65,7 +65,7 @@ Do traders trade less on rainy London days?
 
 ### Sunshine hours vs daily price change — all exchanges
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | eval date=strftime(_time,"%Y-%m-%d"), daily_pct=round(((close-open)/open)*100,2)
 | join type=left date exchange_city [
     search index=s4c_meteo_historic
@@ -89,7 +89,7 @@ Do traders trade less on rainy London days?
     1=1,"other")
  | rename city as exchange_city
  | join type=left date exchange_city [
-    search index=s4c_stocks
+    search index=s4c_stock_indices
     | eval date=strftime(_time,"%Y-%m-%d"), daily_pct=round(((close-open)/open)*100,2)
     | fields date exchange_city close daily_pct volume
 ]
