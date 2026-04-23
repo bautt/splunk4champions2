@@ -7,6 +7,7 @@ dev:
 	cd src/web && yarn build --watch
 
 build:
+	rm -rf dist
 	cd src/ && NODE_ENV=production yarn build
 
 package: build

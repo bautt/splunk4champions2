@@ -2,7 +2,7 @@ import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## Stock Index Data
 
-The workshop includes 10 years of daily OHLCV data for 10 major global indexes loaded into `s4c_stocks`. Each event is one trading day for one index.
+The workshop includes 10 years of daily OHLCV data for 9 major global indexes loaded into `s4c_stock_indices`. Each event is one trading day for one index.
 
 **Available indexes:** DAX, S&P 500, NASDAQ, Dow Jones, FTSE 100, CAC 40, Euro Stoxx 50, Nikkei 225, Hang Seng, SMI
 
@@ -12,7 +12,7 @@ The workshop includes 10 years of daily OHLCV data for 10 major global indexes l
 
 ### Basic Search
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks symbol=^GDAXI
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices symbol=^GDAXI
 | table _time index_name open high low close volume
 | sort -_time`}></SplunkSearch>
 
@@ -20,14 +20,14 @@ The workshop includes 10 years of daily OHLCV data for 10 major global indexes l
 
 ### Closing Price Over Time
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | timechart span=1w avg(close) by index_name`}></SplunkSearch>
 
 ---
 
 ### Compare All Indexes — Latest Close
 
-<SplunkSearch earliest="-3d" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-3d" latest="now" spl={`index=s4c_stock_indices
 | stats latest(close) as close latest(volume) as volume by index_name symbol
 | sort -close`}></SplunkSearch>
 
@@ -35,7 +35,7 @@ The workshop includes 10 years of daily OHLCV data for 10 major global indexes l
 
 ### Biggest Daily Moves (absolute)
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stocks
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | eval daily_change = close - open
 | eval daily_pct = round((daily_change / open) * 100, 2)
 | stats max(daily_pct) as best_day min(daily_pct) as worst_day by index_name
@@ -48,7 +48,7 @@ The workshop includes 10 years of daily OHLCV data for 10 major global indexes l
 `tstats` runs against index-time data only — much faster than a regular search over years of data.
 
 <SplunkSearch earliest="-10y" latest="now" spl={`| tstats count min(_time) as oldest max(_time) as newest
-    WHERE index=s4c_stocks
+    WHERE index=s4c_stock_indices
     BY index_name, symbol
 | eval oldest=strftime(oldest, "%Y-%m-%d"), newest=strftime(newest, "%Y-%m-%d")
 | sort index_name`}></SplunkSearch>
@@ -58,6 +58,6 @@ The workshop includes 10 years of daily OHLCV data for 10 major global indexes l
 ### tstats — Daily Volume by Index (last 30 days)
 
 <SplunkSearch earliest="-30d" latest="now" spl={`| tstats count
-    WHERE index=s4c_stocks
+    WHERE index=s4c_stock_indices
     BY index_name _time span=1d
 | timechart span=1d sum(count) by index_name`}></SplunkSearch>

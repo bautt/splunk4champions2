@@ -3,12 +3,12 @@ import Button from '@splunk/react-ui/Button';
 
 const INDEXES = [
     { name: 's4c_weather',       label: 'Weather Events',   type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/current*' },
-    { name: 's4c_stocks',        label: 'Stocks',           type: 'event',  inputType: 'script',  input: '…/stocks_history.csv (optional one-shot monitor, default off) | Scripts: update_stocks.py (daily JSON, 10y+ OHLCV via Yahoo chart API; CSV append for state)' },
+    { name: 's4c_stock_indices', label: 'Stock indices',    type: 'event',  inputType: 'script',  input: 'Scripts: `update_stock_indices.py` (daily) — 9 major indices, ~10y history via Yahoo chart; state: `static/stock_indices_history.csv` — `_time` = epoch sec' },
     { name: 's4c_www',           label: 'Web Server Logs',  type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/www*' },
     { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/tutorialdata.zip' },
     { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event',  inputType: 'script',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py events (runs every 5 min)' },
     { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric', inputType: 'mcollect',input: 'Run the mcollect search in Chapter 4 → Metrics Lab to push data from s4c_meteo into this index' },
-    { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/meteo_historic.csv' },
+    { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  inputType: 'mixed',  input: 'Monitor: .../static/meteo_historic.csv | Daily: `update_meteo_historic_csv.py` (7 cities = index `exchange_city`; Open-Meteo archive extends dates)' },
 ];
 
 function parseTime(ts) {
@@ -123,17 +123,17 @@ function HintsPanel({ statuses }) {
         <div style={{ borderTop: `1px solid ${C.borderColor}` }}>
             {missing.length > 0 && (
                 <div style={{
-                    padding: '14px 20px',
+                    padding: '10px 14px',
                     backgroundColor: C.hintMissingBg,
                     borderLeft: `4px solid ${C.hintMissingBorder}`,
                 }}>
-                    <div style={{ fontWeight: 700, color: C.hintMissingText, marginBottom: 8, fontSize: 13 }}>
+                    <div style={{ fontWeight: 700, color: C.hintMissingText, marginBottom: 6, fontSize: 12 }}>
                         ✗ Index not found — create the following indexes first
                     </div>
-                    <div style={{ fontSize: 12, color: '#444', marginBottom: 6 }}>
+                    <div style={{ fontSize: 11, color: '#444', marginBottom: 4 }}>
                         Go to <strong>Settings → Data → Indexes → New Index</strong> and create:
                     </div>
-                    <ul style={{ margin: '0 0 0 16px', padding: 0, fontSize: 12, color: '#333' }}>
+                    <ul style={{ margin: '0 0 0 16px', padding: 0, fontSize: 11, color: '#333' }}>
                         {missing.map(idx => (
                             <li key={idx.name} style={{ marginBottom: 4 }}>
                                 <code style={{ fontWeight: 700 }}>{idx.name}</code>
@@ -146,14 +146,14 @@ function HintsPanel({ statuses }) {
 
             {nodata.length > 0 && (
                 <div style={{
-                    padding: '14px 20px',
+                    padding: '10px 14px',
                     backgroundColor: C.hintNodataBg,
                     borderLeft: `4px solid ${C.hintNodataBorder}`,
                 }}>
-                    <div style={{ fontWeight: 700, color: C.hintNodataText, marginBottom: 8, fontSize: 13 }}>
+                    <div style={{ fontWeight: 700, color: C.hintNodataText, marginBottom: 6, fontSize: 12 }}>
                         ⚠ Index exists but has no data — enable the data input
                     </div>
-                    <ul style={{ margin: '0 0 0 16px', padding: 0, fontSize: 12, color: '#333' }}>
+                    <ul style={{ margin: '0 0 0 16px', padding: 0, fontSize: 11, color: '#333' }}>
                         {nodata.map(idx => (
                             <li key={idx.name} style={{ marginBottom: 6 }}>
                                 <code style={{ fontWeight: 700 }}>{idx.name}</code>
@@ -202,7 +202,9 @@ export default function IndexHealth() {
     const allOk = !loading && INDEXES.every(idx => statuses[idx.name]?.hasData);
 
     return (
-        <div style={{
+        <div
+            className="s4c-index-health"
+            style={{
             marginBottom: '24px',
             borderRadius: '10px',
             overflow: 'hidden',
@@ -214,23 +216,24 @@ export default function IndexHealth() {
             <div style={{
                 backgroundColor: C.headerBg,
                 color: C.headerText,
-                padding: '14px 20px',
+                padding: '10px 12px',
                 display: 'flex',
+                flexWrap: 'wrap',
                 alignItems: 'center',
-                gap: '16px',
+                gap: '10px 12px',
             }}>
-                <span style={{ fontSize: '20px', fontWeight: 700, flexGrow: 1, letterSpacing: '0.4px' }}>
+                <span style={{ fontSize: '16px', fontWeight: 700, flexGrow: 1, letterSpacing: '0.4px' }}>
                     Health Check
                 </span>
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>
+                <span style={{ fontSize: '11px', opacity: 0.85 }}>
                     Splunk&nbsp;
-                    <span style={{ fontWeight: 700, backgroundColor: 'rgba(255,255,255,0.15)', padding: '2px 8px', borderRadius: '10px' }}>
+                    <span style={{ fontWeight: 700, backgroundColor: 'rgba(255,255,255,0.15)', padding: '2px 6px', borderRadius: '8px' }}>
                         {versions.splunkVersion}
                     </span>
                 </span>
-                <span style={{ fontSize: '12px', opacity: 0.8 }}>
+                <span style={{ fontSize: '11px', opacity: 0.85 }}>
                     App&nbsp;
-                    <span style={{ fontWeight: 700, backgroundColor: 'rgba(255,255,255,0.15)', padding: '2px 8px', borderRadius: '10px' }}>
+                    <span style={{ fontWeight: 700, backgroundColor: 'rgba(255,255,255,0.15)', padding: '2px 6px', borderRadius: '8px' }}>
                         {versions.appVersion}
                     </span>
                 </span>
@@ -238,37 +241,39 @@ export default function IndexHealth() {
                     <span style={{
                         backgroundColor: allOk ? '#28a745' : '#e53935',
                         color: '#fff',
-                        fontSize: '13px',
+                        fontSize: '11px',
                         fontWeight: 700,
-                        padding: '4px 16px',
+                        padding: '3px 10px',
                         borderRadius: '20px',
-                        letterSpacing: '0.6px',
+                        letterSpacing: '0.4px',
                     }}>
                         {allOk ? 'ALL OK' : 'NEEDS ATTENTION'}
                     </span>
                 )}
                 <Button onClick={check} disabled={loading} appearance="secondary"
                     label={loading ? 'Checking…' : 'Refresh'}
-                    style={{ color: '#ffffff', borderColor: '#ffffff' }} />
+                    style={{ color: '#ffffff', borderColor: '#ffffff', fontSize: '12px' }} />
                 {checkedAt && !loading && (
-                    <span style={{ fontSize: '12px', opacity: 0.65 }}>checked {checkedAt}</span>
+                    <span style={{ fontSize: '11px', opacity: 0.65 }}>checked {checkedAt}</span>
                 )}
             </div>
 
-            {/* ── Table ── */}
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
+            {/* ── Table (scrolls horizontally if needed; font sizes in workshop.css) ── */}
+            <div className="s4c-index-health__scroll" style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
                     <tr style={{ backgroundColor: C.subHeaderBg }}>
                         {['Index', 'Label', 'Type', 'Index exists', 'Has data', 'Oldest event', 'Latest event', 'Count'].map((h, i) => (
                             <th key={h} style={{
-                                padding: '10px 16px',
+                                padding: '6px 8px',
                                 fontWeight: 700,
-                                fontSize: '11px',
+                                fontSize: '10px',
                                 textTransform: 'uppercase',
-                                letterSpacing: '0.7px',
+                                letterSpacing: '0.5px',
                                 color: C.subHeaderText,
                                 textAlign: i >= 5 ? 'right' : i >= 3 ? 'center' : 'left',
                                 borderBottom: `2px solid ${C.borderColor}`,
+                                whiteSpace: 'nowrap',
                             }}>{h}</th>
                         ))}
                     </tr>
@@ -288,20 +293,20 @@ export default function IndexHealth() {
                                 backgroundColor: i % 2 === 0 ? C.rowBase : C.rowAlt,
                                 borderBottom: `1px solid ${C.borderColor}`,
                             }}>
-                                <td style={{ padding: '11px 16px', fontFamily: 'monospace', fontWeight: 700, fontSize: '13px', color: '#1e4d2b' }}>
+                                <td style={{ padding: '5px 8px', fontFamily: 'monospace', fontWeight: 700, fontSize: '11px', color: '#1e4d2b' }}>
                                     {idx.name}
                                 </td>
-                                <td style={{ padding: '11px 16px', color: '#37474f', fontWeight: 500 }}>
+                                <td style={{ padding: '5px 8px', color: '#37474f', fontWeight: 500, fontSize: '11px' }}>
                                     {idx.label}
                                 </td>
-                                <td style={{ padding: '11px 16px' }}>
+                                <td style={{ padding: '5px 8px' }}>
                                     <span style={{
                                         display: 'inline-block',
-                                        padding: '2px 10px',
-                                        borderRadius: '12px',
-                                        fontSize: '11px',
+                                        padding: '1px 6px',
+                                        borderRadius: '10px',
+                                        fontSize: '10px',
                                         fontWeight: 700,
-                                        letterSpacing: '0.4px',
+                                        letterSpacing: '0.3px',
                                         textTransform: 'uppercase',
                                         backgroundColor: idx.type === 'metric' ? C.badgeBlueBg  : C.badgeGreenBg,
                                         color:           idx.type === 'metric' ? C.badgeBlueText : C.badgeGreenText,
@@ -311,23 +316,23 @@ export default function IndexHealth() {
                                 </td>
 
                                 {/* Index exists */}
-                                <td style={{ padding: '11px 16px', textAlign: 'center' }}>
+                                <td style={{ padding: '5px 8px', textAlign: 'center' }}>
                                     <StatusBadge loading={loading_} colors={existsC} label={loading_ ? '…' : (exists ? 'Yes' : 'No')} />
                                 </td>
 
                                 {/* Has data */}
-                                <td style={{ padding: '11px 16px', textAlign: 'center' }}>
+                                <td style={{ padding: '5px 8px', textAlign: 'center' }}>
                                     <StatusBadge loading={loading_} colors={dataC}
                                         label={loading_ ? '…' : (!exists ? '—' : (hasData ? 'Yes' : 'Empty'))} />
                                 </td>
 
-                                <td style={{ padding: '11px 16px', textAlign: 'right', color: '#4a7c59', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>
+                                <td style={{ padding: '5px 8px', textAlign: 'right', color: '#4a7c59', fontVariantNumeric: 'tabular-nums', fontWeight: 500, fontSize: '11px' }}>
                                     {s ? formatDate(s.minTime) : '…'}
                                 </td>
-                                <td style={{ padding: '11px 16px', textAlign: 'right', color: '#4a7c59', fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>
+                                <td style={{ padding: '5px 8px', textAlign: 'right', color: '#4a7c59', fontVariantNumeric: 'tabular-nums', fontWeight: 500, fontSize: '11px' }}>
                                     {s ? formatRelative(s.maxTime) : '…'}
                                 </td>
-                                <td style={{ padding: '11px 16px', textAlign: 'right', color: '#1e4d2b', fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
+                                <td style={{ padding: '5px 8px', textAlign: 'right', color: '#1e4d2b', fontVariantNumeric: 'tabular-nums', fontWeight: 700, fontSize: '11px' }}>
                                     {s ? formatCount(s.count) : '…'}
                                 </td>
                             </tr>
@@ -335,6 +340,7 @@ export default function IndexHealth() {
                     })}
                 </tbody>
             </table>
+            </div>
 
             {/* ── Hints ── */}
             {!loading && <HintsPanel statuses={statuses} />}
@@ -343,22 +349,22 @@ export default function IndexHealth() {
 }
 
 function StatusBadge({ loading, colors, label }) {
-    if (loading) return <span style={{ color: '#bbb', fontSize: '18px' }}>…</span>;
+    if (loading) return <span style={{ color: '#bbb', fontSize: '14px' }}>…</span>;
     return (
         <span style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '4px 14px',
+            gap: '4px',
+            padding: '2px 8px',
             borderRadius: '20px',
             backgroundColor: colors.bg,
             border: `1px solid ${colors.border}`,
             color: colors.text,
             fontWeight: 700,
-            fontSize: '13px',
+            fontSize: '11px',
         }}>
             <span style={{
-                width: '9px', height: '9px',
+                width: '7px', height: '7px',
                 borderRadius: '50%',
                 backgroundColor: colors.dot,
                 flexShrink: 0,

@@ -221,7 +221,7 @@ Completed: 2,169 results by scanning 1,355,725 events in 6.535 seconds
 
 ```spl
 | mcollect index=s4c_student_metrics prefix=stocks. 
-  [ search index=s4c_stocks | table _time, symbol, open, high, low, close, volume ]
+  [ search index=s4c_stock_indices | table _time, symbol, open, high, low, close, volume ]
 
 | mcatalog values(metric_name) WHERE index=s4c_meteo_metrics
 
@@ -402,7 +402,7 @@ index=_audit action=search info=completed
 | sort -count
 
 -- Convert events to metrics
-index=s4c_stocks
+index=s4c_stock_indices
 | mcollect index=s4c_student_metrics prefix=stocks.
 
 -- Walklex: what's in my index?
@@ -410,7 +410,7 @@ index=s4c_stocks
 | stats sum(count) by term
 
 -- Weather + stocks correlation
-index=s4c_stocks symbol="^GDAXI"
+index=s4c_stock_indices symbol="^GDAXI"
 | eval date=strftime(_time,"%Y-%m-%d")
 | join date [
     search index=s4c_meteo_historic exchange="DAX"
