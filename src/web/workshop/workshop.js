@@ -89,20 +89,6 @@ const labs = {
                         }
                     ]
                 },
-
-                {
-                    "title": "SPL2",
-                    "steps": [
-                        {
-                            "title": "SPL2 Overview",
-                            "content": "chapter1/spl2_overview.mdx"
-                        },
-                        {
-                            "title": "SPL2 Modules",
-                            "content": "chapter1/spl2_modules.mdx"
-                        }
-                    ]
-                },
                 {
                     "title": "Useful Links",
                     "steps": [
@@ -236,7 +222,23 @@ const labs = {
                        
                     ]
                 },
-               
+                {
+                    "title": "SPL2",
+                    "steps": [
+                        {
+                            "title": "SPL2 Overview",
+                            "content": "chapter3/spl2_overview.mdx"
+                        },
+                        {
+                            "title": "SPL2 Modules",
+                            "content": "chapter3/spl2_modules.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links4.mdx"
+                        }
+                    ]
+                },
                 {
                     "title": "Command Types",
                     "steps": [
@@ -333,6 +335,19 @@ const labs = {
                             "content": "chapter3/useful_links4.mdx"
                         }
                         
+                    ]
+                },
+                {
+                    "title": "MCP",
+                    "steps": [
+                        {
+                            "title": "Splunk MCP Server",
+                            "content": "chapter3/mcp_splunk.mdx"
+                        },
+                        {
+                            "title": "Useful Links",
+                            "content": "chapter3/useful_links4.mdx"
+                        }
                     ]
                 },
 

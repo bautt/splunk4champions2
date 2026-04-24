@@ -1,0 +1,60 @@
+import Link from '@splunk/react-ui/Link'
+
+## Splunk MCP Server
+
+The **Model Context Protocol (MCP)** server for Splunk provides a standardized, secure way for **AI assistants, agents, and IDEs** (for example Cursor, Claude Code, or other MCP clients) to run searches, query index and system metadata, and use optional **Splunk AI Assistant for SPL** tools — all over authenticated HTTP to your Splunk deployment.
+
+### Key points (at a glance)
+
+- **Install** the <Link to="https://splunkbase.splunk.com/app/7931" openInNewContext>Splunk MCP Server</Link> app from Splunkbase on the **search head** (or the node that exposes Search and the REST API you will call).
+- **Token first:** create an **encrypted MCP token** in the app before connecting any client; without it, clients cannot authenticate to the MCP REST endpoints.
+- **Endpoints:** use the **HTTPS** URL the app shows (for example `https://your-host:8089/services/mcp` and, if shown, the alternate `splunkd/__raw/...` URL). Put the token in your client as the sample shows: `Authorization: Bearer` plus your token value.
+- **Tools:** on the **Tools** tab, **enable only** what you need (built-in `splunk_*` tools, optional `saia_*` AI Assistant tools). Leave risky or unused tools **disabled** (for example `splunk_run_saved_search` if you do not want runs from the client).
+- **Service account:** use a **dedicated Splunk user** for the token (for example **`username_mcp`**) with **least privilege** on indexes and capabilities — not your personal admin — so **audit** and **search job** history show a clear automation identity.
+- **TLS:** in labs with **self-signed** certificates, configure the MCP client to **trust** the cert (or use a proper certificate in production).
+- **Scope:** test on **non-production**; treat MCP like any powerful automation path to your data.
+
+**Splunkbase & overview:** <Link to="https://splunkbase.splunk.com/app/7931" openInNewContext>Splunk MCP Server on Splunkbase</Link> · <Link to="https://www.splunk.com/en_us/blog/artificial-intelligence/unlock-the-power-of-splunk-cloud-platform-with-the-mcp-server.html" openInNewContext>Unlock the power of Splunk Cloud Platform with the MCP server</Link> (Splunk blog: natural language access, security and RBAC, ecosystem integration)
+
+Official documentation: <Link to="https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/configure-the-splunk-mcp-server" openInNewContext>Configure the Splunk MCP Server</Link> and <Link to="https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/connect-and-use-an-mcp-client" openInNewContext>connect and use an MCP client</Link> (see also the **MCP server for Splunk platform** section in Docs for your Splunk / Cloud version).
+
+### Install the app
+
+1. Open the <Link to="https://splunkbase.splunk.com/app/7931" openInNewContext>Splunk MCP Server</Link> listing on Splunkbase (ID **7931**).
+2. Install it on your **search head** (or the instance where Search and REST are available) like any other app, then enable it and review the app’s **Setup** / **Configuration** if prompted.
+
+### Create a token before connecting clients
+
+MCP clients authenticate with a **Bearer token**. In the Splunk MCP Server app you must **create an encrypted MCP token** (time-bound, revocable) and copy it into your client configuration. You cannot use the REST API without a valid token.
+
+The **Server is active** status and the **endpoints** (for example management port `.../services/mcp` and sometimes a web port under `splunkd/__raw/...`) are shown on the app’s home page. Copy the URL your client expects and paste the token where the sample config shows a placeholder.
+
+<img src="/static/app/splunk4champions2/images/mcp_server_config.png" width="100%" alt="Splunk MCP Server: create token, server status, and endpoint URLs" />
+
+### Tools you expose to the client
+
+Under the **Tools** tab you can enable or disable each capability the AI may call (for example `splunk_run_query`, `splunk_get_indexes`, or the **saia_*** helpers for natural-language SPL). Start with the minimum set you need, then expand.
+
+<img src="/static/app/splunk4champions2/images/mcp_server_tools.png" width="100%" alt="Splunk MCP Server Tools: built-in and Splunk AI Assistant tools" />
+
+### Use a dedicated service account (recommended)
+
+For **auditability** and **least privilege**, create a **second Splunk user** used only for MCP, for example naming it like **`yourname_mcp`** (or a role-based name such as `mcp_automation`).
+
+- Token and searches are then clearly attributable in **Search job** history, **audit logs**, and **Data models** of who did what.
+- Grant that user only the **indexes and capabilities** the MCP integration needs (for example `search` on specific indexes, not `admin_all_objects`).
+- Do **not** share your personal admin account’s token with an IDE or automation — rotation and incident response are much harder.
+
+### Client configuration (conceptual)
+
+Your MCP client (IDE or `mcp-remote`) typically needs:
+
+- The **HTTPS** endpoint to `.../services/mcp` (or the alternate URL the app displays)
+- Header `Authorization: Bearer` plus your token value (as in the app’s sample config)
+- On lab systems with **self-signed certificates**, the client may need a setting to **trust** the cert (or use a proper certificate in production)
+
+Refer to the **Copy the MCP configuration** block in the app UI for a template tailored to your host and path.
+
+### Workshop note
+
+The exercises in this app do not require MCP; this section is for teams who want **AI-assisted SPL** and **automation** against a real Splunk instance. Install and test on a **non-production** environment first.

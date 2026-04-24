@@ -4,6 +4,8 @@ import Link from '@splunk/react-ui/Link';
 
 SPL2 is Splunk's next-generation search and data preparation language, reaching worldwide general availability on **January 16, 2026**. It is a single, unified language that works across both search and stream contexts — the same syntax you use to query indexed data also powers in-stream processing in Edge Processor and Ingest Processor.
 
+In Splunk’s [Introducing SPL2](https://www.splunk.com/en_us/blog/platform/introducing-spl2-the-next-generation-search-data-preparation-language-for-splunk.html) announcement, SPL2 is positioned as the **one language** powering the **Cisco Data Fabric**: analysts get familiar SPL-like phrasing *plus* optional **SQL-like** syntax (easier for people coming from databases), while admins gain **data views** (permissioned “views” over indexes to share data without index bloat) and **custom data types** to spot poor-quality data and **drop or fix it in-stream** using Edge and Ingest Processor. The same SPL2 you use in **Search** is reused in **stream** products—**detect a problem in search, fix it upstream** with the same logic. The **SPL2 Search and Reporting** app’s **module editor** adds autocomplete, in-product documentation, and point-and-click help; you can also **embed existing SPL** inside SPL2 and use the **SPL to SPL2 converter** in the product when you want to modernize. App developers can ship **SPL2 module files** with apps—curated data, custom functions, validation, and packaged **views** for customers.
+
 > *"Learn once, use everywhere"* — SPL2 logic written for search can be reused directly in stream processing pipelines.
 
 ---
@@ -87,7 +89,11 @@ SPL2 keywords are **case-insensitive** but conventionally written in UPPERCASE. 
 
 ---
 
-<Link to="https://www.splunk.com/en_us/blog/platform/introducing-spl2-the-next-generation-search-data-preparation-language-for-splunk.html" openInNewContext>Introducing SPL2 — Splunk Blog</Link>
+### Official reference and further reading
+
+<Link to="https://help.splunk.com/en/splunk-enterprise/search/spl2-search-reference/introduction/introduction" openInNewContext>Introduction — SPL2 Search Reference (Help)</Link>
+<br/>
+<Link to="https://www.splunk.com/en_us/blog/platform/introducing-spl2-the-next-generation-search-data-preparation-language-for-splunk.html" openInNewContext>Introducing SPL2 — The next-generation search & data preparation language (Splunk Blog)</Link>
 <br/>
 <Link to="https://help.splunk.com/en/splunk-enterprise/search/spl2-overview/where-can-i-use-spl2" openInNewContext>Where can I use SPL2? — Splunk Docs</Link>
 <br/>
