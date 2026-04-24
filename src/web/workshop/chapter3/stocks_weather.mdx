@@ -7,6 +7,8 @@ Daily historical weather for the **same seven cities** as `exchange_city` in `s4
 **Weather fields:** `temperature_2m_mean` `temperature_2m_max` `precipitation_sum` `wind_speed_10m_max` `sunshine_duration` `weather_code`  
 **Link key:** `city` in `s4c_meteo_historic` matches `exchange_city` in `s4c_stock_indices`
 
+**Why `inputlookup meteo_historic` in joins:** A `join` subsearch is limited to 10,000 results by default. The meteo file has more daily rows than that, so a subsearch on `index=s4c_meteo_historic` can be truncated and the join shows empty weather. `inputlookup` uses the app lookup (same data as the index) without that cap. The app also ships a higher `subsearch` `maxout` in `limits.conf` for other joins.
+
 ---
 
 ### Explore the weather data
@@ -21,10 +23,9 @@ Daily historical weather for the **same seven cities** as `exchange_city` in `s4
 ### Join stocks + weather on date and exchange city
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
-| eval date=strftime(_time,"%Y-%m-%d")
+| eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
 | join type=left date exchange_city [
-    search index=s4c_meteo_historic
-    | eval date=strftime(_time,"%Y-%m-%d")
+    | inputlookup meteo_historic
     | rename city as exchange_city
     | fields date exchange_city temperature_2m_mean precipitation_sum sunshine_duration
 ]
@@ -36,10 +37,10 @@ Daily historical weather for the **same seven cities** as `exchange_city` in `s4
 ### DAX close vs Frankfurt temperature (monthly average)
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
-| eval month=strftime(_time,"%Y-%m"), date=strftime(_time,"%Y-%m-%d")
+| eval month=strftime(_time,"%Y-%m"), date=coalesce(date, strftime(_time,"%Y-%m-%d"))
 | join type=left date [
     search index=s4c_meteo_historic city=Frankfurt
-    | eval date=strftime(_time,"%Y-%m-%d")
+    | eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
     | fields date temperature_2m_mean sunshine_duration
 ]
 | stats avg(close) as avg_close avg(temperature_2m_mean) as avg_temp by month
@@ -52,10 +53,10 @@ Daily historical weather for the **same seven cities** as `exchange_city` in `s4
 Do traders trade less on rainy London days?
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices index_name="FTSE 100"
-| eval date=strftime(_time,"%Y-%m-%d")
+| eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
 | join type=left date [
     search index=s4c_meteo_historic city=London
-    | eval date=strftime(_time,"%Y-%m-%d")
+    | eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
     | fields date precipitation_sum
 ]
 | eval rain_day=if(precipitation_sum>5,"rainy","dry")
@@ -66,10 +67,9 @@ Do traders trade less on rainy London days?
 ### Sunshine hours vs daily price change — all exchanges
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
-| eval date=strftime(_time,"%Y-%m-%d"), daily_pct=round(((close-open)/open)*100,2)
+| eval date=coalesce(date, strftime(_time,"%Y-%m-%d")), daily_pct=round(((close-open)/open)*100,2)
 | join type=left date exchange_city [
-    search index=s4c_meteo_historic
-    | eval date=strftime(_time,"%Y-%m-%d")
+    | inputlookup meteo_historic
     | rename city as exchange_city
     | fields date exchange_city sunshine_duration temperature_2m_mean
 ]
@@ -87,11 +87,11 @@ Do traders trade less on rainy London days?
     wind_speed_10m_max>60,"storm",
     precipitation_sum>40,"heavy rain",
     1=1,"other")
- | rename city as exchange_city
- | join type=left date exchange_city [
-    search index=s4c_stock_indices
-    | eval date=strftime(_time,"%Y-%m-%d"), daily_pct=round(((close-open)/open)*100,2)
-    | fields date exchange_city close daily_pct volume
+| rename city as exchange_city
+| join type=left date exchange_city [
+   search index=s4c_stock_indices
+   | eval date=coalesce(date, strftime(_time,"%Y-%m-%d")), daily_pct=round(((close-open)/open)*100,2)
+   | fields date exchange_city close daily_pct volume
 ]
 | table date city exchange_city weather_event wind_speed_10m_max precipitation_sum close daily_pct
 | sort -date`}></SplunkSearch>

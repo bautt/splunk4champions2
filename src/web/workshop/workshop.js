@@ -698,8 +698,26 @@ const labs = {
                     "title": "Setup",
                     "steps": [
                         {
-                            "title": "Setup Task",
+                            "title": "Setup",
                             "content": "chapter0/setup_data.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Readme",
+                    "steps": [
+                        {
+                            "title": "Readme",
+                            "content": "chapter0/readme.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "What's new",
+                    "steps": [
+                        {
+                            "title": "What's new",
+                            "content": "chapter0/whatsnew.mdx"
                         }
                     ]
                 },

@@ -1,0 +1,207 @@
+import Link from '@splunk/react-ui/Link'
+
+<p>
+  <img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/src/package/appserver/static/images/champignon_schwarz_trans_150x150.png" width="150" alt="" />
+  &nbsp;
+  <img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/src/package/appserver/static/images/champignon_weiss_trans_150x150.png" width="150" alt="" />
+</p>
+
+# Welcome to the Splunk4Champions Workshop
+
+An interactive, hands-on Splunk workshop delivered as a Splunk app. Participants follow guided labs through this React UI embedded directly in Splunk — no slides, everything runs inside the platform.
+
+Built for experienced Splunk users: admins, use case developers, and champions who want to go deeper.
+
+## Who should attend
+
+- Experienced and ambitious Splunk users
+- Use case owners and developers
+- Splunk admins
+
+## What's covered
+
+| Chapter | Topics |
+|---------|--------|
+| **0 · Setup** | Health Check — verify indexes and app/Splunk version at a glance; Readme; What's new |
+| **1 · Settings** | GUI options, Search Assistant, SPL2, Stock Index Search & tstats |
+| **2 · Data** | Indexes, buckets, data pipeline, distributed architecture, data aging |
+| **3 · Search** | Search basics, command types, Job Inspector, terms/segmentation, tstats, tips & quiz |
+| **4 · Metrics** | Log-to-metrics, mcollect, mcatalog, mstats, weather data reference, stock index metrics lab |
+| **5 · XML Dashboards** | Base search, drilldown, annotations, colors, post-processing |
+| **6 · Dashboard Studio** | Tutorial, data sources, interactivity, layout, custom visualizations, canvas viz library, sharing |
+| **7 · Mobile** | Splunk Mobile overview and demo |
+
+## Installation
+
+Download the latest release from the <Link to="https://github.com/bautt/splunk4champions2/releases/" openInNewContext>Releases</Link> page and install as a standard Splunk app.
+
+- Compatible with Splunk 8+
+- Works on Splunk Cloud
+- Not intended for production systems — no warranty
+
+If you have access to <Link to="https://show.splunk.com" openInNewContext>show.splunk.com</Link>, the workshop is available on Splunk Show.
+
+The same content lives in the repository <Link to="https://github.com/bautt/splunk4champions2/blob/main/README.md" openInNewContext>README.md</Link> (GitHub) if you want to read it next to the repo or share the link.
+
+## Included datasets
+
+The app ships with real historical data used across the labs:
+
+- **`s4c_stock_indices`** — up to 10 years of daily OHLCV for **9** major indexes (DAX, Dow, EURO STOXX 50, FTSE 100, Hang Seng, Nasdaq, Nikkei, S&P 500, SMI). Ingested by `update_stock_indices.py` (Yahoo chart API, stdlib only; `_time` = Unix epoch). Join `exchange_city` to `s4c_meteo_historic` on `date` and `city`.
+- **`s4c_meteo_historic`** — Daily historical weather for the **seven** index `exchange_city` values (2016 → rolling; Paris/CAC removed). Shipped `lookups/meteo_historic.csv` plus `update_meteo_historic_csv.py` (Open-Meteo archive, daily) to keep the calendar in step with new index data. Join on `date` and `city` = `exchange_city`.
+- **`s4c_weather`** — Real-time OpenWeatherMap data for metrics labs.
+- **`s4c_tutorial`** — Web server logs for search and dashboard exercises.
+
+## Example data: `s4c_*` workshop indexes
+
+The health check in **Setup** lists the indexes the workshop expects. Below is what each `s4c_*` index holds and what it is for in the labs. (The app’s `default/indexes.conf` also defines them with workshop-friendly retention and size caps where needed.)
+
+### `s4c_meteo` (events)
+
+- **Ingestion:** `open_meteo_weather.py` in **events** mode — flat JSON with plain field names (`open_meteo:weather:json` sourcetype), on a **five-minute** schedule.
+- **Content:** Open-Meteo current weather for the configured **city/region** (temperature, cloud cover, etc.) as a normal **event** index; good for ad hoc SPL, timecharts, and the weather pipeline in Chapter 4.
+- **Use for:** “Live” open-meteo event shapes next to the metrics pipeline; search-time field extraction, formatting, and comparison with `s4c_meteo_metrics`.
+
+### `s4c_meteo_historic` (events)
+
+- **Ingestion:** File monitor on `lookups/meteo_historic.csv` (`s4c:meteo:historic`) plus daily `update_meteo_historic_csv.py` appends new rows; long retention so **2016+** rows stay available.
+- **Content:** **One row per (day, city)** for the **seven** exchange cities used with stock indices. Fields such as `temperature_2m_mean`, `precipitation_sum`, `sunshine_duration`, `city`, `date`, and related metadata. **`city` matches `exchange_city` in `s4c_stock_indices`** for the same day (`date` / `_time` aligned to calendar day).
+- **Use for:** **Chapter 3** weather + stock correlation; joins, `lookup`/`inputlookup` examples. Optional join key: `date` + `city` ↔ `exchange_city`.
+
+### `s4c_meteo_metrics` (metrics)
+
+- **Ingestion:** Same `open_meteo_weather.py` in **metrics** mode, mapping fields into a **metric** schema (`open_meteo:weather:metric` sourcetype), **five-minute** schedule.
+- **Content:** **Metric** time series (Open-Meteo weather) — use **`mstats`**, `mcatalog`, and metrics workflows in the **Metrics** and **Analytics** labs.
+- **Use for:** **Chapter 4** (metrics store, mstats, Analytics Workspace) alongside log-to-metrics concepts; contrast with the event index `s4c_meteo` and the historic CSV-backed index above.
+
+### `s4c_phyphox` (events)
+
+- **Ingestion:** HEC input **http://phyphox** to JSON from the <Link to="https://phyphox.org/" openInNewContext>Phyphox</Link> phone app.
+- **Content:** Sensor and experiment events (structured JSON) for hands-on “bring your own device” data.
+- **Use for:** **Experiments** chapter: HTTP Event Collector, JSON parsing, and optional correlation with the companion metrics index.
+
+### `s4c_phyphox_metrics` (metrics)
+
+- **Ingestion:** HEC input **http://phyphox_metrics** into a **metric** index (`phyphox_metrics` sourcetype).
+- **Content:** **Metric** points derived from Phyphox streams (time-series).
+- **Use for:** Comparing **event** vs **metric** representations; **`mstats`** and metrics tooling on the same kind of data as `s4c_meteo_metrics`.
+
+### `s4c_stock_indices` (events)
+
+- **Ingestion:** Daily scripted input `update_stock_indices.py` (Yahoo-style daily bars; JSON lines, `s4c:stock_indices:json`).
+- **Content:** **Daily OHLCV** per **symbol** and **index** for **nine** global indices; each event includes e.g. `date`, `symbol`, `index_name`, **`exchange_city`**, and prices/volume. **`_time` is UTC midnight for the trading day** (for reliable joins to calendar `date` and meteo).
+- **Use for:** **Chapters 1, 3, 4** — search, tstats, stock+weather correlation, and **`mcollect`** / metrics exercises when converted to the student metrics index.
+
+### `s4c_student_metrics` (metrics)
+
+- **Ingestion:** Not pre-filled: participants run **`mcollect` from searches** in the app (e.g. stock or weather) during **Chapter 4** labs, after the index exists.
+- **Content:** A **dedicated practice metrics index** so you can test **`mcollect`**, **`mcatalog`**, and **`mstats`** without writing into production metric indexes. Prefixes like `stocks.*` or fields such as `city` appear as defined in the lab.
+- **Use for:** **Metrics** labs only — verify with the **Setup** health check that the index is present, then use the copy-paste searches from the workshop.
+
+### `s4c_tutorial` (events)
+
+- **Ingestion:** `tutorialdata.zip` in `static/` (monitor input), with paths exposed as in the app config.
+- **Content:** **Web-style access records** and related tutorial lines used as a **familiar, bounded** sample for first searches and many dashboard examples.
+- **Use for:** **Chapters 3, 5, 6** — `stats`, timecharts, drilldowns, and Dashboard Studio / XML without depending on your production data.
+
+### `s4c_weather` (events)
+
+- **Ingestion:** `current*.log` under `static/` (monitor, `s4c:weather` / JSON) plus supporting download scripts that refresh workshop files (scripts log to `_internal` but feed file updates for this index).
+- **Content:** **Real and simulated** OpenWeatherMap–style **JSON** weather for multiple cities, updated on a schedule; used where the lab calls for “current weather” in **event** form and for metrics/weather mashups in earlier chapters.
+- **Use for:** **Metrics and weather** exercises; `spath`, JSON, and time-series in **event** form (distinct from `s4c_meteo` / `s4c_meteo_historic` and from metric indexes).
+
+### `s4c_www` (events)
+
+- **Ingestion:** `www*` logs under `static/`, `access_combined` family sourcetype, `host` such as `webgurke`; online refresh scripts can append live-looking traffic.
+- **Content:** **Combined web access** lines (URIs, status, bytes, `useragent` buckets, etc.) for a small demo “site” — Rookies- and business-oriented examples in some lab copy.
+- **Use for:** **Search**, **pseudonymization** / privacy examples, and **web analytics**-style patterns without using customer data.
+
+---
+
+## Phyphox experiments
+
+After creating a HEC for Phyphox data, add to the HEC config:
+
+```
+/etc/apps/splunk_httpinput/local/inputs.conf
+[http://phyphox]
+allowQueryStringAuth = true
+```
+
+## Screenshots (from the repository)
+
+The following mirror the <Link to="https://github.com/bautt/splunk4champions2/blob/main/README.md" openInNewContext>GitHub README</Link> screenshot section (images load from the `main` branch).
+
+#### Setup — Health Check
+
+Verify index status, event counts, and date ranges. Shows Splunk and app version at a glance.
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch0_setup_health_check.png" width="100%" alt="Health Check" />
+
+#### Chapter 1 — Settings: Search Assistant
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch1_settings_search_assistant.png" width="100%" alt="Search Assistant" />
+
+#### Chapter 1 — Settings: Stock Index Search (SPL & tstats)
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch1_settings_stock_index_spl.png" width="100%" alt="Stock Index SPL" />
+
+#### Chapter 2 — Data: Index and Buckets
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch2_data_index_buckets.png" width="100%" alt="Data Index Buckets" />
+
+#### Chapter 3 — Search: Search Basics
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_basics.png" width="100%" alt="Search Basics" />
+
+#### Chapter 3 — Search: Job Inspector
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_inspector.png" width="100%" alt="Inspector" />
+
+#### Chapter 3 — Search: Terms & Segmentation
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_terms_segmentation.png" width="100%" alt="Segmentation" />
+
+#### Chapter 3 — Search: tstats
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_tstats.png" width="100%" alt="tstats" />
+
+#### Chapter 4 — Metrics: Searching Metrics
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch4_metrics_searching.png" width="100%" alt="Metrics" />
+
+#### Chapter 5 — XML Dashboards: Base Search
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch5_xml_dashboards_base_search.png" width="100%" alt="XML Dashboards" />
+
+#### Chapter 6 — Dashboard Studio: Overview
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch6_dashboard_studio_overview.png" width="100%" alt="Dashboard Studio" />
+
+#### Chapter 6 — Dashboard Studio: Canvas Visualizations (Robert Castley)
+
+Production-ready Splunk Canvas 2D API visualizations — cloned, built, and invoked directly with no Splunk experience required. No future development dependency or Claude Code needed.
+
+<img src="https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch6_dashboard_studio_canvas_viz.png" width="100%" alt="Canvas Viz" />
+
+---
+
+## Credits (as in the repository)
+
+Workshop content is collected, consolidated, and adapted from public .conf presentations, blog articles, and Splunk Docs. All information is provided “as is” with no guarantee of completeness, accuracy, or timeliness.
+
+- Originally created by **Andreas Greeske** and **Tomas Baublys** in 2020
+- Version 2.0 rebuilt by **Tomas Baublys** on the Splunk UI template by **Daniel Federschmidt**
+- Suggestions and improvements welcome: <Link to="mailto:tbaublys@splunk.com" openInNewContext>tbaublys@splunk.com</Link>
+
+**Canvas Visualizations** section powered by <Link to="https://github.com/rcastley/splunk-custom-visualizations" openInNewContext>splunk-custom-visualizations</Link> by **Robert Castley** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
+
+### Special thanks for public content
+
+Martin Müller · Clara Merriman · Richard Morgan · and many others linked throughout the app
+
+### Special thanks for improvements and problem solving
+
+Dirk Nitschke · Holger Sesterhenn · Henri Mak · Lukas Utz
+
+The **Credits** step in this same Setup chapter has extended acknowledgements in LinkedIn and GitHub form; use that page for the most up-to-date list.
