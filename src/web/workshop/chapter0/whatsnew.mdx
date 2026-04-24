@@ -1,0 +1,51 @@
+import Link from '@splunk/react-ui/Link'
+
+# What's new in the app
+
+The repository does not ship a separate `WHATSNEW.md` file. **Source of truth for long-form release notes** is the <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page and tag descriptions on <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>GitHub</Link>. Below: recent **app** versions in this build, then **highlights** from an earlier GitHub release so you can see the same story as the repo.
+
+If you build from source, the **exact** app version is shown on the **Setup** health check page and under **Settings → Apps → Splunk4Champions2**.
+
+---
+
+## This build (2.10.87)
+
+- **Readme:** new section **Example data: `s4c_*` workshop indexes** — describes each `s4c_` index (content, ingestion, and what chapters use it).
+
+## 2.10.86
+
+- **Setup** is the **first** sub-section in the **Setup** chapter: health check (`IndexHealth`) comes before **Readme** and **What's new**.
+- **Readme** and **What's new** in the app are expanded to align with **README.md** and **GitHub Releases** (this page).
+
+## 2.10.85
+
+- **Setup chapter:** added a **Readme** step and a **What's new** step (in-app; links to the full **README** on GitHub and to releases).
+
+## 2.10.84
+
+- **Chapter 3 (stocks and weather):** `join` examples that merge index data with historical meteo use **`inputlookup meteo_historic`** and a higher **`[subsearch] maxout`** in the app (`limits.conf`) + **`[meteo_historic]`** in `transforms.conf`, so the default **10,000**-row subsearch cap does not drop weather matches. See the <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>repository</Link> for those files.
+
+---
+
+## Highlights from GitHub Release v2.10.65 (excerpt from the public release notes)
+
+The <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page is the full version. A condensed list (as published for **v2.10.65**) includes:
+
+### Dependency and UI
+
+- Upgraded **`@splunk/*`** stack (e.g. react-ui v4→v5, webpack-configs) and refreshed **`yarn.lock`** to reduce open Dependabot issues.
+- Workshop chrome: icon placement, chapter/section bar layout, horizontal scroll on narrow viewports, **Prev / Next** navigation, hash URLs for **bookmarks and back/forward** (see release text for the exact fragment example).
+
+### Content and data (as described in that release)
+
+- **Setup: Health Check** table with index status, time range, counts, and Splunk/app version in the header.
+- Datasets: stock index and historical meteo (with join keys) for labs; that release text referred to `s4c_stocks` naming where applicable — the current app uses **`s4c_stock_indices`**; see the **Readme** step in this chapter for the current field list.
+- New or expanded material for **SPL2**, **AI Assistant**, **stock/weather** correlation, **interactive quiz (Chapter 3)**, **metrics / mcollect** lab, and **Canvas visualizations (Robert Castley / splunk-custom-visualizations)** with a <Link to="https://rcastley.github.io/splunk-custom-visualizations/" openInNewContext>live demo</Link>.
+
+For screenshots, dependency detail, and every file touched, open the <Link to="https://github.com/bautt/splunk4champions2/releases/tag/v2.10.65" openInNewContext>v2.10.65</Link> release (or newer tags) on GitHub.
+
+---
+
+## Older tags
+
+Smaller and maintenance releases (weather shifts, version bumps, Phyphox, cleanup, and earlier 2.9.x lines) are listed chronologically on <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> — use **Compare** between tags to see a full diff for any upgrade you are planning.
