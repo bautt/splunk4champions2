@@ -2,7 +2,7 @@ import Link from '@splunk/react-ui/Link'
 
 ## Canvas-Based Custom Visualizations
 
-<Link to="https://github.com/rcastley/splunk-custom-visualizations" openInNewContext>splunk-custom-visualizations</Link> by Robert Castley is a library of production-ready Splunk visualizations built on the Canvas 2D API. Every example in the repo can be **cloned, built, and installed directly** — no Splunk development experience or Claude Code required.
+<Link to="https://github.com/rcastley/splunk-custom-visualizations" openInNewContext>splunk-custom-visualizations</Link> by Robert Castley is a library of production-ready Splunk visualizations built on the Canvas 2D API. Every example in the repo can be **cloned, built, and installed directly** — no Splunk development experience or Cursor required.
 
 <img src="/static/app/splunk4champions2/images/canvas_viz_examples.jpg" width="100%" alt="Data Pipeline and Index Universe visualizations"/>
 
@@ -75,16 +75,16 @@ All eight vizzes share the same glass-tube design language. Animated effects int
 
 ---
 
-### Building Your Own with Claude Code
+### Building Your Own with Cursor
 
-The repo includes a `/splunk-viz` Claude Code skill. Describe what you want and it scaffolds the entire app:
+The repo includes a `/splunk-viz` skill. Describe what you want and it scaffolds the entire app:
 
 ```text
 Using /splunk-viz, create a visualization that shows a donut chart
 with a center label. It should accept "label" and "value" columns.
 ```
 
-Claude generates `visualization_source.js`, `formatter.html`, `visualizations.conf`, webpack config, and `build.sh`. Build and install with:
+Cursor generates `visualization_source.js`, `formatter.html`, `visualizations.conf`, webpack config, and `build.sh`. Build and install with:
 
 ```bash
 ./build.sh my_viz_name
@@ -99,7 +99,7 @@ $SPLUNK_HOME/bin/splunk install app dist/my_viz_name-1.0.0.tar.gz
 |---|---|
 | Splunk Enterprise 10.2+ or Splunk Cloud | Running visualizations |
 | Node.js 18+ | Running `build.sh` (not needed at Splunk runtime) |
-| Claude Code | Optional — only for generating new vizzes from scratch |
+| Cursor | Optional — only for generating new vizzes from scratch |
 
 ---
 
