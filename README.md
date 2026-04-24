@@ -17,9 +17,9 @@ Built for experienced Splunk users: admins, use case developers, and champions w
 | Chapter | Topics |
 |---------|--------|
 | **0 · Setup** | Health Check — verify indexes and app/Splunk version at a glance |
-| **1 · Settings** | GUI options, Search Assistant, SPL2, Stock Index Search & tstats |
+| **1 · Settings** | GUI options, Search Assistant, Stock Index Search & tstats |
 | **2 · Data** | Indexes, buckets, data pipeline, distributed architecture, data aging |
-| **3 · Search** | Search basics, command types, Job Inspector, terms/segmentation, tstats, tips & quiz |
+| **3 · Search** | Search basics, SPL2, command types, Job Inspector, terms/segmentation, tstats, search tips, Splunk MCP Server (optional), quiz |
 | **4 · Metrics** | Log-to-metrics, mcollect, mcatalog, mstats, weather data reference, stock index metrics lab |
 | **5 · XML Dashboards** | Base search, drilldown, annotations, colors, post-processing |
 | **6 · Dashboard Studio** | Tutorial, data sources, interactivity, layout, custom visualizations, canvas viz library, sharing |
