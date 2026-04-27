@@ -1,0 +1,117 @@
+import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz'
+
+<BuzzQuiz
+  title="Splunk4Champions Quiz"
+  subtitle="This is a technical quiz. However, don't take it too serious :) No panic!"
+  timePerQuestion={20}
+  pointsBase={1000}
+>
+
+  <Question
+    prompt="What do we see here?"
+    emoji="🪣"
+    explanation="The bucket icons represent how Splunk ages data through hot → warm → cold → frozen states.">
+    <Answer>Stuff that is not easy to recycle</Answer>
+    <Answer>Symbolic representation of human growth</Answer>
+    <Answer>Random buckets</Answer>
+    <Answer correct>Splunk Data life cycle (historical design)</Answer>
+  </Question>
+
+  <Question
+    prompt="Bloom filter is:"
+    emoji="🌸"
+    explanation="A bloom filter is a probabilistic, space-efficient data structure that uses hashing to test set membership. False positives are possible; false negatives are not.">
+    <Answer>New Cartoon Filter on Instagram</Answer>
+    <Answer correct>A probabilistic data structure based on hashing</Answer>
+    <Answer>Car oil filter for electric cars</Answer>
+    <Answer>A filter for ActiveX objects or Java applets</Answer>
+  </Question>
+
+  <Question
+    prompt="What is in a Splunk Enterprise index bucket?"
+    emoji="🗄️"
+    explanation="A bucket holds the rawdata journal (compressed events), tsidx files (time-series index), the bloom filter, plus a few metadata files.">
+    <Answer>Inverted indices and BKD trees (and some other stuff)</Answer>
+    <Answer>KV store, index files and no-sql database files (and some other stuff)</Answer>
+    <Answer correct>Bloomfilter, tsidx and compressed raw data (and some other stuff)</Answer>
+    <Answer>B-tree, data pages and indices (and some other stuff)</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="TERM directive can be used across major breakers"
+    emoji="🚧"
+    correct={false}
+    explanation="TERM() only works within minor breakers. Major breakers (whitespace, commas, etc.) split tokens at indexing time, so TERM cannot match across them." />
+
+  <TrueFalse
+    prompt="Streaming commands should be used before transforming commands"
+    emoji="🌊"
+    correct={true}
+    explanation="Streaming commands run on each indexer in parallel and reduce data early. Putting transforming commands (stats, chart, ...) first or in the middle forces the search head to do the heavy lifting." />
+
+  <Question
+    prompt="What is NOT true about metrics in Splunk?"
+    emoji="📊"
+    explanation="Metrics are a first-class part of Splunk Enterprise — no extra software needed. They are great for performance, pair well with the Analytics Workspace, and store dimensions alongside values.">
+    <Answer>Metrics are easy to use in Analytics Workspace</Answer>
+    <Answer>Metrics are great for performance</Answer>
+    <Answer correct>Metrics require additional software</Answer>
+    <Answer>Context information can be stored as dimension</Answer>
+  </Question>
+
+  <Question
+    prompt="Your best helper in the area of search performance is called:"
+    emoji="🕵️"
+    explanation="The Job Inspector breaks down search execution time, scanned events, lispy parsing and command costs — your single best tool for diagnosing slow searches.">
+    <Answer>Christoph</Answer>
+    <Answer>Rumpelstilzchen</Answer>
+    <Answer>Monitoring Console</Answer>
+    <Answer correct>Job Inspector</Answer>
+  </Question>
+
+  <Question
+    prompt="Which search is better and faster?"
+    emoji="🏃"
+    explanation="tstats reads the pre-built tsidx files and never touches raw events, so it is orders of magnitude faster for aggregations on indexed fields.">
+    <Answer>{`index=s4c_weather | stats avg(main.temp) by name`}</Answer>
+    <Answer correct>{`| tstats avg(main.temp) WHERE index=s4c_weather by name`}</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="tstats is best used at the end of a search, after the streaming commands"
+    emoji="📈"
+    correct={false}
+    explanation="tstats is a generating command — it must be the FIRST command in the search (with a leading pipe). Placing it later is invalid." />
+
+  <Question
+    prompt="Dashboard Studio source code is in:"
+    emoji="🎨"
+    explanation="Dashboard Studio dashboards are defined in JSON. Classic dashboards used XML — Studio replaced that.">
+    <Answer>XML</Answer>
+    <Answer>C++</Answer>
+    <Answer correct>JSON</Answer>
+    <Answer>Estonian</Answer>
+  </Question>
+
+  <Question
+    prompt="Chain Search is..."
+    emoji="🔗"
+    explanation="In Dashboard Studio, a chain search runs on top of another search's result set — the modern equivalent of the post-process search from classic XML dashboards.">
+    <Answer correct>New name for a post processing search in Dashboard Studio</Answer>
+    <Answer>Very slow search which triggers chain reaction</Answer>
+    <Answer>Search across the data from the supply chain</Answer>
+    <Answer>AI based online search which uses Google and Bing together</Answer>
+  </Question>
+
+  <Question
+    multi
+    prompt="What are the apocalyptic horsemen of bad searches? (pick all)"
+    emoji="🏇"
+    explanation="All four are search-killers: missing index filter, all-time ranges, leading or middle wildcards, and joins to combine data sources (use stats / lookup / append instead).">
+    <Answer correct>{`index=* or no index`}</Answer>
+    <Answer correct>All Time search</Answer>
+    <Answer correct>Wildcards at the beginning or in the middle</Answer>
+    <Answer correct>Joins to combine different sources</Answer>
+  </Question>
+
+</BuzzQuiz>

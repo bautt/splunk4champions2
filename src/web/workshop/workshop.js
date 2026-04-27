@@ -11,6 +11,7 @@ import Data from  '@splunk/react-icons/Cylinder';
 import GaugeRadial from '@splunk/react-icons/ChartSingleValueRadial';
 import { TbAugmentedReality2, TbLayoutDashboard, TbDatabase } from "react-icons/tb";
 import {GrConfigure} from "react-icons/gr";
+import { TbTrophy } from "react-icons/tb";
 
 const labs = {
     chapters: [
@@ -697,10 +698,27 @@ const labs = {
                             "title": "Mobile Links",
                             "content": "chapter7/mobilelinks.mdx"
                         }
-                       
+
                     ]
                 }
-                
+
+            ]
+        },
+        {
+            "title": "8. Champion Quiz",
+            "id": "eight",
+            "subtitle": "Test your knowledge",
+            "icon": <TbTrophy/>,
+            "sections": [
+                {
+                    "title": "Take the Quiz",
+                    "steps": [
+                        {
+                            "title": "Splunk4Champions Quiz",
+                            "content": "chapter8/quiz.mdx"
+                        }
+                    ]
+                }
             ]
         },
         {
