@@ -49,7 +49,7 @@ The same content lives in the repository <Link to="https://github.com/bautt/splu
 The app ships with real historical data used across the labs:
 
 - **`s4c_stock_indices`** — up to 10 years of daily OHLCV for **9** major indexes (DAX, Dow, EURO STOXX 50, FTSE 100, Hang Seng, Nasdaq, Nikkei, S&P 500, SMI). Ingested by `update_stock_indices.py` (Yahoo chart API, stdlib only; `_time` = Unix epoch). Join `exchange_city` to `s4c_meteo_historic` on `date` and `city`.
-- **`s4c_meteo_historic`** — Daily historical weather for the **seven** index `exchange_city` values (2016 → rolling; Paris/CAC removed). Shipped `lookups/meteo_historic.csv` plus `update_meteo_historic_csv.py` (Open-Meteo archive, daily) to keep the calendar in step with new index data. Join on `date` and `city` = `exchange_city`.
+- **`s4c_meteo_historic`** — Daily historical weather for the **seven** index `exchange_city` values (2016 → rolling; Paris/CAC removed). Shipped `static/meteo_historic.csv` (with `lookups/meteo_historic.csv` as a symlink for `inputlookup`) plus `update_meteo_historic_csv.py` (Open-Meteo archive, daily) to keep the calendar in step with new index data. Join on `date` and `city` = `exchange_city`.
 - **`s4c_weather`** — Real-time OpenWeatherMap data for metrics labs.
 - **`s4c_tutorial`** — Web server logs for search and dashboard exercises.
 
@@ -65,7 +65,7 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 
 ### `s4c_meteo_historic` (events)
 
-- **Ingestion:** File monitor on `lookups/meteo_historic.csv` (`s4c:meteo:historic`) plus daily `update_meteo_historic_csv.py` appends new rows; long retention so **2016+** rows stay available.
+- **Ingestion:** File monitor on `static/meteo_historic.csv` (`s4c:meteo:historic`) plus daily `update_meteo_historic_csv.py` appends new rows; long retention so **2016+** rows stay available.
 - **Content:** **One row per (day, city)** for the **seven** exchange cities used with stock indices. Fields such as `temperature_2m_mean`, `precipitation_sum`, `sunshine_duration`, `city`, `date`, and related metadata. **`city` matches `exchange_city` in `s4c_stock_indices`** for the same day (`date` / `_time` aligned to calendar day).
 - **Use for:** **Chapter 3** weather + stock correlation; joins, `lookup`/`inputlookup` examples. Optional join key: `date` + `city` ↔ `exchange_city`.
 

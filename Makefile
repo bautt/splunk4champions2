@@ -1,4 +1,4 @@
-.PHONY: dev
+.PHONY: dev fetch-current-log
 
 deps:
 	cd src/ && yarn install
@@ -10,7 +10,16 @@ build:
 	rm -rf dist
 	cd src/ && NODE_ENV=production yarn build
 
-package: build
+# Optional: SKIP_FETCH_CURRENT=1 make package — merge local only (no ssh to v37823)
+fetch-current-log:
+	@if [ "x$${SKIP_FETCH_CURRENT}" = "x1" ]; then \
+		echo "SKIP_FETCH_CURRENT=1: ingest local only (merge legacy into current_2026, no ssh)"; \
+		python3 ./scripts/ingest_v37823_current.py --no-fetch; \
+	else \
+		python3 ./scripts/ingest_v37823_current.py; \
+	fi
+
+package: fetch-current-log build
 	rm -rf /tmp/splunk4champions2
 	cp -r dist/ /tmp/splunk4champions2
 	COPYFILE_DISABLE=1 COPY_EXTENDED_ATTRIBUTES_DISABLE=1 tar \
