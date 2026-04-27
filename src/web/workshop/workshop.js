@@ -311,14 +311,14 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Stock Index Search",
+                    "title": "Search examples",
                     "steps": [
                         {
-                            "title": "Stocks — SPL & tstats",
+                            "title": "Search examples — stock baseline",
                             "content": "chapter3/stocks_search.mdx"
                         },
                         {
-                            "title": "Stocks — Weather Correlation",
+                            "title": "Search examples — weather correlation",
                             "content": "chapter3/stocks_weather.mdx"
                         }
                     ]

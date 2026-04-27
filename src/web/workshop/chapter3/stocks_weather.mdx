@@ -1,97 +1,118 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 
-## Weather & Stock Index Correlation
+## Search examples: Weather + Stock Correlation (no `join`)
 
-Daily historical weather for the **same seven cities** as `exchange_city` in `s4c_stock_indices` is stored in `s4c_meteo_historic` (from the shipped CSV, extended on schedule by `update_meteo_historic_csv.py` via Open-Meteo). Together with `s4c_stock_indices`, you can explore whether temperature, precipitation, or sunshine hours correlate with index performance.
+This section focuses on **educational correlation patterns** between:
+- `s4c_stock_indices` (market OHLCV events)
+- `s4c_meteo_historic` (daily weather events)
 
-**Weather fields:** `temperature_2m_mean` `temperature_2m_max` `precipitation_sum` `wind_speed_10m_max` `sunshine_duration` `weather_code`  
-**Link key:** `city` in `s4c_meteo_historic` matches `exchange_city` in `s4c_stock_indices`
+Shared key:
+- `exchange_city` (stocks) ↔ `city` (weather)
+- `date` (or `_time` converted to `%Y-%m-%d`)
 
-**Why `inputlookup meteo_historic` in joins:** A `join` subsearch is limited to 10,000 results by default. The meteo file has more daily rows than that, so a subsearch on `index=s4c_meteo_historic` can be truncated and the join shows empty weather. `inputlookup` uses the app lookup (same data as the index) without that cap. The app also ships a higher `subsearch` `maxout` in `limits.conf` for other joins.
+### Why avoid `join` here
+
+For large historical ranges, `join` is usually slower and easier to truncate.  
+In these examples, we use a scalable pattern:
+1. Aggregate each dataset to the same key (`day`, `city`)
+2. `append` weather aggregates
+3. Merge with `stats values(...) by day city`
+4. Continue analysis with `stats`, `streamstats`, or `tstats`
 
 ---
 
-### Explore the weather data
+### Example 1 — Temperature regime vs daily stock return
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_meteo_historic
-| stats count min(_time) as oldest max(_time) as newest by city exchange
-| eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
-| sort city`}></SplunkSearch>
-
----
-
-### Join stocks + weather on date and exchange city
+Question: **Do returns look different on cold/warm/hot days per city?**
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
-| eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
-| join type=left date exchange_city [
-    | inputlookup meteo_historic
-    | rename city as exchange_city
-    | fields date exchange_city temperature_2m_mean precipitation_sum sunshine_duration
-]
-| table date exchange_city close temperature_2m_mean precipitation_sum sunshine_duration
-| sort -date`}></SplunkSearch>
+| eval city=mvindex(exchange_city,0), day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), o=tonumber(mvindex(open,0)), c=tonumber(mvindex(close,0)), ret_pct=((c-o)/o)*100
+| stats avg(ret_pct) as avg_return_pct by day city
+| append [ search index=s4c_meteo_historic
+    | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), city=mvindex(city,0), temp_max_c=tonumber(temperature_2m_max), rain_mm=tonumber(precipitation_sum)
+    | stats avg(temp_max_c) as temp_max_c avg(rain_mm) as rain_mm by day city ]
+| stats values(avg_return_pct) as avg_return_pct values(temp_max_c) as temp_max_c values(rain_mm) as rain_mm by day city
+| where mvcount(avg_return_pct)>0 AND mvcount(temp_max_c)>0
+| eval avg_return_pct=round(tonumber(mvindex(avg_return_pct,0)),3), temp_max_c=round(tonumber(mvindex(temp_max_c,0)),1), rain_mm=round(tonumber(mvindex(rain_mm,0)),2)
+| eval heat_bucket=case(temp_max_c>=30,"Hot", temp_max_c>=20,"Warm", temp_max_c>=10,"Mild", 1=1,"Cold")
+| stats count as trading_days avg(avg_return_pct) as mean_return_pct avg(temp_max_c) as mean_temp_c avg(rain_mm) as mean_rain_mm by city heat_bucket
+| eval mean_return_pct=round(mean_return_pct,3), mean_temp_c=round(mean_temp_c,1), mean_rain_mm=round(mean_rain_mm,2)
+| sort city heat_bucket`}></SplunkSearch>
+
+**How to read the result**
+- `trading_days` shows sample size per city and weather bucket.
+- `mean_return_pct` compares average day return in each temperature regime.
+- `mean_rain_mm` gives a second weather context for that regime.
+
+**Interpretation guidance**
+- Start by trusting buckets with larger `trading_days`.
+- Compare patterns inside each city first (different markets have different behavior).
+- Use this as hypothesis generation, not causality proof.
 
 ---
 
-### DAX close vs Frankfurt temperature (monthly average)
+### Example 2 — Next-day return after rainy vs dry day
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
-| eval month=strftime(_time,"%Y-%m"), date=coalesce(date, strftime(_time,"%Y-%m-%d"))
-| join type=left date [
-    search index=s4c_meteo_historic city=Frankfurt
-    | eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
-    | fields date temperature_2m_mean sunshine_duration
-]
-| stats avg(close) as avg_close avg(temperature_2m_mean) as avg_temp by month
-| sort month`}></SplunkSearch>
-
----
-
-### Rainy days vs trading volume — London / FTSE 100
-
-Do traders trade less on rainy London days?
-
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices index_name="FTSE 100"
-| eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
-| join type=left date [
-    search index=s4c_meteo_historic city=London
-    | eval date=coalesce(date, strftime(_time,"%Y-%m-%d"))
-    | fields date precipitation_sum
-]
-| eval rain_day=if(precipitation_sum>5,"rainy","dry")
-| stats avg(volume) as avg_volume by rain_day`}></SplunkSearch>
-
----
-
-### Sunshine hours vs daily price change — all exchanges
+Question: **After a rainy day, is the next trading day return different?**
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
-| eval date=coalesce(date, strftime(_time,"%Y-%m-%d")), daily_pct=round(((close-open)/open)*100,2)
-| join type=left date exchange_city [
-    | inputlookup meteo_historic
-    | rename city as exchange_city
-    | fields date exchange_city sunshine_duration temperature_2m_mean
-]
-| eval sunshine_h=round(sunshine_duration/3600,1)
-| stats avg(daily_pct) as avg_change avg(sunshine_h) as avg_sunshine by exchange_city
-| sort -avg_change`}></SplunkSearch>
+| eval city=mvindex(exchange_city,0), day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), o=tonumber(mvindex(open,0)), c=tonumber(mvindex(close,0)), day_return_pct=((c-o)/o)*100
+| stats avg(day_return_pct) as day_return_pct by day city
+| append [ search index=s4c_meteo_historic
+    | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), city=mvindex(city,0), rain_mm=tonumber(precipitation_sum)
+    | stats avg(rain_mm) as rain_mm by day city ]
+| stats values(day_return_pct) as day_return_pct values(rain_mm) as rain_mm by day city
+| where mvcount(day_return_pct)>0 AND mvcount(rain_mm)>0
+| eval day_return_pct=mvindex(day_return_pct,0), rain_mm=mvindex(rain_mm,0), rainy_day=if(rain_mm>=5,1,0)
+| sort 0 city day
+| streamstats current=f window=1 last(rainy_day) as prev_rainy_day by city
+| where isnotnull(prev_rainy_day)
+| eval scenario=if(prev_rainy_day=1,"After rainy day (>=5mm)","After dry day (<5mm)")
+| stats count as observations avg(day_return_pct) as avg_next_day_return_pct stdev(day_return_pct) as stdev_next_day_return by city scenario
+| eval avg_next_day_return_pct=round(avg_next_day_return_pct,3), stdev_next_day_return=round(stdev_next_day_return,3)
+| sort city scenario`}></SplunkSearch>
+
+**How it works**
+- `streamstats ... last(rainy_day)` creates a **lag feature** per city.
+- Today’s return is grouped by **yesterday’s rain condition**.
+
+**Interpretation guidance**
+- `avg_next_day_return_pct` compares the two scenarios.
+- `stdev_next_day_return` shows variability/risk around that average.
+- `observations` prevents over-interpreting tiny groups.
 
 ---
 
-### Extreme weather days — what happened to the index?
+### Example 3 — Fast baseline with `tstats`: rain bucket vs market activity
 
-<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_meteo_historic
-| where wind_speed_10m_max > 60 OR precipitation_sum > 40
-| eval date=strftime(_time,"%Y-%m-%d"), weather_event=case(
-    wind_speed_10m_max>60,"storm",
-    precipitation_sum>40,"heavy rain",
-    1=1,"other")
-| rename city as exchange_city
-| join type=left date exchange_city [
-   search index=s4c_stock_indices
-   | eval date=coalesce(date, strftime(_time,"%Y-%m-%d")), daily_pct=round(((close-open)/open)*100,2)
-   | fields date exchange_city close daily_pct volume
-]
-| table date city exchange_city weather_event wind_speed_10m_max precipitation_sum close daily_pct
-| sort -date`}></SplunkSearch>
+Question: **Does broad market event activity differ by rainfall regime?**
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count as stock_events where index=s4c_stock_indices by _time span=1d
+| eval day=strftime(_time, "%Y-%m-%d")
+| stats sum(stock_events) as stock_events by day
+| append [ search index=s4c_meteo_historic
+    | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), rain_mm=tonumber(precipitation_sum)
+    | stats avg(rain_mm) as avg_rain_mm by day ]
+| stats values(stock_events) as stock_events avg(avg_rain_mm) as avg_rain_mm by day
+| where mvcount(stock_events)>0 AND isnotnull(avg_rain_mm)
+| eval stock_events=tonumber(mvindex(stock_events,0))
+| eval rain_bucket=case(avg_rain_mm>=10,"Heavy rain (>=10mm)", avg_rain_mm>=5,"Rainy (5-9.9mm)", avg_rain_mm>0,"Light rain (0-4.9mm)", 1=1,"No rain")
+| stats count as days avg(stock_events) as avg_stock_events by rain_bucket
+| eval avg_stock_events=round(avg_stock_events,1)
+| sort -avg_stock_events`}></SplunkSearch>
+
+**Why this is useful in class**
+- Demonstrates when `tstats` is ideal: fast daily baseline from indexed data.
+- Shows a practical mixed approach: `tstats` for activity + event search for weather.
+
+**Interpretation guidance**
+- This is a macro-level signal (activity volume), not price direction.
+- Use it as a pre-check before deeper return/volatility analysis.
+
+---
+
+### Teaching notes
+
+- Encourage participants to change thresholds (for example rain `>=3`, `>=8`) and compare stability.
+- Ask learners to add `index_name` grouping to see market-specific behavior.
+- Extend with month/season grouping (`strftime(day,"%m")`) to test seasonality effects.

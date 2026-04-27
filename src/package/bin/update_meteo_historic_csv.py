@@ -2,6 +2,9 @@
 """
 Keep static/meteo_historic.csv aligned with s4c_stock_indices:
 
+A symlink at lookups/meteo_historic.csv points here so | inputlookup meteo_historic
+still works (Splunk resolves CSV lookups under lookups/).
+
 * **Seven** cities (exchange locations) — legacy Paris / CAC rows are removed.
 * **Daily append** of missing dates through **yesterday (UTC)** via
   Open-Meteo Archive API (outbound: archive-api.open-meteo.com).
