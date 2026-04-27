@@ -27,7 +27,7 @@ The **Setup** chapter includes a **health check** (indexes, event counts, time r
 | `s4c_student_metrics` | Practice **metric** index for `mcollect` labs (filled by you) |
 | `s4c_phyphox` / `s4c_phyphox_metrics` | HEC Phyphox event + metrics |
 
-![Setup — health check](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch0_setup_health_check.png)
+![Setup — health check](https://raw.githubusercontent.com/bautt/splunk4champions2/main/src/package/appserver/static/images/ch0_setup_health_check.png)
 
 ---
 
