@@ -33,6 +33,21 @@ function sectionPanelId(chapter, section) {
     return chapter.id + section.title
 }
 
+/** Old bookmarks / links (#sec=threeQuiz) after section was renamed to "Search recap". */
+const LEGACY_SECTION_IDS = {
+    threeQuiz: 'threeSearch recap',
+}
+
+function normalizeSectionId(chapterId, sectionId) {
+    if (!chapterId || !sectionId) return sectionId
+    const mapped = LEGACY_SECTION_IDS[sectionId]
+    if (!mapped) return sectionId
+    const ch = chapters.find((c) => c.id === chapterId)
+    if (!ch) return sectionId
+    const ok = ch.sections.some((s) => sectionPanelId(ch, s) === mapped)
+    return ok ? mapped : sectionId
+}
+
 function defaultSectionFor(chapterId) {
     const ch = chapters.find(c => c.id === chapterId)
     if (!ch) return null
@@ -42,9 +57,12 @@ function defaultSectionFor(chapterId) {
 function parseHash() {
     const hash = window.location.hash.replace('#', '')
     const params = new URLSearchParams(hash)
+    const chapterId = params.get('ch') || null
+    let sectionId = params.get('sec') || null
+    if (chapterId && sectionId) sectionId = normalizeSectionId(chapterId, sectionId)
     return {
-        chapterId: params.get('ch') || null,
-        sectionId: params.get('sec') || null,
+        chapterId,
+        sectionId,
     }
 }
 

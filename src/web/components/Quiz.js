@@ -6,12 +6,36 @@ import SplunkSearch from './SplunkSearch'
 
 const QUESTIONS = [
     {
-        type: 'image',
-        question: 'What is it?',
-        src: '/static/app/splunk4champions2/images/rebus.png',
-        width: 600,
-        answer: null,
-        explanation: 'Discuss the answer with the group!',
+        question: 'Which search is better? And why?',
+        splA: `index=* source=*splunkd.log*
+| head 100`,
+        splB: `index=_internal source=*splunkd.log*
+| head 100`,
+        earliest: '-24h', latest: 'now',
+        answer: 'B',
+        explanation: 'Search tips: events live in indexes — scanning index=* pulls many more buckets than targeting the index you need (here _internal for splunkd logs). Specify an index whenever you can.',
+    },
+    {
+        question: 'Which search is better? And why? (Same SPL — compare the time ranges on each search bar.)',
+        splA: `index=_internal source=*splunkd.log* WARN
+| head 100`,
+        splB: `index=_internal source=*splunkd.log* WARN
+| head 100`,
+        earliestA: '-1y', latestA: 'now',
+        earliestB: '-24h', latestB: 'now',
+        answer: 'B',
+        explanation: 'Search tips: use the narrowest time window that still answers the question. A is fixed to a year of data; B uses 24 hours — far fewer buckets and usually much faster.',
+    },
+    {
+        question: 'Which search is better? And why?',
+        splA: `index=_internal
+| search source=*splunkd.log* WARN
+| head 100`,
+        splB: `index=_internal source=*splunkd.log* WARN
+| head 100`,
+        earliest: '-24h', latest: 'now',
+        answer: 'B',
+        explanation: 'Search tips: filtering only after the first pipe (`| search …`) is a common anti-pattern. Put terms in the initial search clause so indexers discard data earlier.',
     },
     {
         question: 'Which search is better? And why?',
@@ -131,33 +155,25 @@ function QuizQuestion({ q, index, revealed, onReveal }) {
                 {index + 1}. {q.question}
             </div>
 
-            {q.type === 'image' ? (
-                <img
-                    src={q.src}
-                    width={q.width || 600}
-                    style={{ display: 'block', marginBottom: 12, borderRadius: 4 }}
-                />
-            ) : (
-                <>
-                    <div style={{ marginBottom: 8 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
-                            <span style={badge(stateA)}>A</span>
-                        </div>
-                        <SplunkSearch spl={q.splA} earliest={q.earliest} latest={q.latest} />
+            <>
+                <div style={{ marginBottom: 8 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+                        <span style={badge(stateA)}>A</span>
                     </div>
+                    <SplunkSearch spl={q.splA} earliest={q.earliestA ?? q.earliest} latest={q.latestA ?? q.latest} />
+                </div>
 
-                    <div style={{ color: '#999', fontStyle: 'italic', margin: '6px 0', fontSize: 12 }}>
-                        versus
-                    </div>
+                <div style={{ color: '#999', fontStyle: 'italic', margin: '6px 0', fontSize: 12 }}>
+                    versus
+                </div>
 
-                    <div style={{ marginBottom: 12 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
-                            <span style={badge(stateB)}>B</span>
-                        </div>
-                        <SplunkSearch spl={q.splB} earliest={q.earliest} latest={q.latest} />
+                <div style={{ marginBottom: 12 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: 4 }}>
+                        <span style={badge(stateB)}>B</span>
                     </div>
-                </>
-            )}
+                    <SplunkSearch spl={q.splB} earliest={q.earliestB ?? q.earliest} latest={q.latestB ?? q.latest} />
+                </div>
+            </>
 
             {!revealed ? (
                 <Button appearance="secondary" onClick={onReveal} label="Reveal Answer" />
@@ -198,15 +214,20 @@ export default function Quiz() {
 
     return (
         <div>
-            <div style={{
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                marginBottom: 20, padding: '10px 16px',
-                background: '#f5f5f5', borderRadius: 6, border: '1px solid #e0e0e0',
-            }}>
+            <div
+                className="s4c-quiz-toolbar"
+                style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    marginBottom: 20, padding: '10px 16px',
+                    background: '#f5f5f5', borderRadius: 6, border: '1px solid #e0e0e0',
+                }}
+            >
                 <span style={{ fontSize: 13, color: '#555' }}>
                     {answered} / {QUESTIONS.length} revealed
                 </span>
-                <Button appearance="secondary" onClick={reset} label="Reset Quiz" />
+                <div className="s4c-quiz-toolbar-reset">
+                    <Button appearance="secondary" onClick={reset} label="Reset Quiz" />
+                </div>
             </div>
 
             {QUESTIONS.map((q, i) => (

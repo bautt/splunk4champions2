@@ -9,7 +9,7 @@ import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz
 
   <Question
     prompt="What do we see here?"
-    emoji="🪣"
+    image="https://smart2-i-0d1cc0a6c932bebd1.splunk.show/static/app/splunk4champions2/images/rebus.png"
     explanation="The bucket icons represent how Splunk ages data through hot → warm → cold → frozen states.">
     <Answer>Stuff that is not easy to recycle</Answer>
     <Answer>Symbolic representation of human growth</Answer>
@@ -29,7 +29,7 @@ import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz
 
   <Question
     prompt="What is in a Splunk Enterprise index bucket?"
-    emoji="🗄️"
+    emoji="🪣"
     explanation="A bucket holds the rawdata journal (compressed events), tsidx files (time-series index), the bloom filter, plus a few metadata files.">
     <Answer>Inverted indices and BKD trees (and some other stuff)</Answer>
     <Answer>KV store, index files and no-sql database files (and some other stuff)</Answer>
@@ -112,6 +112,46 @@ import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz
     <Answer correct>All Time search</Answer>
     <Answer correct>Wildcards at the beginning or in the middle</Answer>
     <Answer correct>Joins to combine different sources</Answer>
+  </Question>
+
+  <Question
+    prompt="Which search mode is tuned for the fastest results and skips most nonessential field and event processing?"
+    emoji="⚡"
+    explanation="Fast mode defers expensive field and event processing so results come back sooner; use Verbose when you need full extraction detail end-to-end.">
+    <Answer correct>Fast mode</Answer>
+    <Answer>Verbose mode</Answer>
+    <Answer>Smart mode — always the fastest choice</Answer>
+    <Answer>Night mode</Answer>
+  </Question>
+
+  <Question
+    prompt="In SmartStore, the cache manager mainly:"
+    emoji="💾"
+    explanation="The cache manager pulls copies of warm buckets from remote object storage into the indexer cache when searches need them, and evicts copies based on policy, space, and demand.">
+    <Answer correct>Fetches warm buckets from the remote store into local cache and evicts them by policy</Answer>
+    <Answer>Runs all user searches so search heads stay idle</Answer>
+    <Answer>Replaces the license master</Answer>
+    <Answer>Only moves frozen archives to object storage</Answer>
+  </Question>
+
+  <Question
+    prompt="A generating command is special because it:"
+    emoji="⚙️"
+    explanation="Generating commands begin a new result set — from indexes, datamodels, REST, tstats, and more. Many must be first in the pipeline (tstats is the classic example).">
+    <Answer correct>Starts a new result set and is often required as the first command</Answer>
+    <Answer>Runs only on the search head captain</Answer>
+    <Answer>Cannot run in distributed search</Answer>
+    <Answer>Must always be followed immediately by stats</Answer>
+  </Question>
+
+  <Question
+    prompt="Dashboard Studio images uploaded only through the UI (KV store) are a problem when you move the dashboard because:"
+    emoji="🖼️"
+    explanation="Those uploads are stored in KV on the instance — not as files in your app package — so they do not automatically travel when you ship the app to another Splunk environment.">
+    <Answer correct>They may not come along when you package or install the app elsewhere</Answer>
+    <Answer>They auto-sync to your Git repository</Answer>
+    <Answer>They always live as files under etc/apps</Answer>
+    <Answer>They delete the dashboard JSON for security</Answer>
   </Question>
 
 </BuzzQuiz>
