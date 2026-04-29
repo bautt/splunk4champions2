@@ -1,47 +1,56 @@
 import Link from '@splunk/react-ui/Link';
 
-## Data life cycle 
+## Data lifecycle (traditional index storage)
 
-<img src="/static/app/splunk4champions2/images/hot_warm1.png" width="700" />
+<img src="/static/app/splunk4champions2/images/data_retention_lifecycle.png" width="100%" alt="Data retention lifecycle illustration: hot, warm, cold, frozen, thawed" />
 
-## Hot/Warm Storage
-New data lives here
-At least 1 hot bucket per index, per indexer
-800+ IOPS (!)
+### Overview
 
-## Buckets roll from Hot to Warm when....
-* We get too many hot buckets [maxHotBuckets]
-* The timespan of a bucket gets too large
-* A hot bucket hasn’t received data in a while
-* Bucket metadata files have grown too large
-* There is an index clustering replication error
+In traditional Splunk Enterprise index storage, data ages through bucket states:
+**hot -> warm -> cold -> frozen** (and optionally **thawed** after restore).
 
-### Cold Storage
-* Historical data goes here
-* Allows older data to be kept on slower (cheaper) storage
-* Don’t go below 350 IOPS
+- New events are written to **hot** buckets.
+- Full hot buckets roll to **warm**.
+- Older warm buckets roll to **cold**.
+- Retention policies eventually move data to **frozen**.
+- If archived data is restored, it appears as **thawed**.
 
-## Buckets roll from Warm to Cold when...
+By default:
+- `db` path: hot + warm
+- `colddb` path: cold
+- `thaweddb` path: restored thawed data
 
-We get too many Warm buckets [maxWarmDBCount]
-Frozen Storage
-No longer searchable
-Data rolls from Cold to Frozen when...
+### Bucket states at a glance
 
-The total size of the index (Hot+Warm+Cold) grows too large
-The oldest event in a bucket exceeds a specific age
+| State | What it means | Searchable |
+|---|---|---|
+| Hot | Active write target for new events | Yes |
+| Warm | Rolled from hot; no longer written, still searchable | Yes |
+| Cold | Older searchable buckets moved off hot/warm storage | Yes |
+| Frozen | Data aged out of index; deleted or archived | No |
+| Thawed | Archived data restored back for investigation | Yes |
 
-----
+### Retention controls that matter most
 
+Two main controls determine when data is retired:
 
-<img src="/static/app/splunk4champions2/images/hot_warm2.png" width="500" />
-## When do we roll data?
+- `frozenTimePeriodInSecs`  
+  Maximum age before data is frozen.
+- `maxTotalDataSizeMB`  
+  Maximum index size; oldest data is frozen first once exceeded.
 
-Control retention for all indexes that reference the volume. Oldest bucket in the volume is deleted/frozen when defined size is exceeded.
+Important: whichever limit is hit first wins.  
+So data can age out by **size pressure** before it reaches the time-based retention target.
 
-____
-## tsidx reduction
-* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Reducetsidxdiskusage" openInNewContext>tsidx reduction docs</Link>
+### Where S3 fits in the traditional model
 
-The tsidx reduction process eliminates the full-size tsidx files and replaces them with mini versions of those files that contain essential metadata. 
-The rawdata files and some other metadata files remain untouched. You can continue to search across the aged data, if necessary, but such searches will exhibit significantly worse performance. Rare term searches, in particular, will run slowly.
+In the traditional model, S3 (or other object storage) is typically used as a
+**frozen archive destination**, not as active searchable storage.
+
+That is different from SmartStore, where remote object storage holds active warm-bucket master copies.
+
+### Recommended references
+
+- <Link to="https://help.splunk.com/en/data-management/manage-splunk-enterprise-indexers/10.2/manage-index-storage/how-the-indexer-stores-indexes" openInNewContext>How the indexer stores indexes</Link>
+- <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/back-up-and-archive-your-indexes/set-a-retirement-and-archiving-policy" openInNewContext>Set a retirement and archiving policy</Link>
+- <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Reduce_Costs/Optimizing_storage/Defining_data_retention_policies" openInNewContext>Splunk Lantern: Defining data retention policies</Link>
