@@ -353,10 +353,10 @@ const labs = {
                 },
 
                 {
-                    "title": "Quiz",
+                    "title": "Search recap",
                     "steps": [
                         {
-                            "title": "Quiz",
+                            "title": "Search recap",
                             "content": "chapter3/quiz.mdx"
                         },
                         {

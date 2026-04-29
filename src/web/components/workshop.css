@@ -120,10 +120,6 @@
     letter-spacing: 0.03em;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset;
 }
-.s4c-large-room .workshopContent .s4c-kbd-callout {
-    font-size: 1.55rem;
-    padding: 1.1rem 1.35rem;
-}
 
 /* ── 4. Code block styling ─────────────────────────────────────────────────── */
 .workshopContent code {
@@ -231,33 +227,89 @@
     color: #2f612e !important; /* syntaxGreen */
 }
 
+/* Chapter 3 Search recap — reset control should hug label, not stretch */
+.s4c-quiz-toolbar-reset {
+    flex: 0 0 auto;
+}
+.s4c-quiz-toolbar-reset button {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: max-content;
+}
+
 /* Setup utility for trainers to switch readability mode */
 .displayModeToggle {
     border: 1px solid #d8e2ec;
-    border-radius: 6px;
+    border-radius: 8px;
     background: #f8fbff;
-    padding: 14px 16px;
-    margin: 8px 0 18px;
+    padding: 18px 20px;
+    margin: 8px 0 22px;
 }
 
 .displayModeToggle h3 {
-    margin: 0 0 8px;
-    font-size: 17px;
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.25;
+    color: #1a2a3a;
 }
 
 .displayModeToggle p {
-    margin: 0 0 10px;
+    margin: 0 0 12px;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #2c3e50;
 }
 
 .displayModeToggleActions {
     display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.displayModeToggleActions button {
+    font-size: 15px !important;
+    min-height: 42px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
 }
 
 .displayModeHint {
     color: #5a6b7c;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Toggle panel grows again while Large Room is on (projector / back row) */
+.s4c-large-room .displayModeToggle {
+    padding: 22px 26px;
+    border-width: 2px;
+    border-color: #b8cfe0;
+}
+
+.s4c-large-room .displayModeToggle h3 {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.s4c-large-room .displayModeToggle p {
+    font-size: 18px;
+}
+
+.s4c-large-room .displayModeToggleActions {
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.s4c-large-room .displayModeToggleActions button {
+    font-size: 17px !important;
+    min-height: 48px;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+.s4c-large-room .displayModeHint {
+    font-size: 16px;
 }
 
 /* Large-room mode tuned for training/projector readability */
@@ -269,24 +321,29 @@
 .s4c-large-room .workshopContent li,
 .s4c-large-room .workshopContent td,
 .s4c-large-room .workshopContent th {
-    font-size: 18px;
-    line-height: 1.75;
+    font-size: 21px;
+    line-height: 1.72;
 }
 
-.s4c-large-room .workshopContent h1 { font-size: 26px; }
-.s4c-large-room .workshopContent h2 { font-size: 22px; }
-.s4c-large-room .workshopContent h3 { font-size: 19px; }
+.s4c-large-room .workshopContent h1 { font-size: 32px; }
+.s4c-large-room .workshopContent h2 { font-size: 27px; }
+.s4c-large-room .workshopContent h3 { font-size: 22px; }
 
 .s4c-large-room .workshopSearchBar .ace_editor {
-    font-size: 18px !important;
+    font-size: 22px !important;
 }
 
 .s4c-large-room .workshopContent pre code {
-    font-size: 1.2em;
+    font-size: 1.35em;
     font-weight: 650;
 }
 
-/* Index health check: keep table dense so all columns fit (overrides large-room 18px on td/th) */
+.s4c-large-room .workshopContent .s4c-kbd-callout {
+    font-size: 1.75rem;
+    padding: 1.2rem 1.4rem;
+}
+
+/* Index health check: keep table dense so all columns fit (overrides large-room body text on td/th) */
 .s4c-index-health {
     font-size: 12px;
     line-height: 1.35;

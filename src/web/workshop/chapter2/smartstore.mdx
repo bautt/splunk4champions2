@@ -7,7 +7,9 @@ import Link from '@splunk/react-ui/Link';
 SmartStore decouples compute and storage for indexed data.
 Indexer nodes still perform indexing and searching, but warm bucket master copies are stored in remote object storage (S3, Azure Blob, GCS), while local disk is used as cache.
 
-<img src="/static/app/splunk4champions2/images/smartstore_classic_vs_modern.png" width="100%" alt="Classic architecture vs SmartStore architecture illustration" />
+<img src="/static/app/splunk4champions2/images/smartstore_classic_vs_modern.png" width="100%" alt="Classic Splunk architecture: indexer with Hot/Warm, Cold, and Frozen to S3 archive. SmartStore: indexer with local Hot/Cache under cache manager and warm masters in S3-compatible object store" />
+
+**Reading the diagram:** the classic side keeps **hot/warm**, **cold**, and **frozen** on indexer-coupled storage (frozen often means an archive destination such as S3). The SmartStore side keeps **hot/cache** locally—governed by the **cache manager**—and **warm** masters in an **S3-compatible API** object tier (Azure Blob and GCS are supported too). Splunk documents the same storage-option contrast under <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Splunk Lantern: Indexing and search architecture</Link>.
 
 Core idea:
 - **Hot** data is local and writable.
@@ -75,6 +77,7 @@ Thanks to <Link to="https://www.linkedin.com/in/holgersesterhenn/" openInNewCont
 
 - <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/implement-smartstore-to-reduce-local-storage-requirements/about-smartstore" openInNewContext>About SmartStore</Link>
 - <Link to="https://help.splunk.com/en/data-management/manage-splunk-enterprise-indexers/10.2/implement-smartstore-to-reduce-local-storage-requirements/smartstore-architecture-overview" openInNewContext>SmartStore architecture overview</Link>
+- <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Splunk Lantern: Indexing and search architecture</Link>
 - <Link to="https://www.splunk.com/en_us/blog/platform/splunk-smartstore-cut-the-cord-by-decoupling-compute-and-storage.html" openInNewContext>Splunk blog: decoupling compute and storage</Link>
 - <Link to="https://www.splunk.com/en_us/blog/platform/splunk-9-0-smartstore-with-microsoft-azure-container-storage.html" openInNewContext>SmartStore with Azure</Link>
 - <Link to="https://help.splunk.com/en/splunk-enterprise/splunk-validated-architectures/architectures/validated-architectures-for-splunk-platform/smartstore-in-splunk-platform-deployments" openInNewContext>Splunk Validated Architectures: SmartStore</Link>

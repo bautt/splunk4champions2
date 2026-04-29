@@ -49,8 +49,11 @@ In the traditional model, S3 (or other object storage) is typically used as a
 
 That is different from SmartStore, where remote object storage holds active warm-bucket master copies.
 
+Splunk Lantern’s <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Indexing and search architecture</Link> article lays out the same comparison: classic file-system tiers versus SmartStore’s SSD-style **local cache** plus **warm** data in remote object storage (often with no separate **cold** tier).
+
 ### Recommended references
 
 - <Link to="https://help.splunk.com/en/data-management/manage-splunk-enterprise-indexers/10.2/manage-index-storage/how-the-indexer-stores-indexes" openInNewContext>How the indexer stores indexes</Link>
+- <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Splunk Lantern: Indexing and search architecture</Link>
 - <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/back-up-and-archive-your-indexes/set-a-retirement-and-archiving-policy" openInNewContext>Set a retirement and archiving policy</Link>
 - <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Reduce_Costs/Optimizing_storage/Defining_data_retention_policies" openInNewContext>Splunk Lantern: Defining data retention policies</Link>

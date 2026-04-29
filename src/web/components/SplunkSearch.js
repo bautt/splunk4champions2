@@ -74,6 +74,7 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
         timePickerAdvancedInputTypes: advancedInputTypes,
         search: spl,
         enabled: false,
+        showLineNumbers: false,
         componentAppendToInput: <CopyToClipBoardButton search={spl}></CopyToClipBoardButton>
     }
 
@@ -104,7 +105,8 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
     const onOptionsChange = (newOptions) => {
         setOptions(prevState => ({
             ...prevState,
-            ...newOptions
+            ...newOptions,
+            showLineNumbers: false,
         }))
     }
 

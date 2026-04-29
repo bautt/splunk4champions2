@@ -13,7 +13,7 @@ Line numbers are especially useful when:
 - Sharing searches with colleagues and discussing specific steps
 - Reading error messages that reference line N of your search
 
-Try this multi-line search and observe how line numbers help navigate each step:
+This workshop preview omits line numbers for a cleaner layout; in Splunk, enable them with the steps above. Try the same search there — line numbers make each pipe easy to reference:
 
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo
 | rex field=city "(?<city_short>^\\w+)"
