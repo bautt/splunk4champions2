@@ -1,71 +1,81 @@
 import Link from '@splunk/react-ui/Link';
 
+# SmartStore in Splunk Enterprise
 
-<table width="100%">
-        <tr width="50%">           
-        <td>
-SmartStore Architecture
+## What SmartStore does
 
-SmartStore decouples compute from storage by maintaining most indexed data on remote object stores (AWS S3, Google GCS, Azure Blob Storage) while keeping a local cache on indexers for active searching.
+SmartStore decouples compute and storage for indexed data.
+Indexer nodes still perform indexing and searching, but warm bucket master copies are stored in remote object storage (S3, Azure Blob, GCS), while local disk is used as cache.
 
-## How It Works
-* Hot Buckets: Newly indexed data resides locally and is replicated across indexers to meet the replication factor, exactly like traditional architecture.
-* Warm Buckets: When a hot bucket rolls to warm, the indexer uploads a copy to remote storage. Once confirmed uploaded, the remote copy becomes the master copy. The local copy remains cached on the indexer but becomes eligible for eviction.
-* Cache Manager: Manages local cache by fetching warm buckets from remote storage when needed for searches and evicting buckets based on recency, search frequency, and available space.
-* Search Process: Splunk can only search locally cached data. If a search requires buckets not in cache, the cache manager downloads them from remote storage first.
-* Indexer Clusters: Only hot buckets are replicated across peers. Warm buckets exist as a single copy on remote storage, with peers maintaining only metadata. This eliminates the need for multiple local copies and the cold bucket tier entirely.
+<img src="/static/app/splunk4champions2/images/smartstore_classic_vs_modern.png" width="100%" alt="Classic architecture vs SmartStore architecture illustration" />
 
-Result: Dramatically reduces local storage requirements, eliminates frozen storage tiers, enables independent scaling of compute and storage, and trades some search performance for significant cost efficiency.
+Core idea:
+- **Hot** data is local and writable.
+- Rolled **warm** buckets are uploaded to remote object storage.
+- Local cache keeps frequently searched data nearby.
+- Missing warm buckets are fetched on demand by cache manager.
 
- </td>
-        
-        <td width="50%"><img src="/static/app/splunk4champions2/images/Cache_manager.jpg" width="90%"/></td>
+## SmartStore lifecycle (simplified)
 
-        </tr>
-      </table>
-<p></p>
+| Step | Behavior | Searchable |
+|---|---|---|
+| Hot | New events are indexed locally | Yes |
+| Warm (remote master) | Warm bucket master lives in object store | Yes |
+| Cache | Local copy kept based on cache policy and search demand | Yes |
+| Frozen | Data ages out based on retention policy | No |
+
+### Important difference from traditional model
+
+Traditional retention usually follows:
+**hot -> warm -> cold -> frozen**
+
+SmartStore-enabled indexes are commonly operated as:
+**hot -> warm (remote master) -> frozen**
+
+Cold is often unnecessary because warm buckets already live in low-cost object storage.
+
+## Cluster behavior (high level)
+
+For SmartStore indexes in clusters:
+- Replication/search factor semantics differ from non-SmartStore warm buckets.
+- Remote storage is the source of truth for warm-bucket data.
+- Peers rely more on metadata + cache behavior than on storing many local warm copies.
+
+This is where much of the local disk saving comes from.
+
+## SmartStore vs frozen archive on S3
+
+These two are often confused:
+
+- **SmartStore S3**: active warm-bucket master storage (searchable via cache retrieval)
+- **Traditional frozen archive on S3**: aged-out data archive after retention
+
+Same backend technology, very different role in the lifecycle.
 
 
 
-<table width="100%">
-        <tr width="60%">
-        <td>
-   Imagine a library where you have a reading desk and all other books are stored on shelves. Splunk SmartStore works similarly:
+---
 
-* Reading Table (Local Storage): Think of your reading desk as the local storage on your computer or server. It's where the books (data) you are currently using or need quick access to are kept.
-* Bookshelves (Remote Storage): The bookshelves represent a larger, remote storage space where most of the books (data) are stored. This could be cloud storage or another form of external storage.
-* Librarian (SmartStore Technology): The librarian is like the SmartStore technology. When you need a book that isn't on your table, the librarian quickly fetches it from the shelves and brings it to you. Similarly, SmartStore retrieves the necessary data from remote storage to local storage when you need it.
-* Returning Books: Once you're done with a book, the librarian puts it back on the shelves, freeing up space on your table. In the same way, SmartStore moves data back to remote storage when it's no longer actively needed, optimizing the use of local storage.
-* Searchable Books (Searchable Data): Even though some books are on the shelves and not on your table, you can still search for them. It just takes a bit longer for the librarian to bring them to your table. Similarly, with SmartStore, all data remains searchable, but accessing data from the remote storage may take a bit longer compared to accessing it from local storage.
+## Library analogy
 
-In essence, SmartStore efficiently manages data placement, ensuring that only the necessary data is kept readily accessible while the rest remains searchable in remote storage, just like the librarian manages the flow of books between your table and the library's shelve.
+<img src="/static/app/splunk4champions2/images/library.jpg" width="80%" alt="SmartStore library analogy" />
 
-Thanks to  <Link to="https://www.linkedin.com/in/holgersesterhenn/" openInNewContext>Holger Sesterhenn</Link>
-           </td>
-           <td width="40%"><img src="/static/app/splunk4champions2/images/library.jpg" width="80%"/></td>
-           
-        </tr>
-      </table>
-<p></p>
+Think of SmartStore like a library:
+- **Reading desk** = local cache (fast access)
+- **Bookshelves** = remote object storage (long-term, large capacity)
+- **Librarian** = cache manager (fetches what you need, when you need it)
 
+Result: most data stays searchable without keeping everything on local disk.
 
-* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/SmartStorearchitecture" openInNewContext>Smart Store Architecture docs </Link>
+Thanks to <Link to="https://www.linkedin.com/in/holgersesterhenn/" openInNewContext>Holger Sesterhenn</Link> for the analogy.
 
-* <Link to="https://www.splunk.com/en_us/blog/platform/splunk-smartstore-cut-the-cord-by-decoupling-compute-and-storage.html" openInNewContext> Smart Store 2018 Blog </Link>
-* <Link to="https://www.splunk.com/en_us/blog/platform/splunk-9-0-smartstore-with-microsoft-azure-container-storage.html" openInNewContext> Smart Store in Azure </Link>
+---
 
-* <Link to="https://docs.splunk.com/Documentation/SVA/current/Architectures/SmartStore" openInNewContext> Validated Architectures  </Link>
-* <Link to="https://bigdatabeard.com/the-what-when-why-of-splunk-smartstore/" openInNewContext> BigDataBeard Blog on Smartstore  </Link>
+## Recommended references
 
-* <Link to="https://www.youtube.com/watch?v=U3wfj_KwJP0" openInNewContext> Smartstore youtube video  </Link>
-
-Partner Blogs: 
-* <Link to="https://www.amasol.de/blog/detail-page/what-is-splunk-smart-store " openInNewContext> Amasol blog  </Link>
-* <Link to="https://www.atlassian.com/blog/it-teams/unlocking-reliability-with-splunk-smartstore" openInNewContext> Atlassian blog</Link>
-* <Link to="https://hurricanelabs.com/splunk-tutorials/how-to-deploy-splunk-smartstore-for-improved-data-storage/" openInNewContext> Hurricane Labs Blog</Link>
-* <Link to="https://www.loadbalancer.org/blog/multi-site-active-active-splunk-smartstore-with-netapp-storagegrid/" openInNewContext> Smartstore with NetApp  </Link>
-
-.conf Talks
-* <Link to="https://resources.min.io/c/splunk-smartstore-box?x=p9k0ng" openInNewContext> MinIO Conf Talk</Link>
-* <Link to="https://conf.splunk.com/files/2019/slides/FN2168.pdf" openInNewContext> Splunk .conf Talk</Link>
-* <Link to="https://conf.splunk.com/files/2019/slides/FN1435.pdf" openInNewContext> Splunk .conf Talk</Link>
+- <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/implement-smartstore-to-reduce-local-storage-requirements/about-smartstore" openInNewContext>About SmartStore</Link>
+- <Link to="https://help.splunk.com/en/data-management/manage-splunk-enterprise-indexers/10.2/implement-smartstore-to-reduce-local-storage-requirements/smartstore-architecture-overview" openInNewContext>SmartStore architecture overview</Link>
+- <Link to="https://www.splunk.com/en_us/blog/platform/splunk-smartstore-cut-the-cord-by-decoupling-compute-and-storage.html" openInNewContext>Splunk blog: decoupling compute and storage</Link>
+- <Link to="https://www.splunk.com/en_us/blog/platform/splunk-9-0-smartstore-with-microsoft-azure-container-storage.html" openInNewContext>SmartStore with Azure</Link>
+- <Link to="https://help.splunk.com/en/splunk-enterprise/splunk-validated-architectures/architectures/validated-architectures-for-splunk-platform/smartstore-in-splunk-platform-deployments" openInNewContext>Splunk Validated Architectures: SmartStore</Link>
+- <Link to="https://conf.splunk.com/files/2019/slides/FN2168.pdf" openInNewContext>.conf talk: SmartStore deployment patterns</Link>
