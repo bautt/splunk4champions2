@@ -36,6 +36,7 @@ function sectionPanelId(chapter, section) {
 /** Old bookmarks / links (#sec=threeQuiz) after section was renamed to "Search recap". */
 const LEGACY_SECTION_IDS = {
     threeQuiz: 'threeSearch recap',
+    'sevenMobile Links': 'sevenUseful Links',
 }
 
 function normalizeSectionId(chapterId, sectionId) {
