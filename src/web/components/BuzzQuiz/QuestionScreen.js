@@ -124,10 +124,16 @@ export default function QuestionScreen({
     return (
         <div>
             <div className="s4c-buzz__hud">
-                <span>Question {index + 1} / {total}{isMulti ? ' · select all that apply' : ''}</span>
+                <span className="s4c-buzz__hud-left">
+                    Question {index + 1} / {total}{isMulti ? ' · select all that apply' : ''}
+                </span>
+                <div className="s4c-buzz__hud-center" aria-live="polite">
+                    {!revealed ? (
+                        <div className="s4c-buzz__timer-num">{seconds}</div>
+                    ) : null}
+                </div>
                 <span className="s4c-buzz__hud-pill">Score: {runningScore}</span>
             </div>
-            {!revealed ? <div className="s4c-buzz__timer-num">{seconds}</div> : null}
 
             <div className="s4c-buzz__prompt">{question.prompt}</div>
 
