@@ -251,7 +251,7 @@ function App() {
 
     const renderedChapters = chapters.map((chapter, chapterIndex) => (
         <TabLayout.Panel key={chapterIndex} label={chapter.title} panelId={chapter.id} icon={chapter.icon}>
-            <div style={{ position: 'relative' }}>
+            <div className="s4c-chapter-panel-inner" style={{ position: 'relative' }}>
                 <TabLayout
                     activePanelId={activeSections[chapter.id]}
                     onChange={changeSection(chapter.id)}
@@ -274,32 +274,42 @@ function App() {
                 </TabLayout>
 
                 {/* Prev / Next nav — floated into the right side of the section tab strip */}
-                <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 8,
-                    height: 36,
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 4,
-                    zIndex: 10,
-                }}>
+                <div
+                    className="s4c-section-nav"
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 8,
+                        height: 36,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 4,
+                        zIndex: 10,
+                    }}
+                >
                     <button
+                        type="button"
+                        className="s4c-section-nav__btn"
                         onClick={() => navigateTo(currentIndex - 1)}
                         disabled={currentIndex <= 0}
                         title="Previous section"
                         style={navBtnStyle(currentIndex <= 0)}
                     >‹</button>
-                    <span style={{
-                        fontSize: 11,
-                        color: '#666',
-                        minWidth: 36,
-                        textAlign: 'center',
-                        userSelect: 'none',
-                    }}>
+                    <span
+                        className="s4c-section-nav__counter"
+                        style={{
+                            fontSize: 11,
+                            color: '#666',
+                            minWidth: 36,
+                            textAlign: 'center',
+                            userSelect: 'none',
+                        }}
+                    >
                         {chapterIndex + 1}/{chapter.sections.findIndex(s => sectionPanelId(chapter, s) === activeSections[chapter.id]) + 1}
                     </span>
                     <button
+                        type="button"
+                        className="s4c-section-nav__btn"
                         onClick={() => navigateTo(currentIndex + 1)}
                         disabled={currentIndex >= allSections.length - 1}
                         title="Next section"

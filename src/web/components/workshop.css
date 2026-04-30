@@ -312,6 +312,46 @@
     font-size: 16px;
 }
 
+/* Large-room: chapter (top) and section (subchapter) tab labels — match ~content scale (~16→21px) */
+.s4c-large-room .chapterBar > div[role=tablist] button {
+    font-size: 17px !important;
+    line-height: 1.2 !important;
+    min-height: 76px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+.s4c-large-room .chapterBar > div[role=tablist] button svg {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.s4c-large-room .sectionBar > div[role=tablist] {
+    height: 48px !important;
+    min-height: 48px !important;
+}
+.s4c-large-room .sectionBar > div[role=tablist] button {
+    height: 48px !important;
+    min-height: 48px !important;
+    font-size: 16px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+}
+
+/* Prev / next — align with taller section strip */
+.s4c-large-room .s4c-section-nav {
+    height: 48px !important;
+}
+.s4c-large-room .s4c-section-nav__counter {
+    font-size: 14px !important;
+    min-width: 44px !important;
+}
+.s4c-large-room .s4c-section-nav__btn {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 20px !important;
+    line-height: 22px !important;
+}
+
 /* Large-room mode tuned for training/projector readability */
 .s4c-large-room .workshopContent {
     max-width: 1200px;
