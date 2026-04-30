@@ -95,7 +95,7 @@ function TitleScreen({ title, subtitle, count, defaultName, onStart }) {
 export default function BuzzQuiz({
     title = 'Quiz',
     subtitle,
-    timePerQuestion = 20,
+    timePerQuestion = 30,
     pointsBase = 1000,
     theme,                  // 'purple' (default) | 'blue' | 'dark' | 'splunk' | 'sunset' | 'forest'
     background,             // any CSS background string — overrides theme

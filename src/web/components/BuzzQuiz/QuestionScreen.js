@@ -127,11 +127,6 @@ export default function QuestionScreen({
                 <span className="s4c-buzz__hud-left">
                     Question {index + 1} / {total}{isMulti ? ' · select all that apply' : ''}
                 </span>
-                <div className="s4c-buzz__hud-center" aria-live="polite">
-                    {!revealed ? (
-                        <div className="s4c-buzz__timer-num">{seconds}</div>
-                    ) : null}
-                </div>
                 <span className="s4c-buzz__hud-pill">Score: {runningScore}</span>
             </div>
 
@@ -144,10 +139,6 @@ export default function QuestionScreen({
                         : <span role="img" aria-label="">{question.emoji}</span>}
                 </div>
             ) : null}
-
-            <div className="s4c-buzz__timer">
-                <div className="s4c-buzz__timer-bar" style={{ width: `${timerPct}%` }} />
-            </div>
 
             <div className={`s4c-buzz__tiles ${question.kind === 'tf' ? 's4c-buzz__tiles--tf' : ''}`}>
                 {question.answers.map((a, i) => (
@@ -164,15 +155,25 @@ export default function QuestionScreen({
                 ))}
             </div>
 
-            {isMulti && !revealed ? (
-                <div className="s4c-buzz__next-row">
-                    <button
-                        className="s4c-buzz__cta"
-                        onClick={handleSubmitMulti}
-                        disabled={!anyPicked}
-                    >
-                        Submit answer
-                    </button>
+            {!revealed ? (
+                <div className="s4c-buzz__footer-row">
+                    <div className="s4c-buzz__timer-foot" aria-live="polite">
+                        <div className="s4c-buzz__timer-track">
+                            <div className="s4c-buzz__timer-fill" style={{ width: `${timerPct}%` }} />
+                        </div>
+                        <span className="s4c-buzz__timer-label">{seconds}s</span>
+                    </div>
+                    <div className="s4c-buzz__footer-actions">
+                        {isMulti ? (
+                            <button
+                                className="s4c-buzz__cta"
+                                onClick={handleSubmitMulti}
+                                disabled={!anyPicked}
+                            >
+                                Submit answer
+                            </button>
+                        ) : null}
+                    </div>
                 </div>
             ) : null}
 
@@ -192,10 +193,13 @@ export default function QuestionScreen({
                             <div style={{ marginTop: 6 }}>{question.explanation}</div>
                         ) : null}
                     </div>
-                    <div className="s4c-buzz__next-row">
-                        <button className="s4c-buzz__cta" onClick={onNext}>
-                            {index + 1 === total ? 'See results →' : 'Next →'}
-                        </button>
+                    <div className="s4c-buzz__footer-row">
+                        <div className="s4c-buzz__footer-flex-grow" aria-hidden="true" />
+                        <div className="s4c-buzz__footer-actions">
+                            <button className="s4c-buzz__cta" onClick={onNext}>
+                                {index + 1 === total ? 'See results →' : 'Next →'}
+                            </button>
+                        </div>
                     </div>
                 </>
             ) : null}
