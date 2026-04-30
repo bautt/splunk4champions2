@@ -8,7 +8,15 @@ If you build from source, the **exact** app version is shown on the **Setup** he
 
 ---
 
-## This build (2.11.2)
+## This build (2.11.26)
+
+- **SmartStore / data aging:** Chapter 2 labs refreshed — Splunk Lantern alignment, new **classic vs SmartStore-capable indexer** diagram, captions and copy tuned for indexing/search architecture.
+- **Embedded search bars:** SPL syntax highlighting unchanged; **line numbers** in the workshop preview are off (cleaner layout). In Splunk, turn line numbers on via **Settings → Search Preferences** if you want them while editing. Chapter 1 *Line numbers* step explains that split.
+- **Workshop UI:** **Large room** display mode (bigger type and spacing for projection); Chapter 3 quiz toolbar (e.g. Reset) sizing; legacy hash **`#sec=threeQuiz`** redirects to the **Search recap** step.
+- **Quizzes:** Chapter 3 **Search recap** (A/B SPL); Chapter 8 **Buzz** quiz updates (links, extra topics, presentation polish).
+- **Install:** **`splunk4champions2.tar.gz`** is attached to each tag on <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>GitHub Releases</Link>; run **`make package`** locally to produce a tarball that matches this **2.11.26** build exactly.
+
+## 2.11.2
 
 - **Chapter 8 · Champion Quiz:** new Kahoot-style quiz — timed questions, time-decayed scoring, single-choice / true-false / multi-answer. Authored entirely in `web/workshop/chapter8/quiz.mdx`. Themes via `theme=` or custom `background=`. No KV store / leaderboard — final score shown after the last question.
 
