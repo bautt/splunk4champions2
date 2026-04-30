@@ -1,13 +1,43 @@
 import Link from '@splunk/react-ui/Link';
 
-* <Link to="https://www.jasondavies.com/bloomfilter" openInNewContext>"Interactive Bloomfilter-Demo"</Link>
-* <Link to="https://conf.splunk.com/files/2017/slides/splunk-data-life-cycle-determining-when-and-where-to-roll-data.pdf" openInNewContext>".conf 2017 - How Splunk Stores Data"</Link>
-* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/HowSplunkstoresindexes" openInNewContext>"Docs: How the indexer stores indexes"</Link>
-* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Datapipeline" openInNewContext>Data Pipeline in Splunk Docs</Link>
-* <Link to="https://community.splunk.com/t5/Getting-Data-In/Diagrams-of-how-indexing-works-in-the-Splunk-platform-the-Masa/m-p/590774" openInNewContext>More detailed diagrams of the data pipeline</Link>
-* <Link to="https://education.splunk.com/" openInNewContext>"free 1 hour education course on distributed searches:"</Link>
-* <Link to="https://www.splunk.com/pdfs/technical-briefs/splunk-validated-architectures.pdf" openInNewContext>"Splunk Validated Architectures"</Link>
-* <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/Search/Eventsegmentationandsearching" openInNewContext>Event Segmentation in Splunk Docs</Link>
-* <Link to="https://docs.splunk.com/Splexicon:Tsidxfile" openInNewContext>"TSIDX in Splexicon"</Link>
-* <Link to="https://docs.splunk.com/Splexicon:Rawdatafile" openInNewContext>"journal.gz in Splexicon"</Link>
-* <Link to="https://docs.splunk.com/Splexicon:Bloomfilter" openInNewContext>"Bloomfilter in Splexicon"</Link>
+## General indexing and search
+
+* <Link to="https://www.jasondavies.com/bloomfilter" openInNewContext>Interactive Bloomfilter demo</Link>
+* <Link to="https://conf.splunk.com/files/2017/slides/splunk-data-life-cycle-determining-when-and-where-to-roll-data.pdf" openInNewContext>.conf 2017 — How Splunk stores data</Link>
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/HowSplunkstoresindexes" openInNewContext>Docs: How the indexer stores indexes</Link>
+* <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Deploy/Datapipeline" openInNewContext>Data pipeline in Splunk Docs</Link>
+* <Link to="https://community.splunk.com/t5/Getting-Data-In/Diagrams-of-how-indexing-works-in-the-Splunk-platform-the-Masa/m-p/590774" openInNewContext>Community: diagrams of the indexing pipeline</Link>
+* <Link to="https://education.splunk.com/" openInNewContext>Splunk Education (free courses)</Link>
+* <Link to="https://www.splunk.com/pdfs/technical-briefs/splunk-validated-architectures.pdf" openInNewContext>Splunk Validated Architectures — technical brief (PDF)</Link>
+* <Link to="https://docs.splunk.com/Documentation/SplunkCloud/latest/Search/Eventsegmentationandsearching" openInNewContext>Event segmentation in Splunk Docs</Link>
+* <Link to="https://docs.splunk.com/Splexicon:Tsidxfile" openInNewContext>Splexicon: tsidx file</Link>
+* <Link to="https://docs.splunk.com/Splexicon:Rawdatafile" openInNewContext>Splexicon: journal.gz / rawdata</Link>
+* <Link to="https://docs.splunk.com/Splexicon:Bloomfilter" openInNewContext>Splexicon: bloom filter</Link>
+
+---
+
+## Data aging and retention
+
+* <Link to="https://help.splunk.com/en/data-management/manage-splunk-enterprise-indexers/10.2/manage-index-storage/how-the-indexer-stores-indexes" openInNewContext>How the indexer stores indexes</Link>
+* <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Splunk Lantern: Indexing and search architecture</Link>
+* <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/back-up-and-archive-your-indexes/set-a-retirement-and-archiving-policy" openInNewContext>Set a retirement and archiving policy</Link>
+* <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Reduce_Costs/Optimizing_storage/Defining_data_retention_policies" openInNewContext>Splunk Lantern: Defining data retention policies</Link>
+
+---
+
+## SmartStore
+
+* <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/implement-smartstore-to-reduce-local-storage-requirements/about-smartstore" openInNewContext>About SmartStore</Link>
+* <Link to="https://help.splunk.com/en/data-management/manage-splunk-enterprise-indexers/10.2/implement-smartstore-to-reduce-local-storage-requirements/smartstore-architecture-overview" openInNewContext>SmartStore architecture overview</Link>
+* <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Splunk Lantern: Indexing and search architecture</Link>
+* <Link to="https://www.splunk.com/en_us/blog/platform/splunk-smartstore-cut-the-cord-by-decoupling-compute-and-storage.html" openInNewContext>Splunk blog: decoupling compute and storage</Link>
+* <Link to="https://www.splunk.com/en_us/blog/platform/splunk-9-0-smartstore-with-microsoft-azure-container-storage.html" openInNewContext>SmartStore with Azure</Link>
+* <Link to="https://help.splunk.com/en/splunk-enterprise/splunk-validated-architectures/architectures/validated-architectures-for-splunk-platform/smartstore-in-splunk-platform-deployments" openInNewContext>Splunk Validated Architectures: SmartStore</Link>
+* <Link to="https://conf.splunk.com/files/2019/slides/FN2168.pdf" openInNewContext>.conf talk: SmartStore deployment patterns</Link>
+
+---
+
+## Splunk Validated Architectures
+
+* <Link to="https://help.splunk.com/en/splunk-cloud-platform/get-started/splunk-validated-architectures/introduction-to-splunk-validated-architectures/about-splunk-validated-architectures" openInNewContext>About Splunk Validated Architectures</Link>
+* <Link to="https://help.splunk.com/en/splunk-cloud-platform/get-started/splunk-validated-architectures/applied-svas/splunk-operator-for-kubernetes" openInNewContext>Splunk Operator for Kubernetes (applied SVA)</Link>
