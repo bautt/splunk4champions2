@@ -7,6 +7,7 @@ splunk4champions2.tar.gz
 __pycache__/
 *.pyc
 *.pyo
+.claude
 
 # Legacy/one-off: merged into current_2026 by scripts/ingest_v37823_current.py; do not re-add
 src/package/static/current_update.log.gz
