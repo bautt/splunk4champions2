@@ -3,11 +3,10 @@ import Link from '@splunk/react-ui/Link'
 
 Run the search, wait for it to finish, and click on "Job -> Inspect Job" to oberserve the details: 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" 
-|bucket span=4h _time
-|stats avg(temperature_2m) AS temp by city _time
-|where city=="Bonn" OR city=="London" OR city=="Stockholm"
-|xyseries _time, city, temp`}>
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather"  
+| bucket span=4h _time
+| stats avg("main.temp") by name _time
+| where name=="Austin" OR name=="Bonn" OR name=="Hamburg"`}>
 </SplunkSearch>
 
 0. Consider changing job settings to avoid expiration: 
@@ -40,8 +39,8 @@ In this example we see something like:
 
 
  Now compare the results with this search: 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" Bonn OR London OR Stockholm 
-|timechart  span=4h  avg(temperature_2m) by city`}>
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather"  Austin OR Bonn OR Hamburg
+| timechart span=4h  avg("main.temp") by name`}>
 </SplunkSearch>
 Here is an example comparison: 
 What is different? 
@@ -53,9 +52,9 @@ What is different?
 after the first line? Check it out:
 
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_meteo" Bonn OR London OR Stockholm 
-| fields city temperature_2m _time 
-| timechart  span=4h  avg(temperature_2m) by city`}>
+<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather"  Austin OR Bonn OR Hamburg
+| fields name "main.temp" _time 
+| timechart span=4h  avg("main.temp") by name`}>
 </SplunkSearch>
 
 ##  Lispy Efficiency
