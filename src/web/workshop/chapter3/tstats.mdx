@@ -16,6 +16,23 @@ use job inspector and compare it to this "tstats" search:
 <SplunkSearch earliest="-2y" latest="now" spl={`| tstats avg(main.temp) avg(wind.speed) avg(main.humidity) avg(main.pressure) WHERE index=s4c_weather earliest=-2y latest=now() by name _time span=1h | xyseries _time,name,avg*`}></SplunkSearch>
 
 
+## What indexes can I search?
+
+All indexes your role can access — sorted by event count:
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count earliest(_time) as oldest latest(_time) as newest
+    WHERE index=* OR index=_*
+    BY index
+| eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
+| eval type=if(match(index,"^_"),"internal","data")
+| sort type -count`}></SplunkSearch>
+
+What do you get when you search **without** specifying an index? (default search scope only):
+
+<SplunkSearch earliest="-30d" latest="now" spl={`* | stats count by index | sort -count`}></SplunkSearch>
+
+---
+
 ## Simple example: index based tstats search (works with indexed fields)
 <SplunkSearch earliest="-30d" latest="now" spl={`| tstats count where index=_* OR index=* by host`}>
 </SplunkSearch>
