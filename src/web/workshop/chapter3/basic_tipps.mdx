@@ -6,7 +6,7 @@ import Link from '@splunk/react-ui/Link'
 
 > **Excursion — which indexes can you actually search?**
 >
-> Use `tstats` to see every index your role has access to, along with event counts and date ranges:
+> Use `tstats` to see every index your role has access to:
 
 <SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
 
