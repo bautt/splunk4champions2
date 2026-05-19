@@ -8,12 +8,7 @@ import Link from '@splunk/react-ui/Link'
 >
 > Use `tstats` to see every index your role has access to, along with event counts and date ranges:
 
-<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count earliest(_time) as oldest latest(_time) as newest
-    WHERE index=* OR index=_*
-    BY index
-| eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
-| eval type=if(match(index,"^_"),"internal","data")
-| sort type -count`}></SplunkSearch>
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
 
 > Now try searching **without** specifying `index=` at all — this shows only your **default search scope**:
 
