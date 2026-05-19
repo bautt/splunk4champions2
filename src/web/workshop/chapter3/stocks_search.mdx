@@ -27,7 +27,7 @@ The workshop includes 10 years of daily OHLCV data for 9 major global indexes lo
 
 ### Compare All Indexes — Latest Close
 
-<SplunkSearch earliest="-3d" latest="now" spl={`index=s4c_stock_indices
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_stock_indices
 | stats latest(close) as close latest(volume) as volume by index_name symbol
 | sort -close`}></SplunkSearch>
 
@@ -36,6 +36,7 @@ The workshop includes 10 years of daily OHLCV data for 9 major global indexes lo
 ### Biggest Daily Moves (absolute)
 
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
+| eval open=mvindex(open,0), close=mvindex(close,0)
 | eval daily_change = close - open
 | eval daily_pct = round((daily_change / open) * 100, 2)
 | stats max(daily_pct) as best_day min(daily_pct) as worst_day by index_name
