@@ -20,12 +20,7 @@ use job inspector and compare it to this "tstats" search:
 
 All indexes your role can access — sorted by event count:
 
-<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count earliest(_time) as oldest latest(_time) as newest
-    WHERE index=* OR index=_*
-    BY index
-| eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
-| eval type=if(match(index,"^_"),"internal","data")
-| sort type -count`}></SplunkSearch>
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
 
 What do you get when you search **without** specifying an index? (default search scope only):
 
