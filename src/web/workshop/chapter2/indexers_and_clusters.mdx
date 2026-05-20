@@ -1,14 +1,137 @@
-## Distributed Architecture example 
-Note: Indexer clusters are groups of Splunk Enterprise indexers configured to replicate each others' data, so that the system keeps multiple copies of all data.
- This process is known as index replication. Indexers also participate in the search process and help to scale searches.
+import Link from '@splunk/react-ui/Link'
 
-Commands where the search order does not matter are called distributable streaming commands. Distributable streaming commands run on Indexers.
+## Distributed Architecture example
+Note: Indexer clusters are groups of Splunk Enterprise indexers configured to replicate each others' data, so that the system keeps multiple copies of all data. This process is known as index replication. Indexers also participate in the search process and help to scale searches.
+
+Commands where the search order does not matter are called **distributable streaming commands**. Distributable streaming commands run on indexers.
 
 ![Data](/static/app/splunk4champions2/images/architecture.png)
 
-This is just one example of possible architecture, see [Splunk Validated Architectures](https://www.splunk.com/pdfs/technical-briefs/splunk-validated-architectures.pdf) for more. 
-___
+This is just one example of possible architecture, see [Splunk Validated Architectures](https://www.splunk.com/pdfs/technical-briefs/splunk-validated-architectures.pdf) for more.
 
+By maintaining multiple, identical copies of Splunk Enterprise data, clusters prevent data loss while promoting data availability for searching.
 
+---
 
-  By maintaining multiple, identical copies of Splunk Enterprise data, clusters prevent data loss while promoting data availability for searching.
+## How a single search runs in this architecture
+
+Every search is a small MapReduce job. The **search head (SH)** carries the user-facing pieces — it parses the SPL, checks permissions, applies search-time configuration (field extractions, lookups, ACLs) and ultimately renders the result. The **indexers (IDX)** carry the data and do the heavy lifting on it.
+
+For one running search, the work splits roughly like this:
+
+- **SH (before):** parse SPL, resolve roles and indexes, dispatch the search to indexers.
+- **IDX — Map:** find matching events on their slice of the data, extract fields, apply lookups, compute intermediate results.
+- **SH — Reduce:** combine the intermediate results from every indexer, run remaining commands (often `sort`, format, eval against aggregates), return to the user.
+
+<svg viewBox="0 0 720 400" xmlns="http://www.w3.org/2000/svg" style={{ width: '100%', maxWidth: '720px', display: 'block', margin: '1.5em auto' }}>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <rect x="200" y="30" width="320" height="90" rx="8" fill="none" stroke="currentColor" strokeWidth="2"/>
+  <text x="360" y="58" textAnchor="middle" fontSize="16" fontWeight="bold" fill="currentColor">Search Head</text>
+  <text x="360" y="80" textAnchor="middle" fontSize="12" fill="currentColor">phase 1 — Reduce</text>
+  <text x="360" y="100" textAnchor="middle" fontSize="11" fill="currentColor">combine intermediates · sort · format · return</text>
+  <line x1="260" y1="120" x2="120" y2="230" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4,4" markerEnd="url(#arr)"/>
+  <line x1="360" y1="120" x2="340" y2="230" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4,4" markerEnd="url(#arr)"/>
+  <line x1="460" y1="120" x2="580" y2="230" stroke="currentColor" strokeWidth="1.2" strokeDasharray="4,4" markerEnd="url(#arr)"/>
+  <line x1="140" y1="230" x2="280" y2="120" stroke="currentColor" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <line x1="380" y1="230" x2="380" y2="120" stroke="currentColor" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <line x1="620" y1="230" x2="500" y2="120" stroke="currentColor" strokeWidth="1.5" markerEnd="url(#arr)"/>
+  <text x="180" y="180" textAnchor="middle" fontSize="10" fontStyle="italic" fill="currentColor">dispatch</text>
+  <text x="540" y="180" textAnchor="middle" fontSize="10" fontStyle="italic" fill="currentColor">intermediate results</text>
+  <rect x="30" y="230" width="180" height="130" rx="8" fill="none" stroke="currentColor" strokeWidth="2"/>
+  <text x="120" y="258" textAnchor="middle" fontSize="14" fontWeight="bold" fill="currentColor">Indexer 1</text>
+  <text x="120" y="278" textAnchor="middle" fontSize="11" fill="currentColor">phase 0 — Map</text>
+  <text x="120" y="302" textAnchor="middle" fontSize="10" fill="currentColor">find events</text>
+  <text x="120" y="318" textAnchor="middle" fontSize="10" fill="currentColor">extract / lookups</text>
+  <text x="120" y="334" textAnchor="middle" fontSize="10" fill="currentColor">prestats</text>
+  <rect x="270" y="230" width="180" height="130" rx="8" fill="none" stroke="currentColor" strokeWidth="2"/>
+  <text x="360" y="258" textAnchor="middle" fontSize="14" fontWeight="bold" fill="currentColor">Indexer 2</text>
+  <text x="360" y="278" textAnchor="middle" fontSize="11" fill="currentColor">phase 0 — Map</text>
+  <text x="360" y="302" textAnchor="middle" fontSize="10" fill="currentColor">find events</text>
+  <text x="360" y="318" textAnchor="middle" fontSize="10" fill="currentColor">extract / lookups</text>
+  <text x="360" y="334" textAnchor="middle" fontSize="10" fill="currentColor">prestats</text>
+  <rect x="510" y="230" width="180" height="130" rx="8" fill="none" stroke="currentColor" strokeWidth="2"/>
+  <text x="600" y="258" textAnchor="middle" fontSize="14" fontWeight="bold" fill="currentColor">Indexer 3</text>
+  <text x="600" y="278" textAnchor="middle" fontSize="11" fill="currentColor">phase 0 — Map</text>
+  <text x="600" y="302" textAnchor="middle" fontSize="10" fill="currentColor">find events</text>
+  <text x="600" y="318" textAnchor="middle" fontSize="10" fill="currentColor">extract / lookups</text>
+  <text x="600" y="334" textAnchor="middle" fontSize="10" fill="currentColor">prestats</text>
+</svg>
+
+A search-head cluster (SHC) adds capacity for many concurrent users and searches, but **each individual search still runs on exactly one search head** — SHC does not parallelise a single search. The only way to make a single search faster through hardware is more indexers.
+
+### How to know which command ran where
+
+The split between Map and Reduce is decided per search by Splunk's planner. The definitive answer for any search you have run lives in **Job Inspector → Search Job Properties**:
+
+- `phase0` — the part shipped to the indexers (the Map)
+- `phase1` — what runs on the search head (the Reduce)
+
+A second sanity check is the volume of data moved between them: under **Execution costs**, `dispatch.stream.remote` shows the bytes transferred indexers → SH. If millions of events scanned produce a tiny remote transfer, the Map did its job. If the remote transfer is huge, the split was wrong and your SH is doing too much.
+
+---
+
+## Distributable vs centralized streaming
+
+Streaming commands process events one at a time. There are two subclasses:
+
+- **Distributable streaming** — each event is processed in isolation, no knowledge of other events required. These can run on the indexers in parallel.
+- **Centralized streaming** — processing one event depends on what came in earlier events. These have to run on the SH because no single indexer sees the full sequence.
+
+The Episode II article gives a classic worked example: `fillnull` with no field list cannot be distributable, because indexer A does not know which fields exist on indexer B's events. Add a field list (`fillnull value="unknown" clientip`) and the same command becomes distributable — and shifts to the indexers.
+
+Full reference: [Splunk Docs — Types of commands](https://docs.splunk.com/Documentation/Splunk/latest/Search/Typesofcommands) · [Commands by type](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Commandsbytype).
+
+---
+
+## Pushing work onto indexers — when it helps, when it hurts
+
+"More work on indexers = faster" is **usually** true, because indexers run in parallel. But there is a counter-example worth knowing.
+
+The Episode II article shows a search that does a DNS `lookup` per event:
+
+```
+index=_internal sourcetype=splunkd_ui_access
+| lookup dnslookup clientip OUTPUT clienthost
+| fillnull value="unknown"
+| stats count by clienthost
+| sort - count
+```
+
+Even when the indexers parallelise it, they still issue a DNS query for **every** event — 348,178 queries in the article's environment. Moving the lookup **after** the `stats`:
+
+```
+index=_internal sourcetype=splunkd_ui_access
+| fillnull value="unknown" clientip
+| stats count by clientip
+| lookup dnslookup clientip OUTPUT clienthost
+| fillnull value="unknown"
+| stats sum(count) as count by clienthost
+| sort - count
+```
+
+…drops the lookup count to ~500 (one per unique IP), runs sequentially on the SH, and is more than twice as fast overall. The lesson: **distributed parallelism is not free — count the calls, not just the commands**.
+
+---
+
+## Parallel Reduce (Intermediate Reduce)
+
+For large enough Splunk deployments there is an optional third phase between Map (indexers) and Reduce (SH): **Intermediate Reduce**. The indexers ship their map output to a randomly chosen subset of indexers (usually 4), those run the heavy group-by, and only the much smaller pre-aggregated result reaches the SH. You will see `redistribute` (with internal `rdout` / `rdin`) in `phase1` instead of full reducers when it kicks in. It dramatically helps high-cardinality group-bys that would otherwise bottleneck the SH.
+
+Reference: [Splunk Docs — Parallel reduce overview](https://docs.splunk.com/Documentation/Splunk/latest/DistSearch/Parallelreduceoverview).
+
+---
+
+## Read more
+
+- Jacob Brügmann & Martin Müller — [Splunk: Suchen verstehen mit dem Job Inspector — Episode II: Arbeitsteilung](https://www.consist.de/de/unternehmen/blog/artikel/Splunk-Suchen-verstehen-mit-dem-Job-Inspector-Episode-II-Arbeitsteilung/) (Consist, in German) — the article this section is based on
+- Jacob Brügmann & Martin Müller — [Episode I: Splunk-Suchen verstehen mit dem Job Inspector](https://www.consist.de/de/unternehmen/blog/artikel/Splunk-Suchen-verstehen-mit-dem-Job-Inspector/) (Consist, in German) — Episode I, which underpins the Chapter 3 Inspector lab
+- [Splunk Docs — What is distributed search?](https://docs.splunk.com/Documentation/Splunk/latest/DistSearch/Whatisdistributedsearch)
+- [Splunk Docs — Types of commands](https://docs.splunk.com/Documentation/Splunk/latest/Search/Typesofcommands) · [Commands by type](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Commandsbytype)
+- [Splunk Docs — Parallel reduce overview](https://docs.splunk.com/Documentation/Splunk/latest/DistSearch/Parallelreduceoverview)
+- Clara Merriman & Martin Müller — [Clara-fication: Job Inspector (.conf20)](https://conf.splunk.com/files/2020/recordings/TRU1143C.mp4) ([slides](https://conf.splunk.com/files/2020/slides/TRU1143C.pdf))
+- [Splunk Blog — Clara-fication: Job Inspector](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-clara-fication-job-inspector.html)
+- [MapReduce on Wikipedia](https://en.wikipedia.org/wiki/MapReduce)
