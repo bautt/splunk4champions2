@@ -262,24 +262,29 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Search examples",
-                    "steps": [
-                        {
-                            "title": "Search examples — stock baseline",
-                            "content": "chapter3/stocks_search.mdx"
-                        },
-                        {
-                            "title": "Search examples — weather correlation",
-                            "content": "chapter3/stocks_weather.mdx"
-                        }
-                    ]
-                },
-                {
-                    "title": "Search Tips",
+                    "title": "Bad Searches",
                     "steps": [
                         {
                             "title": "What makes searches slow",
                             "content": "chapter3/more_tips.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Search Lab",
+                    "steps": [
+                        {
+                            "title": "The Investigation",
+                            "content": "chapter3/investigation.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Search Quiz",
+                    "steps": [
+                        {
+                            "title": "Search Quiz",
+                            "content": "chapter3/search_quiz.mdx"
                         }
                     ]
                 },
@@ -289,15 +294,6 @@ const labs = {
                         {
                             "title": "Splunk MCP Server",
                             "content": "chapter3/mcp_splunk.mdx"
-                        }
-                    ]
-                },
-                {
-                    "title": "Search recap",
-                    "steps": [
-                        {
-                            "title": "Search recap",
-                            "content": "chapter3/quiz.mdx"
                         }
                     ]
                 },

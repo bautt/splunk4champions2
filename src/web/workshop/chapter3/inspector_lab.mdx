@@ -1,74 +1,146 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
 
-Run the search, wait for it to finish, and click on "Job -> Inspect Job" to oberserve the details: 
+Four cases. Each one: **run the suspect search, open Job Inspector, find the evidence, run the fix, confirm the win.**
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather"  
-| bucket span=4h _time
-| stats avg("main.temp") by name _time
-| where name=="Austin" OR name=="Bonn" OR name=="Hamburg"`}>
-</SplunkSearch>
+Before you start: under the search bar, **Job → Edit Job Settings → Lifetime: 7 days** so your slow jobs do not expire while you compare them.
 
-0. Consider changing job settings to avoid expiration: 
 <img src="/static/app/splunk4champions2/images/jobsettings1.png" width="300" />
 <p>
 <img src="/static/app/splunk4champions2/images/jobsettings2.png" width="400" />
 </p>
 
-1. In the first line we see the number of results, scanned events and time. 
-You can calculate events scanned per second from that. 
+---
 
-In this example we see something like: 
-"This search has completed and has returned 2,169 results by scanning 1,355,725 events in 6.535 seconds"
+## Case 1 — Schema-on-the-fly ambush
 
+**The complaint:** "I just want a count of users hitting Splunk. Why is it taking a minute?"
 
+**The suspect search:**
 
-2. Execution costs: time to process each component, number of invocation, input and output count
-    * "command.search.index" -> time to read the idx files 
-    * "command.search.rawdata" -> time to read rawdata
-    * "command.search.filter" -> time to filter non-matching events
-    * "command.search.kv" -> field extractions (analog for lookups, tags)
-    * "command.search.typer" -> processing event types
+<SplunkSearch earliest="-7d" latest="now" spl={`index=_internal user=*
+| stats count by user`}></SplunkSearch>
 
+**The evidence:** open Job Inspector. Look at the overview line and the job properties.
 
-3. Properties:  Under lower section "Search job properties" 
-    * look for the "optimizedSearch" - is it different?
-    * diskUsage - how much space the search is using?
+- `scanCount` will be huge — every `_internal` event in the time range
+- `eventCount` will be much smaller — only events that actually have a `user` field
+- The ratio tells the story (the Consist article shows a real 61M : 2M ≈ 30 : 1 example)
 
-* Alternatively look search for <b>lispy</b> in the search log
+**The diagnosis:** `user=*` is a "does the field exist?" check. Splunk has no Bloom-filter shortcut for that — it has to extract `user` at search time on every event to know whether to include it. Schema-on-the-fly is flexible but it cannot skip events for a field-existence test.
 
+**The fix:** filter via something that already exists in the tsidx — a sourcetype:
 
- Now compare the results with this search: 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather"  Austin OR Bonn OR Hamburg
-| timechart span=4h  avg("main.temp") by name`}>
-</SplunkSearch>
-Here is an example comparison: 
-What is different? 
-<p>
-<img src="/static/app/splunk4champions2/images/jobcompare.png" width="600" />
-</p>
+<SplunkSearch earliest="-7d" latest="now" spl={`index=_internal sourcetype=splunk*access user=*
+| stats count by user`}></SplunkSearch>
 
-* Would it be better to add "|fields city temperature_2m _time"
-after the first line? Check it out:
+**The confirmation:** `scanCount` collapses to roughly `eventCount`. Total runtime drops dramatically. Apply the two questions:
 
+> Could I have filtered differently? Yes — via `sourcetype`.
+>
+> Could I have reached my goal another way? Yes — `| tstats count where index=_internal sourcetype=splunk*access by user` is even faster.
 
-<SplunkSearch earliest="-1y" latest="now"  spl={`index="s4c_weather"  Austin OR Bonn OR Hamburg
-| fields name "main.temp" _time 
-| timechart span=4h  avg("main.temp") by name`}>
-</SplunkSearch>
+---
 
-##  Lispy Efficiency
-Lispy expressions are predicates Splunk® platform uses to locate events. Finding Lispy in the search log is good for debugging. All events matching the predicates are scanned 
-(scanned includes these steps: Read journal slice off disk, uncompress, fields, eventtypes, tags, lookups, postfilter). If you manage to scan fewer events, your search will be faster. 
-Lispy efficiency can be defined as `eventCount / scanCount`
+## Case 2 — The field tax
+
+**The complaint:** "It is a tiny stats. Why does it still feel slow?"
+
+**The suspect search:**
+
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_www
+| stats count by status`}></SplunkSearch>
+
+**The evidence:** in the execution-costs tree, look at `command.search.kv`. With no `| fields` to constrain Splunk, every field gets extracted on every event before stats runs.
+
+**The fix:** tell Splunk you only need `status`:
+
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_www
+| fields status
+| stats count by status`}></SplunkSearch>
+
+**The confirmation:** `command.search.kv` time drops; total runtime drops. `eventCount` is unchanged — the events themselves did not change, but the per-event work did.
+
+---
+
+## Case 3 — The wrong pipeline order
+
+**The complaint:** "I only need DAX, but the search is dragging."
+
+**The suspect search:**
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices
+| stats avg(close) by index_name
+| where index_name="DAX"`}></SplunkSearch>
+
+**The evidence:**
+
+- `eventCount` covers all 9 indexes — Splunk aggregated everything and then threw 8 away
+- Open the **`optimizedSearch`** field in job properties — did Splunk auto-rewrite the filter for you? Sometimes it can; sometimes it cannot.
+
+**The fix:**
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+| stats avg(close)`}></SplunkSearch>
+
+**The confirmation:** `eventCount` drops to roughly one ninth. `command.search.index` and `command.search.rawdata` both shrink. The execution-cost tree is shorter and bushier than before.
+
+---
+
+## Case 4 — The SmartStore mirage
+
+**The complaint:** "I changed one line and the search is 20x faster — I am a genius!"
+
+You probably are not. You probably just warmed the cache.
+
+In SmartStore environments, warm bucket copies live in object storage and get pulled into the indexer's local cache on demand. The second run of the same search may be dramatically faster simply because the buckets are now local. Attributing that to "your optimisation" is a classic measurement mistake.
+
+**The experiment:**
+
+1. Run this search once over a long range:
+
+<SplunkSearch earliest="-30d" latest="now" spl={`index=_internal sourcetype=splunkd
+| timechart count`}></SplunkSearch>
+
+2. In the execution-costs tree, look at:
+   - `command.search.index.bucketcache.miss`
+   - `command.search.rawdata.bucketcache.miss`
+
+3. Re-run the exact same search.
+
+4. Compare. The `bucketcache.miss` values should drop towards zero. Runtime drops with them.
+
+**The lesson:** when you measure the impact of an optimisation, run **each** version of the search at least twice and compare the **second** runs. Both will have warm caches and the cache effect is factored out of your comparison.
+
+---
+
+## Audit yourself
+
+Use the audit log to see the lispy efficiency (`eventCount / scanCount`) of your recent searches at a glance. Anything well below 1 is a candidate for the kind of work you just did in the four cases.
 
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)
 | stats earliest(_time) as _time earliest(total_run_time) as total_run_time earliest(event_count) as event_count earliest(scan_count) as scan_count earliest(user) as user earliest(savedsearch_name) as savedsearch_name earliest(search) as search by search_id
-| eval lispy_efficiency = event_count / scan_count|where scan_count > 100 AND total_run_time > 2
-| table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}>
-</SplunkSearch>
+| eval lispy_efficiency = event_count / scan_count
+| where scan_count > 100 AND total_run_time > 2
+| table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}></SplunkSearch>
 
-## Search optimization 
-Use this search to see latest searches optimized: 
+---
 
-<Link to="optimized_search" openInNewContext>Search optimization overview</Link>
+## Let Splunk show its work
+
+The `optimizedSearch` property tells you exactly what Splunk decided to run after its own optimisation pass. Worth a look every time you tune a search — sometimes Splunk has already done half the work for you.
+
+<Link to="optimized_search" openInNewContext>Recent searches and their optimised form</Link>
+
+<img src="/static/app/splunk4champions2/images/jobcompare.png" width="600" />
+
+---
+
+## Read more
+
+- [Brügmann & Müller — Splunk: Suchen verstehen mit dem Job Inspector](https://www.consist.de/de/unternehmen/blog/artikel/Splunk-Suchen-verstehen-mit-dem-Job-Inspector/) (Consist, in German, the definitive walkthrough — Case 1 and Case 4 in this lab are drawn from it)
+- [Clara Merriman & Martin Müller — Clara-fication: Job Inspector (.conf20)](https://conf.splunk.com/files/2020/recordings/TRU1143C.mp4) ([slides](https://conf.splunk.com/files/2020/slides/TRU1143C.pdf))
+- [Splunk blog — Clara-fication: Job Inspector](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-clara-fication-job-inspector.html)
+- [Splunk docs — View search job properties with the Job Inspector](https://docs.splunk.com/Documentation/Splunk/latest/Search/ViewsearchjobpropertieswiththeJobInspector)
+- [YouTube — Splunk Job Inspector deep dive](https://www.youtube.com/watch?v=Gf1vOlW0HR4)
+- [Splunk Education short](https://www.youtube.com/watch?v=n3OqaB6GVXs)

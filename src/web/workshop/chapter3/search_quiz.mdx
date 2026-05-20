@@ -1,0 +1,130 @@
+import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz'
+
+<BuzzQuiz
+  title="Search Quiz"
+  subtitle="Two searches. One question. Which one wins — and why?"
+  timePerQuestion={30}
+  pointsBase={1000}
+>
+
+  <Question
+    prompt="Which search is faster?"
+    explanation="index=* scans every index, including internal ones. Naming the index lets Splunk skip every bucket that does not belong to it. Run both with Job Inspector open and compare scan_count."
+  >
+    <Answer>{`index=* | stats count by index`}</Answer>
+    <Answer correct>{`index=s4c_www | stats count by host`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Same SPL, two time ranges over s4c_meteo. Which finishes faster?"
+    explanation="Buckets are organised by time on disk. Setting earliest=-24h lets Splunk skip every older bucket entirely. Always use the narrowest time window that still answers the question."
+  >
+    <Answer>{`earliest=-1y  latest=now`}</Answer>
+    <Answer correct>{`earliest=-24h  latest=now`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Filter for splunkd WARN events. Which approach is faster?"
+    explanation="| search after the first pipe runs on the search head, after all events arrive. Putting the same filter in the base search runs on the indexers in parallel."
+  >
+    <Answer>{`index=_internal | search source=*splunkd.log* WARN | head 100`}</Answer>
+    <Answer correct>{`index=_internal source=*splunkd.log* WARN | head 100`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Rename a field for display. Which order is more efficient?"
+    explanation="Rename runs on whatever data it sees. Placed before stats, it runs over every raw event. Placed after stats, it runs over the small aggregated result set."
+  >
+    <Answer>{`... | rename weather_code as WeatherCode | stats count by WeatherCode | where count>5000`}</Answer>
+    <Answer correct>{`... | stats count by weather_code | where count>5000 | rename weather_code as WeatherCode`}</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="TERM(192.168.1.1) is faster than just searching 192.168.1.1"
+    correct={true}
+    explanation="Without TERM, Splunk splits 192.168.1.1 on the minor breaker (.) into four separate tokens. TERM forces a single exact match against the tsidx — much fewer events to evaluate."
+  />
+
+  <Question
+    prompt="Group events per process id from _introspection. Which command performs better?"
+    explanation="transaction holds events in memory and is not distributed. stats achieves the same grouping in a single distributed pass and is typically 10–20x faster."
+  >
+    <Answer>{`... | transaction "data.pid" | table _time, processId, eventcount`}</Answer>
+    <Answer correct>{`... | stats last(_time) as _time, count as eventcount by "data.pid"`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Compute per-host event counts and keep all events. Which command pattern is faster?"
+    explanation="eventstats computes the aggregate over the same result set in a single pass, with no subsearch. join spawns a subsearch that is capped at 50,000 rows by default and runs sequentially."
+  >
+    <Answer>{`... | join type=left host [search index=_audit | stats count by host]`}</Answer>
+    <Answer correct>{`... | eventstats count as host_count by host`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Count events per city in s4c_meteo. Which is dramatically faster over long time ranges?"
+    explanation="tstats reads pre-built tsidx files and never touches raw event data. It is orders of magnitude faster for aggregations on indexed fields."
+  >
+    <Answer>{`index=s4c_meteo | stats count by city`}</Answer>
+    <Answer correct>{`| tstats count WHERE index=s4c_meteo by city`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Filter weather events to a list of cities. Which is faster?"
+    explanation="Filtering inside the base search runs at the index-scan phase — most non-matching events never get loaded. | where runs after retrieval, so Splunk loads everything first and then discards most of it."
+  >
+    <Answer>{`index=s4c_meteo | where city IN("Berlin", "Brussels", "Warsaw")`}</Answer>
+    <Answer correct>{`index=s4c_meteo city IN(Berlin Brussels Warsaw)`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Which wildcard pattern lets Splunk use the lexicon prefix tree?"
+    explanation="Trailing wildcards still benefit from the lexicon's prefix tree. Middle and leading wildcards force a full scan of every term in the tsidx."
+  >
+    <Answer correct>{`index=s4c_meteo Ber*`}</Answer>
+    <Answer>{`index=s4c_meteo *erlin`}</Answer>
+    <Answer>{`index=s4c_meteo *erli*`}</Answer>
+    <Answer>{`index=s4c_meteo B*lin`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Filter on status before aggregating. Which order is faster?"
+    explanation="where is a streaming command. Placed after stats it runs on the search head over already-aggregated data, but indexers had to send every event up first. Filtering before stats reduces what the search head ever sees."
+  >
+    <Answer>{`index=s4c_www | stats count by status | where status>=400`}</Answer>
+    <Answer correct>{`index=s4c_www status>=400 | stats count by status`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Which filter pattern is friendlier to Bloom filters?"
+    explanation="Bloom filters confirm whether a term is present in a bucket. Searching for absence (NOT) cannot use that shortcut — Splunk must scan and reject events one by one."
+  >
+    <Answer correct>{`index=s4c_www (status=301 OR status=404 OR status=500)`}</Answer>
+    <Answer>{`index=s4c_www NOT status=200`}</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="A search on s4c_stock_indices without a time range scans 10 years of data — even when you only need the last month."
+    correct={true}
+    explanation="Buckets are organised by time on disk. Setting earliest=-30d lets Splunk skip every older bucket entirely. No time range means every bucket on disk gets scanned."
+  />
+
+  <Question
+    prompt="Combine market data with weather data per day. Which approach scales?"
+    explanation="join runs the inner subsearch sequentially and caps it at 50,000 rows by default. append runs the second branch in parallel, and a collapsing stats merges the two streams without limits."
+  >
+    <Answer>{`... | join exchange_city [ search index=s4c_weather | stats avg("main.temp") by name ]`}</Answer>
+    <Answer correct>{`... | append [ search index=s4c_weather | stats avg("main.temp") as avg_temp by name ] | stats values(*) by exchange_city`}</Answer>
+  </Question>
+
+  <Question
+    prompt="Which command type runs on each indexer in parallel and should appear early in the pipeline?"
+    explanation="Streaming commands (eval, where, fields, rex, spath) process one event in, one event out. They run on indexers in parallel and reduce data before it ever reaches the search head."
+  >
+    <Answer>Transforming</Answer>
+    <Answer>Generating</Answer>
+    <Answer correct>Streaming</Answer>
+    <Answer>Orchestrating</Answer>
+  </Question>
+
+</BuzzQuiz>

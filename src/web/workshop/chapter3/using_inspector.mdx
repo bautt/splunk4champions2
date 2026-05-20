@@ -1,43 +1,73 @@
+import JobInspector from '../../components/JobInspector.js'
 import Link from '@splunk/react-ui/Link'
 
-Job Inspector is a tool in Splunk Web that you can use to troubleshoot search performance and understand the behavior of knowledge objects such as event types, tags, lookups, and so on within the search. You can inspect search jobs that are currently running or that have finished recently.
+Job Inspector is your microscope for search performance. It tells you what Splunk actually did, how long each part took, and what it had to chew through to give you a result.
 
+Open it from any search via **Job → Inspect Job**, or directly with `/manager/splunk4champions2/job_inspector?sid=<your_sid>`. For scheduled or saved searches that ran without you watching, find them under **Activity → Jobs** and open the inspector from there.
 
-Job inspector can be invoked by clicking on "Job -> Inspect Job" under the search bar. 
-Or you can use your search id in the following URL: .../en-GB/manager/splunk4champions2/job_inspector?sid=1673511581.496
+---
 
+## What you see — three sections
 
-## Interesting sections: 
+### 1. The overview (top of the page)
+
+The headline: total runtime, **scanned event count in bold**, and any warnings or errors. If `scanCount` is dramatically larger than the result count, this search has optimisation potential — start digging.
+
+<img src="/static/app/splunk4champions2/images/lab2_task1_howto1.png" width="100%" />
+
+### 2. Execution costs (middle)
+
+An indented tree. Parent rows include the time of their children. Bar length is your visual cue to where time was spent.
 
 <table width="100%">
-        <tr>
-          <td width="100%">
-            <p><img src="/static/app/splunk4champions2/images/lab2_task1_howto1.png" width="100%"/></p>
-          </td>
+  <tr>
+    <td width="35%">
+      <img src="/static/app/splunk4champions2/images/inspector-dall-e.png" width="90%" />
+    </td>
+    <td>
+      <p>The cost categories you will see most often:</p>
+      <ul>
+        <li><strong>command.search.index</strong> — locating events in the tsidx</li>
+        <li><strong>command.search.rawdata</strong> — reading raw events from disk</li>
+        <li><strong>command.search.filter</strong> — discarding events that did not match</li>
+        <li><strong>command.search.kv</strong> — field extractions (regex, delims, auto)</li>
+        <li><strong>command.search.typer</strong> — event type processing</li>
+        <li><strong>command.search.index.bucketcache.miss</strong> — SmartStore cold-cache penalty</li>
+        <li><strong>command.search.rawdata.bucketcache.miss</strong> — SmartStore cold-cache penalty (raw)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-        </tr>
-      </table>
-<table width="100%">
-        <tr width="60%">
+### 3. Job properties (bottom)
 
-           <td width="40%">
- <p><img src="/static/app/splunk4champions2/images/inspector-dall-e.png" width="80%"/></p>
-           </td>
+Alphabetical list. The fields you will reach for first:
 
-           <td>
-            <p>The Execution costs section lists information about the components of the search and how much impact each component has on the overall performance of the search. 
-              Keep in mind that parent elements include the time of child elements. </p>
-            <p><strong>command.search.index</strong>- time to search index for location to read in raw files</p>
-            <p><strong>command.search.filter </strong>- remove events which don’t match</p>
-            <p><strong>command.search.kv </strong> - extraction of fields (auto or regex or delims)</p>
-            <p><strong>command.search.rawdata</strong> - time to get events from the raw data</p>
-          </td>
-         
+- `eventCount`, `scanCount`, `resultCount` — how much work for how much output
+- `runDuration` — wall-clock time
+- `earliestTime`, `latestTime` — the actual time range Splunk searched
+- `optimizedSearch` — the rewritten SPL after Splunk's own optimisations
+- `sid` — search id; copy this to share or to pop straight into the inspector
+- Search log links at the very bottom — search-head log and per-indexer logs for deep dives
 
-        </tr>
-      </table>
+---
 
-## Search job properties 
-The Search job properties section lists other characteristics of the job.
-<img src="/static/app/splunk4champions2/images/lab2_task1_insp2.png" width="100%"/>
+## The two diagnostic questions
 
+Whenever a search looks slow, the article by [Brügmann & Müller (Consist)](https://www.consist.de/de/unternehmen/blog/artikel/Splunk-Suchen-verstehen-mit-dem-Job-Inspector/) frames optimisation as two questions:
+
+> **Can I express my filter criteria differently?**
+>
+> **Can I reach my goal a different way?**
+
+Both questions assume you already know the answer is faster — your job in the Inspector is to find the evidence that proves it.
+
+---
+
+## Jump straight into a job
+
+<JobInspector />
+
+---
+
+Now try the four cases — each one is a slow search, a piece of evidence, and a fix.
