@@ -1,0 +1,179 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## The Investigation
+
+A colleague asks you a question over coffee:
+
+> "Does the Frankfurt market behave differently after rainy days? I think DAX closes weaker when traders are stuck inside."
+
+You have three data sources you've heard about: web logs, stock prices, and weather. You don't quite remember the index names. You have an afternoon to find out.
+
+Along the way you will hit every classic search performance trap from the rulebook — and learn how to avoid them.
+
+---
+
+### Act 1 — Where is my data?
+
+You start by listing what's available. Your first instinct is to look at hosts across the whole environment:
+
+<SplunkSearch earliest="-24h" latest="now" spl={`| metadata type=hosts index=*`}></SplunkSearch>
+
+This works, but it pulls from every index — including internal ones. Open Job Inspector and note the bucket scan count.
+
+A faster way: `tstats` reads the same information from the tsidx files directly, no event scanning required.
+
+<SplunkSearch earliest="-24h" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index
+| sort -count`}></SplunkSearch>
+
+You now see `s4c_www`, `s4c_stock_indices`, `s4c_meteo_historic`, and `s4c_weather`. The first is web logs (not relevant for this investigation). The other three are your investigation surface.
+
+> **Lesson:** `tstats` on the tsidx is the fastest way to get index-level metadata.
+
+---
+
+### Act 2 — Get to know the events
+
+Before you write any aggregation, look at the shape of the data.
+
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_stock_indices
+| head 5`}></SplunkSearch>
+
+Take note of the fields: `index_name`, `exchange_city`, `symbol`, `open`, `close`, `volume`.
+
+Same for weather:
+
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo_historic
+| head 5`}></SplunkSearch>
+
+Note: `city`, `temperature_2m_max`, `precipitation_sum`, `date`.
+
+The shared key will be `exchange_city` (stocks) matched with `city` (weather), aligned by date. Good — no `join` will be required.
+
+> **Lesson:** sample first, aggregate later. Knowing field names up front saves dead-end queries.
+
+---
+
+### Act 3 — One city, one question — but filter late
+
+You want DAX's average close over the last year. Your first attempt filters too late:
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices
+| stats avg(close) as avg_close by index_name
+| where index_name="DAX"`}></SplunkSearch>
+
+Splunk computes the average for **all 9 indexes** and then throws 8 away. Better:
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+| stats avg(close) as avg_close`}></SplunkSearch>
+
+Run both. In Job Inspector, compare `eventCount` and `command.search.index` time.
+
+> **Lesson:** push every filter as far left as possible. Index filters and field filters belong in the base search, not after a pipe.
+
+---
+
+### Act 4 — Weather summary, same rule
+
+Frankfurt's average daily max temperature. The natural-but-wrong version filters with `| search` after a pipe:
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_meteo_historic
+| stats avg(temperature_2m_max) by city
+| search city=Frankfurt`}></SplunkSearch>
+
+The indexers already did the work for every city. Fix it by filtering in the base search:
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_meteo_historic city=Frankfurt
+| stats avg(temperature_2m_max) as avg_temp`}></SplunkSearch>
+
+> **Lesson:** `| search` after the first pipe almost always indicates a filter that belongs in the base search.
+
+---
+
+### Act 5 — When you just need counts, use `tstats`
+
+How many trading days do you have per index?
+
+A regular search scans every event:
+
+<SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
+| stats count by index_name`}></SplunkSearch>
+
+`tstats` reads the same count from the tsidx files — no raw events touched:
+
+<SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=s4c_stock_indices BY index_name
+| sort -count`}></SplunkSearch>
+
+Both return the same numbers. Compare `runDuration` in Job Inspector — usually 10–50x faster.
+
+> **Lesson:** `tstats` reads from the tsidx and only sees indexed fields. For aggregations on `index`, `sourcetype`, `host`, `source`, and indexed field extractions, it is dramatically faster.
+
+---
+
+### Act 6 — Two datasets, no `join`
+
+The natural reach for combining datasets is `join`. It usually hurts. Try it first:
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+| eval day=strftime(_time, "%Y-%m-%d"), close=tonumber(mvindex(close,0))
+| stats avg(close) as avg_close by day
+| join day [ search index=s4c_meteo_historic city=Frankfurt
+    | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d"))
+    | stats avg(temperature_2m_max) as avg_temp by day ]`}></SplunkSearch>
+
+`join` runs the subsearch sequentially, caps the inner result at 50k rows by default, and has its own time limit. The scalable pattern is `append` followed by a collapsing `stats`:
+
+<SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+| eval day=strftime(_time, "%Y-%m-%d"), close=tonumber(mvindex(close,0))
+| stats avg(close) as avg_close by day
+| append [ search index=s4c_meteo_historic city=Frankfurt
+    | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d"))
+    | stats avg(temperature_2m_max) as avg_temp by day ]
+| stats values(avg_close) as avg_close values(avg_temp) as avg_temp by day
+| where isnotnull(avg_close) AND isnotnull(avg_temp)`}></SplunkSearch>
+
+> **Lesson:** `append` runs the second branch in parallel. The collapsing `stats values(...) by day` merges the two streams. No subsearch limit, no sequential wait.
+
+---
+
+### Act 7 — The payoff: today's market, yesterday's weather
+
+The original question wasn't about same-day correlation — it was about whether **yesterday's** weather predicts today's market. That is a lag feature. `streamstats` builds it event-by-event without leaving the streaming pipeline.
+
+<SplunkSearch earliest="-2y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
+| eval day=strftime(_time, "%Y-%m-%d"), o=tonumber(mvindex(open,0)), c=tonumber(mvindex(close,0)), day_return=((c-o)/o)*100
+| stats avg(day_return) as day_return by day
+| append [ search index=s4c_meteo_historic city=Frankfurt
+    | eval day=coalesce(mvindex(date,0), strftime(_time, "%Y-%m-%d")), rain=tonumber(precipitation_sum)
+    | stats avg(rain) as rain_mm by day ]
+| stats values(day_return) as day_return values(rain_mm) as rain_mm by day
+| where isnotnull(day_return) AND isnotnull(rain_mm)
+| sort 0 day
+| streamstats current=f window=1 last(rain_mm) as yesterday_rain
+| where isnotnull(yesterday_rain)
+| eval weather_yesterday=case(yesterday_rain>=5, "Rainy (5mm+)", true(), "Dry (<5mm)")
+| stats count as trading_days avg(day_return) as avg_return_pct stdev(day_return) as stdev_return by weather_yesterday
+| eval avg_return_pct=round(avg_return_pct,3), stdev_return=round(stdev_return,3)`}></SplunkSearch>
+
+You have your first answer. Read it carefully:
+
+- `trading_days` — how many observations per scenario. Bigger samples are more trustworthy.
+- `avg_return_pct` — the mean daily return after rainy vs dry yesterdays.
+- `stdev_return` — variability. A small mean difference with high variance is not a signal.
+
+> **Lesson:** `streamstats current=f window=1 last(x)` is the idiomatic Splunk lag-feature pattern. It stays in the streaming pipeline, so it scales.
+
+---
+
+### Where to go next
+
+The skeleton you just built generalises. Try these variations:
+
+- Swap `index_name=DAX` and `city=Frankfurt` for `index_name="S&P 500"` and `city="New York"` — does the same effect appear in a different market?
+- Replace the rainfall threshold with a temperature bucket: `case(yesterday_temp>=25,"Hot", yesterday_temp>=10,"Mild", true(),"Cold")`.
+- Use a 3-day rolling window instead of yesterday only: `streamstats current=f window=3 avg(rain_mm) as rain_3d`.
+- Add `index_name` to the final `by` to compare all 9 markets in one search.
+
+After each variation, open Job Inspector. Did your change make the search faster or slower? Why?
+
+Everything in the rulebook applies here. You now have a method.
