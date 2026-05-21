@@ -1,4 +1,5 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 
 ![](/static/app/splunk4champions2/images/lab1_task1_howto2.png)
 
@@ -15,6 +16,8 @@ Line numbers are especially useful when:
 
 This workshop preview omits line numbers for a cleaner layout; in Splunk, enable them with the steps above. Try the same search there — line numbers make each pipe easy to reference:
 
+<LabBlock title="Try it out">
+
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo
 | rex field=city "(?<city_short>^\\w+)"
 | stats avg(temperature_2m) as avg_temp
@@ -25,3 +28,5 @@ This workshop preview omits line numbers for a cleaner layout; in Splunk, enable
 | eval avg_humidity = round(avg_humidity, 1)
 | sort -avg_temp`}>
 </SplunkSearch>
+
+</LabBlock>

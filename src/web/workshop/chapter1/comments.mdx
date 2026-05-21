@@ -1,4 +1,5 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link'
 
 ## Inline Comments
@@ -24,8 +25,12 @@ is not true for Splunk searches anymore.
 
 <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Comments" openInNewContext>Inline Comments Documentation</Link>
 
+<LabBlock title="Try it out">
+
 <SplunkSearch earliest="-24h" latest="now" spl={`index=_internal host=* source="*metrics.log" sourcetype=splunkd group=per_Sourcetype_thruput 
 \`\`\`this search is borrowed from "Indexing Performance" in Monitoring Console\`\`\`
 | eval ingest_pipe = if(isnotnull(ingest_pipe), ingest_pipe, "none") 
 | timechart minspan=30s per_second(kb) by series useother=false limit=5`}>
 </SplunkSearch>
+
+</LabBlock>

@@ -1,4 +1,5 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link'
 
 # Using the walklex command
@@ -18,17 +19,29 @@ command.
       </table>
 
 
+<LabBlock title="Run this search">
+
 ### Display indexed fields and the count (type=fieldvalue)
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_www type=fieldvalue|stats sum(count) by term`}>
 </SplunkSearch>
+
+</LabBlock>
+
+<LabBlock title="Run this search">
 
 ### Display TERMS and the count (type=term)
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_www type=term|stats sum(count) by term`}>
 </SplunkSearch>
 
+</LabBlock>
+
+<LabBlock title="Run this search">
+
 ### Add prefix to filter results
 <SplunkSearch earliest="-30d" latest="now" spl={`|walklex index=s4c_www type=term prefix=http`}>
 </SplunkSearch>
+
+</LabBlock>
 
  You may also notice the source field of the walklex output contains something like: **s4c_www~0~E7F9BD44-1185-4AD9-85D0-F6DEAD372EC1**
  it is composed from index name, bucket id and indexer guid: **index-id-guId**

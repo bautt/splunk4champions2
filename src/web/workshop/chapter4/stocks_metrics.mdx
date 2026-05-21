@@ -12,18 +12,24 @@ In this exercise you will use `mcollect` to push that data into `s4c_student_met
 
 ### Step 1: Explore the raw event data
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | stats count min(_time) as oldest max(_time) as newest by index_name symbol
 | eval oldest=strftime(oldest,"%Y-%m-%d"), newest=strftime(newest,"%Y-%m-%d")
 | sort index_name`}></SplunkSearch>
 
+
+
 ---
 
 ### Step 2: Preview what will become metrics
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | table _time symbol index_name open high low close volume
 | sort -_time | head 20`}></SplunkSearch>
+
+
 
 ---
 
@@ -35,9 +41,12 @@ The `prefix=stocks.` argument makes fields appear as `stocks.open`, `stocks.clos
 
 Remove the backtick comments from the `mcollect` line to actually write the data — **run once only**.
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | fields _time symbol index_name open high low close volume
 \`\`\`| mcollect index=s4c_student_metrics prefix=stocks.\`\`\``}></SplunkSearch>
+
+
 
 > The full command when ready:  
 > `| mcollect index=s4c_student_metrics prefix=stocks.`
@@ -48,17 +57,23 @@ Remove the backtick comments from the `mcollect` line to actually write the data
 
 After running mcollect, confirm the data is in the metrics index:
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`| mcatalog values(metric_name) values(index_name) values(symbol)
     WHERE index=s4c_student_metrics metric_name=stocks.*`}></SplunkSearch>
+
+
 
 ---
 
 ### Step 5: Query with mstats
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`| mstats avg(stocks.close) as avg_close
     WHERE index=s4c_student_metrics
     BY index_name span=1y
 | timechart span=1y avg(avg_close) by index_name`}></SplunkSearch>
+
+
 
 ---
 

@@ -18,8 +18,11 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 **The suspect search:**
 
+
 <SplunkSearch earliest="-7d" latest="now" spl={`index=_internal user=*
 | stats count by user`}></SplunkSearch>
+
+
 
 **The evidence:** open Job Inspector. Look at the overview line and the job properties.
 
@@ -31,8 +34,11 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 **The fix:** filter via something that already exists in the tsidx — a sourcetype:
 
+
 <SplunkSearch earliest="-7d" latest="now" spl={`index=_internal sourcetype=splunk*access user=*
 | stats count by user`}></SplunkSearch>
+
+
 
 **The confirmation:** `scanCount` collapses to roughly `eventCount`. Total runtime drops dramatically. Apply the two questions:
 
@@ -48,16 +54,22 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 **The suspect search:**
 
+
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_www
 | stats count by status`}></SplunkSearch>
+
+
 
 **The evidence:** in the execution-costs tree, look at `command.search.kv`. With no `| fields` to constrain Splunk, every field gets extracted on every event before stats runs.
 
 **The fix:** tell Splunk you only need `status`:
 
+
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_www
 | fields status
 | stats count by status`}></SplunkSearch>
+
+
 
 **The confirmation:** `command.search.kv` time drops; total runtime drops. `eventCount` is unchanged — the events themselves did not change, but the per-event work did.
 
@@ -69,9 +81,12 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 **The suspect search:**
 
+
 <SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices
 | stats avg(close) by index_name
 | where index_name="DAX"`}></SplunkSearch>
+
+
 
 **The evidence:**
 
@@ -80,8 +95,11 @@ Before you start: under the search bar, **Job → Edit Job Settings → Lifetime
 
 **The fix:**
 
+
 <SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
 | stats avg(close)`}></SplunkSearch>
+
+
 
 **The confirmation:** `eventCount` drops to roughly one ninth. `command.search.index` and `command.search.rawdata` both shrink. The execution-cost tree is shorter and bushier than before.
 
@@ -97,6 +115,7 @@ In SmartStore environments, warm bucket copies live in object storage and get pu
 
 **The experiment:**
 
+
 1. Run this search once over a long range:
 
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_internal sourcetype=splunkd
@@ -110,6 +129,8 @@ In SmartStore environments, warm bucket copies live in object storage and get pu
 
 4. Compare. The `bucketcache.miss` values should drop towards zero. Runtime drops with them.
 
+
+
 **The lesson:** when you measure the impact of an optimisation, run **each** version of the search at least twice and compare the **second** runs. Both will have warm caches and the cache effect is factored out of your comparison.
 
 ---
@@ -118,11 +139,14 @@ In SmartStore environments, warm bucket copies live in object storage and get pu
 
 Use the audit log to see the lispy efficiency (`eventCount / scanCount`) of your recent searches at a glance. Anything well below 1 is a candidate for the kind of work you just did in the four cases.
 
+
 <SplunkSearch earliest="-30d" latest="now" spl={`index=_audit search_id TERM(action=search) (info=granted OR info=completed)
 | stats earliest(_time) as _time earliest(total_run_time) as total_run_time earliest(event_count) as event_count earliest(scan_count) as scan_count earliest(user) as user earliest(savedsearch_name) as savedsearch_name earliest(search) as search by search_id
 | eval lispy_efficiency = event_count / scan_count
 | where scan_count > 100 AND total_run_time > 2
 | table _time total_run_time event_count scan_count lispy_efficiency user savedsearch_name search`}></SplunkSearch>
+
+
 
 ---
 

@@ -1,5 +1,6 @@
 
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link'
 
 ## Searching Metrics
@@ -10,6 +11,8 @@ Metrics have their own set of search commands. Let's explore them using the TA-o
 
 The `mcatalog` command lets you discover what metric names and dimensions are available in a metrics index. Think of it as the metrics equivalent of `| metadata`.
 
+<LabBlock title="Try it out">
+
 Discover all metric names in our weather metrics index:
 <SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
 
@@ -19,9 +22,13 @@ See which cities are reporting weather data:
 Combine metric names with dimensions to understand the data shape:
 <SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) values(city) values(country) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
 
+</LabBlock>
+
 ## Using mstats
 
 The `mstats` command is the primary way to query metric data. It performs statistical aggregations directly on the metrics store, which is significantly faster than running `stats` on event data.
+
+<LabBlock title="Run this search">
 
 Average temperature by city over the last 24 hours:
 <SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp WHERE index=s4c_meteo_metrics BY city span=1h`}></SplunkSearch>
@@ -34,10 +41,17 @@ Wind speed trends with timechart:
 Humidity and temperature together:
 <SplunkSearch earliest="-24h" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp avg(meteo.relative_humidity_2m) as avg_humidity WHERE index=s4c_meteo_metrics BY city`}></SplunkSearch>
 
+</LabBlock>
+
 ## Using mpreview
 
 Use `mpreview` to get a raw look at the metric time series stored in a metrics index. This is useful for troubleshooting and understanding the data structure.
+
+<LabBlock title="Try it out">
+
 <SplunkSearch earliest="-1h" latest="now" spl={`| mpreview index=s4c_meteo_metrics`}></SplunkSearch>
+
+</LabBlock>
 
 ## Analytics Workspace
 

@@ -197,19 +197,6 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "SPL2",
-                    "steps": [
-                        {
-                            "title": "SPL2 Overview",
-                            "content": "chapter3/spl2_overview.mdx"
-                        },
-                        {
-                            "title": "SPL2 Modules",
-                            "content": "chapter3/spl2_modules.mdx"
-                        }
-                    ]
-                },
-                {
                     "title": "Command Types",
                     "steps": [
                         {
@@ -227,6 +214,7 @@ const labs = {
                         },
                         {
                             "title": "Inspector Lab",
+                            "type": "lab",
                             "content": "chapter3/inspector_lab.mdx"
                         }
                     ]
@@ -275,6 +263,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "The Investigation",
+                            "type": "lab",
                             "content": "chapter3/investigation.mdx"
                         }
                     ]
@@ -285,6 +274,19 @@ const labs = {
                         {
                             "title": "Search Quiz",
                             "content": "chapter3/search_quiz.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "SPL2",
+                    "steps": [
+                        {
+                            "title": "SPL2 Overview",
+                            "content": "chapter3/spl2_overview.mdx"
+                        },
+                        {
+                            "title": "SPL2 Modules",
+                            "content": "chapter3/spl2_modules.mdx"
                         }
                     ]
                 },
@@ -356,6 +358,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Metrics Lab",
+                            "type": "lab",
                             "content": "chapter4/metrics_lab.mdx"
                         }
                     ]
@@ -365,6 +368,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Stocks — Events to Metrics",
+                            "type": "lab",
                             "content": "chapter4/stocks_metrics.mdx"
                         }
                     ]
@@ -480,6 +484,7 @@ const labs = {
                     "steps": [
                         {
                             "title": "Build Your First Dashboard",
+                            "type": "lab",
                             "content": "chapter6/ds_tutorial.mdx"
                         }
                     ]
