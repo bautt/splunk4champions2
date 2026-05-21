@@ -413,11 +413,11 @@
 
 /* ── Lab Block: hands-on exercise callout ──────────────────────────────────── */
 .s4c-lab-block {
-    border-left: 4px solid #65A637;
-    background-color: #f2faf2;
+    border-left: 4px solid #C2830A;
+    background-color: #fefaf2;
     border-radius: 0 6px 6px 0;
     margin: 20px 0;
-    box-shadow: 0 2px 8px rgba(101, 166, 55, 0.10);
+    box-shadow: 0 2px 8px rgba(194, 131, 10, 0.10);
 }
 
 .s4c-lab-block__header {
@@ -425,15 +425,15 @@
     align-items: center;
     gap: 8px;
     padding: 10px 16px 8px;
-    border-bottom: 1px solid #c8e6b8;
-    background-color: #e8f5e2;
+    border-bottom: 1px solid #e8c87a;
+    background-color: #fdf0d5;
     border-radius: 0 6px 0 0;
 }
 
 .s4c-lab-block__icon {
     display: flex;
     align-items: center;
-    color: #3d8a1e;
+    color: #7a4f04;
     font-size: 18px;
 }
 
@@ -447,16 +447,16 @@
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #2e6b12;
+    color: #7a4f04;
 }
 
 .s4c-lab-block__body {
     padding: 12px 16px 4px;
 }
 
-/* Override image border inside lab block - no double border */
+/* Override image border inside lab block */
 .s4c-lab-block .workshopContent img {
-    border-color: #c8e6b8;
+    border-color: #e8c87a;
 }
 
 /* Large-room scale for lab block */
