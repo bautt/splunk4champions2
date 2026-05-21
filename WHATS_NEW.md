@@ -4,6 +4,16 @@
 
 ---
 
+### 2.11.75 — hands-on lab treatment, live dashboard embeds, Chapter 3 reorder
+
+- **Lab treatment for hands-on exercises:** new `LabBlock` callout component (steel-blue, hammer icon) for atomic hands-on steps, plus a deep-navy *complete-lab card* treatment for the five end-to-end labs (Inspector Lab, Search Lab / Investigation, Metrics Lab, Stocks — Events to Metrics, Publish a dashboard without login). Each complete lab now opens with an upfront summary card. `workshop.js` tags these steps with `"type": "lab"` so the UI knows which treatment to render.
+- **Chapter 3 reorder:** **SPL2** subchapter moved from the front of Chapter 3 to between **Search Quiz** and **MCP** so the search-performance arc (Basics → Command Types → Inspector → Terms → tstats → Bad Searches → Search Lab → Search Quiz) reads end-to-end before the SPL2/MCP appendix sections.
+- **Live dashboard embeds in Chapter 5 Colors:** new `SplunkPanel` use embeds a live pie-chart panel via `/app/?hideChrome=true` (the Splunk 10.x replacement for the removed `/embed/` route). Static colour screenshots restored alongside the live panel for trainers running offline.
+- **New Chapter 6 publish lab:** `chapter6/ds_publish.mdx` now has a hands-on lab walking through publishing a dashboard without login.
+- **Canvas viz page trimmed:** removed the health-dashboard detour from `chapter6/ds_rcastley_vizs.mdx` so the page focuses on the Canvas 2D library itself.
+- **Chapter 2 asset swaps:** `journal1.png` replaced by `journal_new.png` and `tsidx1.png` by `tsidx_new.png` (the redrawn assets from v2.11.62). The SmartStore "library" image now floats inline with the analogy text instead of sitting as a block.
+- **Weather data refresh:** scheduled ingest update of `current_2026.log.gz` via the show-host pipeline.
+
 ### 2.11.62 — app size reduction, asset redesigns, city normalisation
 
 - **App size dropped substantially:** lossless PNG compression across `appserver/static/images/` and `www.log` gzipped; `current_2026.log.gz` reduced by 37% (8.2 MB → 5.2 MB); `inspector-dall-e.png` dimensions halved (505 KB → 123 KB); unused `hot_warm1.png` / `hot_warm2.png` removed.

@@ -522,3 +522,83 @@
 .s4c-large-room .s4c-lab-summary {
     font-size: 18px;
 }
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   Lab colour schemes — override default blue palette
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Scheme: Brown / Dark Red ──────────────────────────────────────────────── */
+.s4c-scheme-brownred .s4c-lab-block {
+    border-left-color: #9c2c2c;
+    background-color: #fdf6f6;
+    box-shadow: 0 2px 8px rgba(156, 44, 44, 0.10);
+}
+.s4c-scheme-brownred .s4c-lab-block__header {
+    background-color: #f5dada;
+    border-bottom-color: #d89090;
+}
+.s4c-scheme-brownred .s4c-lab-block__icon,
+.s4c-scheme-brownred .s4c-lab-block__label {
+    color: #6b1a1a;
+}
+.s4c-scheme-brownred .s4c-lab-block .workshopContent img {
+    border-color: #d89090;
+}
+
+.s4c-scheme-brownred .s4c-complete-lab > div {
+    border-top-color: #6b1a1a !important;
+    background-color: #fdf2f2 !important;
+}
+.s4c-scheme-brownred .s4c-lab-badge {
+    background-color: #f5dada;
+    border-color: #d89090;
+    color: #6b1a1a;
+}
+.s4c-scheme-brownred .s4c-lab-badge svg {
+    color: #9c2c2c;
+}
+.s4c-scheme-brownred .s4c-lab-summary {
+    border-left-color: #9c2c2c;
+    background-color: #fdf0f0;
+}
+.s4c-scheme-brownred .s4c-lab-summary strong {
+    color: #6b1a1a;
+}
+
+/* ── Scheme: Yellow / Brown ────────────────────────────────────────────────── */
+.s4c-scheme-yellowbrown .s4c-lab-block {
+    border-left-color: #C2830A;
+    background-color: #fefaf2;
+    box-shadow: 0 2px 8px rgba(194, 131, 10, 0.10);
+}
+.s4c-scheme-yellowbrown .s4c-lab-block__header {
+    background-color: #fdf0d5;
+    border-bottom-color: #e8c87a;
+}
+.s4c-scheme-yellowbrown .s4c-lab-block__icon,
+.s4c-scheme-yellowbrown .s4c-lab-block__label {
+    color: #7a4f04;
+}
+.s4c-scheme-yellowbrown .s4c-lab-block .workshopContent img {
+    border-color: #e8c87a;
+}
+
+.s4c-scheme-yellowbrown .s4c-complete-lab > div {
+    border-top-color: #7a4f04 !important;
+    background-color: #fefbf5 !important;
+}
+.s4c-scheme-yellowbrown .s4c-lab-badge {
+    background-color: #fdf0d5;
+    border-color: #e8c87a;
+    color: #7a4f04;
+}
+.s4c-scheme-yellowbrown .s4c-lab-badge svg {
+    color: #C2830A;
+}
+.s4c-scheme-yellowbrown .s4c-lab-summary {
+    border-left-color: #C2830A;
+    background-color: #fdf8ee;
+}
+.s4c-scheme-yellowbrown .s4c-lab-summary strong {
+    color: #7a4f04;
+}
