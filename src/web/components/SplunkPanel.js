@@ -21,13 +21,15 @@ export default function SplunkPanel({ dashboard, embed = false, panelId, height 
         ? window.location.pathname.split('/')[1]
         : 'en-GB';
 
-    const query = panelId ? `?panelId=${encodeURIComponent(panelId)}` : '';
-    // Classic XML dashboards with embed="enabled" can use the /embed/ URL (no login needed).
-    // Dashboard Studio v2 dashboards do not support /embed/ — use the regular /app/ URL instead.
-    const iframeUrl = embed
-        ? `/${locale}/embed/${app}/${dashboard}${query}`
-        : `/${locale}/app/${app}/${dashboard}${query}`;
-    const fullUrl  = `/${locale}/app/${app}/${dashboard}`;
+    // Build query string — hideChrome=true removes the Splunk nav bar (works in Splunk 9.x/10.x).
+    // panelId limits the embed to a single panel (Classic XML only).
+    const params = new URLSearchParams();
+    if (embed) params.set('hideChrome', 'true');
+    if (panelId) params.set('panelId', panelId);
+    const query    = params.toString() ? `?${params.toString()}` : '';
+    // Always use the /app/ URL — /embed/ was removed in Splunk 9.x+.
+    const iframeUrl = `/${locale}/app/${app}/${dashboard}${query}`;
+    const fullUrl   = `/${locale}/app/${app}/${dashboard}`;
 
     return (
         <div style={{ marginBottom: '16px' }}>
