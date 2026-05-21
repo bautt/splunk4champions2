@@ -8,7 +8,20 @@ If you build from source, the **exact** app version is shown on the **Setup** he
 
 ---
 
-## This build (2.11.53)
+## This build (2.11.62)
+
+- **App size reduction:** lossless PNG compression across `appserver/static/images/` and `www.log` gzipped; `current_2026.log.gz` reduced 37% from 8.2 MB to 5.2 MB; `inspector-dall-e.png` halved (505 KB → 123 KB); unused `hot_warm1/2.png` removed.
+- **Image redesigns:** `tsidx1.png` and `journal1.png` redrawn in the current workshop style; the journal asset aligns with on-disk `journal.zst` naming.
+- **City normalisation:** canonical city names in the bundled `current_2026.log.gz`, dashboard SPL updated to match.
+- **Search basics diagrams** clarified in the Chapter 3 walkthroughs.
+- **Splunk Cloud readiness pass** on the app package.
+
+## 2.11.54
+
+- **Package validation notes:** local package build was refreshed after the Cloud-readiness cleanup, and the current Cloud AppInspect status is documented in the root `WHATS_NEW.md`.
+- **Bundled-data decision:** the workshop keeps the current bundled data layout for now to avoid disrupting Enterprise workshop installs; future single-package Cloud work should prefer documented Splunk locations such as `lookups/` for CSV-style seed/reference data rather than a custom `seeddata/` folder.
+
+## 2.11.53
 
 - **Cloud-safe configuration cleanup:** removed app-shipped Phyphox HEC stanzas and added administrator-focused HEC setup guidance in the Phyphox chapter.
 - **Index and limit cleanup:** removed Cloud-incompatible `indexes.conf` settings while keeping index creation stanzas for on-prem installs, and removed app-shipped `limits.conf`; large stock/weather joins should use `inputlookup meteo_historic` or an administrator-owned platform setting.

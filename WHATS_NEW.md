@@ -4,6 +4,20 @@
 
 ---
 
+### 2.11.62 — app size reduction, asset redesigns, city normalisation
+
+- **App size dropped substantially:** lossless PNG compression across `appserver/static/images/` and `www.log` gzipped; `current_2026.log.gz` reduced by 37% (8.2 MB → 5.2 MB); `inspector-dall-e.png` dimensions halved (505 KB → 123 KB); unused `hot_warm1.png` / `hot_warm2.png` removed.
+- **Image assets redrawn in the modern workshop style:** `tsidx1.png` and `journal1.png` re-rendered, the latter renamed in line with the on-disk `journal.zst` naming.
+- **City names normalised** across the bundled `current_2026.log.gz`, with dashboard SPL updated to match the new canonical names.
+- **Search basics diagrams clarified** in the Chapter 3 walkthroughs.
+- **Further Splunk Cloud readiness pass** on the app package.
+
+### 2.11.54 — package validation notes
+
+- **Local test package built:** refreshed `splunk4champions2.tar.gz` after the Cloud-readiness cleanup so trainers can test the current `2.11.53` app behavior locally.
+- **Cloud-readiness status documented:** AppInspect Cloud checks are down to the known bundled-data blocker in root `static/`; HEC tokens, `limits.conf`, invalid index settings, XML parsing issues, and the outdated Splunk Python SDK blocker are resolved.
+- **Bundled-data decision captured:** left the current bundled data layout unchanged for now to avoid disrupting Enterprise workshop installs; future Cloud-compatible single-package work should prefer documented Splunk locations such as `lookups/` for CSV-style seed/reference data rather than introducing a custom `seeddata/` folder.
+
 ### 2.11.53 — Cloud-safe configuration cleanup
 
 - **HEC tokens removed from the app package:** removed the shipped Phyphox HEC stanzas from `inputs.conf`; the Phyphox chapter now explains how an administrator creates environment-specific HEC tokens for Splunk Enterprise or Splunk Cloud.
