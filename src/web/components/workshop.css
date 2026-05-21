@@ -469,24 +469,25 @@
 }
 
 /* ── Complete Lab: step-level card treatment ───────────────────────────────── */
+/* Deeper navy-blue — same family as atomic LabBlock, clearly heavier weight   */
 .s4c-lab-badge {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     padding: 3px 10px 3px 8px;
     margin-bottom: 14px;
-    background-color: #fdf0d5;
-    border: 1px solid #e8c87a;
+    background-color: #ddeaf7;
+    border: 1px solid #b3cee8;
     border-radius: 12px;
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: #7a4f04;
+    color: #1a3a5c;
 }
 
 .s4c-lab-badge svg {
-    color: #C2830A;
+    color: #1a4e80;
     flex-shrink: 0;
 }
 
@@ -495,7 +496,9 @@
     padding: 4px 12px 4px 10px;
 }
 
+/* Deep navy top-border + slightly blue-tinted card background */
 .s4c-complete-lab > div {
-    border-top: 3px solid #C2830A !important;
+    border-top: 3px solid #1a4e80 !important;
     border-radius: 4px;
+    background-color: #f0f6fc !important;
 }
