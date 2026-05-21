@@ -2,11 +2,52 @@ import Link from '@splunk/react-ui/Link'
 
 # What's new in the app
 
-The repository does not ship a separate `WHATSNEW.md` file. **Source of truth for long-form release notes** is the <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page and tag descriptions on <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>GitHub</Link>. Below: recent **app** versions in this build, then **highlights** from an earlier GitHub release so you can see the same story as the repo.
+The repository includes a root-level `WHATS_NEW.md` summary and the <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page remains the source for full tag descriptions on <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>GitHub</Link>. Below: recent **app** versions in this build, then **highlights** from an earlier GitHub release so you can see the same story as the repo.
 
 If you build from source, the **exact** app version is shown on the **Setup** health check page and under **Settings → Apps → Splunk4Champions2**.
 
 ---
+
+## This build (2.11.53)
+
+- **Cloud-safe configuration cleanup:** removed app-shipped Phyphox HEC stanzas and added administrator-focused HEC setup guidance in the Phyphox chapter.
+- **Index and limit cleanup:** removed Cloud-incompatible `indexes.conf` settings while keeping index creation stanzas for on-prem installs, and removed app-shipped `limits.conf`; large stock/weather joins should use `inputlookup meteo_historic` or an administrator-owned platform setting.
+- **Sample token removed:** the Phyphox download dashboard no longer pre-fills a token-like value.
+
+## 2.11.52
+
+- **Cloud readiness maintenance:** escaped dashboard XML labels that used bare ampersands, added `sc_admin` to app metadata, switched Open-Meteo scripted input stanzas to the preferred absolute app `bin/` path form, and updated the bundled Splunk Python SDK.
+- **Cloud packaging review:** the remaining Cloud-only blockers are documented as packaging-profile work so the default workshop package stays stable for non-cloud installations.
+
+## 2.11.51
+
+- **Release notes catch-up:** root `WHATS_NEW.md` now includes the missing post-`2.10.83` updates through the current documentation/collateral build.
+- **Documentation and collateral:** README, participant handout, one-page flyer, architecture slide assets, and editable PowerPoint collateral were refreshed for workshop positioning and trainer use.
+
+## 2.11.50
+
+- **README:** expanded into a public landing page with workshop purpose, target audience, quick content overview, chapter-by-chapter lab descriptions, running guidance, data reference, and links to editable handout/flyer sources.
+
+## 2.11.49
+
+- **Participant handout:** new editable Markdown handout covering workshop flow, chapter guide, data reference, quick references, recent highlights, and PDF export guidance.
+- **One-page flyer:** new editable Markdown flyer for workshop promotion and PDF conversion.
+
+## 2.11.48
+
+- **Chapter 2 Data:** added distributed search / MapReduce content with a supporting architecture diagram to connect search-head/indexer behavior to data storage concepts.
+
+## 2.11.47
+
+- **README:** refreshed the chapter overview and removed oversized lab images from the public landing page flow.
+
+## 2.11.40
+
+- **Search examples:** simplified `tstats` tip text and related README content.
+
+## 2.11.39
+
+- **Search basics:** reduced the index-discovery `tstats` example to a compact one-liner for easier teaching.
 
 ## This build (2.11.27)
 
@@ -48,7 +89,7 @@ If you build from source, the **exact** app version is shown on the **Setup** he
 
 ## 2.10.84
 
-- **Chapter 3 (stocks and weather):** `join` examples that merge index data with historical meteo use **`inputlookup meteo_historic`** and a higher **`[subsearch] maxout`** in the app (`limits.conf`) + **`[meteo_historic]`** in `transforms.conf`, so the default **10,000**-row subsearch cap does not drop weather matches. See the <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>repository</Link> for those files.
+- **Chapter 3 (stocks and weather):** `join` examples that merge index data with historical meteo use **`inputlookup meteo_historic`** and **`[meteo_historic]`** in `transforms.conf` so the weather side can avoid the default **10,000**-row subsearch cap. If a trainer still wants larger subsearch limits, that should be an administrator-owned platform setting outside the app.
 
 ---
 

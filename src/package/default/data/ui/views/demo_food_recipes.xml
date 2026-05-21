@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="light">
-    <label>Demo — Food & Recipes</label>
+    <label>Demo — Food &amp; Recipes</label>
     <description></description>
     <definition><![CDATA[{
   "title": "Demo — Food & Recipes",

@@ -1,8 +1,107 @@
 # What's New — Splunk4Champions Workshop
 
+## Version 2.11.x
+
+---
+
+### 2.11.53 — Cloud-safe configuration cleanup
+
+- **HEC tokens removed from the app package:** removed the shipped Phyphox HEC stanzas from `inputs.conf`; the Phyphox chapter now explains how an administrator creates environment-specific HEC tokens for Splunk Enterprise or Splunk Cloud.
+- **Cloud-compatible index definitions:** removed unsupported `indexes.conf` properties and corrected index path names while keeping all `s4c_*` index stanzas so standalone/on-prem installs still create the workshop indexes.
+- **`limits.conf` removed from the app:** the previous `[subsearch] maxout` setting helped large stock/weather joins, but platform limits should be administrator-owned; workshop guidance now favors `inputlookup meteo_historic` for the historical weather side of those joins.
+- **Sample HEC token removed from UI:** the Phyphox download dashboard no longer pre-fills a token-like value.
+
+### 2.11.52 — Cloud readiness maintenance
+
+- **XML validity fixes:** escaped dashboard labels that used bare ampersands so Cloud/AppInspect XML parsing succeeds without changing dashboard behavior.
+- **Cloud metadata polish:** added `sc_admin` to app-level write permissions and switched Open-Meteo scripted input stanzas to the preferred absolute `$SPLUNK_HOME/etc/apps/.../bin` path form.
+- **Splunk Python SDK refreshed:** updated the bundled `splunklib` runtime to Splunk SDK for Python `2.1.1` and included its runtime dependencies.
+- **Cloud packaging review:** identified the remaining Cloud-only blockers that should be handled with a separate Cloud packaging profile rather than changing the default workshop package used by most non-cloud installs.
+
+### 2.11.51 — release notes catch-up
+
+- **`WHATS_NEW.md` refreshed:** added the missing post-`2.10.83` notes so the root release summary now reflects the in-app What's New page, recent tags, and current workshop collateral.
+- **Version references aligned:** this documentation-only build bumps the app metadata after the README, handout, flyer, architecture diagram, and PowerPoint collateral updates.
+
+### 2.11.50 — README expansion
+
+- **README landing page expanded:** added a clearer workshop purpose, target audience, quick content overview, chapter-by-chapter lab descriptions, running guidance, and current data reference.
+- **Workshop collateral linked:** README now points to editable Markdown sources for the participant handout and one-page flyer.
+- **Audience and positioning clarified:** content now reflects the workshop purpose as hands-on enablement for experienced Splunk users, admins, dashboard builders, use case developers, trainers, and internal champions.
+
+### 2.11.49 — editable handout and flyer
+
+- **New participant handout:** added `SPLUNK4CHAMPIONS_HANDOUT_2026.md`, an editable Markdown handout covering the workshop flow, chapter guide, data reference, quick references, recent highlights, and PDF export guidance.
+- **New one-page flyer:** added `SPLUNK4CHAMPIONS_FLYER_2026.md`, an editable Markdown flyer for workshop promotion and PDF conversion.
+- **PDF-friendly format:** both files use simple Markdown and Pandoc-friendly front matter so they can be edited in Markdown tools, Word/Google Docs, or converted to PDF.
+
+### 2.11.48 — Chapter 2 distributed search / MapReduce
+
+- **Chapter 2 Data refresh:** added a distributed search / MapReduce section with a supporting SVG-style architecture diagram.
+- **Learning goal:** connects indexers, search heads, map/reduce behavior, and distributed search architecture to the data-storage concepts already covered in Chapter 2.
+
+### 2.11.47 — README chapter overview refresh
+
+- **README cleanup:** refreshed the chapter overview to better match the current workshop structure.
+- **Repository presentation:** removed oversized lab images from the README flow so the public landing page is easier to scan.
+
+### 2.11.40 — tstats tip and README updates
+
+- **Search chapter polish:** simplified `tstats` tip text and related examples for easier delivery.
+- **Documentation:** refreshed README content around the current chapter flow and search examples.
+
+### 2.11.39 — index discovery search simplification
+
+- **Search basics:** simplified index discovery with `tstats` into a compact one-liner.
+- **Trainer use:** keeps the example easy to explain while still showing how to discover accessible indexes efficiently.
+
+### 2.11.26 / 2.11.27 — links, SmartStore, display mode, and quizzes
+
+- **Chapter links:** each training chapter (**2–8**) now ends with its own **Useful Links** subchapter. Link lists are no longer repeated after every topic step.
+- **Bookmark compatibility:** legacy Chapter 7 bookmarks such as `#sec=sevenMobile Links` redirect to the new **Useful Links** section.
+- **SmartStore / data aging:** Chapter 2 labs refreshed with Splunk Lantern alignment, classic vs SmartStore-capable indexer diagrams, and updated captions/copy for indexing and search architecture.
+- **Embedded search bars:** workshop preview line numbers are off for cleaner layout; participants can enable native Splunk line numbers under **Settings → Search Preferences**.
+- **Workshop UI:** Large Room display mode improves readability for projected delivery.
+- **Quizzes:** Chapter 3 **Search recap** and Chapter 8 **Champion Quiz / Buzz** received presentation and content polish.
+- **Packaging:** tagged builds attach `splunk4champions2.tar.gz` on GitHub Releases; `make package` creates a matching local package.
+
+### 2.11.2 — Champion Quiz
+
+- **Chapter 8 · Champion Quiz:** added a Kahoot-style final quiz with timed questions, instant feedback, time-decayed scoring, single-choice, true/false, and multi-answer patterns.
+- **Authoring model:** quiz content is authored in `web/workshop/chapter8/quiz.mdx` using `<Question>`, `<TrueFalse>`, and `multi` for multi-answer questions.
+- **No leaderboard dependency:** final score is shown after the last question; no KV store is required.
+
 ## Version 2.10.x
 
 ---
+
+### 2.10.89 — MCP lab checklist
+
+- **MCP lab:** added a **Key points at a glance** checklist at the top of the Splunk MCP page covering install, token, endpoints, tool toggles, dedicated `username_mcp` user, TLS, and non-production guidance.
+
+### 2.10.88 — SPL2 and MCP chapter restructure
+
+- **Chapter 3 Search:** moved **SPL2** from Settings to the Search chapter after Search basics.
+- **New MCP section:** added an optional **Splunk MCP Server** section after Search Tips, covering Splunkbase installation, tokens, dedicated `username_mcp` user, and app UI screenshots.
+- **Images:** added `mcp_server_config.png` and `mcp_server_tools.png` under `appserver/static/images/`.
+
+### 2.10.87 — `s4c_*` data reference
+
+- **Readme expansion:** added an **Example data: `s4c_*` workshop indexes** section describing each workshop index, what it contains, how it is ingested, and which chapters use it.
+
+### 2.10.86 — Setup-first chapter order
+
+- **Setup chapter:** Health Check (`IndexHealth`) is now the first sub-section in the Setup chapter, before Readme and What's New.
+- **In-app docs:** Readme and What's New pages were expanded to align with the repository README and GitHub Releases.
+
+### 2.10.85 — in-app Readme and What's New
+
+- **Setup chapter:** added in-app **Readme** and **What's New** steps with links to the full GitHub README and release history.
+
+### 2.10.84 — stock/weather join reliability
+
+- **Chapter 3 stock/weather correlation:** join examples that merge index data with historical meteo now use `inputlookup meteo_historic`.
+- **Subsearch support:** app configuration includes a higher `[subsearch] maxout` plus `[meteo_historic]` in `transforms.conf`, so the default 10,000-row subsearch cap does not drop weather matches.
 
 ### 2.10.83 — `meteo_historic` path + `demo_metrics` lookup
 

@@ -2,29 +2,145 @@
 
 # Welcome to the Splunk4Champions Workshop!
 
-An interactive, hands-on Splunk workshop delivered as a Splunk app. Participants follow guided labs through a React UI embedded directly in Splunk — no slides, everything runs inside the platform.
+Splunk4Champions is an interactive, hands-on Splunk workshop delivered as a Splunk app. Participants follow guided labs through a React UI embedded directly in Splunk: no separate lab portal, no external notebook, and no slide deck required for the exercises.
 
-Built for experienced Splunk users: admins, use case developers, and champions who want to go deeper.
+The workshop is built for people who already know the basics of Splunk and want to become stronger champions for their teams. It combines platform internals, SPL habits, data onboarding concepts, metrics, dashboards, mobile, AI-assisted workflows, and practical troubleshooting patterns.
+
+## Purpose
+
+Splunk4Champions helps experienced users move from "I can search" to "I understand how Splunk behaves and can build reliable content for others." The workshop is designed to:
+
+- Strengthen practical SPL and search performance skills.
+- Explain how Splunk stores, ages, and searches data.
+- Give participants safe, curated sample datasets instead of using production data.
+- Teach dashboard patterns across classic XML dashboards and Dashboard Studio.
+- Introduce metrics, mobile workflows, AI Assistant, and optional MCP concepts.
+- Provide a reusable enablement package for live classes, self-paced labs, and internal champion programs.
 
 ## Who should attend
 
-- Experienced and ambitious Splunk users
+- Experienced Splunk users who want to go deeper
+- Splunk admins and platform owners
 - Use case owners and developers
-- Splunk admins
+- Dashboard builders
+- Internal champions who support other Splunk users
+- Presales engineers or trainers who need a reusable hands-on workshop
 
-## What's covered
+## Quick content overview
 
-| Chapter | Topics |
-|---------|--------|
-| **0 · Setup** | Health Check — verify indexes and app/Splunk version at a glance |
-| **1 · Settings** | GUI options, Search Assistant, Stock Index Search & tstats |
-| **2 · Data** | Indexes, buckets, data pipeline, distributed architecture, data aging |
-| **3 · Search** | Search basics, SPL2, command types, Job Inspector anatomy + four-case lab, terms/segmentation, tstats, bad searches, Search Lab (story-driven multi-act investigation), Search Quiz, Splunk MCP Server (optional) |
-| **4 · Metrics** | Log-to-metrics, mcollect, mcatalog, mstats, weather data reference, stock index metrics lab |
-| **5 · XML Dashboards** | Base search, drilldown, annotations, colors, post-processing |
-| **6 · Dashboard Studio** | Tutorial, data sources, interactivity, layout, custom visualizations, canvas viz library, sharing |
-| **7 · Mobile** | Splunk Mobile overview and demo |
-| **8 · Champion Quiz** | Final knowledge check across the whole workshop |
+| Chapter | Focus | Outcome |
+|---------|-------|---------|
+| **Setup** | Health Check, readiness, links, release highlights | Confirm the app, indexes, data, Splunk version, and app version are ready before labs begin |
+| **1 · Settings** | UI preferences, search modes, Search Assistant, AI Assistant | Tune the Splunk working environment and avoid expensive search UI habits |
+| **2 · Data** | Indexes, buckets, pipeline, clustering, data aging, SmartStore | Understand how Splunk stores data and why architecture affects search behavior |
+| **3 · Search** | SPL/SPL2, command types, Job Inspector, terms, `tstats`, bad searches, investigation lab, MCP | Build faster, clearer, more explainable searches |
+| **4 · Metrics** | Metric indexes, `mcollect`, `mcatalog`, `mstats`, weather, stocks, Phyphox | Compare event and metric workflows and build efficient time-series searches |
+| **5 · XML Dashboards** | Base searches, drilldowns, tokens, annotations, colors, pseudonymization | Learn durable classic dashboard patterns still used in many Splunk estates |
+| **6 · Dashboard Studio** | Data sources, interactivity, layouts, custom visualizations, canvas viz library, sharing | Build modern, interactive dashboards with reusable data sources and richer visuals |
+| **7 · Mobile** | Splunk Mobile setup and overview | See how Splunk content can support mobile workflows |
+| **8 · Champion Quiz** | Timed questions, instant feedback, final score | Reinforce workshop concepts and close the session with an interactive recap |
+
+## Lab descriptions
+
+### Setup
+
+The Setup chapter starts with a Health Check that validates the expected workshop indexes, event counts, metric counts, time ranges, Splunk version, and app version. It also includes the in-app Readme, What's New, follow-up links, and credits.
+
+For trainers, the workshop includes a Large Room display mode with larger typography and spacing for projected delivery.
+
+### 1 · Settings
+
+Participants configure Splunk preferences before deeper labs begin:
+
+- Search Assistant
+- Line numbers
+- Themes
+- Fast, Smart, and Verbose search modes
+- Search auto-format and keyboard shortcuts
+- Inline SPL comments
+- User language and locale
+- Splunk AI Assistant
+
+The practical goal is to make search work easier to read, easier to teach, and less likely to create unnecessary workload.
+
+### 2 · Data
+
+This chapter explains the data lifecycle in Splunk:
+
+- Indexes and buckets
+- Hot, warm, cold, and frozen data
+- Raw data, `tsidx`, bloom filters, and bucket metadata
+- Input, parsing, indexing, and search stages
+- Segmentation and `TERM()` behavior
+- Indexers, clustering, data aging, and SmartStore concepts
+
+Participants learn why the same search can behave very differently depending on time range, terms, index layout, and data model.
+
+### 3 · Search
+
+The Search chapter is the core SPL and search-performance section. It includes:
+
+- Search basics
+- SPL2 overview and modules
+- Search command types
+- Job Inspector and Inspector lab
+- Segmentation recap, `walklex`, and `TERM()`
+- `tstats` and `PREFIX`
+- Slow-search patterns and practical improvements
+- A story-driven investigation lab
+- Search recap / quiz
+- Optional Splunk MCP Server lab
+
+The goal is not only to teach commands, but to help participants reason about why a search is fast, slow, safe, or hard to maintain.
+
+### 4 · Metrics
+
+The Metrics chapter introduces metric indexes and time-series search patterns:
+
+- Metrics concepts
+- Onboarding metrics
+- `mcollect`, `mcatalog`, and `mstats`
+- Weather metric data
+- Stock index events converted into metrics
+- Phyphox phone-sensor experiments
+
+Participants compare event and metric representations and learn when each is the right fit.
+
+### 5 · XML Dashboards
+
+Classic XML dashboards remain important in many Splunk environments. This chapter covers:
+
+- Base searches
+- Drilldowns
+- Tokens
+- Annotations
+- Colors
+- Pseudonymization / hiding user names
+
+The goal is to teach maintainable dashboard patterns and avoid repeated expensive searches.
+
+### 6 · Dashboard Studio
+
+Dashboard Studio is covered as the modern dashboarding path:
+
+- Dashboard Studio concepts
+- First dashboard tutorial
+- Base and chain searches
+- Tokens, buttons, and conditional panels
+- Images, annotations, tabs, and trellis layout
+- Custom visualization approaches
+- Canvas visualizations by Robert Castley
+- Publishing without login
+
+Participants learn how to separate data sources, layout, and interaction design.
+
+### 7 · Mobile
+
+This chapter introduces Splunk Mobile, gateway setup, adding a device, and consuming Splunk content through mobile workflows.
+
+### 8 · Champion Quiz
+
+The final chapter is a Kahoot-style knowledge check with timed questions, instant feedback, and time-decayed scoring. It can be used as a live recap, a trainer-led discussion prompt, or a self-check after the workshop.
 
 ## Installation
 
@@ -36,24 +152,82 @@ Download the latest release from the [Releases page](https://github.com/bautt/sp
 
 If you have access to **show.splunk.com**, the workshop is available on Splunk Show.
 
+## Running the workshop
+
+After installation, open the lab UI from the Splunk app:
+
+```text
+https://<your-splunk>/en-GB/app/splunk4champions2/lab
+```
+
+The locale segment can differ by environment, for example `en-US` or `de-DE`.
+
+Recommended delivery flow:
+
+1. Open **Setup** and resolve any Health Check issues.
+2. Use **Settings** to align UI preferences across participants.
+3. Teach **Data** before deep **Search** labs so the performance topics have context.
+4. Use **Metrics** and **Dashboard Studio** as the practical build sections.
+5. Finish with the **Champion Quiz** for recap and discussion.
+
+## Handout and flyer
+
+Editable workshop collateral is included in Markdown format:
+
+- [`SPLUNK4CHAMPIONS_HANDOUT_2026.md`](SPLUNK4CHAMPIONS_HANDOUT_2026.md) — participant handout
+- [`SPLUNK4CHAMPIONS_FLYER_2026.md`](SPLUNK4CHAMPIONS_FLYER_2026.md) — one-page flyer source
+
+These files are intentionally plain Markdown so they can be edited easily and exported to PDF with Pandoc, VS Code Markdown PDF, Typora, Marked, Obsidian, Word, or Google Docs.
+
+Example:
+
+```bash
+pandoc SPLUNK4CHAMPIONS_HANDOUT_2026.md \
+  -o SPLUNK4CHAMPIONS_HANDOUT_2026.pdf \
+  --pdf-engine=xelatex
+```
+
 ## Included datasets
 
-The app ships with real historical data used across the labs:
+The app ships with curated `s4c_*` data so labs do not depend on customer production data:
 
 - **`s4c_stock_indices`** — up to 10 years of daily OHLCV for **9** major indexes (DAX, Dow, EURO STOXX 50, FTSE 100, Hang Seng, Nasdaq, Nikkei, S&P 500, SMI). Ingested by `update_stock_indices.py` (Yahoo chart API, stdlib only; `_time` = Unix epoch). Join `exchange_city` to `s4c_meteo_historic` on `date` + `city`.
 - **`s4c_meteo_historic`** — Daily historical weather for the **seven** index `exchange_city` values (2016 → rolling; Paris/CAC removed). Shipped **`static/meteo_historic.csv`** (lookup name `meteo_historic` still works via a symlink in `lookups/`) plus **`update_meteo_historic_csv.py`** (Open-Meteo archive, daily) to keep the calendar in step with new index data. Join on `date` and `city` = `exchange_city`.
+- **`s4c_meteo`** — Open-Meteo current weather as event data, useful for event search and comparison with metrics.
+- **`s4c_meteo_metrics`** — Open-Meteo current weather represented as metric time series.
+- **`s4c_student_metrics`** — Practice metric index populated by participants during `mcollect` labs.
 - **`s4c_weather`** — Real-time OpenWeatherMap data for metrics labs.
-- **`s4c_www`** — Web server logs for search and dashboard exercises (walklex, terms, segmentation).
+- **`s4c_tutorial`** — Web-style tutorial logs for search and dashboard exercises.
+- **`s4c_www`** — Web server logs for search, pseudonymization, and dashboard exercises.
+- **`s4c_phyphox` / `s4c_phyphox_metrics`** — Optional phone sensor event and metric data via HEC.
+
+## Recent highlights
+
+- Setup Health Check with actionable index and data-status hints
+- Large Room display mode for trainer-led delivery
+- Expanded Search chapter with SPL2 and optional MCP content
+- Champion Quiz chapter with timed, interactive questions
+- Dashboard Studio tutorial, interactivity, custom visualizations, and publishing examples
+- Metrics labs with weather, stock index, and Phyphox data
+- Standard-library stock and weather update scripts where possible
 
 ## Phyphox experiments
 
-After creating a HEC for Phyphox data, add to the HEC config:
+The workshop app does not ship HEC tokens. Create the optional Phyphox tokens per environment:
 
+```ini
+Token name: phyphox_metrics
+Default index: s4c_phyphox_metrics
+Allowed indexes: s4c_phyphox_metrics
+Source type: phyphox_metrics
+
+Optional token name: phyphox
+Default index: s4c_phyphox
+Allowed indexes: s4c_phyphox
+Source type: phyphox_json
 ```
-/etc/apps/splunk_httpinput/local/inputs.conf
-[http://phyphox]
-allowQueryStringAuth = true
-```
+
+For Splunk Cloud, create HEC tokens through the Cloud-supported admin flow, such as Splunk Web or ACS.
 
 ---
 

@@ -14,13 +14,34 @@ This lab contains following steps:
 1) Install the app on your phone (iPhone or Android) 
 <Link to="https://phyphox.org/download/" openInNewContext> Phyphox App Download Page</Link>
 
-2) Enable HEC : /en-GB/manager/splunk4champions2/http-eventcollector -> Edit Global Settings -> Enable
-(Settings -> Data Inputs -> HTTP Event Collector -> Global Settings -> All Tokens "Enabled" )
-    Copy token value for metrics data
-3) Go to 
-<Link to="download_phyphox_experiments" openInNewContext>Phyphox configuration generator dashboard </Link> and configure your experiment. This config file will contain your splunk address and the hec token, so the app will be able to send json data directly to Splunk. 
+2) Ask a Splunk administrator to create the HEC token. The workshop app no longer ships HEC tokens in `inputs.conf` because Splunk Cloud requires HEC tokens to be created by an administrator, and on-prem tokens should also be unique per environment.
 
-4) Transfer the xml-configuration file to your phone: you can use the camera and scan the QR code, than open the link, download the file and open with the phyphox app. 
+Recommended HEC settings:
+
+```ini
+Token name: phyphox_metrics
+Default index: s4c_phyphox_metrics
+Allowed indexes: s4c_phyphox_metrics
+Source type: phyphox_metrics
+```
+
+Optional event-token settings if you also want raw JSON event data:
+
+```ini
+Token name: phyphox
+Default index: s4c_phyphox
+Allowed indexes: s4c_phyphox
+Source type: phyphox_json
+```
+
+For Splunk Enterprise, use **Settings -> Data Inputs -> HTTP Event Collector** and enable HEC globally if it is not already enabled. For Splunk Cloud, create the token through the Cloud-supported admin flow for your stack, for example Splunk Web or ACS, and make sure port `8088` is reachable from the phone network.
+
+3) Copy the `phyphox_metrics` HEC token value.
+
+4) Go to 
+<Link to="download_phyphox_experiments" openInNewContext>Phyphox configuration generator dashboard </Link> and configure your experiment. Paste the Splunk host, HEC port, protocol, and token value. The generated config file contains your Splunk HEC endpoint and token so the phone app can send JSON data directly to Splunk.
+
+5) Transfer the xml-configuration file to your phone: you can use the camera and scan the QR code, than open the link, download the file and open with the phyphox app. 
 
 <table width="100%">
         <tr width="30%">
