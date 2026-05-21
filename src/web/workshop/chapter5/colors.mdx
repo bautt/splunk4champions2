@@ -1,13 +1,14 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import SplunkPanel from '../../components/SplunkPanel.js'
 import Link from '@splunk/react-ui/Link'
 
 ## Splunk default vs assigned colors
 
 Splunk default colors changed in version 9.x. If you prefer to assign your own, possibly a more decent color scheme, you can assign colors in dashboards. 
 
-<img src="/static/app/splunk4champions2/images/piechartcolors.png" width="80%" /> \
+<SplunkPanel dashboard="ch5_xml_pie_charts" embed={true} height="420px" />
 
- <Link to="tstats-trelis" openInNewContext>Dashboard with a Pie</Link>
+ <Link to="ch5_xml_pie_charts" openInNewContext>Open full dashboard →</Link>
 
 and look for this line:
 
