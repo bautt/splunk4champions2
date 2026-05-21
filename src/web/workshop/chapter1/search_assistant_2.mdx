@@ -1,4 +1,5 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link';
 
 <img src="/static/app/splunk4champions2/images/task-1.gif"/>
@@ -15,9 +16,13 @@ A reference guide for Search Processing Language commands and syntax, accessible
 
 **How to change:** Settings (gear icon in search bar) → Search Preferences → **Search assistant**
 
+<LabBlock title="Try it out">
+
 Try typing an incomplete search below and watch Search Assistant offer suggestions:
 
 <SplunkSearch earliest="-24h" latest="now" spl={`index=s4c_meteo | stats `}>
 </SplunkSearch>
+
+</LabBlock>
 
 <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Usingthesearchassistant" openInNewContext>Using the Search Assistant</Link>
