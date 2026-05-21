@@ -502,3 +502,23 @@
     border-radius: 4px;
     background-color: #f0f6fc !important;
 }
+
+/* ── Complete Lab summary box ──────────────────────────────────────────────── */
+.s4c-lab-summary {
+    background-color: #e8f0f8;
+    border-left: 3px solid #2E6DA4;
+    border-radius: 0 6px 6px 0;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #1a2a3a;
+}
+
+.s4c-lab-summary strong {
+    color: #1a4e80;
+}
+
+.s4c-large-room .s4c-lab-summary {
+    font-size: 18px;
+}
