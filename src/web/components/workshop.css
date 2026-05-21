@@ -413,11 +413,11 @@
 
 /* ── Lab Block: hands-on exercise callout ──────────────────────────────────── */
 .s4c-lab-block {
-    border-left: 4px solid #C2830A;
-    background-color: #fefaf2;
+    border-left: 4px solid #2E6DA4;
+    background-color: #f4f8fd;
     border-radius: 0 6px 6px 0;
     margin: 20px 0;
-    box-shadow: 0 2px 8px rgba(194, 131, 10, 0.10);
+    box-shadow: 0 2px 8px rgba(46, 109, 164, 0.10);
 }
 
 .s4c-lab-block__header {
@@ -425,15 +425,15 @@
     align-items: center;
     gap: 8px;
     padding: 10px 16px 8px;
-    border-bottom: 1px solid #e8c87a;
-    background-color: #fdf0d5;
+    border-bottom: 1px solid #b3cee8;
+    background-color: #ddeaf7;
     border-radius: 0 6px 0 0;
 }
 
 .s4c-lab-block__icon {
     display: flex;
     align-items: center;
-    color: #7a4f04;
+    color: #1a4e80;
     font-size: 18px;
 }
 
@@ -447,7 +447,7 @@
     font-size: 13px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: #7a4f04;
+    color: #1a4e80;
 }
 
 .s4c-lab-block__body {
@@ -456,7 +456,7 @@
 
 /* Override image border inside lab block */
 .s4c-lab-block .workshopContent img {
-    border-color: #e8c87a;
+    border-color: #b3cee8;
 }
 
 /* Large-room scale for lab block */
@@ -466,4 +466,36 @@
 .s4c-large-room .s4c-lab-block__icon svg {
     width: 22px;
     height: 22px;
+}
+
+/* ── Complete Lab: step-level card treatment ───────────────────────────────── */
+.s4c-lab-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px 3px 8px;
+    margin-bottom: 14px;
+    background-color: #fdf0d5;
+    border: 1px solid #e8c87a;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #7a4f04;
+}
+
+.s4c-lab-badge svg {
+    color: #C2830A;
+    flex-shrink: 0;
+}
+
+.s4c-large-room .s4c-lab-badge {
+    font-size: 13px;
+    padding: 4px 12px 4px 10px;
+}
+
+.s4c-complete-lab > div {
+    border-top: 3px solid #C2830A !important;
+    border-radius: 4px;
 }

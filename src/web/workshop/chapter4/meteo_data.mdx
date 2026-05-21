@@ -1,4 +1,5 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link'
 
 ## TA-open-meteo Data Reference
@@ -39,6 +40,8 @@ This page documents the data schema for the TA-open-meteo add-on. Use it as a qu
 | `country_code` | ISO country code | `DE` |
 | `timezone` | Timezone string | `Europe/Bonn` |
 
+<LabBlock title="Try it out">
+
 **Sample event query:**
 <SplunkSearch earliest="-24h" latest="now" spl={`index=s4c_meteo
 | stats avg(temperature_2m) as avg_temp avg(relative_humidity_2m) as avg_humidity by city
@@ -47,6 +50,8 @@ This page documents the data schema for the TA-open-meteo add-on. Use it as a qu
 **Explore raw events:**
 <SplunkSearch earliest="-1h" latest="now" spl={`index=s4c_meteo
 | head 10`}></SplunkSearch>
+
+</LabBlock>
 
 ---
 
@@ -82,6 +87,8 @@ This page documents the data schema for the TA-open-meteo add-on. Use it as a qu
 
 **Sample metric queries:**
 
+<LabBlock title="Run this search">
+
 Discover all available metrics:
 <SplunkSearch earliest="-30d" latest="now" spl={`| mcatalog values(metric_name) WHERE index=s4c_meteo_metrics`}></SplunkSearch>
 
@@ -92,3 +99,5 @@ Average temperature by city:
 Temperature over time:
 <SplunkSearch earliest="-7d" latest="now" spl={`| mstats avg(meteo.temperature_2m) as avg_temp prestats=true WHERE index=s4c_meteo_metrics BY city span=1h
 | timechart avg(meteo.temperature_2m) as avg_temp BY city span=1h`}></SplunkSearch>
+
+</LabBlock>

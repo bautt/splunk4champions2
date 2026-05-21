@@ -1,11 +1,14 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link'
 
 ## 1. Only search in the index you need:
 <img src="/static/app/splunk4champions2/images/only_index.png" width="100%" />
 
 > **Excursion — which indexes can you actually search?**
->
+
+<LabBlock title="Try it out">
+
 > Use `tstats` to see every index your role has access to:
 
 <SplunkSearch earliest="-10y" latest="now" spl={`| tstats count WHERE index=* OR index=_* BY index`}></SplunkSearch>
@@ -15,6 +18,8 @@ import Link from '@splunk/react-ui/Link'
 <SplunkSearch earliest="-30d" latest="now" spl={`* | stats count by index | sort -count`}></SplunkSearch>
 
 > Notice the difference? Without `index=` you only search the default scope (usually just `main`). Always be explicit!
+
+</LabBlock>
 
 ___
 

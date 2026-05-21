@@ -1,13 +1,18 @@
 import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
 import Link from '@splunk/react-ui/Link'
 
 ![](/static/app/splunk4champions2/images/lab1_task2_fast.png)
 
 **Fast mode** uses the least amount of system resources by skipping field extraction entirely — only indexed fields and default fields (`host`, `source`, `sourcetype`, `_time`, `_raw`) are available. It is ideal when checking whether data is present, or after a search is already built and you just need results quickly.
 
+<LabBlock title="Try it out">
+
 Try this search in Fast mode and compare with Smart or Verbose:
 
 <SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`index=s4c_meteo | stats count by city`}>
 </SplunkSearch>
+
+</LabBlock>
 
 * If you see no data in the s4c_meteo index, go to section 0-Setup and follow the instructions to create indexes and add example data.

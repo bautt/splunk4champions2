@@ -31,7 +31,7 @@ export function SectionStep({ step }) {
     }, [step])
 
     if (LoadedContent) {
-        return <Step content={() => (LoadedContent)} title={step.title} subtitle={step.subtitle || ''}/>
+        return <Step content={() => (LoadedContent)} title={step.title} subtitle={step.subtitle || ''} type={step.type || ''}/>
     }
     return <div/>
 }

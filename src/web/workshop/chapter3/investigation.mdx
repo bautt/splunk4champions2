@@ -17,6 +17,7 @@ Along the way you will hit every classic search performance trap from the rulebo
 
 You start by listing what's available. Your first instinct is to look at hosts across the whole environment:
 
+
 <SplunkSearch earliest="-24h" latest="now" spl={`| metadata type=hosts index=*`}></SplunkSearch>
 
 This works, but it pulls from every index — including internal ones. Open Job Inspector and note the bucket scan count.
@@ -28,6 +29,8 @@ A faster way: `tstats` reads the same information from the tsidx files directly,
 
 You now see `s4c_www`, `s4c_stock_indices`, `s4c_meteo_historic`, and `s4c_weather`. The first is web logs (not relevant for this investigation). The other three are your investigation surface.
 
+
+
 > **Lesson:** `tstats` on the tsidx is the fastest way to get index-level metadata.
 
 ---
@@ -35,6 +38,7 @@ You now see `s4c_www`, `s4c_stock_indices`, `s4c_meteo_historic`, and `s4c_weath
 ### Act 2 — Get to know the events
 
 Before you write any aggregation, look at the shape of the data.
+
 
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_stock_indices
 | head 5`}></SplunkSearch>
@@ -48,6 +52,8 @@ Same for weather:
 
 Note: `city`, `temperature_2m_max`, `precipitation_sum`, `date`.
 
+
+
 The shared key will be `exchange_city` (stocks) matched with `city` (weather), aligned by date. Good — no `join` will be required.
 
 > **Lesson:** sample first, aggregate later. Knowing field names up front saves dead-end queries.
@@ -57,6 +63,7 @@ The shared key will be `exchange_city` (stocks) matched with `city` (weather), a
 ### Act 3 — One city, one question — but filter late
 
 You want DAX's average close over the last year. Your first attempt filters too late:
+
 
 <SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices
 | stats avg(close) as avg_close by index_name
@@ -69,6 +76,8 @@ Splunk computes the average for **all 9 indexes** and then throws 8 away. Better
 
 Run both. In Job Inspector, compare `eventCount` and `command.search.index` time.
 
+
+
 > **Lesson:** push every filter as far left as possible. Index filters and field filters belong in the base search, not after a pipe.
 
 ---
@@ -76,6 +85,7 @@ Run both. In Job Inspector, compare `eventCount` and `command.search.index` time
 ### Act 4 — Weather summary, same rule
 
 Frankfurt's average daily max temperature. The natural-but-wrong version filters with `| search` after a pipe:
+
 
 <SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_meteo_historic
 | stats avg(temperature_2m_max) by city
@@ -85,6 +95,8 @@ The indexers already did the work for every city. Fix it by filtering in the bas
 
 <SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_meteo_historic city=Frankfurt
 | stats avg(temperature_2m_max) as avg_temp`}></SplunkSearch>
+
+
 
 > **Lesson:** `| search` after the first pipe almost always indicates a filter that belongs in the base search.
 
@@ -96,6 +108,7 @@ How many trading days do you have per index?
 
 A regular search scans every event:
 
+
 <SplunkSearch earliest="-10y" latest="now" spl={`index=s4c_stock_indices
 | stats count by index_name`}></SplunkSearch>
 
@@ -106,6 +119,8 @@ A regular search scans every event:
 
 Both return the same numbers. Compare `runDuration` in Job Inspector — usually 10–50x faster.
 
+
+
 > **Lesson:** `tstats` reads from the tsidx and only sees indexed fields. For aggregations on `index`, `sourcetype`, `host`, `source`, and indexed field extractions, it is dramatically faster.
 
 ---
@@ -113,6 +128,7 @@ Both return the same numbers. Compare `runDuration` in Job Inspector — usually
 ### Act 6 — Two datasets, no `join`
 
 The natural reach for combining datasets is `join`. It usually hurts. Try it first:
+
 
 <SplunkSearch earliest="-1y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
 | eval day=strftime(_time, "%Y-%m-%d"), close=tonumber(mvindex(close,0))
@@ -132,6 +148,8 @@ The natural reach for combining datasets is `join`. It usually hurts. Try it fir
 | stats values(avg_close) as avg_close values(avg_temp) as avg_temp by day
 | where isnotnull(avg_close) AND isnotnull(avg_temp)`}></SplunkSearch>
 
+
+
 > **Lesson:** `append` runs the second branch in parallel. The collapsing `stats values(...) by day` merges the two streams. No subsearch limit, no sequential wait.
 
 ---
@@ -139,6 +157,7 @@ The natural reach for combining datasets is `join`. It usually hurts. Try it fir
 ### Act 7 — The payoff: today's market, yesterday's weather
 
 The original question wasn't about same-day correlation — it was about whether **yesterday's** weather predicts today's market. That is a lag feature. `streamstats` builds it event-by-event without leaving the streaming pipeline.
+
 
 <SplunkSearch earliest="-2y" latest="now" spl={`index=s4c_stock_indices index_name=DAX
 | eval day=strftime(_time, "%Y-%m-%d"), o=tonumber(mvindex(open,0)), c=tonumber(mvindex(close,0)), day_return=((c-o)/o)*100
@@ -154,6 +173,8 @@ The original question wasn't about same-day correlation — it was about whether
 | eval weather_yesterday=case(yesterday_rain>=5, "Rainy (5mm+)", true(), "Dry (<5mm)")
 | stats count as trading_days avg(day_return) as avg_return_pct stdev(day_return) as stdev_return by weather_yesterday
 | eval avg_return_pct=round(avg_return_pct,3), stdev_return=round(stdev_return,3)`}></SplunkSearch>
+
+
 
 You have your first answer. Read it carefully:
 
