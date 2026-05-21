@@ -523,6 +523,48 @@
     font-size: 18px;
 }
 
+/* ── Scheme preview inside LabSchemeToggle ─────────────────────────────────── */
+.s4c-scheme-preview {
+    margin-top: 18px;
+}
+
+.s4c-scheme-preview__caption {
+    font-size: 12px;
+    color: #555;
+    margin: 0 0 8px;
+    font-style: italic;
+}
+
+.s4c-scheme-preview__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.s4c-scheme-preview .s4c-lab-block,
+.s4c-scheme-preview .s4c-complete-lab {
+    margin: 0;
+    font-size: 12px;
+}
+
+.s4c-scheme-preview .s4c-lab-block__body p {
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.s4c-scheme-preview .s4c-lab-summary {
+    font-size: 12px;
+    line-height: 1.45;
+    padding: 8px 12px;
+    margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+    .s4c-scheme-preview__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ══════════════════════════════════════════════════════════════════════════════
    Lab colour schemes — override default blue palette
    ══════════════════════════════════════════════════════════════════════════════ */

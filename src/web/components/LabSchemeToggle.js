@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import Button from '@splunk/react-ui/Button';
+import Hammer from '@splunk/react-icons/Hammer';
 
-const LAB_SCHEME_KEY = 's4c_lab_scheme';
 const LAB_SCHEME_EVENT = 's4c-lab-scheme-change';
-const VALID_SCHEMES = ['blue', 'brownred', 'yellowbrown'];
 
 function getSchemeFromBody() {
     if (typeof document === 'undefined') return 'blue';
@@ -42,6 +41,31 @@ export default function LabSchemeToggle() {
                     onClick={() => updateScheme('yellowbrown')}
                 />
             </div>
+
+            <div className="s4c-scheme-preview">
+                <p className="s4c-scheme-preview__caption">Preview — updates live as you switch:</p>
+                <div className="s4c-scheme-preview__grid">
+                    <div className="s4c-lab-block">
+                        <div className="s4c-lab-block__header">
+                            <span className="s4c-lab-block__icon"><Hammer /></span>
+                            <span className="s4c-lab-block__label">Hands-on</span>
+                        </div>
+                        <div className="s4c-lab-block__body">
+                            <p style={{ margin: 0 }}>Atomic exercise callout — used for inline tasks inside any subchapter.</p>
+                        </div>
+                    </div>
+
+                    <div className="s4c-complete-lab">
+                        <div style={{ padding: '12px 16px' }}>
+                            <span className="s4c-lab-badge"><Hammer /> Complete Lab</span>
+                            <div className="s4c-lab-summary">
+                                <strong>End-to-end lab</strong> — opens with a summary card highlighting the goal of a multi-step walkthrough.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <p className="displayModeHint">
                 Scheme is saved in your browser and persists across sessions.
             </p>
