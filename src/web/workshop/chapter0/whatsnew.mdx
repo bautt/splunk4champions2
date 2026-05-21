@@ -8,7 +8,17 @@ If you build from source, the **exact** app version is shown on the **Setup** he
 
 ---
 
-## This build (2.11.62)
+## This build (2.11.75)
+
+- **Hands-on lab treatment:** new `LabBlock` callout (steel-blue, hammer icon) for atomic exercises and a deep-navy *complete-lab card* for the five end-to-end labs (Inspector Lab, Search Lab, Metrics Lab, Stocks — Events to Metrics, Publish a dashboard without login). Each complete lab opens with an upfront summary card.
+- **Chapter 3 reorder:** **SPL2** moved from the front of Chapter 3 to between **Search Quiz** and **MCP** so the search-performance arc reads end-to-end first.
+- **Live dashboard embeds in Chapter 5 Colors:** new `SplunkPanel` use embeds a live pie chart via `/app/?hideChrome=true` (the Splunk 10.x replacement for the removed `/embed/` route); static colour screenshots restored alongside.
+- **New Chapter 6 publish lab:** `chapter6/ds_publish.mdx` now has a hands-on lab on publishing a dashboard without login.
+- **Canvas viz page trimmed:** health-dashboard detour removed from `chapter6/ds_rcastley_vizs.mdx`.
+- **Chapter 2 asset swaps:** `journal_new.png` replaces `journal1.png` and `tsidx_new.png` replaces `tsidx1.png` (redrawn assets from v2.11.62); SmartStore "library" image floats inline with the analogy text.
+- **Weather data refresh:** scheduled ingest update of `current_2026.log.gz`.
+
+## 2.11.62
 
 - **App size reduction:** lossless PNG compression across `appserver/static/images/` and `www.log` gzipped; `current_2026.log.gz` reduced 37% from 8.2 MB to 5.2 MB; `inspector-dall-e.png` halved (505 KB → 123 KB); unused `hot_warm1/2.png` removed.
 - **Image redesigns:** `tsidx1.png` and `journal1.png` redrawn in the current workshop style; the journal asset aligns with on-disk `journal.zst` naming.

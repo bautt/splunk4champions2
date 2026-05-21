@@ -149,6 +149,28 @@ function syncDisplayModeInUrl(mode) {
     window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
 }
 
+// ── Lab colour scheme ─────────────────────────────────────────────────────
+const LAB_SCHEME_KEY = 's4c_lab_scheme';
+const LAB_SCHEME_EVENT = 's4c-lab-scheme-change';
+const VALID_SCHEMES = ['blue', 'brownred', 'yellowbrown'];
+
+function readStoredLabScheme() {
+    try {
+        const v = window.localStorage.getItem(LAB_SCHEME_KEY);
+        return VALID_SCHEMES.includes(v) ? v : 'blue';
+    } catch { return 'blue'; }
+}
+
+function applyLabScheme(scheme) {
+    document.body.classList.remove('s4c-scheme-brownred', 's4c-scheme-yellowbrown');
+    if (scheme === 'brownred') document.body.classList.add('s4c-scheme-brownred');
+    if (scheme === 'yellowbrown') document.body.classList.add('s4c-scheme-yellowbrown');
+}
+
+function persistLabScheme(scheme) {
+    try { window.localStorage.setItem(LAB_SCHEME_KEY, scheme); } catch {}
+}
+
 // ── App ───────────────────────────────────────────────────────────────────────
 
 function App() {
@@ -188,6 +210,20 @@ function App() {
 
         window.addEventListener(DISPLAY_MODE_EVENT, onModeChange);
         return () => window.removeEventListener(DISPLAY_MODE_EVENT, onModeChange);
+    }, []);
+
+    useEffect(() => {
+        const scheme = readStoredLabScheme();
+        applyLabScheme(scheme);
+
+        const onSchemeChange = (event) => {
+            const next = VALID_SCHEMES.includes(event?.detail?.scheme) ? event.detail.scheme : 'blue';
+            applyLabScheme(next);
+            persistLabScheme(next);
+        };
+
+        window.addEventListener(LAB_SCHEME_EVENT, onSchemeChange);
+        return () => window.removeEventListener(LAB_SCHEME_EVENT, onSchemeChange);
     }, []);
 
     // isMounted: false on first effect run (initial mount → replaceState, no new history entry)
