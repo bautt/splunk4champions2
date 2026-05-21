@@ -77,13 +77,13 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 
 ### `s4c_phyphox` (events)
 
-- **Ingestion:** HEC input **http://phyphox** to JSON from the <Link to="https://phyphox.org/" openInNewContext>Phyphox</Link> phone app.
+- **Ingestion:** Optional administrator-created HEC token for JSON from the <Link to="https://phyphox.org/" openInNewContext>Phyphox</Link> phone app.
 - **Content:** Sensor and experiment events (structured JSON) for hands-on “bring your own device” data.
 - **Use for:** **Experiments** chapter: HTTP Event Collector, JSON parsing, and optional correlation with the companion metrics index.
 
 ### `s4c_phyphox_metrics` (metrics)
 
-- **Ingestion:** HEC input **http://phyphox_metrics** into a **metric** index (`phyphox_metrics` sourcetype).
+- **Ingestion:** Optional administrator-created HEC token into a **metric** index (`phyphox_metrics` sourcetype).
 - **Content:** **Metric** points derived from Phyphox streams (time-series).
 - **Use for:** Comparing **event** vs **metric** representations; **`mstats`** and metrics tooling on the same kind of data as `s4c_meteo_metrics`.
 
@@ -121,13 +121,21 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 
 ## Phyphox experiments
 
-After creating a HEC for Phyphox data, add to the HEC config:
+The workshop app does not ship HEC tokens. Create Phyphox HEC tokens per Splunk environment:
 
+```ini
+Token name: phyphox_metrics
+Default index: s4c_phyphox_metrics
+Allowed indexes: s4c_phyphox_metrics
+Source type: phyphox_metrics
+
+Optional token name: phyphox
+Default index: s4c_phyphox
+Allowed indexes: s4c_phyphox
+Source type: phyphox_json
 ```
-/etc/apps/splunk_httpinput/local/inputs.conf
-[http://phyphox]
-allowQueryStringAuth = true
-```
+
+For Splunk Cloud, create HEC tokens through the Cloud-supported admin flow, such as Splunk Web or ACS.
 
 ## Screenshots (from the repository)
 

@@ -1,6 +1,6 @@
 
 <dashboard version="2" theme="dark">
-    <label>Ch6 — VPN & Network Overview (DS)</label>
+    <label>Ch6 — VPN &amp; Network Overview (DS)</label>
     <description></description>
     <definition><![CDATA[{
   "visualizations": {

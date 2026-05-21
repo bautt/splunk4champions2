@@ -1,7 +1,7 @@
 # Splunk4Champions — Workshop Handout
 
 **Repository:** [github.com/bautt/splunk4champions2](https://github.com/bautt/splunk4champions2)  
-**Contact:** tbaublys@splunk.com  
+**Contact:** [tbaublys@splunk.com](mailto:tbaublys@splunk.com)  
 **App URL (workshop UI):** `https://<your-splunk>/en-GB/app/splunk4champions2/lab` (locale segment may differ, e.g. `en-US`)
 
 > **Tip — bookmarks:** The lab records your place in the URL **hash** (e.g. `#ch=three&sec=...`). Use browser back/forward, book chapter/section steps, and the **‹ ›** controls to move linearly through all sections.
@@ -16,18 +16,20 @@
 
 The **Setup** chapter includes a **health check** (indexes, event counts, time range, **Splunk** and **app** version) plus **Readme**, **What’s new**, follow-up links, and **credits**. If an index is red, create it under **Settings → Data → Indexes** and enable the matching **Data inputs** in the app.
 
-| Index (examples) | Role |
-|------------------|------|
-| `s4c_tutorial` | Web-style tutorial logs for search and dashboards |
-| `s4c_www` | Access-combined demo web traffic |
-| `s4c_weather` | OpenWeatherMap-style JSON for metrics/weather labs |
-| `s4c_meteo` / `s4c_meteo_metrics` | Open-Meteo event + metric series |
-| `s4c_meteo_historic` | Daily weather by **city** (join to stocks on **date** + **city** = `exchange_city`) |
-| `s4c_stock_indices` | Daily OHLCV for major indexes (`exchange_city` for weather joins) |
-| `s4c_student_metrics` | Practice **metric** index for `mcollect` labs (filled by you) |
-| `s4c_phyphox` / `s4c_phyphox_metrics` | HEC Phyphox event + metrics |
 
-![Setup — health check](https://raw.githubusercontent.com/bautt/splunk4champions2/main/src/package/appserver/static/images/ch0_setup_health_check.png)
+| Index (examples)                      | Role                                                                                |
+| ------------------------------------- | ----------------------------------------------------------------------------------- |
+| `s4c_tutorial`                        | Web-style tutorial logs for search and dashboards                                   |
+| `s4c_www`                             | Access-combined demo web traffic                                                    |
+| `s4c_weather`                         | OpenWeatherMap-style JSON for metrics/weather labs                                  |
+| `s4c_meteo` / `s4c_meteo_metrics`     | Open-Meteo event + metric series                                                    |
+| `s4c_meteo_historic`                  | Daily weather by **city** (join to stocks on **date** + **city** = `exchange_city`) |
+| `s4c_stock_indices`                   | Daily OHLCV for major indexes (`exchange_city` for weather joins)                   |
+| `s4c_student_metrics`                 | Practice **metric** index for `mcollect` labs (filled by you)                       |
+| `s4c_phyphox` / `s4c_phyphox_metrics` | HEC Phyphox event + metrics                                                         |
+
+
+Setup — health check
 
 ---
 
@@ -37,18 +39,20 @@ Topics in the app: **Search Assistant**, line numbers, **themes**, **search mode
 
 ### Search Assistant & stock index lab (examples from the UI)
 
-![Search Assistant](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch1_settings_search_assistant.png)
+Search Assistant
 
-![Stock index search — SPL and tstats](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch1_settings_stock_index_spl.png)
+Stock index search — SPL and tstats
 
 ### Keyboard shortcuts (search bar)
 
-| Action | Windows / Linux | macOS |
-|--------|-----------------|-------|
-| Reformat / auto-indent | `Ctrl+Shift+F` | `⌘+Shift+F` |
-| Expand macro inline | `Ctrl+Shift+E` | `⌘+Shift+E` |
-| Run search | `Enter` | `Enter` |
-| New line without running | `Shift+Enter` | `Shift+Enter` |
+
+| Action                   | Windows / Linux | macOS         |
+| ------------------------ | --------------- | ------------- |
+| Reformat / auto-indent   | `Ctrl+Shift+F`  | `⌘+Shift+F`   |
+| Expand macro inline      | `Ctrl+Shift+E`  | `⌘+Shift+E`   |
+| Run search               | `Enter`         | `Enter`       |
+| New line without running | `Shift+Enter`   | `Shift+Enter` |
+
 
 ### Inline comments
 
@@ -56,11 +60,13 @@ Enclose comment text in **backticks** inside the search string (see [Comments](h
 
 ### Search mode quick guide
 
-| Mode | When to use |
-|------|-------------|
-| **Fast** | Counts/aggregates when you do not need all fields extracted |
-| **Smart** | Default — Splunk chooses field discovery |
+
+| Mode        | When to use                                                                |
+| ----------- | -------------------------------------------------------------------------- |
+| **Fast**    | Counts/aggregates when you do not need all fields extracted                |
+| **Smart**   | Default — Splunk chooses field discovery                                   |
 | **Verbose** | Debugging only — more data on the search head, **expensive** on large data |
+
 
 > Do **not** use Verbose on huge windows or production dashboards.
 
@@ -99,14 +105,16 @@ Each **bucket** holds `journal.gz` (raw), `*.tsidx` (for fast scans and `tstats`
 Input → Parsing → Indexing → Search
 ```
 
-| Stage | Role |
-|-------|------|
-| **Input** | HEC, files, forwarders, scripts |
-| **Parsing** | Line breaking, time, host, sourcetype |
-| **Indexing** | Segmentation, tsidx, bloom |
-| **Search** | Bloom → tsidx → raw as needed |
 
-![Data — index and buckets (UI)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch2_data_index_buckets.png)
+| Stage        | Role                                  |
+| ------------ | ------------------------------------- |
+| **Input**    | HEC, files, forwarders, scripts       |
+| **Parsing**  | Line breaking, time, host, sourcetype |
+| **Indexing** | Segmentation, tsidx, bloom            |
+| **Search**   | Bloom → tsidx → raw as needed         |
+
+
+Data — index and buckets (UI)
 
 ### Links (Data chapter)
 
@@ -121,13 +129,13 @@ Input → Parsing → Indexing → Search
 
 ### Search basics & golden rules
 
-1. **Specify index(es)** — avoid `index=*` in real use.  
-2. **Tighten time** — fewer buckets.  
-3. **Filter in the first search** — before the first `|`.  
-4. **Streaming commands first** where possible.  
+1. **Specify index(es)** — avoid `index=*` in real use.
+2. **Tighten time** — fewer buckets.
+3. **Filter in the first search** — before the first `|`.
+4. **Streaming commands first** where possible.
 5. **Drop fields early** — `| fields` or `| eval` + narrow columns.
 
-![Search basics](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_basics.png)
+Search basics
 
 ### SPL2 (Module Editor, next-gen language)
 
@@ -137,29 +145,31 @@ Input → Parsing → Indexing → Search
 
 ### Command types (streaming vs transforming)
 
-| Kind | Where it runs | Examples |
-|------|---------------|----------|
-| **Streaming** | Indexers in parallel (often) | `eval`, `where`, `fields`, `rex`, `spath` |
-| **Transforming** | After reduction | `stats`, `chart`, `timechart`, `top`, `dedup` |
+
+| Kind             | Where it runs                | Examples                                      |
+| ---------------- | ---------------------------- | --------------------------------------------- |
+| **Streaming**    | Indexers in parallel (often) | `eval`, `where`, `fields`, `rex`, `spath`     |
+| **Transforming** | After reduction              | `stats`, `chart`, `timechart`, `top`, `dedup` |
+
 
 ### Job Inspector
 
 Use **Job → Inspect Job** to see **event counts scanned**, **duration**, **execution costs** (`command.search.index`, `rawdata`, `filter`, `kv`, …), and **optimized** search. Compare two runs to tune expensive searches.
 
-![Job Inspector](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_inspector.png)
+Job Inspector
 
 ### Segmentation, TERM, walklex, wildcards
 
-- **Major breakers** split tokens (e.g. `127.0.0.1` → many tokens) — use **`TERM(127.0.0.1)`** for one indexed term where appropriate.  
+- **Major breakers** split tokens (e.g. `127.0.0.1` → many tokens) — use `**TERM(127.0.0.1)`** for one indexed term where appropriate.  
 - **Wildcards:** avoid leading `*`; mid-field `*` is costly.  
-- **`walklex`:** list indexed terms in warm/cold (needs capability).  
+- `**walklex`:** list indexed terms in warm/cold (needs capability).  
 - [TERM](https://docs.splunk.com/Documentation/Splunk/latest/Search/UseCASEandTERMtomatchphrases) · [walklex](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Walklex)
 
-![Terms / segmentation](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_terms_segmentation.png)
+Terms / segmentation
 
 ### tstats and PREFIX
 
-`tstats` reads **tsidx** only (not raw) — very fast for counts and stats if fields are indexed as expected. Use **`PREFIX(field=value)`** when you need a literal prefix in the tstats filter (see **PREFIX** in Docs and the **tstats** workshop step).
+`tstats` reads **tsidx** only (not raw) — very fast for counts and stats if fields are indexed as expected. Use `**PREFIX(field=value)`** when you need a literal prefix in the tstats filter (see **PREFIX** in Docs and the **tstats** workshop step).
 
 ```spl
 | tstats count WHERE index=s4c_www BY host, status, _time span=1h
@@ -167,13 +177,13 @@ Use **Job → Inspect Job** to see **event counts scanned**, **duration**, **exe
 | tstats count WHERE index=s4c_www PREFIX(status=200) BY host
 ```
 
-![tstats (workshop UI)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch3_search_tstats.png)
+tstats (workshop UI)
 
 ### Stock index search and weather correlation
 
 - **Index:** `s4c_stock_indices` — daily bars; fields include `date`, `symbol`, `index_name`, `exchange_city`, OHLCV.  
 - **Weather:** `s4c_meteo_historic` — `city` matches `exchange_city`; **date** alignment via calendar day.  
-- Large **`join` subsearches** can hit the default subsearch limit — the workshop uses **`inputlookup meteo_historic`** and app **`limits.conf` / `transforms.conf`** for reliable joins. Example pattern:
+- Large `**join` subsearches** can hit the default subsearch limit. Prefer `**inputlookup meteo_historic`** for the weather side of the join; if you need larger subsearch limits, set them as an administrator outside the app. Example pattern:
 
 ```spl
 index=s4c_stock_indices
@@ -189,17 +199,17 @@ index=s4c_stock_indices
 
 ### Search tips (performance)
 
-Prefer alternatives to **expensive** patterns: avoid unnecessary **leading wildcards**, push filters left, use **`stats`/`timechart`** instead of **`transaction`** when possible, consider **`lookup`** / **`eventstats`** instead of heavy **joins**, and use **saved/scheduled** searches instead of unbounded real-time in dashboards.
+Prefer alternatives to **expensive** patterns: avoid unnecessary **leading wildcards**, push filters left, use `**stats`/`timechart`** instead of `**transaction**` when possible, consider `**lookup**` / `**eventstats**` instead of heavy **joins**, and use **saved/scheduled** searches instead of unbounded real-time in dashboards.
 
 ### Splunk MCP Server (optional)
 
-Install the [**Splunk MCP Server** on Splunkbase](https://splunkbase.splunk.com/app/7931) (app **7931**), create an **encrypted MCP token** before clients connect, copy the **HTTPS** endpoint (e.g. `.../services/mcp`), and use **`Authorization: Bearer`**. In **Tools**, enable only the capabilities you need. Prefer a **dedicated** Splunk user (e.g. `username_mcp`) for **audit** and **least privilege**.  
+Install the **[Splunk MCP Server** on Splunkbase](https://splunkbase.splunk.com/app/7931) (app **7931**), create an **encrypted MCP token** before clients connect, copy the **HTTPS** endpoint (e.g. `.../services/mcp`), and use `**Authorization: Bearer`**. In **Tools**, enable only the capabilities you need. Prefer a **dedicated** Splunk user (e.g. `username_mcp`) for **audit** and **least privilege**.  
 Context: [Unlock the power of Splunk Cloud Platform with the MCP server](https://www.splunk.com/en_us/blog/artificial-intelligence/unlock-the-power-of-splunk-cloud-platform-with-the-mcp-server.html) (Splunk blog)  
 Docs: [Configure the Splunk MCP Server](https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/configure-the-splunk-mcp-server) · [Connect and use an MCP client](https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/connect-and-use-an-mcp-client)
 
-![MCP — server and token / endpoints (example)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/src/package/appserver/static/images/mcp_server_config.png)
+MCP — server and token / endpoints (example)
 
-![MCP — tools list (example)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/src/package/appserver/static/images/mcp_server_tools.png)
+MCP — tools list (example)
 
 ### Quiz (Chapter 3)
 
@@ -217,7 +227,7 @@ The **interactive quiz** tests search behaviour (including **tstats** and edge c
 
 ## 4 · Metrics
 
-**Concepts:** measures + dimensions, **metric** indexes, **`mstats`** / **`mcatalog`**, `mcollect` from events, **Analytics Workspace**.
+**Concepts:** measures + dimensions, **metric** indexes, `**mstats`** / `**mcatalog**`, `mcollect` from events, **Analytics Workspace**.
 
 ```spl
 | mcollect index=s4c_student_metrics prefix=stocks.
@@ -229,9 +239,9 @@ The **interactive quiz** tests search behaviour (including **tstats** and edge c
 ```
 
 - **Chapters in app:** Metrics intro, onboarding, **Searching Metrics**, **Weather data reference (Open-Meteo schema)**, **Metrics lab** (e.g. weather → `mcollect`), **Stock index metrics** (stocks → metrics), **Phyphox** experiments.  
-- Index **`s4c_student_metrics`** is a safe practice target for **`mcollect`**.
+- Index `**s4c_student_metrics`** is a safe practice target for `**mcollect**`.
 
-![Metrics — searching (workshop UI)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch4_metrics_searching.png)
+Metrics — searching (workshop UI)
 
 ### Links (Metrics) — full reference
 
@@ -241,7 +251,7 @@ The **interactive quiz** tests search behaviour (including **tstats** and edge c
 - [Convert logs to metrics (metadata)](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/Convertlogstometadata) · [Best practices for metrics](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/Bestpracticesformetrics)
 - [Manage metric index limits](https://docs.splunk.com/Documentation/Splunk/latest/Metrics/Manage-metric-index-limits)
 - [Analytics / Analytics Workspace](https://docs.splunk.com/Documentation/Splunk/latest/Analytics/Analyze)
-- Command reference: [`mstats`](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Mstats) · [`mcatalog`](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Mcatalog) · [`mcollect`](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Mcollect)
+- Command reference: `[mstats](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Mstats)` · `[mcatalog](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Mcatalog)` · `[mcollect](https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Mcollect)`
 - [Metrics in Splunk Cloud](https://docs.splunk.com/Documentation/SplunkCloud/latest/Metrics/GetMetricsInOther) — platform-specific notes where applicable
 - [OpenTelemetry → Splunk (Community blog)](https://community.splunk.com/t5/Community-Blog/Sending-Metrics-to-Splunk-Enterprise-With-the-OpenTelemetry/ba-p/613991) · [Open-Meteo API](https://open-meteo.com/) · [Open-Meteo docs](https://open-meteo.com/en/docs) (workshop weather data source context)
 
@@ -253,7 +263,7 @@ The **interactive quiz** tests search behaviour (including **tstats** and edge c
 
 Classic dashboards use **Simple XML** (or advanced XML in older content). The Search & Reporting **Visualization Editor** and **Source** view help you wire searches to panels. Official hub: [Build and edit dashboards](https://docs.splunk.com/Documentation/Splunk/latest/Viz/Buildandeditdashboards) · [Simplified XML reference](https://docs.splunk.com/Documentation/Splunk/latest/Viz/PanelreferenceforSimplifiedXML) · [Drilldown in Simple XML](https://docs.splunk.com/Documentation/Splunk/latest/Viz/Drilldown) · [Tokens in dashboards](https://docs.splunk.com/Documentation/Splunk/latest/Viz/Token) · [Event handlers](https://docs.splunk.com/Documentation/Splunk/latest/Viz/EventHandler).
 
-![XML dashboards — base search (workshop UI)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch5_xml_dashboards_base_search.png)
+XML dashboards — base search (workshop UI)
 
 ### 5.1 Base search and post-process
 
@@ -355,22 +365,24 @@ Hiding or replacing sensitive fields in dashboards (e.g. usernames, IPs) is cove
 
 **Workshop subtopics:** [Concepts & layout](#60-concepts) · [Base & chain data sources](#61-base-and-chain-searches-json) · [Tokens & interactivity](#62-tokens-and-interactivity) · [Tabs, trellis, images, custom viz, Canvas, publish](#63-layout-sharing-and-canvas) · [Documentation links](#64-dashboard-studio-documents)
 
-![Dashboard Studio — overview (workshop UI)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch6_dashboard_studio_overview.png)
+Dashboard Studio — overview (workshop UI)
 
 ### 6.0 Concepts
 
-| Area | Classic Simple XML | Dashboard Studio |
-|------|-------------------|------------------|
-| Definition | `.xml` dashboard | JSON (definition) + **canvas** or grid |
-| Query reuse | `base` + post-process on `<search>` | `ds.search` (base) + `ds.chain` (children) |
-| Interactivity | Tokens + `depends` | `tokens` block, `inputs`, `eventHandlers` |
+
+| Area                         | Classic Simple XML                                        | Dashboard Studio                                                                                                           |
+| ---------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Definition                   | `.xml` dashboard                                          | JSON (definition) + **canvas** or grid                                                                                     |
+| Query reuse                  | `base` + post-process on `<search>`                       | `ds.search` (base) + `ds.chain` (children)                                                                                 |
+| Interactivity                | Tokens + `depends`                                        | `tokens` block, `inputs`, `eventHandlers`                                                                                  |
 | Sharing to anonymous viewers | **Not** via Publish in DS pre–10.0; classic embed differs | **Publish (10.0+)** — [Publish dashboard](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/publishDashboard) |
+
 
 Entry points: [Dashboard Studio overview](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/Overview) · [Tutorial (Docs)](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/dashStudioTutorial) · [Alternative tutorial](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/Tutorial) · [What’s new in Dashboard Studio (10.2+)](https://help.splunk.com/en/splunk-enterprise/create-dashboards-and-reports/dashboard-studio/10.2/whats-new-in-dashboard-studio/whats-new-in-dashboard-studio) (pick your exact version in Help as URL patterns vary).
 
 ### 6.1 Base and chain searches (JSON)
 
-A **data source** of type `ds.search` runs a SPL query. A **`ds.chain`** reuses another source’s result set and adds SPL **without** re-querying the index. The base query should be **transforming**; if not, declare fields so chain searches see them (workshop: `| fields` pattern).
+A **data source** of type `ds.search` runs a SPL query. A `**ds.chain*`* reuses another source’s result set and adds SPL **without** re-querying the index. The base query should be **transforming**; if not, declare fields so chain searches see them (workshop: `| fields` pattern).
 
 **Concept:**
 
@@ -452,19 +464,18 @@ Default values live under `tokens.defaultTokenValues` so the first load is deter
 
 - [Dashboard Studio user manual / landing (navigate by topic)](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/Overview)  
 - [Add data sources to Dashboard Studio](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/addDataSources)  
-- [Data source options: `ds.search` / `ds.chain`](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/chainSearch) (same as chain)  
+- [Data source options: `ds.search` / `ds.chain](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/chainSearch)` (same as chain)  
 - [Add visualizations to Dashboard Studio](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/Visualization) (topic hub)
 
-![Dashboard Studio — Canvas library (workshop UI)](https://raw.githubusercontent.com/bautt/splunk4champions2/main/screenshots/ch6_dashboard_studio_canvas_viz.png)
+Dashboard Studio — Canvas library (workshop UI)
 
 ---
 
-## 7 · Splunk Mobile (and AR)
+## 7 · Splunk Mobile 
 
-1. Install **Splunk Mobile** — [iOS (iPhone)](https://apps.apple.com/us/app/splunk-mobile/id1420299852) · [Android](https://play.google.com/store/apps/details?id=com.splunk.android.alerts) · [iPad](https://apps.apple.com/us/app/splunk-for-ipad/id1568523145)  
-2. **Splunk Secure Gateway (SSG):** [Requirements / administer](https://docs.splunk.com/Documentation/SecureGateway/latest/Admin/Requirements) · [SSG security](https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Security) · [Register a device (User)](https://docs.splunk.com/Documentation/SecureGateway/latest/User/RegisterorUnregisteraDevice)  
-3. **Connected experiences / blogs:** [Get started with connected experiences](https://www.splunk.com/en_us/blog/platform/get-started-with-connected-experiences.html) · [SSG 3.0](https://www.splunk.com/en_us/blog/platform/welcome-to-splunk-secure-gateway-3-0.html) · [What’s new in Mobile](https://www.splunk.com/en_us/blog/platform/reports-sharing-and-more-whats-new-in-splunk-mobile-this-summer.html) · [Mobile, iPad, AR & private networks](https://www.splunk.com/en_us/blog/platform/splunk-mobile-ipad-ar-and-tv-in-private-networks.html)  
-4. **AR / Edge Hub (optional):** [Edge Hub & AR on Splunkbase](https://splunkbase.splunk.com/app/5180) — install on the search head when using AR. [AR for iOS (Docs)](https://docs.splunk.com/Documentation/AR/5.0.3/UseSplunkARinTheField/Installation) · [AR for Android (Docs)](https://docs.splunk.com/Documentation/ARAndroid/latest/UseSplunkARinTheField/Installation) · [Splunk AR blog tag](https://www.splunk.com/en_us/blog/tag/splunk-ar.html)
+1. Install **Splunk Mobile** — [iOS (iPhone)](https://apps.apple.com/us/app/splunk-mobile/id1420299852) · [Android](https://play.google.com/store/apps/details?id=com.splunk.android.alerts) · [iPad](https://apps.apple.com/us/app/splunk-for-ipad/id1568523145)
+2. **Splunk Secure Gateway (SSG):** [Requirements / administer](https://docs.splunk.com/Documentation/SecureGateway/latest/Admin/Requirements) · [SSG security](https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Security) · [Register a device (User)](https://docs.splunk.com/Documentation/SecureGateway/latest/User/RegisterorUnregisteraDevice)
+3. **Connected experiences / blogs:** [Get started with connected experiences](https://www.splunk.com/en_us/blog/platform/get-started-with-connected-experiences.html) · [SSG 3.0](https://www.splunk.com/en_us/blog/platform/welcome-to-splunk-secure-gateway-3-0.html) · [What’s new in Mobile](https://www.splunk.com/en_us/blog/platform/reports-sharing-and-more-whats-new-in-splunk-mobile-this-summer.html) · [Mobile, iPad, AR & private networks](https://www.splunk.com/en_us/blog/platform/splunk-mobile-ipad-ar-and-tv-in-private-networks.html)
 
 ### ITSI on mobile (optional)
 
@@ -476,15 +487,17 @@ Default values live under `tokens.defaultTokenValues` so the first load is deter
 
 Selected sessions referenced in the workshop **Follow up** chapter (PDF + recording when available):
 
-| Topic | Slides / resource |
-|-------|-------------------|
-| tstats and PREFIX | [PLA1089C PDF](https://conf.splunk.com/files/2020/slides/PLA1089C.pdf) · [Recording](https://conf.splunk.com/files/2020/recordings/PLA1089C.mp4) |
+
+| Topic                              | Slides / resource                                                                                                                                     |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| tstats and PREFIX                  | [PLA1089C PDF](https://conf.splunk.com/files/2020/slides/PLA1089C.pdf) · [Recording](https://conf.splunk.com/files/2020/recordings/PLA1089C.mp4)      |
 | Clara-fication: expensive searches | [PLA1162B PDF](https://conf.splunk.com/files/2022/slides/PLA1162B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1162B_1080.mp4) |
-| Fields, indexed tokens and you | [PLA1466B PDF](https://conf.splunk.com/files/2022/slides/PLA1466B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1466B_1080.mp4) |
-| Job Inspector | [TRU1143C PDF](https://conf.splunk.com/files/2020/slides/TRU1143C.pdf) · [Recording](https://conf.splunk.com/files/2020/recordings/TRU1143C.mp4) |
-| More tstats for your buckets | [TRU1133B PDF](https://conf.splunk.com/files/2021/slides/TRU1133B.pdf) · [Recording](https://conf.splunk.com/files/2021/recordings/TRU1133B.mp4) |
-| Master joining without `join` | [PLA1528B PDF](https://conf.splunk.com/files/2022/slides/PLA1528B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1528B_1080.mp4) |
-| Dashboard Studio interactivity | [PLA1314B PDF](https://conf.splunk.com/files/2022/slides/PLA1314B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1314B_1080.mp4) |
+| Fields, indexed tokens and you     | [PLA1466B PDF](https://conf.splunk.com/files/2022/slides/PLA1466B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1466B_1080.mp4) |
+| Job Inspector                      | [TRU1143C PDF](https://conf.splunk.com/files/2020/slides/TRU1143C.pdf) · [Recording](https://conf.splunk.com/files/2020/recordings/TRU1143C.mp4)      |
+| More tstats for your buckets       | [TRU1133B PDF](https://conf.splunk.com/files/2021/slides/TRU1133B.pdf) · [Recording](https://conf.splunk.com/files/2021/recordings/TRU1133B.mp4)      |
+| Master joining without `join`      | [PLA1528B PDF](https://conf.splunk.com/files/2022/slides/PLA1528B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1528B_1080.mp4) |
+| Dashboard Studio interactivity     | [PLA1314B PDF](https://conf.splunk.com/files/2022/slides/PLA1314B.pdf) · [Recording](https://conf.splunk.com/files/2022/recordings/PLA1314B_1080.mp4) |
+
 
 **Splunk blog / Docs (search quality):** [Clara-fication: Job Inspector](https://www.splunk.com/en_us/blog/tips-and-tricks/splunk-clara-fication-job-inspector.html) · [Search best practices (Clara-fication)](https://www.splunk.com/en_us/blog/customers/splunk-clara-fication-search-best-practices.html) · [Built-in search optimizations (Docs)](https://docs.splunk.com/Documentation/Splunk/latest/Search/Built-inoptimization) · [Behind the magnifying glass — how search works (PDF, .conf 2016)](https://conf.splunk.com/files/2016/slides/behind-the-magnifying-glass-how-search-works.pdf)
 
@@ -496,14 +509,16 @@ Selected sessions referenced in the workshop **Follow up** chapter (PDF + record
 
 ## Common anti-patterns (recap)
 
-| Instead of | Prefer |
-|------------|--------|
-| `NOT x=y` (sometimes costly) | Positive filters where possible |
-| `search foo` after first `|` | `foo` in the initial search string |
-| `join` for large enrichment | `lookup`, `eventstats`, or prebuilt KV |
-| Leading wildcards | `TERM()`, narrow tokens, CIM field names |
-| `transaction` for grouping | `stats` with explicit `by` |
-| Unbounded real-time in dashboards | Scheduled (1m/5m) + panel refresh |
+
+| Instead of                        | Prefer                                   |
+| --------------------------------- | ---------------------------------------- |
+| `NOT x=y` (sometimes costly)      | Positive filters where possible          |
+| `search foo` after first `        | `                                        |
+| `join` for large enrichment       | `lookup`, `eventstats`, or prebuilt KV   |
+| Leading wildcards                 | `TERM()`, narrow tokens, CIM field names |
+| `transaction` for grouping        | `stats` with explicit `by`               |
+| Unbounded real-time in dashboards | Scheduled (1m/5m) + panel refresh        |
+
 
 ---
 
@@ -532,29 +547,39 @@ index=_audit action=search info=completed
 
 ## One-page quick reference
 
-| Goal | Pattern |
-|------|--------|
-| Fast aggregate | `\| tstats count WHERE index=X BY field` |
-| Exact token | `TERM(127.0.0.1)` |
-| Group without transaction | `\| stats ... BY field` |
-| Enrich without join | `lookup` / `eventstats` |
-| Index terms (warm/cold) | `walklex` |
-| List metric names | `mcatalog` |
-| Events → metrics (lab) | `mcollect` into `s4c_student_metrics` |
-| Stock + meteo (workshop) | `inputlookup meteo_historic` on **date** + `exchange_city` |
+
+| Goal                      | Pattern                                                    |
+| ------------------------- | ---------------------------------------------------------- |
+| Fast aggregate            | `| tstats count WHERE index=X BY field`                    |
+| Exact token               | `TERM(127.0.0.1)`                                          |
+| Group without transaction | `| stats ... BY field`                                     |
+| Enrich without join       | `lookup` / `eventstats`                                    |
+| Index terms (warm/cold)   | `walklex`                                                  |
+| List metric names         | `mcatalog`                                                 |
+| Events → metrics (lab)    | `mcollect` into `s4c_student_metrics`                      |
+| Stock + meteo (workshop)  | `inputlookup meteo_historic` on **date** + `exchange_city` |
+
 
 ---
 
 ## Phyphox (HEC)
 
-For phone sensor HEC inputs, the workshop expects (see **Phyphox** / **Readme** in the app):
+For phone sensor HEC inputs, create the optional Phyphox HEC tokens per environment (see **Phyphox** / **Readme** in the app):
 
 ```ini
-/etc/apps/splunk_httpinput/local/inputs.conf
-[http://phyphox]
-allowQueryStringAuth = true
+Token name: phyphox_metrics
+Default index: s4c_phyphox_metrics
+Allowed indexes: s4c_phyphox_metrics
+Source type: phyphox_metrics
+
+Optional token name: phyphox
+Default index: s4c_phyphox
+Allowed indexes: s4c_phyphox
+Source type: phyphox_json
 ```
+
+For Splunk Cloud, create HEC tokens through the Cloud-supported admin flow, such as Splunk Web or ACS.
 
 ---
 
-*Handout version aligned with the Splunk4Champions2 workshop app structure (chapters 0–7). Screenshots: GitHub `main` branch. Contact: tbaublys@splunk.com*
+*Handout version aligned with the Splunk4Champions2 workshop app structure (chapters 0–7). Screenshots: GitHub `main` branch. Contact: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)*
