@@ -1,4 +1,5 @@
 import Link from '@splunk/react-ui/Link'
+import LabBlock from '../../components/LabBlock.js'
 
 ## Publishing Dashboards Without Login (New in Splunk 10.0)
 
@@ -57,4 +58,34 @@ The recipient sees live data without ever logging in to Splunk.
 - The **Publish** button is enabled by default — no `web.conf` changes required
 - The publishing user needs `edit_dashboard` and `schedule_search` capabilities
 
-<Link to="/en-GB/app/splunk4champions2/ch5_xml_publish" openInNewContext>Open Example Dashboard →</Link> &nbsp;|&nbsp; <Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/publishDashboard" openInNewContext>Publish Dashboards Documentation</Link>
+---
+
+### Try It: Publish and Verify
+
+<LabBlock title="Publish a dashboard">
+
+**1. Open the example dashboard**
+
+<Link to="/en-GB/app/splunk4champions2/ch6_ds_meaningful_charts?tab=layout_1" openInNewContext>Open ch6_ds_meaningful_charts →</Link>
+
+**2. Publish it**
+
+- Click **Edit** (top right) → then **Publish** in the toolbar  
+- Set refresh interval: **15 minutes**  
+- Set expiry: **7 days**  
+- Click **Publish** and copy the generated link
+
+**3. Verify — no Splunk login needed**
+
+Open an **incognito / private browser window** (or a different browser entirely), paste the link, and confirm:
+- The dashboard loads with live data  
+- No login prompt appears  
+- The Splunk navigation chrome is absent
+
+**4. Revoke**
+
+Go back to the dashboard → **Edit** → **Publish** → **Unpublish** to revoke the link immediately.
+
+</LabBlock>
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/publishDashboard" openInNewContext>Publish Dashboards Documentation</Link>
