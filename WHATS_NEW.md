@@ -4,7 +4,7 @@
 
 ---
 
-### 2.11.76 — workshop-wide colour schemes and trainer-friendly setup polish
+### 2.11.77 — workshop-wide colour schemes and trainer-friendly setup polish
 
 - **Whole-workshop colour schemes:** the Setup colour picker now restyles the entire workshop (top chapter bar, subchapter bar, table headers, lab callouts and complete-lab cards, primary search button, Setup toggles) instead of just the lab blocks. Four schemes available:
   - **Blue / Navy** (default — steel-blue / deep-navy)
