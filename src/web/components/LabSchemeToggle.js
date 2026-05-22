@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import Button from '@splunk/react-ui/Button';
 import Hammer from '@splunk/react-icons/Hammer';
+import Flask from '@splunk/react-icons/Flask';
 
 const LAB_SCHEME_EVENT = 's4c-lab-scheme-change';
 
 function getSchemeFromBody() {
     if (typeof document === 'undefined') return 'blue';
     if (document.body.classList.contains('s4c-scheme-brownred')) return 'brownred';
-    if (document.body.classList.contains('s4c-scheme-yellowbrown')) return 'yellowbrown';
+    if (document.body.classList.contains('s4c-scheme-blueyellow')) return 'blueyellow';
+    if (document.body.classList.contains('s4c-scheme-pinkorange')) return 'pinkorange';
     return 'blue';
 }
 
 export default function LabSchemeToggle() {
     const [scheme, setScheme] = useState(getSchemeFromBody);
+    const [expanded, setExpanded] = useState(false);
 
     const updateScheme = (next) => {
         if (typeof window === 'undefined') return;
@@ -20,25 +23,50 @@ export default function LabSchemeToggle() {
         setScheme(next);
     };
 
+    if (!expanded) {
+        return (
+            <p className="s4c-scheme-toggle-link">
+                <a
+                    href="#change-scheme"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setExpanded(true);
+                    }}
+                >
+                    change colour scheme
+                </a>
+            </p>
+        );
+    }
+
     return (
         <div className="displayModeToggle">
-            <h3>Lab Highlight Colour Scheme</h3>
-            <p>Choose the colour used for hands-on lab callouts and complete-lab cards.</p>
+            <h3>Workshop Colour Scheme</h3>
+            <p>Choose the colour theme applied across the workshop — top navigation, subchapter bar, tables, lab callouts and complete-lab cards.</p>
             <div className="displayModeToggleActions">
                 <Button
                     appearance={scheme === 'blue' ? 'primary' : 'secondary'}
+                    className={`s4c-toggle-btn${scheme === 'blue' ? ' s4c-toggle-btn--active' : ''}`}
                     label="Blue / Navy (default)"
                     onClick={() => updateScheme('blue')}
                 />
                 <Button
                     appearance={scheme === 'brownred' ? 'primary' : 'secondary'}
+                    className={`s4c-toggle-btn${scheme === 'brownred' ? ' s4c-toggle-btn--active' : ''}`}
                     label="Brown / Dark Red"
                     onClick={() => updateScheme('brownred')}
                 />
                 <Button
-                    appearance={scheme === 'yellowbrown' ? 'primary' : 'secondary'}
-                    label="Yellow / Brown"
-                    onClick={() => updateScheme('yellowbrown')}
+                    appearance={scheme === 'blueyellow' ? 'primary' : 'secondary'}
+                    className={`s4c-toggle-btn${scheme === 'blueyellow' ? ' s4c-toggle-btn--active' : ''}`}
+                    label="Blue / Yellow"
+                    onClick={() => updateScheme('blueyellow')}
+                />
+                <Button
+                    appearance={scheme === 'pinkorange' ? 'primary' : 'secondary'}
+                    className={`s4c-toggle-btn${scheme === 'pinkorange' ? ' s4c-toggle-btn--active' : ''}`}
+                    label="Pink / Orange"
+                    onClick={() => updateScheme('pinkorange')}
                 />
             </div>
 
@@ -57,7 +85,7 @@ export default function LabSchemeToggle() {
 
                     <div className="s4c-complete-lab">
                         <div style={{ padding: '12px 16px' }}>
-                            <span className="s4c-lab-badge"><Hammer /> Complete Lab</span>
+                            <span className="s4c-lab-badge"><Flask /> Complete Lab</span>
                             <div className="s4c-lab-summary">
                                 <strong>End-to-end lab</strong> — opens with a summary card highlighting the goal of a multi-step walkthrough.
                             </div>

@@ -15,7 +15,7 @@
 }
 
 .chapterBar > div[role=tablist] button[aria-selected=true] svg {
-    color: #1a6c37;
+    color: #1a4e80;
 }
 
 /* ── 3. Content area max-width ─────────────────────────────────────────────── */
@@ -77,12 +77,12 @@
 }
 
 .workshopContent th {
-    background-color: #e8f4ee;
+    background-color: #dde7f0;
     color: #1a2a3a;
     font-weight: 600;
     text-align: left;
     padding: 8px 12px;
-    border: 1px solid #c8ddd0;
+    border: 1px solid #b3cee8;
 }
 
 .workshopContent td {
@@ -182,7 +182,21 @@
 .workshopSearchBar [data-test="search-button"]:focus,
 .workshopSearchBar [data-test="search-button"]:focus-visible {
     outline: none !important;
-    box-shadow: 0 0 0 2px rgba(26, 137, 41, 0.25) !important;
+}
+
+/* ── Search button base tint (scheme-overridden below) ─────────────────────── */
+.workshopSearchBar [data-test="search-button"] {
+    background-color: #2E6DA4 !important;
+    border-color: #2E6DA4 !important;
+    color: #ffffff !important;
+}
+.workshopSearchBar [data-test="search-button"]:hover {
+    background-color: #1a4e80 !important;
+    border-color: #1a4e80 !important;
+}
+.workshopSearchBar [data-test="search-button"]:focus,
+.workshopSearchBar [data-test="search-button"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(46, 109, 164, 0.30) !important;
 }
 
 /* TimeRangePicker wrapper sits right before the search button */
@@ -607,40 +621,272 @@
     color: #6b1a1a;
 }
 
-/* ── Scheme: Yellow / Brown ────────────────────────────────────────────────── */
-.s4c-scheme-yellowbrown .s4c-lab-block {
-    border-left-color: #C2830A;
-    background-color: #fefaf2;
-    box-shadow: 0 2px 8px rgba(194, 131, 10, 0.10);
+/* ── Scheme: Blue / Yellow (Ukrainian) ─────────────────────────────────────── */
+.s4c-scheme-blueyellow .s4c-lab-block {
+    border-left-color: #005BBB;
+    background-color: #FFFBE0;
+    box-shadow: 0 2px 8px rgba(0, 91, 187, 0.15);
 }
-.s4c-scheme-yellowbrown .s4c-lab-block__header {
-    background-color: #fdf0d5;
-    border-bottom-color: #e8c87a;
+.s4c-scheme-blueyellow .s4c-lab-block__header {
+    background-color: #FFE34D;
+    border-bottom-color: #d4b524;
 }
-.s4c-scheme-yellowbrown .s4c-lab-block__icon,
-.s4c-scheme-yellowbrown .s4c-lab-block__label {
-    color: #7a4f04;
+.s4c-scheme-blueyellow .s4c-lab-block__icon,
+.s4c-scheme-blueyellow .s4c-lab-block__label {
+    color: #003a78;
 }
-.s4c-scheme-yellowbrown .s4c-lab-block .workshopContent img {
-    border-color: #e8c87a;
+.s4c-scheme-blueyellow .s4c-lab-block .workshopContent img {
+    border-color: #d4b524;
 }
 
-.s4c-scheme-yellowbrown .s4c-complete-lab > div {
-    border-top-color: #7a4f04 !important;
-    background-color: #fefbf5 !important;
+.s4c-scheme-blueyellow .s4c-complete-lab > div {
+    border-top-color: #005BBB !important;
+    background-color: #FFFBE0 !important;
 }
-.s4c-scheme-yellowbrown .s4c-lab-badge {
-    background-color: #fdf0d5;
-    border-color: #e8c87a;
-    color: #7a4f04;
+.s4c-scheme-blueyellow .s4c-lab-badge {
+    background-color: #FFE34D;
+    border-color: #d4b524;
+    color: #003a78;
 }
-.s4c-scheme-yellowbrown .s4c-lab-badge svg {
-    color: #C2830A;
+.s4c-scheme-blueyellow .s4c-lab-badge svg {
+    color: #005BBB;
 }
-.s4c-scheme-yellowbrown .s4c-lab-summary {
-    border-left-color: #C2830A;
-    background-color: #fdf8ee;
+.s4c-scheme-blueyellow .s4c-lab-summary {
+    border-left-color: #005BBB;
+    background-color: #FFF6C2;
 }
-.s4c-scheme-yellowbrown .s4c-lab-summary strong {
-    color: #7a4f04;
+.s4c-scheme-blueyellow .s4c-lab-summary strong {
+    color: #003a78;
+}
+
+/* ── Scheme: Pink / Orange (splunk.com) ────────────────────────────────────── */
+.s4c-scheme-pinkorange .s4c-lab-block {
+    border-left-color: #E91565;
+    background-color: #FFF0F6;
+    box-shadow: 0 2px 8px rgba(233, 21, 101, 0.15);
+}
+.s4c-scheme-pinkorange .s4c-lab-block__header {
+    background-color: #FFC2D8;
+    border-bottom-color: #e082a8;
+}
+.s4c-scheme-pinkorange .s4c-lab-block__icon,
+.s4c-scheme-pinkorange .s4c-lab-block__label {
+    color: #a00d44;
+}
+.s4c-scheme-pinkorange .s4c-lab-block .workshopContent img {
+    border-color: #e082a8;
+}
+
+.s4c-scheme-pinkorange .s4c-complete-lab > div {
+    border-top-color: #E91565 !important;
+    background-color: #FFF5FA !important;
+}
+.s4c-scheme-pinkorange .s4c-lab-badge {
+    background-color: #FFC2D8;
+    border-color: #e082a8;
+    color: #a00d44;
+}
+.s4c-scheme-pinkorange .s4c-lab-badge svg {
+    color: #F89C32;
+}
+.s4c-scheme-pinkorange .s4c-lab-summary {
+    border-left-color: #F89C32;
+    background-color: #FFE0EC;
+}
+.s4c-scheme-pinkorange .s4c-lab-summary strong {
+    color: #a00d44;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   Workshop-chrome theming per scheme — chapter bar, section bar, tables, toggle
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Brown / Dark Red ──────────────────────────────────────────────────────── */
+.s4c-scheme-brownred .chapterBar > div[role=tablist] {
+    background-color: #f5dada;
+}
+.s4c-scheme-brownred .chapterBar > div[role=tablist] button[aria-selected=true] {
+    background-color: rgba(156, 44, 44, 0.10) !important;
+}
+.s4c-scheme-brownred .chapterBar > div[role=tablist] button[aria-selected=true] svg {
+    color: #9c2c2c;
+}
+.s4c-scheme-brownred .sectionBar > div[role=tablist] {
+    background-color: #fdf6f6;
+}
+.s4c-scheme-brownred .workshopContent th {
+    background-color: #f5dada;
+    border-color: #d89090;
+}
+.s4c-scheme-brownred .workshopContent tr:nth-child(even) td {
+    background-color: #fdf6f6;
+}
+.s4c-scheme-brownred .displayModeToggle {
+    background-color: #fdf6f6;
+    border-color: #d89090;
+}
+
+/* ── Blue / Yellow (Ukrainian) ─────────────────────────────────────────────── */
+.s4c-scheme-blueyellow .chapterBar > div[role=tablist] {
+    background-color: #FFE34D;
+}
+.s4c-scheme-blueyellow .chapterBar > div[role=tablist] button[aria-selected=true] {
+    background-color: rgba(0, 91, 187, 0.15) !important;
+}
+.s4c-scheme-blueyellow .chapterBar > div[role=tablist] button[aria-selected=true] svg {
+    color: #005BBB;
+}
+.s4c-scheme-blueyellow .sectionBar > div[role=tablist] {
+    background-color: #FFF6C2;
+}
+.s4c-scheme-blueyellow .workshopContent th {
+    background-color: #FFE34D;
+    border-color: #d4b524;
+}
+.s4c-scheme-blueyellow .workshopContent tr:nth-child(even) td {
+    background-color: #FFFBE0;
+}
+.s4c-scheme-blueyellow .displayModeToggle {
+    background-color: #FFFBE0;
+    border-color: #d4b524;
+}
+
+/* ── Pink / Orange (splunk.com) ────────────────────────────────────────────── */
+.s4c-scheme-pinkorange .chapterBar > div[role=tablist] {
+    background-color: #FFC2D8;
+}
+.s4c-scheme-pinkorange .chapterBar > div[role=tablist] button[aria-selected=true] {
+    background-color: rgba(233, 21, 101, 0.15) !important;
+}
+.s4c-scheme-pinkorange .chapterBar > div[role=tablist] button[aria-selected=true] svg {
+    color: #E91565;
+}
+.s4c-scheme-pinkorange .sectionBar > div[role=tablist] {
+    background-color: #FFE0EC;
+}
+.s4c-scheme-pinkorange .workshopContent th {
+    background-color: #FFC2D8;
+    border-color: #e082a8;
+}
+.s4c-scheme-pinkorange .workshopContent tr:nth-child(even) td {
+    background-color: #FFF0F6;
+}
+.s4c-scheme-pinkorange .displayModeToggle {
+    background-color: #FFF0F6;
+    border-color: #e082a8;
+}
+
+/* ── Search button tint per scheme (overrides Splunk-green default) ────────── */
+.s4c-scheme-blue .workshopSearchBar [data-test="search-button"] {
+    background-color: #2E6DA4 !important;
+    border-color: #2E6DA4 !important;
+}
+.s4c-scheme-blue .workshopSearchBar [data-test="search-button"]:hover {
+    background-color: #1a4e80 !important;
+    border-color: #1a4e80 !important;
+}
+.s4c-scheme-blue .workshopSearchBar [data-test="search-button"]:focus,
+.s4c-scheme-blue .workshopSearchBar [data-test="search-button"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(46, 109, 164, 0.30) !important;
+}
+
+.s4c-scheme-brownred .workshopSearchBar [data-test="search-button"] {
+    background-color: #9c2c2c !important;
+    border-color: #9c2c2c !important;
+}
+.s4c-scheme-brownred .workshopSearchBar [data-test="search-button"]:hover {
+    background-color: #6b1a1a !important;
+    border-color: #6b1a1a !important;
+}
+.s4c-scheme-brownred .workshopSearchBar [data-test="search-button"]:focus,
+.s4c-scheme-brownred .workshopSearchBar [data-test="search-button"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(156, 44, 44, 0.30) !important;
+}
+
+.s4c-scheme-blueyellow .workshopSearchBar [data-test="search-button"] {
+    background-color: #005BBB !important;
+    border-color: #005BBB !important;
+}
+.s4c-scheme-blueyellow .workshopSearchBar [data-test="search-button"]:hover {
+    background-color: #003a78 !important;
+    border-color: #003a78 !important;
+}
+.s4c-scheme-blueyellow .workshopSearchBar [data-test="search-button"]:focus,
+.s4c-scheme-blueyellow .workshopSearchBar [data-test="search-button"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(0, 91, 187, 0.30) !important;
+}
+
+.s4c-scheme-pinkorange .workshopSearchBar [data-test="search-button"] {
+    background-color: #E91565 !important;
+    border-color: #E91565 !important;
+}
+.s4c-scheme-pinkorange .workshopSearchBar [data-test="search-button"]:hover {
+    background-color: #a00d44 !important;
+    border-color: #a00d44 !important;
+}
+.s4c-scheme-pinkorange .workshopSearchBar [data-test="search-button"]:focus,
+.s4c-scheme-pinkorange .workshopSearchBar [data-test="search-button"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(233, 21, 101, 0.30) !important;
+}
+
+/* ── Collapsed colour scheme link (intentionally subtle) ───────────────────── */
+.s4c-scheme-toggle-link {
+    margin: 24px 0 0 0;
+    font-size: 11px;
+    color: #9aa3ad;
+    opacity: 0.7;
+    text-align: right;
+}
+.s4c-scheme-toggle-link:hover {
+    opacity: 1;
+}
+.s4c-scheme-toggle-link a {
+    color: #9aa3ad;
+    text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+}
+.s4c-scheme-toggle-link a:hover {
+    color: #5c6773;
+    border-bottom-style: solid;
+}
+.s4c-scheme-brownred .s4c-scheme-toggle-link a:hover { color: #9c2c2c; }
+.s4c-scheme-blueyellow .s4c-scheme-toggle-link a:hover { color: #005BBB; }
+.s4c-scheme-pinkorange .s4c-scheme-toggle-link a:hover { color: #E91565; }
+
+/* ── Active toggle button tint per scheme (Setup page) ─────────────────────── */
+.s4c-toggle-btn--active {
+    background-color: #2E6DA4 !important;
+    border-color: #2E6DA4 !important;
+    color: #ffffff !important;
+}
+.s4c-toggle-btn--active:hover {
+    background-color: #1a4e80 !important;
+    border-color: #1a4e80 !important;
+}
+
+.s4c-scheme-brownred .s4c-toggle-btn--active {
+    background-color: #9c2c2c !important;
+    border-color: #9c2c2c !important;
+}
+.s4c-scheme-brownred .s4c-toggle-btn--active:hover {
+    background-color: #6b1a1a !important;
+    border-color: #6b1a1a !important;
+}
+
+.s4c-scheme-blueyellow .s4c-toggle-btn--active {
+    background-color: #005BBB !important;
+    border-color: #005BBB !important;
+}
+.s4c-scheme-blueyellow .s4c-toggle-btn--active:hover {
+    background-color: #003a78 !important;
+    border-color: #003a78 !important;
+}
+
+.s4c-scheme-pinkorange .s4c-toggle-btn--active {
+    background-color: #E91565 !important;
+    border-color: #E91565 !important;
+}
+.s4c-scheme-pinkorange .s4c-toggle-btn--active:hover {
+    background-color: #a00d44 !important;
+    border-color: #a00d44 !important;
 }
