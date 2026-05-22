@@ -76,7 +76,7 @@ The app ships with curated `s4c_*` data so labs do not depend on customer produc
 **Format:** Guided hands-on workshop inside Splunk  
 **Audience:** Intermediate to advanced Splunk users  
 **App:** `splunk4champions2`  
-**Current build referenced:** `2.11.75`  
+**Current build referenced:** `2.11.76`  
 **Repository:** <https://github.com/bautt/splunk4champions2>  
 **Contact:** `tbaublys@splunk.com`
 

@@ -1,9 +1,7 @@
 /* Background Color for the Section Bar */
 
 .sectionBar > div[role=tablist] {
- /*   background-color: #c3cbd4; */
-  /*background-color: #edede9;*/
-  background-color: #F0FBFF;
+  background-color: #eef5fc;
   padding-left: 8px !important;
   padding-right: 0 !important;
   height: 36px !important;

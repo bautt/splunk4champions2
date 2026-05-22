@@ -31,11 +31,13 @@ export default function DisplayModeToggle() {
             <div className="displayModeToggleActions">
                 <Button
                     appearance={mode === 'default' ? 'primary' : 'secondary'}
+                    className={`s4c-toggle-btn${mode === 'default' ? ' s4c-toggle-btn--active' : ''}`}
                     label="Standard"
                     onClick={() => updateMode('default')}
                 />
                 <Button
                     appearance={mode === 'large' ? 'primary' : 'secondary'}
+                    className={`s4c-toggle-btn${mode === 'large' ? ' s4c-toggle-btn--active' : ''}`}
                     label="Large Room"
                     onClick={() => updateMode('large')}
                 />

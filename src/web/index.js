@@ -152,7 +152,8 @@ function syncDisplayModeInUrl(mode) {
 // ── Lab colour scheme ─────────────────────────────────────────────────────
 const LAB_SCHEME_KEY = 's4c_lab_scheme';
 const LAB_SCHEME_EVENT = 's4c-lab-scheme-change';
-const VALID_SCHEMES = ['blue', 'brownred', 'yellowbrown'];
+const VALID_SCHEMES = ['blue', 'brownred', 'blueyellow', 'pinkorange'];
+const ALL_SCHEME_CLASSES = ['s4c-scheme-blue', 's4c-scheme-brownred', 's4c-scheme-blueyellow', 's4c-scheme-pinkorange'];
 
 function readStoredLabScheme() {
     try {
@@ -162,9 +163,9 @@ function readStoredLabScheme() {
 }
 
 function applyLabScheme(scheme) {
-    document.body.classList.remove('s4c-scheme-brownred', 's4c-scheme-yellowbrown');
-    if (scheme === 'brownred') document.body.classList.add('s4c-scheme-brownred');
-    if (scheme === 'yellowbrown') document.body.classList.add('s4c-scheme-yellowbrown');
+    document.body.classList.remove(...ALL_SCHEME_CLASSES);
+    const next = VALID_SCHEMES.includes(scheme) ? scheme : 'blue';
+    document.body.classList.add(`s4c-scheme-${next}`);
 }
 
 function persistLabScheme(scheme) {

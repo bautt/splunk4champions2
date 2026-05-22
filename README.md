@@ -46,7 +46,7 @@ Splunk4Champions helps experienced users move from "I can search" to "I understa
 
 The Setup chapter starts with a Health Check that validates the expected workshop indexes, event counts, metric counts, time ranges, Splunk version, and app version. It also includes the in-app Readme, What's New, follow-up links, and credits.
 
-For trainers, the workshop includes a Large Room display mode with larger typography and spacing for projected delivery.
+For trainers, the workshop includes a Large Room display mode with larger typography and spacing for projected delivery, plus an optional workshop colour scheme picker (Blue / Navy, Brown / Dark Red, Blue / Yellow, Pink / Orange) tucked under the health check so the same app can be re-themed per audience without code changes.
 
 ### 1 · Settings
 
@@ -205,6 +205,7 @@ The app ships with curated `s4c_*` data so labs do not depend on customer produc
 
 - Setup Health Check with actionable index and data-status hints
 - Large Room display mode for trainer-led delivery
+- Workshop-wide colour scheme picker (Blue / Navy, Brown / Dark Red, Blue / Yellow, Pink / Orange) re-themes navigation, tables, lab callouts, and primary buttons together
 - Expanded Search chapter with SPL2 and optional MCP content
 - Champion Quiz chapter with timed, interactive questions
 - Dashboard Studio tutorial, interactivity, custom visualizations, and publishing examples

@@ -2,7 +2,7 @@ import React from "react";
 import Card from "@splunk/react-ui/Card";
 import P from '@splunk/react-ui/Paragraph'
 import Heading from '@splunk/react-ui/Heading'
-import Hammer from '@splunk/react-icons/Hammer'
+import Flask from '@splunk/react-icons/Flask'
 
 export default function LabStep({title, subtitle, content: Content, type}) {
 
@@ -13,7 +13,7 @@ export default function LabStep({title, subtitle, content: Content, type}) {
         <Card.Body style={{maxWidth: 900, paddingTop: 5}}>
             {type === 'lab' && (
                 <div className="s4c-lab-badge">
-                    <Hammer style={{width:15, height:15}} />
+                    <Flask style={{width:15, height:15}} />
                     <span>Complete Lab</span>
                 </div>
             )}

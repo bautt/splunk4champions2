@@ -4,6 +4,20 @@
 
 ---
 
+### 2.11.76 — workshop-wide colour schemes and trainer-friendly setup polish
+
+- **Whole-workshop colour schemes:** the Setup colour picker now restyles the entire workshop (top chapter bar, subchapter bar, table headers, lab callouts and complete-lab cards, primary search button, Setup toggles) instead of just the lab blocks. Four schemes available:
+  - **Blue / Navy** (default — steel-blue / deep-navy)
+  - **Brown / Dark Red**
+  - **Blue / Yellow** (Ukrainian flag intensity — `#005BBB` / `#FFE34D`)
+  - **Pink / Orange** (Splunk.com brand intensity — `#E91565` / `#F89C32`)
+- **Live preview in the picker:** switching schemes immediately previews a `LabBlock` callout and a complete-lab card so trainers see the effect before committing.
+- **Picker tucked away by default:** the colour scheme panel is now collapsed behind a subtle "change colour scheme" link placed below the Setup health check, keeping the Setup page focused on readiness checks.
+- **Lab icons clarified:** atomic hands-on `LabBlock` callouts keep the hammer icon, while the five complete-lab summary cards now use a flask icon to visually distinguish "single exercise" from "end-to-end lab".
+- **Scheme-aware primary buttons:** the workshop search button and Setup toggle buttons (Standard / Large Room and the four scheme buttons) now match the active scheme instead of staying Splunk green, including hover and focus states.
+- **Theme-aware navigation:** chapter bar and section bar default to a pale blue tint that matches the new Blue / Navy baseline, and each scheme overrides them so the workshop visually agrees with itself end-to-end.
+- **Persistence unchanged:** the chosen scheme (and the trainer display mode) is still stored in browser local storage and broadcast via custom events so SPA navigation keeps the chosen theme.
+
 ### 2.11.75 — hands-on lab treatment, live dashboard embeds, Chapter 3 reorder
 
 - **Lab treatment for hands-on exercises:** new `LabBlock` callout component (steel-blue, hammer icon) for atomic hands-on steps, plus a deep-navy *complete-lab card* treatment for the five end-to-end labs (Inspector Lab, Search Lab / Investigation, Metrics Lab, Stocks — Events to Metrics, Publish a dashboard without login). Each complete lab now opens with an upfront summary card. `workshop.js` tags these steps with `"type": "lab"` so the UI knows which treatment to render.

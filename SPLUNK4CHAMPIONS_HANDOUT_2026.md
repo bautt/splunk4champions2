@@ -10,7 +10,7 @@ fontsize: 10pt
 # Splunk4Champions Workshop Handout
 
 **Workshop app:** `splunk4champions2`  
-**Current build referenced:** `2.11.75`  
+**Current build referenced:** `2.11.76`  
 **Repository:** <https://github.com/bautt/splunk4champions2>  
 **Workshop UI:** `https://<your-splunk>/en-GB/app/splunk4champions2/lab`  
 **Contact:** `tbaublys@splunk.com`
