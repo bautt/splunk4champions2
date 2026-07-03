@@ -6,9 +6,9 @@ import Link from '@splunk/react-ui/Link'
 
 **Fast mode** uses the least amount of system resources by skipping field extraction entirely — only indexed fields and default fields (`host`, `source`, `sourcetype`, `_time`, `_raw`) are available. It is ideal when checking whether data is present, or after a search is already built and you just need results quickly.
 
-<LabBlock title="Try it out">
+<LabBlock title="Try it">
 
-Try this search in Fast mode and compare with Smart or Verbose:
+Run this search in Fast mode and compare with Smart or Verbose:
 
 <SplunkSearch earliest="-30d" latest="now" mode="fast" spl={`index=s4c_meteo | stats count by city`}>
 </SplunkSearch>

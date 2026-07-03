@@ -22,3 +22,22 @@ Example for transforming commands: addtotals, chart, mvcombine, rare, stats, tab
 
 See documentation for the examples: 
 <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Commandsbytype" openInNewContext>"Command Types in Splunk Docs"</Link>
+
+___
+
+## Try one of each
+
+**Streaming — `eval` runs on each indexer in parallel:**
+<SplunkSearch spl={`index=s4c_www | eval kb=round(bytes/1024,1) | table _time host status kb`} />
+
+> **Why this matters:** `eval` is *distributable streaming* — it runs on the indexers and reduces data before it reaches the search head.
+
+**Transforming — `stats` runs on the search head after all events are collected:**
+<SplunkSearch spl={`index=s4c_www | stats count avg(bytes) as avg_bytes by status`} />
+
+> **Why this matters:** transforming commands must see the full result set in one place, so they wait for every indexer to ship its events.
+
+**Generating — `makeresults` starts a new result set, no index scan:**
+<SplunkSearch spl={`| makeresults count=5 | eval demo="no index needed"`} />
+
+> **Why this matters:** generating commands are the first command in a search and produce rows from nothing — useful for tests, mock data, or as a seed for `eval`/`foreach`.

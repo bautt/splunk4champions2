@@ -1,0 +1,66 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## Eval — beyond the basics
+
+`eval` is one of Splunk's quiet workhorses. Past the first few `eval x=y+1` examples, it can replace nested `if()` chains, parse JSON inline, and reshape multi-value fields without leaving the streaming part of the pipeline (where work is cheap).
+
+---
+
+### `case()` — readable conditionals
+
+Nested `if()` becomes unreadable fast. `case()` is a flat list of *condition → value* pairs evaluated top to bottom; the first match wins. Use `true()` as the final fallback.
+
+<SplunkSearch spl={`index=s4c_www
+| eval category=case(
+    status<300, "ok",
+    status<400, "redirect",
+    status<500, "client_error",
+    true(),     "server_error")
+| stats count by category`} />
+
+> **Why this matters:** the case bands compile to a single eval pass and stay streaming — the work happens on the indexers, not the search head.
+
+---
+
+### Multi-value field helpers
+
+Splunk fields can hold lists. The `mv*` family lets you create, count, and pick from them without `mvexpand` (which materialises a row per value and can balloon result counts).
+
+<SplunkSearch spl={`index=s4c_www
+| stats values(status) as statuses by host
+| eval status_count=mvcount(statuses), first_status=mvindex(statuses, 0)`} />
+
+> **Why this matters:** `mvcount()` and `mvindex()` give you cardinality and positional access cheaply. Reach for `mvexpand` only when you actually need one row per element.
+
+---
+
+### `spath()` — inline JSON parsing
+
+When you have JSON inside `_raw` (or any string field) and you only need one or two values, `spath()` extracts them in place without adding a full `| spath` command.
+
+<SplunkSearch spl={`| makeresults
+| eval payload="{\\"city\\": \\"Frankfurt\\", \\"temp\\": 14.2}"
+| eval city=spath(payload, "city"), temp=tonumber(spath(payload, "temp"))`} />
+
+> **Why this matters:** for sparse JSON access this avoids the cost of full-document field extraction. Use `| spath` when you actually want every field on every event.
+
+---
+
+### Type coercion — `tonumber()`, `tostring()`, `printf()`
+
+Splunk fields are strings by default. Comparisons and arithmetic silently misbehave if you forget. Coerce explicitly:
+
+<SplunkSearch spl={`index=s4c_www
+| eval kb=tonumber(bytes)/1024
+| eval kb_fmt=printf("%.1f KB", kb)
+| table _time host status kb_fmt`} />
+
+> **Why this matters:** `tonumber()` makes mathematical operations safe; `printf()` formats numbers for display. Together they replace clumsy `round(x, 1) . " KB"` concatenation.
+
+---
+
+### Read more
+
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/CommonEvalFunctions" openInNewContext>Common eval functions (Splunk Docs)</Link>
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/MultivalueEvalFunctions" openInNewContext>Multivalue eval functions</Link>

@@ -1,0 +1,66 @@
+import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz'
+
+<BuzzQuiz
+  title="Metrics Quiz"
+  subtitle="mstats, mcollect, dimensions vs fields."
+  timePerQuestion={25}
+  pointsBase={1000}
+>
+
+  <Question
+    prompt="Which command queries a *metric* index?"
+    explanation="`mstats` is the metric equivalent of `stats` — it reads from metric indexes and supports time-series aggregation. `stats` works only on event indexes."
+  >
+    <Answer>{`stats`}</Answer>
+    <Answer correct>{`mstats`}</Answer>
+    <Answer>{`metricstats`}</Answer>
+    <Answer>{`tstats`}</Answer>
+  </Question>
+
+  <Question
+    prompt="What does `| mcollect` do?"
+    explanation="`mcollect` converts the current event-based result set into metric data points and writes them to a metric index. It is how you turn ingested events into queryable metrics without re-onboarding the source."
+  >
+    <Answer>Collects logs from a remote system</Answer>
+    <Answer correct>Writes the current result rows into a metric index as metric data points</Answer>
+    <Answer>Joins two metric indexes together</Answer>
+    <Answer>Restores frozen metric data</Answer>
+  </Question>
+
+  <Question
+    prompt="In a metric data point, what is the difference between a *dimension* and a *measure*?"
+    explanation="Dimensions are categorical (city, host, status) — what you group by. Measures are numeric (temperature, cpu_percent) — what you aggregate. Together they replace the event field bag with a typed, compact representation."
+  >
+    <Answer>Dimensions are numeric, measures are categorical</Answer>
+    <Answer correct>Dimensions are categorical attributes you group by; measures are the numeric values you aggregate</Answer>
+    <Answer>Dimensions are stored, measures are calculated at search time</Answer>
+    <Answer>They are the same thing under different names</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="`mstats` requires a metric index — it cannot run against an event index even if the events contain numeric fields."
+    correct={true}
+    explanation="`mstats` is specifically designed for the metric store. To use it on event data you must first project the events into a metric index with `mcollect`."
+  />
+
+  <Question
+    prompt="Why prefer metrics over events for high-volume time-series data (e.g. host CPU samples every 10 seconds)?"
+    explanation="Metric data points are typed, deduplicated by dimensions, and stored as compact rows rather than text events. The storage footprint is roughly 1/10th and `mstats` aggregations are dramatically faster than equivalent `stats` on the raw events."
+  >
+    <Answer>Metrics retain longer by default</Answer>
+    <Answer correct>Much smaller on-disk footprint and faster aggregation queries</Answer>
+    <Answer>Metrics are required for any dashboard</Answer>
+    <Answer>Events cannot be aggregated over time</Answer>
+  </Question>
+
+  <Question
+    prompt="You ran `| mcollect index=s4c_student_metrics prefix=weather.` over some events. Where do you look to confirm it worked?"
+    explanation="`mcatalog` is the schema explorer for metric data — it tells you which metric names and dimensions exist in a metric index. Confirming with `mcatalog` is faster than running an `mstats` and waiting."
+  >
+    <Answer>{`| stats count`}</Answer>
+    <Answer>{`| dbinspect index=s4c_student_metrics`}</Answer>
+    <Answer correct>{`| mcatalog values(metric_name) WHERE index=s4c_student_metrics`}</Answer>
+    <Answer>{`| metasearch index=s4c_student_metrics`}</Answer>
+  </Question>
+
+</BuzzQuiz>

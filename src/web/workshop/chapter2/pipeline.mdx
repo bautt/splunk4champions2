@@ -38,5 +38,12 @@ In particular, the parsing pipeline actually consists of three pipelines: parsin
 
 <img width="80%" src="/static/app/splunk4champions2/images/pipeline.png"/>
 
+___
 
+## Lab — Watch the indexing pipeline live
 
+Your own Splunk instance reports its pipeline queue depth to `_introspection`. Watch the queues fill and drain as data flows in:
+
+<SplunkSearch earliest="-15m" latest="now" spl={`index=_introspection component=Queues | timechart avg(current_size_kb) by name`} />
+
+> **What to notice:** healthy queues stay close to zero. Persistent fill on `parsingQueue`, `aggQueue`, or `indexQueue` signals a bottleneck at that stage of the pipeline — often the first symptom of an indexer that can't keep up with ingestion.

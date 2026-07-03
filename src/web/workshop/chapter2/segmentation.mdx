@@ -7,7 +7,7 @@ import Link from '@splunk/react-ui/Link'
         <tr width="60%">
            <td width="40%"><img src="/static/app/splunk4champions2/images/segmentation.png" width="80%"/></td>
            <td>
-           What happpens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
+           What happens when data arrives in the index? Among other thing it gets segmented in tokens and tokens will be stored in TSIDX files. Major breakers define tokens. 
 Tokens with minor breakers will be stored as a TERM and in separate tokens. 
 So the first step in segmentation process is to break up _raw using major breakers. Next the minor breakers are applied to the tokens created by major breakers. Both are stored in the TSIDX file. 
 
@@ -30,6 +30,16 @@ Minor breakers: / : = @ . - $  % \\ _
  * Breakers can be configured in segmenters.conf – but you should not touch it without a good reason. 
 * <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Eventsegmentationandsearching#Major_breakers" openInNewContext>Major and minor breakers in Splunk Docs</Link>
 
- 
+___
 
+## Lab — See segmentation in action
 
+The same numeric value can be a token or part of a longer token depending on which breakers Splunk applies. Run these two searches and compare *scan count* and *event count* in the Job Inspector:
+
+**Plain string search — hits the merged lexicon, finds anything containing `200`:**
+<SplunkSearch spl={`index=s4c_www "200"`} />
+
+**`TERM()` — looks up the exact token `200` in the tsidx, much faster:**
+<SplunkSearch spl={`index=s4c_www TERM(200)`} />
+
+> **Why this matters:** `TERM()` is how you query values that contain *minor* breakers (IPs like `10.0.0.1`, paths like `/var/log/messages`, GUIDs, version strings) without forcing a lexicon walk.

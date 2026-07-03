@@ -1,4 +1,5 @@
 import Link from '@splunk/react-ui/Link';
+import SplunkSearch from '../../components/SplunkSearch.js'
 
 ## Data lifecycle (traditional index storage)
 
@@ -57,3 +58,13 @@ Splunk Lantern’s <Link to="https://lantern.splunk.com/Splunk_Success_Framework
 - <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Platform_Management/Indexing_and_search_architecture" openInNewContext>Splunk Lantern: Indexing and search architecture</Link>
 - <Link to="https://help.splunk.com/en/splunk-enterprise/administer/manage-indexers-and-indexer-clusters/10.2/back-up-and-archive-your-indexes/set-a-retirement-and-archiving-policy" openInNewContext>Set a retirement and archiving policy</Link>
 - <Link to="https://lantern.splunk.com/Splunk_Success_Framework/Reduce_Costs/Optimizing_storage/Defining_data_retention_policies" openInNewContext>Splunk Lantern: Defining data retention policies</Link>
+
+___
+
+## Lab — See bucket lifecycle states
+
+Look at how many buckets are in each state for a workshop index, and how much storage each state occupies:
+
+<SplunkSearch spl={`| dbinspect index=s4c_www | stats count sum(sizeOnDiskMB) as totalMB by state`} />
+
+> **What to notice:** on a freshly-loaded workshop you may see only `hot` (or `hot` + `warm`) — that is normal for a small data set. On a busy production indexer you'd typically see all four searchable states (hot, warm, cold, thawed) with the bulk of the volume in cold.

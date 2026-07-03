@@ -1,0 +1,61 @@
+import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz'
+
+<BuzzQuiz
+  title="Settings Quiz"
+  subtitle="Tune your workspace before you dig in."
+  timePerQuestion={25}
+  pointsBase={1000}
+>
+
+  <Question
+    prompt="Which search mode returns the smallest result payload for an aggregation like `| stats count by host`?"
+    explanation="Fast mode skips field discovery for non-required fields. Smart mode picks Fast for transforming searches and Verbose for non-transforming. Verbose always pulls back every event including all fields."
+  >
+    <Answer correct>Fast</Answer>
+    <Answer>Smart</Answer>
+    <Answer>Verbose</Answer>
+  </Question>
+
+  <Question
+    prompt="You want Splunk to auto-pretty-print your SPL. Which keyboard shortcut triggers the formatter in the search bar?"
+    explanation="`Ctrl+\\` (Windows/Linux) or `Cmd+\\` (macOS) runs Search Auto-Format. It indents pipes onto new lines and aligns operators — making long searches readable without manual line breaks."
+  >
+    <Answer>{`Ctrl+Enter`}</Answer>
+    <Answer>{`Ctrl+F`}</Answer>
+    <Answer correct>{`Ctrl+\\`}</Answer>
+    <Answer>{`Ctrl+Shift+P`}</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="Line numbers in the search editor must be turned on per user — it is not a global default."
+    correct={true}
+    explanation="Line numbers are a per-user preference under Settings → Search Preferences. The default is off; trainers usually turn them on for projector-friendly reviews."
+  />
+
+  <Question
+    prompt="What does an inline SPL comment look like?"
+    explanation="Splunk uses ``` ``` (triple backtick) to delimit a single-line comment inside SPL. It is the only supported comment syntax — `# ...` or `// ...` are not parsed as comments and will become part of the search."
+  >
+    <Answer>{`// this is a comment`}</Answer>
+    <Answer>{`# this is a comment`}</Answer>
+    <Answer correct>{`\`\`\` this is a comment \`\`\``}</Answer>
+    <Answer>{`-- this is a comment`}</Answer>
+  </Question>
+
+  <Question
+    prompt="What does the Splunk AI Assistant *not* do for you?"
+    explanation="The Assistant explains SPL, drafts searches from natural language, and suggests improvements. It does not execute privileged admin commands like deleting indexes — those still require admin actions in Settings."
+  >
+    <Answer>Explain an existing search</Answer>
+    <Answer>Draft a search from a plain-English question</Answer>
+    <Answer>Suggest performance improvements</Answer>
+    <Answer correct>Delete an index for you</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="Switching the Splunk UI language affects how SPL is parsed."
+    correct={false}
+    explanation="UI language only changes menu labels and timestamp formatting. SPL keywords are always English regardless of locale."
+  />
+
+</BuzzQuiz>

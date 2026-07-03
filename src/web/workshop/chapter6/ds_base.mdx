@@ -1,4 +1,5 @@
 import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
 
 ## Base & Chain Searches in Dashboard Studio
 
@@ -66,4 +67,8 @@ Dashboard Studio validates the chain at edit time and shows warnings if field re
 
 ---
 
-<Link to="/en-GB/app/splunk4champions2/ch6_ds_base_search" openInNewContext>Open Example Dashboard →</Link> &nbsp;|&nbsp; <Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/chainSearch" openInNewContext>Chain Searches Documentation</Link>
+### Example dashboard — live
+
+<SplunkPanel dashboard="ch6_ds_base_search" embed={true} height="520px" />
+
+<Link to="https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/chainSearch" openInNewContext>Chain Searches Documentation</Link>

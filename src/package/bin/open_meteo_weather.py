@@ -9,7 +9,7 @@ Usage (set automatically by inputs.conf stanzas):
                                      for a Splunk events index
 
 Geocoding results are cached in:
-  <app_home>/local/.geocache.json
+  <app_home>/bin/.geocache.json
 
 Schedule recommendation:
   300 s (5 min) to 3600 s (60 min)
@@ -32,15 +32,16 @@ from urllib.request import Request, urlopen
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
 FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 TIMEOUT = 30
-USER_AGENT = "splunk-open-meteo-scripted-input/2.5"
+USER_AGENT = "splunk-open-meteo-scripted-input/2.6"
 HOSTNAME = socket.gethostname()
 
 MODE_METRICS = "metrics"
 MODE_EVENTS = "events"
 
-APP_HOME = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-LOCAL_DIR = os.path.join(APP_HOME, "local")
-GEOCACHE_FILE = os.path.join(LOCAL_DIR, ".geocache.json")
+BIN_DIR = os.path.dirname(os.path.abspath(__file__))
+GEOCACHE_FILE = os.path.join(BIN_DIR, ".geocache.json")
+# v2.5 wrote here; read-only fallback so upgrades keep an existing cache.
+LEGACY_GEOCACHE_FILE = os.path.join(os.path.dirname(BIN_DIR), "local", ".geocache.json")
 
 CITIES = [
     {"name": "New York",      "country_code": "US"},
@@ -128,22 +129,19 @@ def http_get_json(base_url, params):
 
 
 # ---------------------------------------------------------------------------
-# Geocoding cache
+# Geocoding cache (bin/ — writable by splunk after root-owned app installs)
 # ---------------------------------------------------------------------------
-def ensure_local_dir():
-    os.makedirs(LOCAL_DIR, exist_ok=True)
-
-
 def load_geocache():
-    try:
-        with open(GEOCACHE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+    for path in (GEOCACHE_FILE, LEGACY_GEOCACHE_FILE):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError, PermissionError):
+            continue
+    return {}
 
 
 def save_geocache(cache):
-    ensure_local_dir()
     tmp_file = GEOCACHE_FILE + ".tmp"
     with open(tmp_file, "w", encoding="utf-8") as f:
         json.dump(cache, f, indent=2, sort_keys=True)
@@ -301,7 +299,6 @@ def main():
     build_fn = build_metric_event if mode == MODE_METRICS else build_event_event
 
     try:
-        ensure_local_dir()
         resolved = resolve_all_cities()
         payload = fetch_weather_batch(resolved)
         responses = normalize_batch_response(payload)

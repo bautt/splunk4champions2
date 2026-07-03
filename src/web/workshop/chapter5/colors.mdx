@@ -1,5 +1,5 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
 
 ## Splunk default vs assigned colors
 
@@ -18,11 +18,12 @@ Here is an example for Charts:
 
 <img src="/static/app/splunk4champions2/images/colorcharts.png" width="100%" /> \
 
- <Link to="colors_dark" openInNewContext>Dashboard custom colors for charts</Link>
+<SplunkPanel dashboard="colors_dark" embed={true} height="450px" />
 
-Another example on how to use assigned colors to create meaningful pie charts is here: 
- <Link to="meaningful_pie_charts" openInNewContext>Meaningful pie charts in XML</Link>
- and the same dashboard in Dashboard Studio: 
- <Link to="ds_pie_charts" openInNewContext>Meaningful pie charts in DS</Link>
+Another example — assigning colours to make pie charts meaningful rather than decorative:
+
+<SplunkPanel dashboard="meaningful_pie_charts" embed={true} height="450px" />
+
+And the same dashboard rebuilt in Dashboard Studio: <Link to="ds_pie_charts" openInNewContext>Meaningful pie charts in DS</Link>.
 
 <img src="/static/app/splunk4champions2/images/meaningful_pie_charts_ds.png" width="100%" /> \

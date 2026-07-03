@@ -1,20 +1,105 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
 <img src="/static/app/splunk4champions2/images/slow_search_bw.jpg" width="55%" />
 
 ## The rulebook
 
-These are the patterns to recognise. The next step ("The Investigation") walks through them in a real, story-driven lab.
+These are the patterns to recognise. The next step ("The Investigation") walks through them in a real, story-driven lab. Run the **before** and **after** pairs side by side and compare *scan count* and *event count* in the Job Inspector.
 
-| Antipattern | Why it hurts | Fix |
-|---|---|---|
-| All Time | Scans every bucket regardless of age | Always set a time range |
-| `index=*` | Searches all indexes including `_internal` | Always name your index |
-| Leading / middle wildcards | Bypasses the Bloom filter; full lexicon scan | Trailing only (`term*`); use `TERM()` for IPs and other minor-breaker values |
-| Transforming before streaming | All events hit the search head before filtering | `eval`, `where`, `fields` before `stats`, `chart`, `timechart` |
-| `NOT` / `!=` | Bloom filters find presence; absence is slow | Use positive filters: `(a OR b OR c)` |
-| `transaction` (no parameters) | Runs entirely on the search head, not distributed | `stats ... by session_id` unless you genuinely need `maxspan` or `startswith` |
-| `join` | Sequential; inner search capped at 50k rows | `stats` + `appendcols` or `append`, or a lookup |
-| `\| search` after the first pipe | Filter runs on the search head, after all events arrive | Move filter terms before the first `\|` |
-| Real-time searches | Continuous load on search heads and indexers | Short-interval scheduled search + panel auto-refresh |
-| Verbose mode | Full events sent to the search head even for stats | Smart or Fast mode for aggregations |
-| `savedsearch` | Always re-runs the search from scratch | `loadjob` to reuse a finished job's results |
-| Zero-result subsearches | Can produce false positives or trigger expensive side effects | Guard the outer search with `require` |
+---
+
+### 1. Always specify an index
+
+> **Why it matters:** `index=*` searches every accessible index — including `_internal`, `_audit`, and any test data you forgot was there.
+
+**Before — searches every index:**
+<SplunkSearch spl={`index=* | head 10`} />
+
+**After — scoped to one index:**
+<SplunkSearch spl={`index=s4c_www | head 10`} />
+
+---
+
+### 2. Use a specific time range
+
+> **Why it matters:** *All Time* scans every bucket regardless of age. Most labs only need a few minutes of recent data.
+
+**Before — All Time:**
+<SplunkSearch spl={`index=s4c_www | stats count by status`} />
+
+**After — last 7 days:**
+<SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_www | stats count by status`} />
+
+---
+
+### 3. Wildcards — leading and middle are slow
+
+> **Why it matters:** Leading or middle wildcards bypass the bloom filter and force a full lexicon scan. Use `TERM()` for IP addresses and any value containing minor breakers.
+
+**Before — middle wildcard, full lexicon scan:**
+<SplunkSearch spl={`index=s4c_www *error*`} />
+
+**After — TERM() uses the segmenter directly:**
+<SplunkSearch spl={`index=s4c_www TERM(error)`} />
+
+---
+
+### 4. Filter before you transform
+
+> **Why it matters:** Streaming commands (`eval`, `where`, `fields`) run on the indexers and reduce data *before* it reaches the search head. Transforming commands (`stats`, `chart`, `timechart`) need the full result set in one place.
+
+**Before — transform first, filter later:**
+<SplunkSearch spl={`index=s4c_www | stats count by status | where status>=400`} />
+
+**After — filter at the source, then transform:**
+<SplunkSearch spl={`index=s4c_www status>=400 | stats count by status`} />
+
+---
+
+### 5. `transaction` vs `stats`
+
+> **Why it matters:** `transaction` without parameters runs entirely on the search head and is not distributed. Use `stats ... by <key>` unless you genuinely need `maxspan`, `startswith`, or event ordering.
+
+**Before — search head only:**
+<SplunkSearch spl={`index=s4c_www | transaction clientip`} />
+
+**After — distributed, faster:**
+<SplunkSearch spl={`index=s4c_www | stats values(uri) as uris, count by clientip`} />
+
+---
+
+### 6. `join` vs `stats` + `appendcols`
+
+> **Why it matters:** `join` is sequential and the inner subsearch is capped at 50,000 rows by default. A `stats`-based pattern is parallel and avoids the cap entirely.
+
+**Before — `join` with a subsearch:**
+<SplunkSearch spl={`index=s4c_www | join clientip [search index=s4c_www status>=400 | table clientip status]`} />
+
+**After — single pass with `stats`:**
+<SplunkSearch spl={`index=s4c_www | stats count(eval(status>=400)) as errors, count as total by clientip`} />
+
+---
+
+### 7. Move `| search` before the first pipe
+
+> **Why it matters:** `| search` after the first pipe runs on the search head, after every event has already arrived from the indexers. Same filter, much later.
+
+**Before — filter at the search head:**
+<SplunkSearch spl={`index=s4c_www | search status>=400`} />
+
+**After — filter at the indexer:**
+<SplunkSearch spl={`index=s4c_www status>=400`} />
+
+---
+
+## Patterns to avoid (no easy before/after)
+
+> **`NOT` / `!=`** — Bloom filters and the segmenter find presence, not absence. Rewrite as a positive filter where possible: `(status=404 OR status=500)` instead of `status!=200`.
+
+> **Real-time searches** — Continuous load on every search peer. Replace with a short-interval scheduled search and a panel that auto-refreshes.
+
+> **Verbose search mode** — Sends full raw events to the search head even when you only need stats. Use *Smart* or *Fast* mode for any search that ends in an aggregation.
+
+> **`savedsearch` re-runs from scratch** — Use `loadjob` to reuse a finished job's results instead of paying the search cost again.
+
+> **Zero-result subsearches** — A subsearch returning no rows can yield false positives downstream. Guard the outer search with `require` (Splunk 9.0+) so it fails fast when the subsearch is empty.
