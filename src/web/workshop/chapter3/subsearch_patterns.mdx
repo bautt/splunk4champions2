@@ -1,0 +1,73 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## Subsearches, join, and the alternatives
+
+Advanced users tend to reach for `join` or a subsearch first. Most of the time, a single-pass `stats`, `eventstats`, `streamstats`, or `appendcols` is faster and cleaner. This page is the short tour of when each is appropriate.
+
+---
+
+### When a subsearch makes sense
+
+Subsearches are best when you need a **small** set of values to filter your outer search — they return up to 10,000 rows by default and run sequentially.
+
+<SplunkSearch spl={`index=s4c_www [search index=s4c_www status>=500 | stats values(clientip) as clientip | table clientip]`} />
+
+> **Why this matters:** the subsearch's result becomes part of the outer search's index-time filter, so the heavy outer scan only ever sees IPs that have produced a 5xx. Fewer events read = faster search.
+
+---
+
+### `appendcols` — side-by-side aggregations
+
+When you want two unrelated metrics side by side (e.g. *errors* and *total requests* for the same hosts), `appendcols` adds columns from a second search to the rows of the first. Faster than `join` and rarely as misunderstood.
+
+<SplunkSearch spl={`index=s4c_www | stats count as total by host
+| appendcols [search index=s4c_www status>=400 | stats count as errors by host]`} />
+
+> **Why this matters:** no key matching, no row capping. Just two parallel aggregations stitched together by row position.
+
+---
+
+### `eventstats` — enrich every event with a group-level value
+
+`eventstats` computes a statistic across the result set and writes it back onto every row, without reducing the row count. Perfect for "above average" or "share of total" calculations.
+
+<SplunkSearch spl={`index=s4c_www
+| eventstats avg(bytes) as avg_bytes by status
+| eval above_avg=if(bytes>avg_bytes, "yes", "no")
+| table _time host status bytes avg_bytes above_avg`} />
+
+> **Why this matters:** the rows are preserved, but each one now knows its group's average. Compare with `stats avg(bytes) by status` which collapses to one row per status.
+
+---
+
+### `streamstats` — running totals without a search-head roundtrip
+
+`streamstats` computes its statistics *as it walks the events in order*. Running totals, moving counts, "n events ago" lookups — all without leaving the streaming pipeline.
+
+<SplunkSearch spl={`index=s4c_www
+| sort _time
+| streamstats sum(bytes) as running_total by host`} />
+
+> **Why this matters:** `stats sum(bytes) by host` returns one row per host. `streamstats` returns every row plus the running sum at that point in time — useful for cumulative views and step-by-step analysis.
+
+---
+
+### Rule of thumb
+
+| Goal | Reach for |
+|------|-----------|
+| Filter the outer search by a small dynamic list | subsearch |
+| Two side-by-side aggregations on the same row set | `appendcols` |
+| Annotate every event with its group's stats (no row reduction) | `eventstats` |
+| Running totals, moving counts, "n events back" | `streamstats` |
+| One row per group, plain aggregation | `stats` |
+| Joining two indexes by a key, keeping all columns | `lookup` (if static) or `stats` + named aggregations |
+
+---
+
+### Read more
+
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Search/Aboutsubsearches" openInNewContext>About subsearches (Splunk Docs)</Link>
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Streamstats" openInNewContext>`streamstats` reference</Link>
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Eventstats" openInNewContext>`eventstats` reference</Link>

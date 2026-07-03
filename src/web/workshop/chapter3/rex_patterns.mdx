@@ -1,0 +1,77 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import Link from '@splunk/react-ui/Link'
+
+## Field extraction with `rex`
+
+`rex` is the search-time scalpel for pulling new fields out of `_raw` or any existing string field. Use it for ad-hoc extractions; for fields you'll reuse, promote the regex to `EXTRACT-` in `props.conf` so every search benefits without rewriting SPL.
+
+---
+
+### Named capture groups
+
+The cleanest `rex` produces one or more named fields with `(?<name>pattern)`. The resulting fields are available immediately for `stats`, `where`, `table`, etc.
+
+<SplunkSearch spl={`index=s4c_www
+| rex "(?<client_ip>\\d+\\.\\d+\\.\\d+\\.\\d+)"
+| stats count by client_ip
+| sort -count | head 10`} />
+
+> **Why this matters:** `client_ip` lives only inside this search. If many searches need it, move the pattern into `props.conf` as an `EXTRACT-` so Splunk does the work once.
+
+---
+
+### Multiple captures in one regex
+
+A single `rex` can produce many fields in one pass. Order doesn't matter, but readability does — anchor and label deliberately.
+
+<SplunkSearch spl={`index=s4c_www
+| rex "(?<method>GET|POST|PUT|DELETE) (?<path>\\S+) HTTP/(?<http_ver>\\d\\.\\d)"
+| stats count by method http_ver | sort -count`} />
+
+> **Why this matters:** one regex evaluation, three fields. Cheaper than chaining three `| rex` commands.
+
+---
+
+### `mode=sed` — in-place rewrite
+
+`rex mode=sed` modifies a field's value rather than extracting a new one. Useful for masking PII, normalising case, or fixing inconsistent values before aggregation.
+
+<SplunkSearch spl={`index=s4c_www
+| rex field=clientip mode=sed "s/\\.\\d+$/.0/"
+| stats count by clientip`} />
+
+> **Why this matters:** rewrites the last octet of each IP to `0` so you can aggregate by `/24` subnet without first extracting the prefix into a new field.
+
+---
+
+### `max_match=0` — many matches from one event
+
+By default `rex` stops at the first match. `max_match=0` captures every occurrence into a multivalue field — handy when one event contains a list embedded in text.
+
+<SplunkSearch spl={`| makeresults
+| eval log="user=alice user=bob user=carol logged in"
+| rex field=log max_match=0 "user=(?<user>\\S+)"
+| table user`} />
+
+> **Why this matters:** `user` becomes a multivalue field containing `alice`, `bob`, `carol`. Pair with `mvexpand user` if you need a row per match downstream.
+
+---
+
+### `| rex` vs `EXTRACT-` in props.conf
+
+| Use `| rex` when… | Use `EXTRACT-` when… |
+|------------------|----------------------|
+| Iterating on a pattern interactively | Field is used by many searches or dashboards |
+| The extraction is one-off or ad-hoc | The extraction is stable and you want it free |
+| You don't have admin rights on the indexers | You can edit `props.conf` (and roll it to the cluster) |
+| You need the regex to vary per search | The same regex works everywhere the sourcetype appears |
+
+Search-time extractions cost CPU on every search. A single `EXTRACT-` does the same work once at search-time and applies everywhere automatically — no SPL needed.
+
+---
+
+### Read more
+
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/SearchReference/Rex" openInNewContext>`rex` command reference (Splunk Docs)</Link>
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/AboutSplunkregularexpressions" openInNewContext>About Splunk regular expressions</Link>
+- <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Knowledge/Addfieldsatsearchtime" openInNewContext>Configure field extractions in `props.conf`</Link>

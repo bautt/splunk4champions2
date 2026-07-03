@@ -1,3 +1,5 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+
 ## How is data stored? 
 ### Data Flow and Indexing
 * HEC or forwarders send data to indexers in the cluster, where the data is immediately parsed and indexed.
@@ -27,4 +29,18 @@ The index folder contains:
 ___
 
 ## What is a Bucket?
-A bucket in Splunk is a directory within an index folder that stores both the raw event data and the associated index files needed for searching. Buckets organize data based on its age and lifecycle stage
+A bucket in Splunk is a directory within an index folder that stores both the raw event data and the associated index files needed for searching. Buckets organize data based on its age and lifecycle stage.
+
+___
+
+## Lab — Explore your indexes
+
+Discover which indexes you can search and how many events live in each. `tstats` reads metadata directly and works for any user with search access:
+
+<SplunkSearch spl={`| tstats count WHERE index=* OR index=_* BY index | sort - count`} />
+
+Now look at the bucket structure of one index — `dbinspect` exposes the per-bucket metadata you've just read about:
+
+<SplunkSearch spl={`| dbinspect index=s4c_www | table index bucketId state sizeOnDiskMB rawSize startEpoch endEpoch`} />
+
+> **What to notice:** every row is one bucket directory on disk. `state` shows whether it is hot, warm, cold, or thawed. `startEpoch` / `endEpoch` define the time range encoded in the bucket folder name.

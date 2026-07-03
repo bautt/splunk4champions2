@@ -16,7 +16,7 @@ Line numbers are especially useful when:
 
 This workshop preview omits line numbers for a cleaner layout; in Splunk, enable them with the steps above. Try the same search there — line numbers make each pipe easy to reference:
 
-<LabBlock title="Try it out">
+<LabBlock title="Try it">
 
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_meteo
 | rex field=city "(?<city_short>^\\w+)"

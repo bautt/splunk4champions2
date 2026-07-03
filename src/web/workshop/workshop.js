@@ -91,6 +91,15 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "Quiz",
+                    "steps": [
+                        {
+                            "title": "Settings Quiz",
+                            "content": "chapter1/quiz.mdx"
+                        }
+                    ]
+                },
+                {
                     "title": "Useful Links",
                     "steps": [
                         {
@@ -167,6 +176,15 @@ const labs = {
                         {
                             "title": "Splunk Smartstore",
                             "content": "chapter2/smartstore.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Quiz",
+                    "steps": [
+                        {
+                            "title": "Data Quiz",
+                            "content": "chapter2/quiz.mdx"
                         }
                     ]
                 },
@@ -255,6 +273,23 @@ const labs = {
                         {
                             "title": "What makes searches slow",
                             "content": "chapter3/more_tips.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Advanced SPL",
+                    "steps": [
+                        {
+                            "title": "Eval patterns",
+                            "content": "chapter3/eval_patterns.mdx"
+                        },
+                        {
+                            "title": "Subsearches and alternatives",
+                            "content": "chapter3/subsearch_patterns.mdx"
+                        },
+                        {
+                            "title": "rex field extraction",
+                            "content": "chapter3/rex_patterns.mdx"
                         }
                     ]
                 },
@@ -379,6 +414,15 @@ const labs = {
                         {
                             "title": "Phyphox Experiments",
                             "content": "chapter4/phyphox.mdx"
+                        }
+                    ]
+                },
+                {
+                    "title": "Quiz",
+                    "steps": [
+                        {
+                            "title": "Metrics Quiz",
+                            "content": "chapter4/quiz.mdx"
                         }
                     ]
                 },

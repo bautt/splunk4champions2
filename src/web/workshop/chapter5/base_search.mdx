@@ -1,5 +1,5 @@
-import SplunkSearch from '../../components/SplunkSearch.js'
 import Link from '@splunk/react-ui/Link'
+import SplunkPanel from '../../components/SplunkPanel.js'
 
 ### Best search is an avoided search :)
 
@@ -17,7 +17,9 @@ Multiple base searches can be used in one dashboard and referenced by name.
 <img src="/static/app/splunk4champions2/images/basesearch_lucid.png" width="80%" />
 
 
-See a base search example - open the  <Link to="basesearch" openInNewContext>Basesearch dashboard example</Link>.
+See a base search example live below — eight panels, one shared base search:
+
+<SplunkPanel dashboard="basesearch" embed={true} height="500px" />
 
 Base search is defined at the beginning of the dashboard: 
 

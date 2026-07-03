@@ -11,8 +11,6 @@ Size of the files depends on data. In this case the tsidx files are 225MB for 78
 I used zstd and uncompressed journal.zst and the uncompressed data was 1,4GB in size. 
 Merged lexicon file in the directory is a part of search index too, it is used to support typeahead. It is also required by walklex command. 
 
-in
-
 Note: The bucket search command is not related to the index buckets described here. Its purpose is to put continuous numerical values into discrete sets or bins. The bucket command is actually an alias for the bin command. See the bin command in the Search Reference.
 
 ___
@@ -51,3 +49,13 @@ A compressed file in an index bucket that contains event data, as well as journa
 The rawdata file and the index files together constitute the files in a bucket. 
 
 <img width="80%" src="/static/app/splunk4champions2/images/journal_new.png"/>
+
+___
+
+## Lab — Inspect bucket contents
+
+See bucket sizes and roughly how the on-disk size compares to the original raw data:
+
+<SplunkSearch spl={`| dbinspect index=s4c_www | eval ratio=round(rawSize/sizeOnDiskMB/1024,2) | stats avg(ratio) as compress_ratio by index`} />
+
+> **What to notice:** `rawSize` is the uncompressed event volume, `sizeOnDiskMB` is what the bucket actually occupies. The ratio gives you a sense of Splunk's compression and tsidx overhead on this index.

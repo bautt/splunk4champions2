@@ -1,0 +1,72 @@
+import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz'
+
+<BuzzQuiz
+  title="Data Quiz"
+  subtitle="Indexes, buckets, lifecycle, segmentation."
+  timePerQuestion={25}
+  pointsBase={1000}
+>
+
+  <Question
+    prompt="Newly arrived events are written to which bucket state first?"
+    explanation="Hot buckets are the only state Splunk writes to. Once a hot bucket reaches its size or time limit it rolls to warm and stops accepting new events."
+  >
+    <Answer>Cold</Answer>
+    <Answer correct>Hot</Answer>
+    <Answer>Thawed</Answer>
+    <Answer>Frozen</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="Frozen buckets are searchable by default."
+    correct={false}
+    explanation="Frozen data is either deleted or archived per the index's retention policy. To search it again you must restore it from the archive — at which point it appears as thawed."
+  />
+
+  <Question
+    prompt="What is the Bloom filter's job in a bucket?"
+    explanation="A Bloom filter is a compact, lossy 'does this bucket *probably* contain this term?' index. Splunk skips entire buckets when the Bloom filter says no — saving the cost of opening the tsidx and journal."
+  >
+    <Answer>Stores compressed raw events</Answer>
+    <Answer correct>Quickly says whether a term is *probably* in the bucket so Splunk can skip whole buckets</Answer>
+    <Answer>Maps event timestamps to disk offsets</Answer>
+    <Answer>Holds field extractions for search-time use</Answer>
+  </Question>
+
+  <Question
+    prompt="The tsidx file primarily stores…"
+    explanation="`tsidx` (time-series index) maps tokens to their locations in the journal. It is what makes term search fast — Splunk goes from a token to the byte offset of the matching events without reading the raw data."
+  >
+    <Answer>Compressed raw events</Answer>
+    <Answer correct>A token-to-location map for the bucket's events</Answer>
+    <Answer>Saved searches and dashboards</Answer>
+    <Answer>User permissions and roles</Answer>
+  </Question>
+
+  <Question
+    prompt="In SmartStore, what lives in the local cache vs. remote object storage?"
+    explanation="SmartStore keeps warm-bucket *master copies* in remote object storage (S3 or compatible). The local SSD-style cache holds the buckets you're actively searching. Cold tier disappears in SmartStore — there is only cached vs. uncached."
+  >
+    <Answer>Hot buckets in remote, warm in local</Answer>
+    <Answer correct>Master copies of warm buckets in remote storage; recently-used buckets in local cache</Answer>
+    <Answer>Only frozen archive lives in remote storage</Answer>
+    <Answer>Local cache holds the search head's saved searches</Answer>
+  </Question>
+
+  <Question
+    prompt="Which characters are *minor* breakers in default segmentation?"
+    explanation="Minor breakers like `/ : = @ . - $ % \\ _` split tokens further within a major-breaker-bounded segment. That is why IPs (`10.0.0.1`) and paths (`/var/log`) need `TERM()` for an exact match — without it, Splunk searches the sub-tokens."
+  >
+    <Answer>{`Space, tab, newline`}</Answer>
+    <Answer correct>{`/  :  =  @  .  -  _`}</Answer>
+    <Answer>{`(  )  [  ]  {  }`}</Answer>
+    <Answer>{`|  &  ;  ,`}</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="A search over the last 24 hours scans every bucket on disk regardless of age."
+    correct={false}
+    explanation="Buckets carry their time range in the folder name. Splunk uses that metadata to skip every bucket whose time range falls outside earliest/latest — that is why narrow time ranges are so dramatically faster."
+  />
+
+</BuzzQuiz>
