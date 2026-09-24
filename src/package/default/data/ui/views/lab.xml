@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
-<view template="splunk4champions2:/templates/lab.html" type="html">
+<view template="pages/splunk_ui_app.html" type="html">
 	<label>Workshop</label>
 </view>
