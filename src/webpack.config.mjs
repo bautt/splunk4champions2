@@ -20,7 +20,10 @@ const entries = {
 const config = merge(baseConfig.default, {
     entry: entries,
     output: {
-      filename: '[name].bundle.js',
+      // Splunk's first-party pages/splunk_ui_app.html template loads the entry
+      // script from /static/app/<app>/pages/<view>.js, so entry names must match
+      // the view names in default/data/ui/views.
+      filename: 'pages/[name].js',
       path: path.join(stage_folder, 'appserver', 'static'),
       clean: true,
     },
