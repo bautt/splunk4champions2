@@ -41,6 +41,7 @@
     "qs": "^6.16.0",
     "websocket-driver": "^0.7.5",
     "browserslist": "^4.28.7",
-    "baseline-browser-mapping": "^2.11.0"
+    "baseline-browser-mapping": "^2.11.0",
+    "moment": "^2.31.0"
   }
 }
