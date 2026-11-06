@@ -1,0 +1,221 @@
+<dashboard version="2" theme="dark">
+  <label>Token kitchen</label>
+  <description>Five Dashboard Studio token types on one cooking example, plus hide when no data. No index. Every search is makeresults.</description>
+  <definition><![CDATA[
+{
+  "title": "Token kitchen",
+  "description": "Five token types. Runs without an index.",
+  "inputs": {
+    "in_style": {
+      "type": "input.dropdown",
+      "title": "Style",
+      "options": {
+        "token": "style",
+        "defaultValue": "vegetarian",
+        "items": [
+          { "label": "vegetarian", "value": "vegetarian" },
+          { "label": "Meat", "value": "Meat" }
+        ]
+      }
+    },
+    "in_ingredient": {
+      "type": "input.dropdown",
+      "title": "Main ingredient",
+      "options": {
+        "token": "ingredient",
+        "selectFirstSearchResult": true,
+        "items": ">frame(label, value) | objects()"
+      },
+      "dataSources": { "primary": "ds_ingredients" },
+      "context": {
+        "label": ">primary | seriesByName(\"label\") | renameSeries(\"label\")",
+        "value": ">primary | seriesByName(\"value\") | renameSeries(\"value\")"
+      }
+    },
+    "in_guests": {
+      "type": "input.number",
+      "title": "Guests",
+      "options": {
+        "token": "guests",
+        "defaultValue": 4,
+        "min": 1,
+        "max": 20
+      }
+    }
+  },
+  "dataSources": {
+    "ds_book": {
+      "type": "ds.search",
+      "name": "Recipe book",
+      "options": {
+        "query": "| makeresults | eval r=split(\"Tomato,vegetarian,Soup,Tomato soup,25,4;Tomato,vegetarian,Salad,Tomato salad,10,2;Lentil,vegetarian,Soup,Lentil soup,45,6;Lentil,vegetarian,Stew,Lentil stew,50,6;Oat,vegetarian,Porridge,Oat porridge,15,2;Oat,vegetarian,Porridge,Overnight oats,5,1;Apple,vegetarian,Cake,Apple cake,75,8;Apple,vegetarian,Cake,Apple strudel,90,6;Apple,vegetarian,Porridge,Applesauce,20,4;Chicken,Meat,Soup,Chicken soup,60,4;Chicken,Meat,Porridge,Chicken congee,50,4;Lamb,Meat,Stew,Lamb stew,90,6;Lamb,Meat,Soup,Lamb mint soup,70,4\",\";\") | mvexpand r | eval f=split(r,\",\") | eval ingredient=mvindex(f,0), style=mvindex(f,1), dish=mvindex(f,2), recipe=mvindex(f,3), minutes=tonumber(mvindex(f,4)), servings=tonumber(mvindex(f,5)) | table ingredient style dish recipe minutes servings"
+      }
+    },
+    "ds_pantry": {
+      "type": "ds.chain",
+      "name": "pantry",
+      "options": {
+        "extend": "ds_book",
+        "enableSmartSources": true,
+        "query": "| stats dc(ingredient) as ingredients, dc(eval(if(style=\"vegetarian\",ingredient,null()))) as vegetarian, values(ingredient) as list | eval list=mvjoin(list, \", \")"
+      }
+    },
+    "ds_ingredients": {
+      "type": "ds.chain",
+      "name": "Ingredients for the style",
+      "options": {
+        "extend": "ds_book",
+        "query": "| where style=\"$style$\" | dedup ingredient | eval label=ingredient, value=ingredient | table label value"
+      }
+    },
+    "ds_hits": {
+      "type": "ds.chain",
+      "name": "Recipes for the ingredient",
+      "options": {
+        "extend": "ds_book",
+        "query": "| where ingredient=\"$ingredient$\" | rename dish AS Dish, recipe AS Recipe, minutes AS Minutes, servings AS Servings | table Dish Recipe Minutes Servings"
+      }
+    },
+    "ds_scale": {
+      "type": "ds.search",
+      "name": "scale",
+      "options": {
+        "enableSmartSources": true,
+        "query": "| makeresults | eval guests=tonumber(\"$guests$\"), servings=tonumber(\"$servings$\"), minutes=tonumber(\"$minutes$\") | eval factor=round(guests/servings, 1), total=round(minutes+(factor-1)*8, 0) | table factor total"
+      }
+    },
+    "ds_cake": {
+      "type": "ds.search",
+      "name": "Cake ingredients",
+      "options": {
+        "query": "| makeresults | eval g=\"$dish$\", guests=tonumber(\"$guests$\") | where g=\"Cake\" | eval r=split(\"Flour,60;Sugar,30;Butter,40;Apple,70\",\";\") | mvexpand r | eval f=split(r,\",\") | eval Ingredient=mvindex(f,0), Grams=round(tonumber(mvindex(f,1))*guests,0) | table Ingredient Grams"
+      }
+    }
+  },
+  "visualizations": {
+    "md_head": {
+      "type": "splunk.markdown",
+      "options": {
+        "markdown": "**Dashboard** style **$style$** · ingredient **$ingredient$** · guests **$guests$** · dish **$dish$** · recipe **$recipe$**\n\n**Search** pantry:result.ingredients **$pantry:result.ingredients$** · scale:result.factor **$scale:result.factor$**\n\n**Environment** env:user **$env:user$** · env:locale **$env:locale$**\n\n**Eval** $eval:plan$",
+        "backgroundColor": "#1b1d26",
+        "fontSize": "large",
+        "fontColor": "#e8ecf5"
+      }
+    },
+    "md_pantry": {
+      "type": "splunk.markdown",
+      "title": "1 · The search looks in the pantry",
+      "description": "Search tokens. These numbers are not typed into the dashboard. They come from the search named pantry.",
+      "options": {
+        "markdown": "# $pantry:result.ingredients$ ingredients · $pantry:result.vegetarian$ vegetarian\n\n$pantry:result.list$",
+        "backgroundColor": "#15161d",
+        "fontSize": "large",
+        "fontColor": "#e8ecf5"
+      }
+    },
+    "tbl_hits": {
+      "type": "splunk.table",
+      "title": "2 · Recipes with $ingredient$",
+      "description": "Click a row. The click sets dish, recipe, minutes, and servings.",
+      "dataSources": { "primary": "ds_hits" },
+      "options": { "rowNumbers": false, "backgroundColor": "transparent" },
+      "eventHandlers": [
+        {
+          "type": "drilldown.setToken",
+          "options": {
+            "tokens": [
+              { "token": "dish", "key": "row.Dish.value" },
+              { "token": "recipe", "key": "row.Recipe.value" },
+              { "token": "minutes", "key": "row.Minutes.value" },
+              { "token": "servings", "key": "row.Servings.value" }
+            ]
+          }
+        }
+      ]
+    },
+    "md_card": {
+      "type": "splunk.markdown",
+      "title": "3 · $eval:plan$",
+      "description": "Shown by a condition: recipe is not empty. The scale search does the arithmetic in SPL. The shopping line is an eval expression in the browser.",
+      "options": {
+        "markdown": "# $recipe$\n\n$minutes$ minutes · $servings$ servings · $dish$\n\n**For $guests$ guests:** factor **$scale:result.factor$** → about **$scale:result.total$ minutes**\n\n$eval:shop$",
+        "backgroundColor": "#15161d",
+        "fontSize": "large",
+        "fontColor": "#e8ecf5"
+      },
+      "containerOptions": { "visibility": { "showConditions": ["cond_chosen"] } }
+    },
+    "pie_cake": {
+      "type": "splunk.pie",
+      "title": "Ingredients for $recipe$ · $guests$ guests",
+      "description": "This panel has no condition. Its search returns rows only for a cake. Hide when no data does the rest.",
+      "dataSources": { "primary": "ds_cake" },
+      "options": {
+        "showDonutHole": true,
+        "labelDisplay": "valuesAndPercentage",
+        "backgroundColor": "transparent"
+      },
+      "containerOptions": { "visibility": { "hideWhenNoData": true } }
+    },
+    "md_map": {
+      "type": "splunk.markdown",
+      "title": "4 · The same tokens in Token Manager",
+      "description": "Edit mode, then the token icon in the top bar. For each token you see the value, the default, who sets it, and who reads it.",
+      "options": {
+        "markdown": "| Token | Kind | Set by |\n| --- | --- | --- |\n| style, ingredient, guests | Dashboard | the three inputs |\n| dish, recipe, minutes, servings | Dashboard | a click on a table row |\n| pantry:result.* | Search | the search named pantry |\n| scale:result.* | Search | the search named scale |\n| env:user, env:locale | Environment | Splunk |\n| Recipe chosen | Condition | JSONata |\n| plan, shop | Eval | JSONata |",
+        "backgroundColor": "#15161d",
+        "fontSize": "medium",
+        "fontColor": "#e8ecf5"
+      }
+    }
+  },
+  "expressions": {
+    "conditions": {
+      "cond_chosen": {
+        "name": "Recipe chosen",
+        "value": "$recipe$ != \"\""
+      }
+    },
+    "eval": {
+      "ev_plan": {
+        "name": "plan",
+        "value": "'Today: ' & $recipe$ & ' for ' & $guests$ & ' guests'"
+      },
+      "ev_shop": {
+        "name": "shop",
+        "value": "'Buy: ' & $string($number($guests$) * 150) & ' g of the main ingredient'"
+      }
+    }
+  },
+  "defaults": {
+    "tokens": {
+      "default": {
+        "recipe": { "value": "" },
+        "dish": { "value": "" }
+      }
+    },
+    "visualizations": {
+      "global": { "showProgressBar": false }
+    }
+  },
+  "layout": {
+    "type": "grid",
+    "tabs": { "items": [{ "layoutId": "layout_1", "label": "Kitchen" }] },
+    "layoutDefinitions": {
+      "layout_1": {
+        "type": "grid",
+        "structure": [
+          { "item": "md_head", "type": "block", "position": { "x": 0, "y": 0, "w": 1200, "h": 220 } },
+          { "item": "md_pantry", "type": "block", "position": { "x": 0, "y": 220, "w": 1200, "h": 200 } },
+          { "item": "tbl_hits", "type": "block", "position": { "x": 0, "y": 420, "w": 600, "h": 380 } },
+          { "item": "md_card", "type": "block", "position": { "x": 600, "y": 420, "w": 600, "h": 380 } },
+          { "item": "pie_cake", "type": "block", "position": { "x": 0, "y": 800, "w": 1200, "h": 360 } },
+          { "item": "md_map", "type": "block", "position": { "x": 0, "y": 1160, "w": 1200, "h": 320 } }
+        ]
+      }
+    },
+    "globalInputs": ["in_style", "in_ingredient", "in_guests"]
+  }
+}
+]]></definition>
+</dashboard>

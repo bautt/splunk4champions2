@@ -1,0 +1,48 @@
+import Link from '@splunk/react-ui/Link'
+import LabBlock from '../../components/LabBlock.js'
+import TokenKitchen from '../../components/TokenKitchen.js'
+
+<div className="s4c-lab-summary">
+
+**Goal:** see all five token types on one dashboard. Every search is `makeresults`. No index, and no lookup file.
+
+</div>
+
+<Link to="ch6_ds_token_kitchen" openInNewContext>Open Token Kitchen in Dashboard Studio</Link>
+
+The interactive example below is a simplified preview. Open the real dashboard in a new tab to run the searches and inspect its tokens, interactions, and source in **Edit** mode (if you have edit permission).
+
+A token is a placeholder for a value that can change. You write it between dollar signs, `$ingredient$`. Splunk fills in the current value in searches, titles, text, and conditions.
+
+The prefix before the colon is the namespace. With no prefix, the namespace is `default`, so you write `$style$` rather than `$default:style$`.
+
+| Kind | How you write it | Where the value comes from | In the kitchen |
+|---|---|---|---|
+| Dashboard | `$style$` | An input, a click, a default, or the URL | style, ingredient, guests, recipe |
+| Search | `$pantry:result.ingredients$` | The first row of a named search | pantry, scale |
+| Environment | `$env:user$` | Splunk. Read only | who is cooking, which locale |
+| Condition | `$condition:name$` | An expression that is true or false | show the recipe card |
+| Eval | `$eval:plan$` | An expression that builds text or a number | "Today: …", the shopping line |
+
+<LabBlock title="Walk the kitchen">
+
+Try the preview on this page, then follow these steps in the real Dashboard Studio dashboard linked above.
+
+1. Do nothing. Panel 1 counts what is in the book. Those numbers are not in a table you typed. That is a **search token**. The source is named `pantry`, and `enableSmartSources` is on. Only the first result row becomes tokens, so the search ends in `stats`.
+2. Set **Style** to Meat, then back to vegetarian. The ingredient list is itself a search filtered by `$style$`. Chicken and lamb are not greyed out. They are not in the list. Do not set `defaultValue` and `selectFirstSearchResult` on the same input, and do not let two inputs write the same token.
+3. Click a table row. One click sets dish, recipe, minutes, and servings. The card on the right appears because a **condition** checks that recipe is not empty. In the editor that is Interactions, On click, Set token. `row.Dish.value` reads the clicked row. A fixed `value` would write a constant instead.
+4. Set **Guests** to 10. Two calculations run. A search named `scale` does the factor in SPL. An **eval** expression builds the shopping line in the browser.
+5. Choose Apple, then click Apple cake. A pie appears that was not there. It has no condition. The search returns rows only when the dish is Cake, and **hide when no data** hides the panel otherwise.
+6. Open Edit, then the token icon. Filter Dashboard, Search, Environment, and Expression. For `recipe` you should see the table as the thing that sets it.
+
+</LabBlock>
+
+<TokenKitchen />
+
+Environment tokens you can read include `user`, `user_realname`, `user_email`, `user_timezone`, `app`, `locale`, `page`, `product`, and `version`. The switches `is_cloud`, `is_enterprise`, and `is_free` are present only when they are true. There is no `false`. Test them with `= "true"`.
+
+Conditions are JSONata, not SPL. Use `=` for equality, plus `!=`, `and`, `or`, and `not`. The kitchen condition is `$recipe$ != ""`, and the panel lists it under `showConditions`.
+
+A button input can set or clear a token. In the editor that is Add input, Button, then Set token or Unset token. The kitchen uses a row click for the same job.
+
+<Link to="https://help.splunk.com/en/splunk-cloud-platform/create-dashboards-and-reports/dashboard-studio/10.5.2605/make-dashboards-dynamic-and-interactive/tokens" openInNewContext>Tokens in Dashboard Studio</Link>

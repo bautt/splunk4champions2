@@ -11,12 +11,10 @@ export default function JobInspector() {
     }
 
     const onJobInspectorClick = (e) => {
-        console.log(value)
         window.open(`/manager/search/job_inspector?sid=${value}`)   
     }
 
     const onJobDetailsClick = (e) => {
-        console.log(value)
         window.open(`/app/search/job_details_dashboard?form.sid=${value}`)   
     }
 

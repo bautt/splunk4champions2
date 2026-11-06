@@ -1,0 +1,48 @@
+<div className="s4c-lab-summary">
+
+**Goal:** draw three bars from a search that returns `label` and `value`. Web is 120, Database is 80, Mail is 40. The lengths are 3 : 2 : 1.
+
+</div>
+
+<img src="/static/app/splunk4champions2/images/custom_viz_bars.svg" width="640" alt="Three horizontal bars: Web 120, Database 80, Mail 40, in the ratio 3 to 2 to 1." />
+
+The built-in bar chart below is the picture. Your own visualization is the exercise. Splunk runs the search. Your code only draws the table it returns.
+
+<WorkshopViz
+    title="Web 120, Database 80, Mail 40"
+    viz="bar"
+    spl={`| makeresults count=3
+| streamstats count AS row
+| eval label=case(row=1,"Web",row=2,"Database",true(),"Mail")
+| eval value=case(row=1,120,row=2,80,true(),40)
+| table label value`}
+    earliest="-15m"
+    latest="now"
+    caption="Built-in Studio bar chart. The lab builds the same picture as your own app."
+/>
+
+<img src="/static/app/splunk4champions2/images/custom_viz_pipeline.svg" width="100%" alt="Flow from search to table, then three files, a build, an spl package, and Dashboard Studio." />
+
+| Word | Meaning |
+|---|---|
+| Scaffold | The generator creates the folders and starter files. |
+| JavaScript | The instructions: read the rows and draw bars. |
+| CSS | Type, spacing, and bar height. |
+| JSON | The menu name and the editor form. Not SPL. |
+| Build | Produces browser files. It does not prove the chart works. |
+| Package | Wraps those files as an app you can install. |
+
+The contract is two columns. `label` is text. `value` is a number that is zero or greater. Column order does not matter. The names do.
+
+<LabBlock title="Checkpoint">
+
+Run the search. You should see three rows and only the columns `label` and `value`.
+
+<SplunkSearch earliest="-15m" latest="now" spl={`| makeresults count=3
+| streamstats count AS row
+| eval label=case(row=1,"Web",row=2,"Database",true(),"Mail")
+| eval value=case(row=1,120,row=2,80,true(),40)
+| table label value`}>
+</SplunkSearch>
+
+</LabBlock>

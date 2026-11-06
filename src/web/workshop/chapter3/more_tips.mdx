@@ -25,7 +25,7 @@ These are the patterns to recognise. The next step ("The Investigation") walks t
 > **Why it matters:** *All Time* scans every bucket regardless of age. Most labs only need a few minutes of recent data.
 
 **Before — All Time:**
-<SplunkSearch spl={`index=s4c_www | stats count by status`} />
+<SplunkSearch earliest="0" latest="" spl={`index=s4c_www | stats count by status`} />
 
 **After — last 7 days:**
 <SplunkSearch earliest="-7d" latest="now" spl={`index=s4c_www | stats count by status`} />
@@ -34,13 +34,18 @@ These are the patterns to recognise. The next step ("The Investigation") walks t
 
 ### 3. Wildcards — leading and middle are slow
 
-> **Why it matters:** Leading or middle wildcards bypass the bloom filter and force a full lexicon scan. Use `TERM()` for IP addresses and any value containing minor breakers.
+> **Why it matters:** Leading or middle wildcards can force a lexicon scan, and Splunk may warn that a middle wildcard behaves inconsistently around punctuation. Use `TERM()` when you want an exact indexed term, including minor breakers; it is not a general replacement for substring matching.
 
-**Before — middle wildcard, full lexicon scan:**
-<SplunkSearch spl={`index=s4c_www *error*`} />
+**Before — leading wildcard:**
+<SplunkSearch spl={`index=s4c_www *product*`} />
 
-**After — TERM() uses the segmenter directly:**
-<SplunkSearch spl={`index=s4c_www TERM(error)`} />
+**Before — middle wildcard:**
+<SplunkSearch spl={`index=s4c_www pro*uct`} />
+
+**After — exact indexed term:**
+<SplunkSearch spl={`index=s4c_www TERM(product)`} />
+
+These examples use `product`, which is present in the workshop web-log sample. If they return no events, check that `s4c_www` has been populated before comparing the searches.
 
 ---
 

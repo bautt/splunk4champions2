@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180" role="img" aria-labelledby="barsTitle">
+  <title id="barsTitle">Web 120, Database 80, Mail 40. Bar lengths are 3 to 2 to 1.</title>
+  <style>
+    text { font-family: Arial, sans-serif; font-size: 16px; fill: #1a2a3a; }
+    .track { fill: #d5dee6; }
+    .fill { fill: #1768ab; }
+  </style>
+  <text x="8" y="36">Web</text>
+  <rect class="track" x="120" y="16" width="360" height="28" rx="3"/>
+  <rect class="fill" x="120" y="16" width="360" height="28" rx="3"/>
+  <text x="492" y="36">120</text>
+  <text x="8" y="92">Database</text>
+  <rect class="track" x="120" y="72" width="360" height="28" rx="3"/>
+  <rect class="fill" x="120" y="72" width="240" height="28" rx="3"/>
+  <text x="492" y="92">80</text>
+  <text x="8" y="148">Mail</text>
+  <rect class="track" x="120" y="128" width="360" height="28" rx="3"/>
+  <rect class="fill" x="120" y="128" width="120" height="28" rx="3"/>
+  <text x="492" y="148">40</text>
+</svg>

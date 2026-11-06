@@ -11,10 +11,22 @@
     margin-top: 0 !important;
 }
 
-.sectionBar > div[role=tablist] button:focus,
-.sectionBar > div[role=tablist] button:focus-visible {
+/* Splunk's focus ring is a glow around the tab. This strip is 36px tall and
+   clips the top and bottom, which leaves two blue stubs on the sides.
+   Selection is an underline inside the tab instead. */
+.sectionBar > div[role=tablist] button:focus {
     outline: none !important;
     box-shadow: none !important;
+}
+
+.sectionBar > div[role=tablist] button[aria-selected="true"] {
+    box-shadow: inset 0 -2px 0 #1a4e80 !important;
+    color: #1a4e80 !important;
+}
+
+.sectionBar > div[role=tablist] button:focus-visible {
+    outline: none !important;
+    box-shadow: inset 0 -2px 0 #1a4e80 !important;
 }
 
 .sectionBar > div[role=tablist] button {

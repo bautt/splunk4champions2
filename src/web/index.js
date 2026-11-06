@@ -1,116 +1,127 @@
-import React, { createContext, useState, useEffect, useCallback, useRef } from 'react';
-import layout from '@splunk/react-page';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import layout from '@splunk/react-page/18';
 import { SplunkThemeProvider } from '@splunk/themes';
 
 import ChapterBar from './components/ChapterBar';
-import TabLayout from '@splunk/react-ui/TabLayout'
+import TabLayout from '@splunk/react-ui/TabLayout';
+import DocumentDrawer from '@splunk/react-icons/DocumentDrawer';
 
-import workshop from './workshop/workshop'
+import workshop from './workshop/workshop';
 import Section from './components/Section';
 
-import "./components/SectionBar.css";
-import "./components/workshop.css";
-import ToastMessages from '@splunk/react-toast-notifications/ToastMessages'
-import Toaster, { makeCreateToast } from '@splunk/react-toast-notifications/Toaster';
-import ToastContext from './context'
+import './components/SectionBar.css';
+import './components/workshop.css';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-const chapters = workshop.chapters
+/*
+ * The chapter bar is the live path, then Legacy, then Setup.
+ * A chapter marked `shelf: "overflow"` leaves the primary strip and appears
+ * as an inner tab inside one Legacy tab. Deep links such as `#ch=four`
+ * keep working: the dispatcher opens Legacy with Metrics selected inside it.
+ *
+ * Setup (id "zero") is pinned to the end of the primary strip.
+ * Large Room and the colour scheme live on that page.
+ */
+
+const chapters = workshop.chapters;
+const OVERFLOW_ID = '__overflow';
+const SETUP_ID = 'zero';
+
+const liveChapters = chapters.filter(
+    (c) => c.shelf !== 'overflow' && c.id !== SETUP_ID
+);
+const overflowChapters = chapters.filter((c) => c.shelf === 'overflow');
+const setupChapter = chapters.find((c) => c.id === SETUP_ID);
+
 const DISPLAY_MODE_KEY = 's4c_display_mode';
 const DISPLAY_MODE_EVENT = 's4c-display-mode-change';
 const LARGE_MODE_CLASS = 's4c-large-room';
 
-// Build a flat ordered list of {chapterId, sectionId} for prev/next navigation
-const allSections = chapters.flatMap(ch =>
-    ch.sections.map(sec => ({
-        chapterId: ch.id,
-        sectionId: ch.id + sec.title,
-    }))
-)
-
 function sectionPanelId(chapter, section) {
-    return chapter.id + section.title
+    return chapter.id + section.title;
 }
 
 /** Old bookmarks / links (#sec=threeQuiz) after section was renamed to "Search recap". */
 const LEGACY_SECTION_IDS = {
     threeQuiz: 'threeSearch recap',
     'sevenMobile Links': 'sevenUseful Links',
-}
+    zeroWorkshop: 'zeroSetup',
+    zeroSettings: 'zeroSetup',
+    sixTutorial: 'sixOverview',
+    'sixData Sources': 'sixChain Searches',
+    sixInteractivity: 'sixToken Kitchen',
+    'sixToken kitchen': 'sixToken Kitchen',
+    'sixLayout & Visualizations': 'sixImage Upload',
+    'sixCustom Visualizations': 'sixCustom Viz',
+    'sixCanvas Viz Library': 'sixCustom Viz',
+    'sixSharing & Security': 'sixSharing',
+};
 
 function normalizeSectionId(chapterId, sectionId) {
-    if (!chapterId || !sectionId) return sectionId
-    const mapped = LEGACY_SECTION_IDS[sectionId]
-    if (!mapped) return sectionId
-    const ch = chapters.find((c) => c.id === chapterId)
-    if (!ch) return sectionId
-    const ok = ch.sections.some((s) => sectionPanelId(ch, s) === mapped)
-    return ok ? mapped : sectionId
+    if (!chapterId || !sectionId) return sectionId;
+    const mapped = LEGACY_SECTION_IDS[sectionId];
+    if (!mapped) return sectionId;
+    const ch = chapters.find((c) => c.id === chapterId);
+    if (!ch) return sectionId;
+    const ok = ch.sections.some((s) => sectionPanelId(ch, s) === mapped);
+    return ok ? mapped : sectionId;
 }
 
 function defaultSectionFor(chapterId) {
-    const ch = chapters.find(c => c.id === chapterId)
-    if (!ch) return null
-    return sectionPanelId(ch, ch.sections[0])
+    const ch = chapters.find((c) => c.id === chapterId);
+    if (!ch) return null;
+    return sectionPanelId(ch, ch.sections[0]);
 }
 
 function parseHash() {
-    const hash = window.location.hash.replace('#', '')
-    const params = new URLSearchParams(hash)
-    const chapterId = params.get('ch') || null
-    let sectionId = params.get('sec') || null
-    if (chapterId && sectionId) sectionId = normalizeSectionId(chapterId, sectionId)
-    return {
-        chapterId,
-        sectionId,
+    const hash = window.location.hash.replace('#', '');
+    const params = new URLSearchParams(hash);
+    let chapterId = params.get('ch') || null;
+    let sectionId = params.get('sec') || null;
+    // The custom-viz lab used to be its own overflow chapter.
+    if (chapterId === 'viz') {
+        chapterId = 'six';
+        sectionId = 'sixCustom Viz';
     }
+    if (chapterId && sectionId) sectionId = normalizeSectionId(chapterId, sectionId);
+    return { chapterId, sectionId };
 }
 
 function buildHash(chapterId, sectionId) {
-    const params = new URLSearchParams()
-    params.set('ch', chapterId)
-    params.set('sec', sectionId)
-    return '#' + params.toString()
+    const params = new URLSearchParams();
+    params.set('ch', chapterId);
+    params.set('sec', sectionId);
+    return '#' + params.toString();
 }
 
 function pushHash(chapterId, sectionId) {
-    window.history.pushState(null, '', buildHash(chapterId, sectionId))
+    window.history.pushState(null, '', buildHash(chapterId, sectionId));
 }
 
 function replaceHash(chapterId, sectionId) {
-    window.history.replaceState(null, '', buildHash(chapterId, sectionId))
+    window.history.replaceState(null, '', buildHash(chapterId, sectionId));
 }
 
 function validChapterId(id) {
-    return chapters.some(c => c.id === id)
+    return chapters.some((c) => c.id === id);
 }
 
 function validSectionId(chapterId, sectionId) {
-    const ch = chapters.find(c => c.id === chapterId)
-    if (!ch) return false
-    return ch.sections.some(s => sectionPanelId(ch, s) === sectionId)
+    const ch = chapters.find((c) => c.id === chapterId);
+    if (!ch) return false;
+    return ch.sections.some((s) => sectionPanelId(ch, s) === sectionId);
 }
 
-function navBtnStyle(disabled) {
-    return {
-        width: 22,
-        height: 22,
-        padding: 0,
-        border: '1px solid #bbb',
-        borderRadius: 4,
-        background: disabled ? 'transparent' : '#fff',
-        color: disabled ? '#ccc' : '#444',
-        fontSize: 16,
-        lineHeight: '20px',
-        textAlign: 'center',
-        cursor: disabled ? 'default' : 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexShrink: 0,
-        transition: 'background 0.15s',
-    }
+function isOverflowChapter(chapterId) {
+    return overflowChapters.some((c) => c.id === chapterId);
+}
+
+/** Which primary tab is the given chapter under: itself, Legacy, or Setup. */
+function primaryTabFor(chapterId) {
+    if (chapterId === SETUP_ID) return SETUP_ID;
+    if (isOverflowChapter(chapterId)) return OVERFLOW_ID;
+    return chapterId;
 }
 
 function readDisplayModeFromUrl() {
@@ -153,13 +164,20 @@ function syncDisplayModeInUrl(mode) {
 const LAB_SCHEME_KEY = 's4c_lab_scheme';
 const LAB_SCHEME_EVENT = 's4c-lab-scheme-change';
 const VALID_SCHEMES = ['blue', 'brownred', 'blueyellow', 'pinkorange'];
-const ALL_SCHEME_CLASSES = ['s4c-scheme-blue', 's4c-scheme-brownred', 's4c-scheme-blueyellow', 's4c-scheme-pinkorange'];
+const ALL_SCHEME_CLASSES = [
+    's4c-scheme-blue',
+    's4c-scheme-brownred',
+    's4c-scheme-blueyellow',
+    's4c-scheme-pinkorange',
+];
 
 function readStoredLabScheme() {
     try {
         const v = window.localStorage.getItem(LAB_SCHEME_KEY);
         return VALID_SCHEMES.includes(v) ? v : 'blue';
-    } catch { return 'blue'; }
+    } catch {
+        return 'blue';
+    }
 }
 
 function applyLabScheme(scheme) {
@@ -169,32 +187,34 @@ function applyLabScheme(scheme) {
 }
 
 function persistLabScheme(scheme) {
-    try { window.localStorage.setItem(LAB_SCHEME_KEY, scheme); } catch {}
+    try {
+        window.localStorage.setItem(LAB_SCHEME_KEY, scheme);
+    } catch {}
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
 
 function App() {
-    const createToast = makeCreateToast(Toaster)
-
-    // Initialise from URL hash if present, otherwise default to first chapter
+    // Initialise from URL hash if present, otherwise default to first live chapter.
     const initState = () => {
-        const { chapterId, sectionId } = parseHash()
-        const ch = chapterId && validChapterId(chapterId) ? chapterId : chapters[0].id
-        const sec = sectionId && validSectionId(ch, sectionId) ? sectionId : defaultSectionFor(ch)
-        return { chapterId: ch, sectionId: sec }
-    }
+        const { chapterId, sectionId } = parseHash();
+        const ch = chapterId && validChapterId(chapterId) ? chapterId : liveChapters[0].id;
+        const sec = sectionId && validSectionId(ch, sectionId) ? sectionId : defaultSectionFor(ch);
+        return { chapterId: ch, sectionId: sec };
+    };
 
-    const [activeChapterId, setActiveChapterId] = useState(() => initState().chapterId)
+    const [activeChapterId, setActiveChapterId] = useState(() => initState().chapterId);
 
-    // Track active section per chapter so switching back restores position
+    // Track active section per chapter so switching back restores position.
     const [activeSections, setActiveSections] = useState(() => {
-        const { chapterId, sectionId } = initState()
-        const map = {}
-        chapters.forEach(ch => { map[ch.id] = defaultSectionFor(ch.id) })
-        map[chapterId] = sectionId
-        return map
-    })
+        const { chapterId, sectionId } = initState();
+        const map = {};
+        chapters.forEach((ch) => {
+            map[ch.id] = defaultSectionFor(ch.id);
+        });
+        map[chapterId] = sectionId;
+        return map;
+    });
 
     useEffect(() => {
         const initialMode = readDisplayModeFromUrl() || readStoredDisplayMode() || 'default';
@@ -227,148 +247,211 @@ function App() {
         return () => window.removeEventListener(LAB_SCHEME_EVENT, onSchemeChange);
     }, []);
 
-    // isMounted: false on first effect run (initial mount → replaceState, no new history entry)
-    // isHashNav: true when hashchange fired the state update (URL already correct, skip push)
-    const isMounted = useRef(false)
-    const isHashNav = useRef(false)
+    const isMounted = useRef(false);
+    const isHashNav = useRef(false);
 
-    // Sync state → hash whenever navigation changes
+    // Sync state → hash whenever navigation changes.
     useEffect(() => {
         if (isHashNav.current) {
-            // Browser back/forward already set the URL — just clear the flag
-            isHashNav.current = false
-            return
+            isHashNav.current = false;
+            return;
         }
         if (!isMounted.current) {
-            // Initial mount: normalise the URL without adding a history entry
-            isMounted.current = true
-            replaceHash(activeChapterId, activeSections[activeChapterId])
-            return
+            isMounted.current = true;
+            replaceHash(activeChapterId, activeSections[activeChapterId]);
+            return;
         }
-        // User-initiated navigation: add a history entry so back/forward works
-        pushHash(activeChapterId, activeSections[activeChapterId])
-    }, [activeChapterId, activeSections])
+        pushHash(activeChapterId, activeSections[activeChapterId]);
+    }, [activeChapterId, activeSections]);
 
-    // Sync hash → state on browser back/forward
+    // Sync hash → state on browser back/forward.
     useEffect(() => {
         const onHashChange = () => {
-            const { chapterId, sectionId } = parseHash()
+            const { chapterId, sectionId } = parseHash();
             if (chapterId && validChapterId(chapterId)) {
-                // Mark as hash-driven so the state effect skips pushState
-                isHashNav.current = true
-                setActiveChapterId(chapterId)
+                isHashNav.current = true;
+                setActiveChapterId(chapterId);
                 if (sectionId && validSectionId(chapterId, sectionId)) {
-                    setActiveSections(prev => ({ ...prev, [chapterId]: sectionId }))
+                    setActiveSections((prev) => ({ ...prev, [chapterId]: sectionId }));
                 }
             }
-        }
-        window.addEventListener('hashchange', onHashChange)
-        return () => window.removeEventListener('hashchange', onHashChange)
-    }, [])
+        };
+        window.addEventListener('hashchange', onHashChange);
+        return () => window.removeEventListener('hashchange', onHashChange);
+    }, []);
 
-    const changeChapter = useCallback((e, { activePanelId: chapterId }) => {
-        setActiveChapterId(chapterId)
-    }, [])
+    // Change primary tab. A click on Legacy opens the previously-active
+    // legacy chapter (or Metrics by default); Setup opens that chapter.
+    const changePrimaryTab = useCallback((e, { activePanelId }) => {
+        if (activePanelId === OVERFLOW_ID) {
+            // If the current chapter is already an overflow chapter, keep it.
+            const current = isOverflowChapter(activeChapterId) ? activeChapterId : overflowChapters[0]?.id;
+            if (current) setActiveChapterId(current);
+            return;
+        }
+        setActiveChapterId(activePanelId);
+    }, [activeChapterId]);
+
+    const changeOverflowChapter = useCallback((e, { activePanelId }) => {
+        if (chapters.some((c) => c.id === activePanelId && c.shelf === 'overflow')) {
+            setActiveChapterId(activePanelId);
+        }
+    }, []);
 
     const changeSection = useCallback((chapterId) => (e, { activePanelId: sectionId }) => {
-        setActiveSections(prev => ({ ...prev, [chapterId]: sectionId }))
-    }, [])
+        setActiveSections((prev) => ({ ...prev, [chapterId]: sectionId }));
+    }, []);
 
-    // Prev / Next navigation (global index used only for button enable/disable)
-    const currentIndex = allSections.findIndex(
-        s => s.chapterId === activeChapterId && s.sectionId === activeSections[activeChapterId]
-    )
+    // Flat list of all steps for prev/next, only inside the currently rendered
+    // chapter (so Next from the last section of Settings goes to the first
+        // section of Data, not of Legacy).
+    const flatForChapter = (chapterId) => {
+        const ch = chapters.find((c) => c.id === chapterId);
+        if (!ch) return [];
+        return ch.sections.map((s) => ({
+            chapterId,
+            sectionId: sectionPanelId(ch, s),
+            label: s.title,
+        }));
+    };
 
-    const navigateTo = useCallback((index) => {
-        if (index < 0 || index >= allSections.length) return
-        const { chapterId, sectionId } = allSections[index]
-        setActiveChapterId(chapterId)
-        setActiveSections(prev => ({ ...prev, [chapterId]: sectionId }))
-    }, [])
+    const activeSectionId = activeSections[activeChapterId];
+    const chapterSteps = flatForChapter(activeChapterId);
+    const localIndex = chapterSteps.findIndex((s) => s.sectionId === activeSectionId);
 
-    const renderedChapters = chapters.map((chapter, chapterIndex) => (
-        <TabLayout.Panel key={chapterIndex} label={chapter.title} panelId={chapter.id} icon={chapter.icon}>
-            <div className="s4c-chapter-panel-inner" style={{ position: 'relative' }}>
-                <TabLayout
-                    activePanelId={activeSections[chapter.id]}
-                    onChange={changeSection(chapter.id)}
-                    className="sectionBar"
+    const goToIndex = useCallback((index) => {
+        if (index < 0 || index >= chapterSteps.length) return;
+        const target = chapterSteps[index];
+        setActiveSections((prev) => ({ ...prev, [activeChapterId]: target.sectionId }));
+    }, [chapterSteps, activeChapterId]);
+
+    const prevStep = localIndex > 0 ? chapterSteps[localIndex - 1] : null;
+    const nextStep = localIndex >= 0 && localIndex < chapterSteps.length - 1 ? chapterSteps[localIndex + 1] : null;
+
+    const renderChapterPanel = (chapter) => (
+        <div className="s4c-chapter-panel-inner">
+            <TabLayout
+                activePanelId={activeSections[chapter.id]}
+                onChange={changeSection(chapter.id)}
+                className="sectionBar"
+            >
+                {chapter.sections.map((section, sIndex) => (
+                    <TabLayout.Panel
+                        key={sIndex}
+                        label={section.title}
+                        panelId={sectionPanelId(chapter, section)}
+                        style={{ marginBottom: 15 }}
+                    >
+                        <div className="workshopContent">
+                            <Section chapter={chapter} section={section} />
+                        </div>
+                    </TabLayout.Panel>
+                ))}
+            </TabLayout>
+
+            <div className="s4c-section-nav" role="navigation" aria-label="Section navigation">
+                <button
+                    type="button"
+                    className="s4c-section-nav__btn"
+                    onClick={() => goToIndex(localIndex - 1)}
+                    disabled={!prevStep}
+                    title={prevStep ? `Previous: ${prevStep.label}` : 'Previous'}
                 >
-                    {chapter.sections.map((section, sIndex) => (
+                    <span className="s4c-section-nav__arrow" aria-hidden="true">‹</span>
+                    <span className="s4c-section-nav__btn-label">
+                        {prevStep ? `Previous: ${prevStep.label}` : 'Previous'}
+                    </span>
+                </button>
+                <span className="s4c-section-nav__counter" aria-label="Section position">
+                    {localIndex >= 0 ? `${localIndex + 1} of ${chapterSteps.length}` : ''}
+                </span>
+                <button
+                    type="button"
+                    className="s4c-section-nav__btn"
+                    onClick={() => goToIndex(localIndex + 1)}
+                    disabled={!nextStep}
+                    title={nextStep ? `Next: ${nextStep.label}` : 'Next'}
+                >
+                    <span className="s4c-section-nav__btn-label">
+                        {nextStep ? `Next: ${nextStep.label}` : 'Next'}
+                    </span>
+                    <span className="s4c-section-nav__arrow" aria-hidden="true">›</span>
+                </button>
+            </div>
+        </div>
+    );
+
+    const renderedPrimary = [];
+
+    liveChapters.forEach((chapter, chapterIndex) => {
+        renderedPrimary.push(
+            <TabLayout.Panel
+                key={`live-${chapterIndex}`}
+                label={chapter.title}
+                panelId={chapter.id}
+                icon={chapter.icon}
+            >
+                {renderChapterPanel(chapter)}
+            </TabLayout.Panel>
+        );
+    });
+
+    if (overflowChapters.length > 0) {
+        renderedPrimary.push(
+            <TabLayout.Panel
+                key="overflow"
+                label="Legacy"
+                panelId={OVERFLOW_ID}
+                icon={<DocumentDrawer />}
+            >
+                <TabLayout
+                    activePanelId={isOverflowChapter(activeChapterId) ? activeChapterId : overflowChapters[0].id}
+                    onChange={changeOverflowChapter}
+                    className="overflowBar"
+                >
+                    {overflowChapters.map((chapter, idx) => (
                         <TabLayout.Panel
-                            key={sIndex}
-                            label={section.title}
-                            panelId={sectionPanelId(chapter, section)}
-                            style={{ marginBottom: 15 }}
+                            key={`of-${idx}`}
+                            label={chapter.title}
+                            panelId={chapter.id}
+                            icon={chapter.icon}
                         >
-                            <ToastContext.Provider value={createToast}>
-                                <div className="workshopContent">
-                                    <Section chapter={chapter} section={section} />
-                                </div>
-                            </ToastContext.Provider>
+                            {renderChapterPanel(chapter)}
                         </TabLayout.Panel>
                     ))}
                 </TabLayout>
+            </TabLayout.Panel>
+        );
+    }
 
-                {/* Prev / Next nav — floated into the right side of the section tab strip */}
-                <div
-                    className="s4c-section-nav"
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 8,
-                        height: 36,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 4,
-                        zIndex: 10,
-                    }}
-                >
-                    <button
-                        type="button"
-                        className="s4c-section-nav__btn"
-                        onClick={() => navigateTo(currentIndex - 1)}
-                        disabled={currentIndex <= 0}
-                        title="Previous section"
-                        style={navBtnStyle(currentIndex <= 0)}
-                    >‹</button>
-                    <span
-                        className="s4c-section-nav__counter"
-                        style={{
-                            fontSize: 11,
-                            color: '#666',
-                            minWidth: 36,
-                            textAlign: 'center',
-                            userSelect: 'none',
-                        }}
-                    >
-                        {chapterIndex + 1}/{chapter.sections.findIndex(s => sectionPanelId(chapter, s) === activeSections[chapter.id]) + 1}
-                    </span>
-                    <button
-                        type="button"
-                        className="s4c-section-nav__btn"
-                        onClick={() => navigateTo(currentIndex + 1)}
-                        disabled={currentIndex >= allSections.length - 1}
-                        title="Next section"
-                        style={navBtnStyle(currentIndex >= allSections.length - 1)}
-                    >›</button>
-                </div>
-            </div>
-        </TabLayout.Panel>
-    ))
+    if (setupChapter) {
+        renderedPrimary.push(
+            <TabLayout.Panel
+                key="setup"
+                label={setupChapter.title}
+                panelId={setupChapter.id}
+                icon={setupChapter.icon}
+            >
+                {renderChapterPanel(setupChapter)}
+            </TabLayout.Panel>
+        );
+    }
 
     return (
-        <>
-            <ChapterBar activeChapter={activeChapterId} onChapterChange={changeChapter}>
-                {renderedChapters}
+        <div className="s4c-shell">
+            <ChapterBar
+                activeChapter={primaryTabFor(activeChapterId)}
+                onChapterChange={changePrimaryTab}
+            >
+                {renderedPrimary}
             </ChapterBar>
-        </>
-    )
+        </div>
+    );
 }
 
 layout(
     <SplunkThemeProvider family="enterprise" colorScheme="light" density="compact">
-        <ToastMessages />
-        <App></App>
-    </SplunkThemeProvider>
-    , { hideFooter: false, hideAppBar: false });
+        <App />
+    </SplunkThemeProvider>,
+    { hideFooter: false, hideAppBar: false }
+);

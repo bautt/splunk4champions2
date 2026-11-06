@@ -1,67 +1,22 @@
 import Link from '@splunk/react-ui/Link'
 
-## Dashboard Studio: The Next Generation of Splunk Dashboards
+<div className="s4c-lab-summary">
 
-Dashboard Studio offers a modern, flexible canvas for designing interactive dashboards with pixel-perfect control, built-in data-driven layouts, and advanced customization.
+**Six pages, one job each.** Chain Searches, Token Kitchen, Image Upload, Custom Viz, and Sharing. This page only names the pieces.
 
-<img src="/static/app/splunk4champions2/images/iot_factory.gif" alt="Example Hub Dashboard"/>
+</div>
 
----
+Dashboard Studio is the dashboard you edit on a canvas. A dashboard is searches, the pictures those searches draw, and the controls that change them.
 
-### Key Components
+<img src="/static/app/splunk4champions2/images/iot_factory.gif" alt="Example Dashboard Studio dashboard"/>
 
-#### Visualizations  
-- **ID**: Unique identifier (e.g. `viz_f49snx`)  
-- **Type**: Chart type (e.g. Column, Line, Gauge)  
-- **Options**: Presentation settings (stack mode, color palettes)  
-- **Data Source**: Referenced by data source ID  
+| Piece | What it is |
+|---|---|
+| Data source | An inline search, a saved search, or a chain that reuses another search |
+| Visualization | A chart, table, or markdown block. It has an id, a type, and one data source |
+| Input | A control that writes a token. Searches and titles read that token |
+| Layout | A grid. Each panel has a position and a size |
 
-#### Data Sources  
-- **ID**: Unique identifier (e.g. `ds_j2kn9c`)  
-- **Type**: Search type (Inline, Saved Search, Chain Search)  
-- **Options**: Search parameters (time range, refresh interval)  
+The next page runs one search and feeds several panels from it.
 
-#### Inputs  
-- **ID**: Unique identifier (e.g. `input_host`)  
-- **Type**: Input control (Dropdown, Textbox, Time Picker)  
-- **Options**: Token binding and default values  
-
-#### Layout  
-- **Type**: Grid or Absolute positioning  
-- **Structure**: Coordinates (x, y) and size (width, height) in pixels  
-- **Global Inputs**: Input display order and grouping  
-
-#### Defaults  
-- **Visualizations**: Default options (show last update time)  
-- **Data Sources**: Default time range and refresh rate  
-
-<img src="/static/app/splunk4champions2/images/studio_code.png" width="40%" alt="Studio JSON Example"/>
-
----
-
-## Data Sources in Studio
-
-- **Inline Searches**: Ad-hoc SPL queries embedded directly in the dashboard.  
-- **Saved Searches**: Reuse existing scheduled searches; ensure proper sharing permissions.  
-- **Chain Searches**: Define dependent searches where one search feeds results into another, all configured via the UI.
-
----
-
-## What’s New in Dashboard Studio
-
-### Splunk Enterprise 9.x  
-- **Advanced Theming**: Custom color palettes and responsive layouts  
-- **Chained Searches UI**: Drag-and-drop configuration for multi-stage queries  
-- **Enhanced Input Controls**: New slider and multi-select dropdown components  
-- **Dynamic Drilldowns**: Contextual navigation between panels without manual token wiring  
-
-### Splunk Enterprise 10.x  
-- **Vector Shapes & Annotations**: Add custom SVG shapes, arrows, and text overlays directly on visualizations  
-- **Conditional Formatting**: Apply rules to change visual appearance based on data thresholds  
-- **Custom Layout Breakpoints**: Define responsive behavior for different display sizes  
-- **Performance Insights**: Built-in metrics for panel render times and query performance profiling  
-
-### Splunk 10.2
-- Use existing custom visualization apps in Dashboard Studio.
-
-<Link to="https://help.splunk.com/en/splunk-enterprise/create-dashboards-and-reports/dashboard-studio/10.2/whats-new-in-dashboard-studio/whats-new-in-dashboard-studio" openInNewContext>What's New in Dashboard Studio</Link>
+<Link to="https://help.splunk.com/en/splunk-enterprise/create-dashboards-and-reports/dashboard-studio/10.2/whats-new-in-dashboard-studio/whats-new-in-dashboard-studio" openInNewContext>What's new in Dashboard Studio</Link>

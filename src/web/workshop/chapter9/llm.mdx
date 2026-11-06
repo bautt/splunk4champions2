@@ -1,0 +1,72 @@
+<div className="s4c-lab-summary">
+
+**Goal:** one checkbox, `showValues`, added by an LLM. You accept it only if the checks below pass.
+
+</div>
+
+Rules for this step:
+
+* One small change. No new packages, no install, no Splunk restart.
+* No tokens, passwords, or real logs in the prompt.
+* The chart still writes text with `textContent`.
+* If the result is wrong twice, restore your backup and ask the trainer.
+
+<LabBlock title="Make a backup">
+
+Copy `config.json`, `visualization.js`, and `visualization.css` to a folder outside the project before you paste a prompt.
+
+</LabBlock>
+
+First prompt, explain only. Do not apply the answer.
+
+```text
+Explain visualization.js for a Dashboard Studio extension that uses VisualizationAPI.
+We use @splunk/dashboard-studio-extension, not RequireJS and not React.
+Do not change any files.
+Describe state, readRows, render, and the listeners in a few sentences.
+```
+
+Then the change. Acceptance, agreed before you paste:
+
+* A checkbox labeled **Show values**.
+* The option name is `showValues`, type boolean, default `true`.
+* Off hides the numbers only. Bars and labels stay.
+* On shows the numbers again.
+* If the option is missing, numbers stay visible.
+* The choice remains after you save the dashboard and open it again.
+
+```text
+Change only config.json and visualization.js in my workshop visualization.
+We use @splunk/dashboard-studio-extension with VisualizationAPI.
+Not the old SplunkVisualizationBase or RequireJS framework, and not React.
+
+Add a Dashboard Studio editor checkbox "Show values".
+The option is showValues, type boolean, default true.
+Bars and labels stay as they are.
+If the option is missing at runtime, numbers stay visible.
+Redraw when options change.
+
+First say which lines you will change. Then make only that change.
+No new packages, no external services, no build changes.
+No Splunk install and no server restart.
+Keep writing search values with textContent, not HTML.
+Then list a check for each acceptance point.
+```
+
+Before you keep the edit, confirm with a partner:
+
+* `showValues` is in the config and in the JavaScript.
+* The type is boolean and the default is true.
+* The JavaScript falls back, for example `options.showValues ?? true`.
+* No other files, packages, or URLs were added.
+
+<LabBlock title="Rebuild and retest">
+
+```text
+yarn build:prod
+yarn package
+```
+
+Install the update on the same agreed path. Reload the dashboard. Turn the numbers off, turn them on, save, and open the dashboard again.
+
+</LabBlock>

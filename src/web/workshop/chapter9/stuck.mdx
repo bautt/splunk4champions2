@@ -1,0 +1,27 @@
+<div className="s4c-lab-summary">
+
+**Use this page when something failed.** Take the smallest next step in the row. Do not start a second project.
+
+</div>
+
+| What you see | Next step |
+|---|---|
+| `package.json` not found | Open the terminal next to `package.json`. |
+| `Cannot find package 'esbuild'` | From that same folder, `yarn install`, wait, then `yarn build`. Do not add esbuild by hand first. |
+| No `src` next to `package.json` | Open `visualizations`, then your viz folder, then `src`. The generator creates it. `yarn install` does not. |
+| `visualization.js not found, skipping` | Check the real folder name and the `.js` extension. Not `.jsx`. |
+| You saved, and Splunk looks the same | `yarn build:prod`, `yarn package`, update the app on the agreed path, then reload the dashboard. |
+| `DashboardExtensionAPI is not available` | Open the viz in Studio, or in the optional preview. Do not import the API from a story file. |
+| `label` or `value` is missing | Fix the search. Do not invent numbers in the chart to hide a bad table. |
+| The chart is not in the menu | Use Dashboard Studio, confirm the install, reload, and scroll the chart list. |
+| The menu still shows the old name | Confirm `config.name`, and that the new package is the one that was installed. |
+| Build succeeds and the panel is blank | Read the browser message and the data source. A build is not a test of the chart. |
+| The LLM writes RequireJS | Stop. Say `@splunk/dashboard-studio-extension` and `VisualizationAPI` again. |
+
+If the visualization is installed and still missing, an admin can look it up. This does not install or restart anything:
+
+```spl
+| rest /servicesNS/-/-/configs/conf-visualizations splunk_server=local
+| search framework_type=studio_visualization
+| table title eai:appid framework_type disabled
+```

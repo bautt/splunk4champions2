@@ -1,0 +1,40 @@
+import Link from '@splunk/react-ui/Link'
+
+<div className="s4c-lab-summary">
+
+**Goal:** give the chart your name, package the app, and open it in a Studio dashboard in this workshop app.
+
+</div>
+
+In `visualizations/<viz>/config.json`, set `config.name` to your initials and **Workshop Bars**. Example: `TB – Workshop Bars`. That string is the name in the Studio chart list. The technical app id does not set it.
+
+<LabBlock title="Package">
+
+```text
+yarn build:prod
+yarn package
+```
+
+</LabBlock>
+
+Install the `.spl` only on the path the trainer named. Do not install it on a production search head. This workshop app does not contain a finished bar chart, on purpose.
+
+After install, create a Dashboard Studio dashboard in **splunk4champions2**. Add your chart. Use the same search as the goal step:
+
+```spl
+| makeresults count=3
+| streamstats count AS row
+| eval label=case(row=1,"Web",row=2,"Database",true(),"Mail")
+| eval value=case(row=1,120,row=2,80,true(),40)
+| table label value
+```
+
+You should see three bars, Web longest and Mail shortest, and an editor group **Bar display** with color and maximum width.
+
+An indexed search is optional. Stay on the synthetic search until the acceptance table passes. The official write-up of this framework is the <Link to="https://help.splunk.com/en/splunk-enterprise/developing-views-and-apps-for-splunk-web/10.4/custom-visualizations-for-dashboard-studio/tutorial-build-a-custom-visualization" openInNewContext>custom visualization tutorial</Link>.
+
+<LabBlock title="Checkpoint">
+
+The chart menu shows your `config.name`. The dashboard shows Web, Database, and Mail.
+
+</LabBlock>

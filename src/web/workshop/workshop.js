@@ -1,17 +1,29 @@
 import React from 'react';
 import Settings from '@splunk/react-icons/Cog';
-import Activity from '@splunk/react-icons/Pulse';
-import Search from  '@splunk/react-icons/Magnifier';
-import Metrics from  '@splunk/react-icons/Metrics';
-import Dashboard from  '@splunk/react-icons/LayoutPanels';
-import Images from  '@splunk/react-icons/Picture';
-import ChartScatter from  '@splunk/react-icons/ChartScatter';
-import Tool from  '@splunk/react-icons/Wrench';
-import Data from  '@splunk/react-icons/Cylinder';
-import GaugeRadial from '@splunk/react-icons/ChartSingleValueRadial';
-import { TbAugmentedReality2, TbLayoutDashboard, TbDatabase } from "react-icons/tb";
-import {GrConfigure} from "react-icons/gr";
+import Search from '@splunk/react-icons/Magnifier';
+import Metrics from '@splunk/react-icons/Metrics';
+import Dashboard from '@splunk/react-icons/LayoutPanels';
+import Tool from '@splunk/react-icons/Wrench';
+import { TbAugmentedReality2, TbLayoutDashboard } from "react-icons/tb";
 import { TbTrophy } from "react-icons/tb";
+import Data from '@splunk/react-icons/Cylinder';
+
+/**
+ * The lab map.
+ *
+ * `shelf: "overflow"` moves a chapter off the primary tab strip and into one
+ * grouped Legacy tab. The chapter stays in the app, deep links keep working.
+ *
+ * The live path is numbered in the order it appears:
+ * 1 Settings, 2 Data, 3 Search, 4 Dashboard Studio, 5 Champion Quiz.
+ * Legacy holds Metrics, XML Dashboards, and Mobile, without numbers,
+ * so those shelves do not punch holes in the live path.
+ * Setup (id "zero") is always the last primary tab. Large Room mode and
+ * the colour scheme live on that page, not in the shell.
+ *
+ * Useful Links sections used to end every chapter. They are consolidated into
+ * Setup -> Follow Up Links (chapter0/follow_up.mdx) rather than repeated.
+ */
 
 const labs = {
     chapters: [
@@ -19,7 +31,6 @@ const labs = {
             "title": "1. Settings",
             "id": "one",
             "icon": <Settings/>,
-            "subtitle": "test",
             "sections": [
                 {
                     "title": "Set your preferences",
@@ -98,23 +109,13 @@ const labs = {
                             "content": "chapter1/quiz.mdx"
                         }
                     ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter1/useful_links.mdx"
-                        }
-                    ]
                 }
             ]
         },
-        
+
         {
             "title": "2. Data",
             "id": "two",
-            "subtitle": "test",
             "icon": <Data/>,
             "sections": [
                 {
@@ -187,22 +188,12 @@ const labs = {
                             "content": "chapter2/quiz.mdx"
                         }
                     ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter2/useful_links.mdx"
-                        }
-                    ]
                 }
             ]
         },
         {
             "title": "3. Search",
             "id": "three",
-            "subtitle": "test",
             "icon": <Search/>,
             "sections": [
                 {
@@ -303,15 +294,7 @@ const labs = {
                         }
                     ]
                 },
-                {
-                    "title": "Search Quiz",
-                    "steps": [
-                        {
-                            "title": "Search Quiz",
-                            "content": "chapter3/search_quiz.mdx"
-                        }
-                    ]
-                },
+                // SPL2 and MCP come before the Search Quiz so the quiz can draw on them.
                 {
                     "title": "SPL2",
                     "steps": [
@@ -335,20 +318,22 @@ const labs = {
                     ]
                 },
                 {
-                    "title": "Useful Links",
+                    "title": "Search Quiz",
                     "steps": [
                         {
-                            "title": "Useful Links",
-                            "content": "chapter3/useful_links.mdx"
+                            "title": "Search Quiz",
+                            "content": "chapter3/search_quiz.mdx"
                         }
                     ]
                 }
             ]
         },
 
+        // Legacy: Metrics
         {
-            "title": "4. Metrics",
+            "title": "Metrics",
             "id": "four",
+            "shelf": "overflow",
             "subtitle": "",
             "icon": <Metrics/>,
             "sections": [
@@ -425,22 +410,15 @@ const labs = {
                             "content": "chapter4/quiz.mdx"
                         }
                     ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter4/useful_links.mdx"
-                        }
-                    ]
                 }
             ]
         },
+
+        // Legacy: XML Dashboards
         {
-            "title": "5. XML Dashboards",
+            "title": "XML Dashboards",
             "id": "five",
-            "subtitle": "test",
+            "shelf": "overflow",
             "icon": <Dashboard/>,
             "sections": [
                 {
@@ -496,20 +474,11 @@ const labs = {
                             "content": "chapter5/pseudonymization.mdx"
                         }
                     ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter5/useful_links.mdx"
-                        }
-                    ]
                 }
             ]
         },
         {
-            "title": "6. Dashboard Studio",
+            "title": "4. Dashboard Studio",
             "id": "six",
             "subtitle": "",
             "icon": <TbLayoutDashboard/>,
@@ -518,101 +487,104 @@ const labs = {
                     "title": "Overview",
                     "steps": [
                         {
-                            "title": "Dashboard Studio Concepts",
+                            "title": "Overview",
                             "content": "chapter6/studio.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Tutorial",
+                    "title": "Chain Searches",
                     "steps": [
                         {
-                            "title": "Build Your First Dashboard",
-                            "type": "lab",
-                            "content": "chapter6/ds_tutorial.mdx"
-                        }
-                    ]
-                },
-                {
-                    "title": "Data Sources",
-                    "steps": [
-                        {
-                            "title": "Base & Chain Searches",
+                            "title": "Chain Searches",
                             "content": "chapter6/ds_base.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Interactivity",
+                    "title": "Token Kitchen",
                     "steps": [
                         {
-                            "title": "Tokens, Buttons & Conditional Panels",
-                            "content": "chapter6/ds_tokens.mdx"
+                            "title": "Token Kitchen",
+                            "type": "lab",
+                            "content": "chapter6/ds_token_kitchen.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Layout & Visualizations",
+                    "title": "Image Upload",
                     "steps": [
                         {
-                            "title": "Working with Images",
+                            "title": "Image Upload",
                             "content": "chapter6/ds_images.mdx"
-                        },
-                        {
-                            "title": "Annotations",
-                            "content": "chapter6/ds_annotations.mdx"
-                        },
-                        {
-                            "title": "Tabbed Dashboards",
-                            "content": "chapter6/ds_tabbed.mdx"
-                        },
-                        {
-                            "title": "Trellis Layout",
-                            "content": "chapter6/ds_trellis.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Custom Visualizations",
+                    "title": "Custom Viz",
                     "steps": [
                         {
-                            "title": "Custom Viz — Three Approaches",
-                            "content": "chapter6/ds_customviz.mdx"
+                            "title": "Goal and data",
+                            "type": "lab",
+                            "content": "chapter9/goal.mdx"
+                        },
+                        {
+                            "title": "Create the project",
+                            "type": "lab",
+                            "content": "chapter9/scaffold.mdx"
+                        },
+                        {
+                            "title": "Build the scaffold",
+                            "type": "lab",
+                            "content": "chapter9/build.mdx"
+                        },
+                        {
+                            "title": "Draw the bars",
+                            "type": "lab",
+                            "content": "chapter9/bars.mdx"
+                        },
+                        {
+                            "title": "Install and open in Studio",
+                            "type": "lab",
+                            "content": "chapter9/install.mdx"
+                        },
+                        {
+                            "title": "One small LLM change",
+                            "type": "lab",
+                            "content": "chapter9/llm.mdx"
+                        },
+                        {
+                            "title": "Check and show",
+                            "content": "chapter9/check.mdx"
+                        },
+                        {
+                            "title": "If you get stuck",
+                            "content": "chapter9/stuck.mdx"
+                        },
+                        {
+                            "title": "Trainer notes",
+                            "content": "chapter9/trainer.mdx"
                         }
                     ]
                 },
                 {
-                    "title": "Canvas Viz Library",
+                    "title": "Sharing",
                     "steps": [
                         {
-                            "title": "Canvas Visualizations by rcastley",
-                            "content": "chapter6/ds_rcastley_vizs.mdx"
-                        }
-                    ]
-                },
-                {
-                    "title": "Sharing & Security",
-                    "steps": [
-                        {
-                            "title": "Publish without Login",
+                            "title": "Sharing",
+                            "type": "lab",
                             "content": "chapter6/ds_publish.mdx"
-                        }
-                    ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter6/useful_links.mdx"
                         }
                     ]
                 }
             ]
         },
+
+        // Legacy: Mobile (includes Spacebridge explanation in chapter7/mobileintro.mdx)
         {
-            "title": "7. Mobile",
+            "title": "Mobile",
             "id": "seven",
+            "shelf": "overflow",
             "subtitle": "Splunk Mobile",
             "icon": <TbAugmentedReality2/>,
             "sections": [
@@ -633,20 +605,12 @@ const labs = {
                             "content": "chapter7/mobilesetup.mdx"
                         }
                     ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter7/useful_links.mdx"
-                        }
-                    ]
                 }
             ]
         },
+
         {
-            "title": "8. Champion Quiz",
+            "title": "5. Champion Quiz",
             "id": "eight",
             "subtitle": "Test your knowledge",
             "icon": <TbTrophy/>,
@@ -659,22 +623,12 @@ const labs = {
                             "content": "chapter8/quiz.mdx"
                         }
                     ]
-                },
-                {
-                    "title": "Useful Links",
-                    "steps": [
-                        {
-                            "title": "Useful Links",
-                            "content": "chapter8/useful_links.mdx"
-                        }
-                    ]
                 }
             ]
         },
         {
             "title": "Setup",
             "id": "zero",
-            "subtitle": "test",
             "icon": <Tool/>,
             "sections": [
                 {
@@ -704,7 +658,7 @@ const labs = {
                         }
                     ]
                 },
-                
+
                 {
                     "title": "Follow Up Links",
                     "steps": [
@@ -712,7 +666,7 @@ const labs = {
                             "title": "Follow Up Links ",
                             "content": "chapter0/follow_up.mdx"
                         }
-                       
+
                     ]
                 },
                 {
@@ -722,13 +676,13 @@ const labs = {
                             "title": "Credits",
                             "content": "chapter0/credits.mdx"
                         }
-                       
+
                     ]
                 }
-                
+
             ]
         }
-       
+
     ]
 }
 

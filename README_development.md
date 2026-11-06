@@ -1,9 +1,15 @@
 # Development readme:
+
+Current app release: **2.16.0**. Both `[launcher]` and `[id]` versions in
+[`src/package/default/app.conf`](src/package/default/app.conf) define the Splunk
+app version; `src/package.json` identifies the frontend build package separately.
+See [release notes](WHATS_NEW.md) for the UI refresh and workshop changes.
+
 ## Setting up the Development Environment
 
 Prework on Mac: 
 ```
-1) install nodejs pkg from https://nodejs.org/de/download 
+1) install Node.js 22 or newer from https://nodejs.org/en/download
 # sudo npm install --global yarn webpack  webpack-cli
 ```
 
@@ -28,6 +34,38 @@ To build the app, use the `package` target. This will build a production version
 ```
 make package
 ```
+
+### Regression tests
+
+Run `yarn --cwd src test` for the workshop feedback regression tests. These cover
+Health Check diagnostics and refresh, clipboard success and failure, and lesson
+loading, cancellation, and retry using React 18's test renderer. Splunk APIs and
+browser APIs are mocked; no running Splunk instance is required.
+
+Run `yarn --cwd src build` to validate the production app and MDX content. Before
+release, also check Setup, search copying, and lesson navigation inside Splunk Web.
+
+For 2.16.0, all 11 regression tests and the production build passed. Local browser
+checks on Splunk Enterprise 10.6.0.5 covered Health Check, clipboard success and
+dismissal, time-picker presets, all four colour schemes, Large Room, narrow-screen
+tabs, the embedded Studio bar chart, the quiz landing page, and the Token Kitchen
+dashboard link. This is not a full end-to-end or Cloud certification. The build
+still reports MapLibre dynamic-dependency and bundle-size warnings.
+
+If local Splunk uses a symlink to `dist`, `yarn --cwd src build` refreshes the app
+without deleting the entire app directory. Hard-refresh Splunk Web after building.
+
+### UI dependency compatibility
+
+The app uses React/React DOM 18.3.1 with the `@splunk/react-page/18` entry point,
+Splunk React UI 5.18.0, react-page 8.4.0, themes 1.13.1, icons 5.17.0, and search 8.0.0.
+The dashboard context/core/presets/state packages are aligned at 29.9.0 with
+visualization-context 28.9.1. Keep styled-components on 5.3.11: React 19 and
+styled-components 6 are outside this Splunk UI stack's supported peer ranges.
+Themes and Splunk icons are direct dependencies because app code imports them.
+
+Clipboard feedback uses persistent, dismissible inline Splunk UI messages rather
+than the deprecated toast-notification package.
 
 ### Running App Vetting locally
 

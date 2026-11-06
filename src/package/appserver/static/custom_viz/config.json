@@ -1,0 +1,35 @@
+{
+  "showTitleAndDescription": true,
+  "includeInToolbar": true,
+  "includeInVizSwitcher": true,
+  "showDrilldown": false,
+  "canSetTokens": [],
+  "hasEventHandlers": false,
+  "config": {
+    "name": "Workshop Bars",
+    "description": "Draws label and value as horizontal bars",
+    "category": "Custom",
+    "icon": null,
+    "dataContract": {
+      "requiredDataSources": ["primary"],
+      "optionalDataSources": []
+    },
+    "size": {
+      "initialWidth": 700,
+      "initialHeight": 350
+    },
+    "optionsSchema": {
+      "barColor": { "type": "string", "default": "#1768ab" },
+      "maxBarWidth": { "type": "number", "default": 400 }
+    },
+    "editorConfig": [
+      {
+        "label": "Bar display",
+        "layout": [
+          [{ "label": "Bar color", "editor": "editor.color", "option": "barColor" }],
+          [{ "label": "Maximum bar width (pixels)", "editor": "editor.number", "option": "maxBarWidth" }]
+        ]
+      }
+    ]
+  }
+}

@@ -4,6 +4,15 @@
 **Contact:** [tbaublys@splunk.com](mailto:tbaublys@splunk.com)  
 **App URL (workshop UI):** `https://<your-splunk>/en-GB/app/splunk4champions2/lab` (locale segment may differ, e.g. `en-US`)
 
+**App version:** 2.16.0
+
+**Live path:** 1 Settings, 2 Data, 3 Search, 4 Dashboard Studio, 5 Champion Quiz. **Setup** is the last tab. **Legacy** holds Metrics, XML Dashboards, and Mobile. Dashboard Studio is Overview, Chain Searches, Token Kitchen, Image Upload, Custom Viz, and Sharing. Token Kitchen includes a simplified preview and a link to the real Studio dashboard. The Canvas visualization library is not a workshop chapter.
+
+**New in 2.16.0:** refreshed Splunk UI and React 18, dismissible clipboard feedback,
+clearer Health Check failures, lesson loading/retry controls, and scrollable
+navigation tabs on narrow screens. Local smoke testing used Splunk Enterprise
+10.6.0.5; the custom visualization exercise requires 10.4+ or an equivalent Cloud release.
+
 > **Tip — bookmarks:** The lab records your place in the URL **hash** (e.g. `#ch=three&sec=...`). Use browser back/forward, book chapter/section steps, and the **‹ ›** controls to move linearly through all sections.
 
 **Figure base (GitHub `main`):**  
@@ -14,7 +23,7 @@
 
 ## 0 · Setup, health, and data
 
-The **Setup** chapter includes a **health check** (indexes, event counts, time range, **Splunk** and **app** version) plus **Readme**, **What’s new**, follow-up links, and **credits**. If an index is red, create it under **Settings → Data → Indexes** and enable the matching **Data inputs** in the app.
+The **Setup** chapter includes a **health check** (indexes, event counts, time range, **Splunk** and **app** version) plus **Readme**, **What’s new**, follow-up links, and **credits**. If an index is confirmed missing, create it under **Settings → Data → Indexes** and enable the matching **Data inputs** in the app. A failed check is not proof that an index is missing: resolve session, permission, or connection errors and refresh first.
 
 
 | Index (examples)                      | Role                                                                                |
@@ -35,7 +44,7 @@ Setup — health check
 
 ## 1 · Settings & preferences
 
-Topics in the app: **Search Assistant**, line numbers, **themes**, **search modes** (fast / smart / verbose), **auto-format** and **keyboard shortcuts**, **inline comments**, **user language & locale**, **Splunk AI Assistant**, and **useful links**.
+Topics in the app: **Search Assistant**, line numbers, **themes**, **search modes** (fast / smart / verbose), **auto-format** and **keyboard shortcuts**, **inline comments**, **user language & locale**, and **Splunk AI Assistant**. Follow-up links are on **Setup**.
 
 ### Search Assistant & stock index lab (examples from the UI)
 
@@ -225,7 +234,7 @@ The **interactive quiz** tests search behaviour (including **tstats** and edge c
 
 ---
 
-## 4 · Metrics
+## Legacy · Metrics
 
 **Concepts:** measures + dimensions, **metric** indexes, `**mstats`** / `**mcatalog**`, `mcollect` from events, **Analytics Workspace**.
 
@@ -257,7 +266,7 @@ Metrics — searching (workshop UI)
 
 ---
 
-## 5 · Classic (Simple XML) dashboards
+## Legacy · XML Dashboards
 
 **Workshop subtopics:** [Base search](#51-base-search-and-post-process) · [Drilldown & time tokens](#52-drilldown) · [Token switches](#53-tokens) · [Annotations](#54-annotations) · [Colors](#55-field-and-series-colors) · [Pseudonymization / field protection](#56-pseudonymization)
 
@@ -361,9 +370,13 @@ Hiding or replacing sensitive fields in dashboards (e.g. usernames, IPs) is cove
 
 ---
 
-## 6 · Dashboard Studio
+## 4 · Dashboard Studio
 
-**Workshop subtopics:** [Concepts & layout](#60-concepts) · [Base & chain data sources](#61-base-and-chain-searches-json) · [Tokens & interactivity](#62-tokens-and-interactivity) · [Tabs, trellis, images, custom viz, Canvas, publish](#63-layout-sharing-and-canvas) · [Documentation links](#64-dashboard-studio-documents)
+**Live pages:** Overview, Chain Searches, Token Kitchen, Image Upload, Custom Viz, Sharing. Token Kitchen has a simplified in-page preview and a link to the real `ch6_ds_token_kitchen` dashboard; use the dashboard for the Studio editor steps. Custom Viz is the `@splunk/dashboard-studio-extension` exercise. The Canvas visualization library is not a workshop chapter.
+
+**Reference notes below** still cover chain searches, tokens, images, and publishing. Tabs, trellis, and the Canvas library are documentation, not current workshop pages.
+
+**Workshop subtopics:** [Concepts & layout](#60-concepts) · [Base & chain data sources](#61-base-and-chain-searches-json) · [Tokens & interactivity](#62-tokens-and-interactivity) · [Images, custom viz, publish](#63-layout-sharing-and-canvas) · [Documentation links](#64-dashboard-studio-documents)
 
 Dashboard Studio — overview (workshop UI)
 
@@ -450,15 +463,14 @@ Then chain: `| stats count by host`, etc.
 
 Default values live under `tokens.defaultTokenValues` so the first load is deterministic.
 
-### 6.3 Layout, sharing, and Canvas
+### 6.3 Images, custom viz, and publishing
 
-- **Custom React/D3** extensions require build pipeline; the workshop **Custom visualization** and **Canvas** steps describe three approaches.  
-- **Canvas 2D library (Robert Castley):** [splunk-custom-visualizations (GitHub)](https://github.com/rcastley/splunk-custom-visualizations) — clone, `npm` build, install; [live static demo (no Splunk required)](https://rcastley.github.io/splunk-custom-visualizations/).  
+- **Custom viz** in the workshop is the Dashboard Studio exercise: scaffold a bar chart with `@splunk/dashboard-studio-extension`, draw it, and install it.
 - **Publish without login (Enterprise 10.0+ / supported Cloud):** from **Edit → Publish** set refresh + expiry, share URL; data runs as **publishing user**. [Publish dashboards](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/publishDashboard)  
 - [Maps and interactivity (blog)](https://www.splunk.com/en_us/blog/platform/dashboard-studio-more-maps-more-interactivity.html)  
 - Education: [Introduction to dashboards (Splunk Education)](https://education.splunk.com/course/introduction-to-dashboards) · [Dynamic dashboards](https://education.splunk.com/course/dynamic-dashboards)
 
-**Inline SVG in DS:** bind fields to `viz.svg` options for lightweight custom graphics (workshop: **Layout** / images).
+**Inline SVG in DS:** bind fields to `viz.svg` options for lightweight custom graphics (workshop: **Image Upload**).
 
 ### 6.4 Dashboard Studio — document index
 
@@ -467,11 +479,9 @@ Default values live under `tokens.defaultTokenValues` so the first load is deter
 - [Data source options: `ds.search` / `ds.chain](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/chainSearch)` (same as chain)  
 - [Add visualizations to Dashboard Studio](https://docs.splunk.com/Documentation/Splunk/latest/DashStudio/Visualization) (topic hub)
 
-Dashboard Studio — Canvas library (workshop UI)
-
 ---
 
-## 7 · Splunk Mobile 
+## Legacy · Mobile 
 
 1. Install **Splunk Mobile** — [iOS (iPhone)](https://apps.apple.com/us/app/splunk-mobile/id1420299852) · [Android](https://play.google.com/store/apps/details?id=com.splunk.android.alerts) · [iPad](https://apps.apple.com/us/app/splunk-for-ipad/id1568523145)
 2. **Splunk Secure Gateway (SSG):** [Requirements / administer](https://docs.splunk.com/Documentation/SecureGateway/latest/Admin/Requirements) · [SSG security](https://docs.splunk.com/Documentation/SecureGateway/3.4.251/Admin/Security) · [Register a device (User)](https://docs.splunk.com/Documentation/SecureGateway/latest/User/RegisterorUnregisteraDevice)
@@ -582,4 +592,4 @@ For Splunk Cloud, create HEC tokens through the Cloud-supported admin flow, such
 
 ---
 
-*Handout version aligned with the Splunk4Champions2 workshop app structure (chapters 0–7). Screenshots: GitHub `main` branch. Contact: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)*
+*Handout aligned with Splunk4Champions2 **2.16.0**. Live path is 1–5, then Legacy, then Setup. Screenshots: GitHub `main` branch. Contact: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)*

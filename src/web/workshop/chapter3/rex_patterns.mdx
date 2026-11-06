@@ -25,7 +25,7 @@ The cleanest `rex` produces one or more named fields with `(?<name>pattern)`. Th
 A single `rex` can produce many fields in one pass. Order doesn't matter, but readability does — anchor and label deliberately.
 
 <SplunkSearch spl={`index=s4c_www
-| rex "(?<method>GET|POST|PUT|DELETE) (?<path>\\S+) HTTP/(?<http_ver>\\d\\.\\d)"
+| rex "(?<method>GET|POST|PUT|DELETE) (?<path>\\S+) HTTP (?<http_ver>\\d\\.\\d)"
 | stats count by method http_ver | sort -count`} />
 
 > **Why this matters:** one regex evaluation, three fields. Cheaper than chaining three `| rex` commands.
