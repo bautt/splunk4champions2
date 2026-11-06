@@ -8,9 +8,18 @@ import Link from '@splunk/react-ui/Link'
 
 # Welcome to the Splunk4Champions Workshop
 
+**Current app version: 2.16.0**
+
 An interactive, hands-on Splunk workshop delivered as a Splunk app. Participants follow guided labs through this React UI embedded directly in Splunk — no slides, everything runs inside the platform.
 
 Built for experienced Splunk users: admins, use case developers, and champions who want to go deeper.
+
+## New in 2.16.0
+
+- Refreshed UI stack: React 18.3.1, Splunk React UI 5.18.0, Search 8.0.0, and Dashboard framework 29.9.0.
+- Persistent, dismissible clipboard feedback, clearer Health Check diagnostics, and lesson loading/retry controls.
+- Horizontally scrollable tabs without overlapping labels on narrow screens.
+- Token Kitchen includes a simplified preview and a link to the real Studio dashboard for the editor exercises.
 
 ## Who should attend
 
@@ -22,23 +31,26 @@ Built for experienced Splunk users: admins, use case developers, and champions w
 
 | Chapter | Topics |
 |---------|--------|
-| **0 · Setup** | Health Check — verify indexes and app/Splunk version at a glance; Readme; What's new |
-| **1 · Settings** | GUI options, Search Assistant, Stock Index Search & tstats |
+| **1 · Settings** | GUI options, Search Assistant, search modes, SPL readability, language, AI Assistant |
 | **2 · Data** | Indexes, buckets, data pipeline, distributed architecture, data aging |
 | **3 · Search** | Search basics, **SPL2**, command types, Job Inspector, terms/segmentation, tstats, search tips, **MCP** (optional), quiz |
-| **4 · Metrics** | Log-to-metrics, mcollect, mcatalog, mstats, weather data reference, stock index metrics lab |
-| **5 · XML Dashboards** | Base search, drilldown, annotations, colors, post-processing |
-| **6 · Dashboard Studio** | Tutorial, data sources, interactivity, layout, custom visualizations, canvas viz library, sharing |
-| **7 · Mobile** | Splunk Mobile overview and demo |
-| **8 · Champion Quiz** | Kahoot-style quiz to test what you learned — timed questions, instant feedback, time-decayed scoring. Edit questions in `web/workshop/chapter8/quiz.mdx` (`<Question>`, `<TrueFalse>`, `multi` for multi-answer). |
+| **4 · Dashboard Studio** | Overview, chain searches, token kitchen, image upload, custom viz exercise, sharing |
+| **5 · Champion Quiz** | Kahoot-style quiz. Edit questions in `web/workshop/chapter8/quiz.mdx`. |
+| **Legacy · Metrics** | Log-to-metrics, mcollect, mcatalog, mstats, weather and stock metric labs |
+| **Legacy · XML Dashboards** | Base search, drilldown, annotations, colors, post-processing |
+| **Legacy · Mobile** | Splunk Mobile overview and gateway setup |
+| **Setup** | Health Check, Large Room, colour scheme, Readme, What's new, links, credits |
 
 ## Installation
 
 Download the latest release from the <Link to="https://github.com/bautt/splunk4champions2/releases/" openInNewContext>Releases</Link> page and install as a standard Splunk app.
 
-- Compatible with Splunk 8+
-- Works on Splunk Cloud
 - Not intended for production systems — no warranty
+
+Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5. Older
+Splunk releases and Splunk Cloud were not validated with the upgraded UI stack.
+The custom visualization exercise requires Splunk Enterprise 10.4+ or an equivalent
+Cloud release.
 
 If you have access to <Link to="https://show.splunk.com" openInNewContext>show.splunk.com</Link>, the workshop is available on Splunk Show.
 
@@ -60,7 +72,7 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 ### `s4c_meteo` (events)
 
 - **Ingestion:** `open_meteo_weather.py` in **events** mode — flat JSON with plain field names (`open_meteo:weather:json` sourcetype), on a **five-minute** schedule.
-- **Content:** Open-Meteo current weather for the configured **city/region** (temperature, cloud cover, etc.) as a normal **event** index; good for ad hoc SPL, timecharts, and the weather pipeline in Chapter 4.
+- **Content:** Open-Meteo current weather for the configured **city/region** (temperature, cloud cover, etc.) as a normal **event** index; good for ad hoc SPL, timecharts, and the weather pipeline in Legacy → Metrics.
 - **Use for:** “Live” open-meteo event shapes next to the metrics pipeline; search-time field extraction, formatting, and comparison with `s4c_meteo_metrics`.
 
 ### `s4c_meteo_historic` (events)
@@ -72,14 +84,14 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 ### `s4c_meteo_metrics` (metrics)
 
 - **Ingestion:** Same `open_meteo_weather.py` in **metrics** mode, mapping fields into a **metric** schema (`open_meteo:weather:metric` sourcetype), **five-minute** schedule.
-- **Content:** **Metric** time series (Open-Meteo weather) — use **`mstats`**, `mcatalog`, and metrics workflows in the **Metrics** and **Analytics** labs.
-- **Use for:** **Chapter 4** (metrics store, mstats, Analytics Workspace) alongside log-to-metrics concepts; contrast with the event index `s4c_meteo` and the historic CSV-backed index above.
+- **Content:** **Metric** time series (Open-Meteo weather) — use **`mstats`**, `mcatalog`, and the metrics workflows under **Legacy → Metrics**.
+- **Use for:** **Legacy → Metrics** (metrics store, `mstats`) alongside log-to-metrics concepts; contrast with the event index `s4c_meteo` and the historic CSV-backed index above.
 
 ### `s4c_phyphox` (events)
 
 - **Ingestion:** Optional administrator-created HEC token for JSON from the <Link to="https://phyphox.org/" openInNewContext>Phyphox</Link> phone app.
 - **Content:** Sensor and experiment events (structured JSON) for hands-on “bring your own device” data.
-- **Use for:** **Experiments** chapter: HTTP Event Collector, JSON parsing, and optional correlation with the companion metrics index.
+- **Use for:** **Legacy → Metrics → Phyphox**: HTTP Event Collector, JSON parsing, and optional correlation with the companion metrics index.
 
 ### `s4c_phyphox_metrics` (metrics)
 
@@ -91,11 +103,11 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 
 - **Ingestion:** Daily scripted input `update_stock_indices.py` (Yahoo-style daily bars; JSON lines, `s4c:stock_indices:json`).
 - **Content:** **Daily OHLCV** per **symbol** and **index** for **nine** global indices; each event includes e.g. `date`, `symbol`, `index_name`, **`exchange_city`**, and prices/volume. **`_time` is UTC midnight for the trading day** (for reliable joins to calendar `date` and meteo).
-- **Use for:** **Chapters 1, 3, 4** — search, tstats, stock+weather correlation, and **`mcollect`** / metrics exercises when converted to the student metrics index.
+- **Use for:** **Search**, stock and weather correlation, and **`mcollect`** in **Legacy → Metrics** when converted to the student metrics index.
 
 ### `s4c_student_metrics` (metrics)
 
-- **Ingestion:** Not pre-filled: participants run **`mcollect` from searches** in the app (e.g. stock or weather) during **Chapter 4** labs, after the index exists.
+- **Ingestion:** Not pre-filled: participants run **`mcollect` from searches** in the app (e.g. stock or weather) during the **Metrics** labs (Legacy), after the index exists.
 - **Content:** A **dedicated practice metrics index** so you can test **`mcollect`**, **`mcatalog`**, and **`mstats`** without writing into production metric indexes. Prefixes like `stocks.*` or fields such as `city` appear as defined in the lab.
 - **Use for:** **Metrics** labs only — verify with the **Setup** health check that the index is present, then use the copy-paste searches from the workshop.
 
@@ -103,7 +115,7 @@ The health check in **Setup** lists the indexes the workshop expects. Below is w
 
 - **Ingestion:** `tutorialdata.zip` in `static/` (monitor input), with paths exposed as in the app config.
 - **Content:** **Web-style access records** and related tutorial lines used as a **familiar, bounded** sample for first searches and many dashboard examples.
-- **Use for:** **Chapters 3, 5, 6** — `stats`, timecharts, drilldowns, and Dashboard Studio / XML without depending on your production data.
+- **Use for:** **Search**, **Legacy → XML Dashboards**, and **Dashboard Studio** — `stats`, timecharts, and drilldowns without depending on your production data.
 
 ### `s4c_weather` (events)
 
@@ -152,8 +164,6 @@ Workshop content is collected, consolidated, and adapted from public .conf prese
 - Suggestions and improvements welcome: <Link to="mailto:tbaublys@splunk.com" openInNewContext>tbaublys@splunk.com</Link>
 - Ongoing workshop updates and refinements with **Cursor**
 - **Henri Mak** created a bunch of DS dashboards and examples
-
-**Canvas Visualizations** section powered by <Link to="https://github.com/rcastley/splunk-custom-visualizations" openInNewContext>splunk-custom-visualizations</Link> by **Robert Castley** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
 
 ### Special thanks for public content
 

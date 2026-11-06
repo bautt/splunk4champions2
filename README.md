@@ -30,15 +30,15 @@ Splunk4Champions helps experienced users move from "I can search" to "I understa
 
 | Chapter | Focus | Outcome |
 |---------|-------|---------|
-| **Setup** | Health Check, readiness, links, release highlights | Confirm the app, indexes, data, Splunk version, and app version are ready before labs begin |
 | **1 · Settings** | UI preferences, search modes, Search Assistant, AI Assistant | Tune the Splunk working environment and avoid expensive search UI habits |
 | **2 · Data** | Indexes, buckets, pipeline, clustering, data aging, SmartStore | Understand how Splunk stores data and why architecture affects search behavior |
 | **3 · Search** | SPL/SPL2, command types, Job Inspector, terms, `tstats`, bad searches, investigation lab, MCP | Build faster, clearer, more explainable searches |
-| **4 · Metrics** | Metric indexes, `mcollect`, `mcatalog`, `mstats`, weather, stocks, Phyphox | Compare event and metric workflows and build efficient time-series searches |
-| **5 · XML Dashboards** | Base searches, drilldowns, tokens, annotations, colors, pseudonymization | Learn durable classic dashboard patterns still used in many Splunk estates |
-| **6 · Dashboard Studio** | Data sources, interactivity, layouts, custom visualizations, canvas viz library, sharing | Build modern, interactive dashboards with reusable data sources and richer visuals |
-| **7 · Mobile** | Splunk Mobile setup and overview | See how Splunk content can support mobile workflows |
-| **8 · Champion Quiz** | Timed questions, instant feedback, final score | Reinforce workshop concepts and close the session with an interactive recap |
+| **4 · Dashboard Studio** | Overview, chain searches, token kitchen, image upload, custom viz exercise, sharing | Build a Studio dashboard, then a chart Studio does not ship |
+| **5 · Champion Quiz** | Timed questions, instant feedback, final score | Reinforce workshop concepts and close the session with an interactive recap |
+| **Legacy · Metrics** | Metric indexes, `mcollect`, `mcatalog`, `mstats`, weather, stocks, Phyphox | Compare event and metric workflows and build efficient time-series searches |
+| **Legacy · XML Dashboards** | Base searches, drilldowns, tokens, annotations, colors, pseudonymization | Learn durable classic dashboard patterns still used in many Splunk estates |
+| **Legacy · Mobile** | Splunk Mobile setup and overview | See how Splunk content can support mobile workflows |
+| **Setup** | Health Check, Large Room, colour scheme, Readme, What's new, links, credits | Confirm the app and indexes, and set the room display |
 
 ## Lab descriptions
 
@@ -46,7 +46,7 @@ Splunk4Champions helps experienced users move from "I can search" to "I understa
 
 The Setup chapter starts with a Health Check that validates the expected workshop indexes, event counts, metric counts, time ranges, Splunk version, and app version. It also includes the in-app Readme, What's New, follow-up links, and credits.
 
-For trainers, the workshop includes a Large Room display mode with larger typography and spacing for projected delivery, plus an optional workshop colour scheme picker (Blue / Navy, Brown / Dark Red, Blue / Yellow, Pink / Orange) tucked under the health check so the same app can be re-themed per audience without code changes.
+For trainers, the Setup page includes a Large Room display mode with larger typography and spacing for projected delivery, and a colour scheme picker (Blue / Navy, Brown / Dark Red, Blue / Yellow, Pink / Orange) on the same page.
 
 ### 1 · Settings
 
@@ -93,7 +93,7 @@ The Search chapter is the core SPL and search-performance section. It includes:
 
 The goal is not only to teach commands, but to help participants reason about why a search is fast, slow, safe, or hard to maintain.
 
-### 4 · Metrics
+### Legacy · Metrics
 
 The Metrics chapter introduces metric indexes and time-series search patterns:
 
@@ -106,7 +106,7 @@ The Metrics chapter introduces metric indexes and time-series search patterns:
 
 Participants compare event and metric representations and learn when each is the right fit.
 
-### 5 · XML Dashboards
+### Legacy · XML Dashboards
 
 Classic XML dashboards remain important in many Splunk environments. This chapter covers:
 
@@ -119,26 +119,22 @@ Classic XML dashboards remain important in many Splunk environments. This chapte
 
 The goal is to teach maintainable dashboard patterns and avoid repeated expensive searches.
 
-### 6 · Dashboard Studio
+### 4 · Dashboard Studio
 
-Dashboard Studio is covered as the modern dashboarding path:
+Dashboard Studio is six pages:
 
-- Dashboard Studio concepts
-- First dashboard tutorial
-- Base and chain searches
-- Tokens, buttons, and conditional panels
-- Images, annotations, tabs, and trellis layout
-- Custom visualization approaches
-- Canvas visualizations by Robert Castley
-- Publishing without login
+- Overview
+- Chain searches
+- Token kitchen
+- Image upload
+- Custom viz exercise (`@splunk/dashboard-studio-extension`, plain JavaScript)
+- Sharing a dashboard without a login
 
-Participants learn how to separate data sources, layout, and interaction design.
-
-### 7 · Mobile
+### Legacy · Mobile
 
 This chapter introduces Splunk Mobile, gateway setup, adding a device, and consuming Splunk content through mobile workflows.
 
-### 8 · Champion Quiz
+### 5 · Champion Quiz
 
 The final chapter is a Kahoot-style knowledge check with timed questions, instant feedback, and time-decayed scoring. It can be used as a live recap, a trainer-led discussion prompt, or a self-check after the workshop.
 
@@ -146,9 +142,13 @@ The final chapter is a Kahoot-style knowledge check with timed questions, instan
 
 Download the latest release from the [Releases page](https://github.com/bautt/splunk4champions2/releases/) and install as a standard Splunk app.
 
-- Compatible with Splunk 8+
-- Works on Splunk Cloud
 - Not intended for production systems — no warranty
+- Current app version: **2.16.0**
+
+Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5.
+The custom visualization exercise requires Splunk Enterprise 10.4+ or an
+equivalent Splunk Cloud release; the UI upgrade was not validated on older
+Splunk releases or in Splunk Cloud.
 
 If you have access to **show.splunk.com**, the workshop is available on Splunk Show.
 
@@ -167,7 +167,7 @@ Recommended delivery flow:
 1. Open **Setup** and resolve any Health Check issues.
 2. Use **Settings** to align UI preferences across participants.
 3. Teach **Data** before deep **Search** labs so the performance topics have context.
-4. Use **Metrics** and **Dashboard Studio** as the practical build sections.
+4. Use **Dashboard Studio** as the practical build section. Metrics stays under Legacy.
 5. Finish with the **Champion Quiz** for recap and discussion.
 
 ## Handout and flyer
@@ -203,14 +203,22 @@ The app ships with curated `s4c_*` data so labs do not depend on customer produc
 
 ## Recent highlights
 
-- Setup Health Check with actionable index and data-status hints
-- Large Room display mode for trainer-led delivery
-- Workshop-wide colour scheme picker (Blue / Navy, Brown / Dark Red, Blue / Yellow, Pink / Orange) re-themes navigation, tables, lab callouts, and primary buttons together
-- Expanded Search chapter with SPL2 and optional MCP content
-- Champion Quiz chapter with timed, interactive questions
-- Dashboard Studio tutorial, interactivity, custom visualizations, and publishing examples
-- Metrics labs with weather, stock index, and Phyphox data
+- **2.16.0 UI refresh:** React 18.3.1, Splunk React UI 5.18.0, Search 8.0.0, and Dashboard framework 29.9.0
+- Persistent, dismissible clipboard messages replace deprecated toast notifications
+- Health Check distinguishes missing/empty indexes from permission, session, network, and timeout errors
+- Lesson loading indicators and retry controls for loading or rendering failures
+- Nonshrinking, horizontally scrollable navigation tabs on narrow screens
+- Token Kitchen includes a simplified in-page preview and a link to the real Studio dashboard
+- Large Room display mode and a visible colour scheme picker on Setup
+- Live path: 1 Settings, 2 Data, 3 Search, 4 Dashboard Studio, 5 Champion Quiz
+- Legacy tab for Metrics, XML Dashboards, and Mobile
+- Dashboard Studio: chain searches, Token Kitchen, image upload, a custom viz exercise, and publishing
+- Metrics labs with weather, stock index, and Phyphox data, under Legacy
 - Standard-library stock and weather update scripts where possible
+
+See [What's New](WHATS_NEW.md) for release details and the
+[development README](README_development.md) for Node.js 22+, dependency
+compatibility, and validation commands.
 
 ## Phyphox experiments
 
@@ -260,19 +268,14 @@ Verify index status, event counts, and date ranges. Shows Splunk and app version
 #### Chapter 3 — Search: tstats
 ![tstats](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_tstats.png)
 
-#### Chapter 4 — Metrics: Searching Metrics
+#### Legacy — Metrics: Searching Metrics
 ![Metrics](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch4_metrics_searching.png)
 
-#### Chapter 5 — XML Dashboards: Base Search
+#### Legacy — XML Dashboards: Base Search
 ![XML Dashboards](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch5_xml_dashboards_base_search.png)
 
-#### Chapter 6 — Dashboard Studio: Overview
+#### Chapter 4 — Dashboard Studio: Overview
 ![Dashboard Studio](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_overview.png)
-
-#### Chapter 6 — Dashboard Studio: Canvas Visualizations by Robert Castley
-Production-ready Splunk Canvas 2D API visualizations — cloned, built, and invoked directly with no Splunk experience required. No future development dependency or Cursor required.
-
-![Canvas Viz](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_canvas_viz.png)
 
 ---
 
@@ -284,8 +287,6 @@ Workshop content is collected, consolidated, and adapted from public .conf prese
 - Version 2.0 rebuilt by **Tomas Baublys** on the Splunk UI template by **Daniel Federschmidt**
 - Suggestions and improvements welcome: [tbaublys@splunk.com](mailto:tbaublys@splunk.com)
 - Ongoing workshop updates and refinements with **Cursor**
-
-**Canvas Visualizations** section powered by [splunk-custom-visualizations](https://github.com/rcastley/splunk-custom-visualizations) by **Robert Castley** — a library of production-ready Canvas 2D API visualizations for Dashboard Studio.
 
 ### Special thanks for public content
 Martin Müller · Clara Merriman · Richard Morgan · and many others linked throughout the app

@@ -1,0 +1,56 @@
+html, body, #root {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.workshop-bars {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    padding: 16px;
+    background: #ffffff;
+    color: #1a1a1a;
+    font: 14px/1.5 Arial, sans-serif;
+}
+
+.workshop-bars[data-theme='dark'] {
+    background: #1a1c21;
+    color: #e2e8f0;
+}
+
+.bar-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bar-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.bar-label {
+    width: 120px;
+    flex-shrink: 0;
+    overflow-wrap: anywhere;
+}
+
+.bar-track {
+    display: block;
+    flex-shrink: 0;
+}
+
+.bar-fill {
+    display: block;
+    height: 20px;
+    border-radius: 3px;
+}
+
+.bar-value {
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+}

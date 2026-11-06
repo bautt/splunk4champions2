@@ -10,7 +10,7 @@ fontsize: 10pt
 # Splunk4Champions Workshop Handout
 
 **Workshop app:** `splunk4champions2`  
-**Current build referenced:** `2.11.77`  
+**Current build referenced:** `2.16.0`  
 **Repository:** <https://github.com/bautt/splunk4champions2>  
 **Workshop UI:** `https://<your-splunk>/en-GB/app/splunk4champions2/lab`  
 **Contact:** `tbaublys@splunk.com`
@@ -32,18 +32,18 @@ The workshop is built for experienced Splunk users who want to move beyond basic
 - Indexes, buckets, data aging, SmartStore concepts, and the data pipeline
 - Search fundamentals, SPL2, command types, Job Inspector, terms, `tstats`, and performance patterns
 - Metrics workflows with `mcollect`, `mcatalog`, `mstats`, weather data, stock index data, and Phyphox sensor data
-- XML dashboards and Dashboard Studio dashboards
-- Custom visualizations and Canvas visualization examples
-- Splunk Mobile concepts
+- XML dashboards (Legacy) and Dashboard Studio
+- A custom visualization exercise inside Dashboard Studio
+- Splunk Mobile concepts (Legacy)
 - Final Champion Quiz to check knowledge across the whole workshop
 
 ## How to use the workshop app
 
 1. Open the workshop UI from the Splunk app navigation.
 2. Start with **Setup** and verify the Health Check.
-3. Work through chapters in order, or jump to the topic you need.
+3. Work the live path in order: Settings, Data, Search, Dashboard Studio, Champion Quiz. Metrics, XML Dashboards, and Mobile are under **Legacy**.
 4. Use the URL hash and browser bookmarks to return to a chapter or section.
-5. For live delivery, use the **Large Room** display mode when projecting.
+5. For live delivery, use **Large Room** and the colour scheme on **Setup**. Both stay visible there.
 
 The app stores your navigation state in the URL hash. Browser back/forward and direct links can be used during a class.
 
@@ -62,7 +62,7 @@ Key items:
 - Readme, What's New, follow-up links, and credits
 - Trainer-friendly display mode for larger rooms
 
-If the Health Check shows a red index, create the index under **Settings -> Data -> Indexes** and enable the matching app data input. If an index exists but is empty, check the monitor input or scripted input listed by the Health Check.
+If the Health Check confirms a missing index, create it under **Settings -> Data -> Indexes** and enable the matching app data input. If an index exists but is empty, check the monitor input or scripted input listed by the Health Check. Failed checks are not proof of missing data: resolve session, permission, network, or timeout errors and refresh first.
 
 ## 1. Settings
 
@@ -116,7 +116,37 @@ Covered topics:
 
 Practical takeaway: participants learn not just what SPL commands do, but why some searches are faster, safer, or more scalable than others.
 
-## 4. Metrics
+## 4. Dashboard Studio
+
+Dashboard Studio is six pages.
+
+Covered topics:
+
+- Overview
+- Chain searches
+- Token Kitchen: simplified in-page preview plus a link to the real Studio dashboard for editor exercises
+- Image upload
+- Custom viz exercise with `@splunk/dashboard-studio-extension`
+- Sharing a dashboard without a login
+
+Practical takeaway: participants build one Studio dashboard, then a chart Studio does not ship.
+
+## 5. Champion Quiz
+
+The final numbered chapter is a Kahoot-style knowledge check across the workshop.
+
+Covered topics:
+
+- Timed questions
+- Single-choice, true/false, and multi-answer patterns
+- Instant feedback
+- Time-decayed scoring
+
+Practical takeaway: the quiz gives participants a memorable end point and helps trainers reinforce the main ideas.
+
+## Legacy · Metrics
+
+This chapter is under **Legacy**. It is not on the numbered path.
 
 This chapter introduces Splunk metric indexes and metric search patterns.
 
@@ -140,7 +170,9 @@ Core commands and concepts:
 
 Practical takeaway: participants learn when to use event indexes versus metric indexes, and how to build efficient metric searches.
 
-## 5. XML Dashboards
+## Legacy · XML Dashboards
+
+This chapter is under **Legacy**. It is not on the numbered path.
 
 This chapter covers classic Splunk XML dashboards.
 
@@ -155,27 +187,9 @@ Covered topics:
 
 Practical takeaway: participants understand proven XML dashboard patterns that still matter in many Splunk environments.
 
-## 6. Dashboard Studio
+## Legacy · Mobile
 
-This chapter introduces Dashboard Studio concepts and modern dashboard building.
-
-Covered topics:
-
-- Dashboard Studio concepts
-- Building a first dashboard
-- Base and chain searches
-- Tokens, buttons, and conditional panels
-- Working with images
-- Annotations
-- Tabbed dashboards
-- Trellis layout
-- Custom visualizations
-- Canvas visualizations by Robert Castley
-- Publishing without login
-
-Practical takeaway: participants learn how to create modern dashboards with richer layouts, data sources, interactivity, and visual composition.
-
-## 7. Mobile
+This chapter is under **Legacy**. It is not on the numbered path.
 
 This chapter introduces Splunk Mobile.
 
@@ -187,19 +201,6 @@ Covered topics:
 - Mobile dashboard and alert experience
 
 Practical takeaway: participants see how Splunk content can move beyond desktop dashboards into mobile workflows.
-
-## 8. Champion Quiz
-
-The final chapter is a Kahoot-style knowledge check across the workshop.
-
-Covered topics:
-
-- Timed questions
-- Single-choice, true/false, and multi-answer patterns
-- Instant feedback
-- Time-decayed scoring
-
-Practical takeaway: the quiz gives participants a memorable end point and helps trainers reinforce the main ideas.
 
 \newpage
 
@@ -375,24 +376,24 @@ The current workshop has been refreshed across content, UI, and data.
 
 ## Current content highlights
 
-- Setup Health Check with actionable index and data-status hints
-- Large Room display mode for trainer-led delivery
-- Expanded Search chapter with SPL2 and optional MCP content
-- Champion Quiz chapter with timed, interactive questions
-- Dashboard Studio tutorial, interactivity, custom visualizations, and publishing examples
-- Metrics labs with weather, stock index, and Phyphox data
+- Version 2.16.0 refreshes Splunk UI and React 18, adds persistent dismissible clipboard feedback, improves Health Check diagnostics and lesson loading/retry, and prevents overlapping navigation labels on narrow screens.
+- Locally smoke-tested on Splunk Enterprise 10.6.0.5. The custom visualization exercise requires 10.4+ or an equivalent Cloud release; the upgraded UI stack was not validated on older releases or in Cloud.
+- Setup Health Check, Large Room, and a visible colour scheme picker
+- Live path: Settings, Data, Search, Dashboard Studio, Champion Quiz
+- Legacy tab for Metrics, XML Dashboards, and Mobile
+- Dashboard Studio: chain searches, Token Kitchen preview and real-dashboard link, images, custom viz, and sharing
+- Metrics labs with weather, stock index, and Phyphox data, under Legacy
 
 ## Recent data model highlights
 
 - `s4c_stock_indices` provides up to 10 years of daily OHLCV data for nine major indices.
 - `s4c_meteo_historic` aligns historical weather cities with stock exchange cities.
-- `demo_metrics` lookup is explicit for Dashboard Studio examples.
 - Open-Meteo and stock update scripts use Python standard library dependencies where possible.
 
 ## Trainer delivery notes
 
 - Start with Setup Health Check before any chapter.
-- Use Large Room mode when projecting.
+- Use Large Room and the colour scheme on Setup when projecting.
 - Encourage participants to bookmark URL hashes for labs they want to revisit.
 - Keep the Search chapter hands-on: Job Inspector and bad search examples land best when participants run them.
 - Use the final quiz as a recap and discussion starter rather than only as a score.

@@ -1,4 +1,4 @@
-.PHONY: dev fetch-current-log package deploy deploy_show appinspect
+.PHONY: dev fetch-current-log package package-cloud deploy deploy_show appinspect appinspect-cloud
 
 deps:
 	cd src/ && yarn install
@@ -50,4 +50,12 @@ deploy_show: fetch-current-log package
 	s4cshow.sh
 
 appinspect:
-	venv/bin/splunk-appinspect inspect splunk4champions2.tar.gz
+	splunk-appinspect inspect splunk4champions2.tar.gz
+
+# Splunk Cloud: slim tarball without bundled ingest data or outbound scripts.
+package-cloud: build
+	chmod +x scripts/package_cloud.sh
+	./scripts/package_cloud.sh
+
+appinspect-cloud: package-cloud
+	splunk-appinspect inspect splunk4champions2-cloud.tar.gz --mode precert --included-tags cloud --ci --max-messages all

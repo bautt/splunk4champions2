@@ -2,13 +2,43 @@ import Link from '@splunk/react-ui/Link'
 
 # What's new in the app
 
+## This build (2.16.0)
+
+- **UI refresh:** React 18.3.1, Splunk React UI 5.18.0, Search 8.0.0, and Dashboard framework 29.9.0. Builds require Node.js 22+.
+- **Clipboard feedback:** persistent, dismissible inline messages replace deprecated toasts. Success is shown only after copying completes; failures include manual-copy guidance.
+- **Health Check:** clearer session, permission, network, timeout, and response errors. Failed requests are not reported as empty indexes; version checks can succeed independently.
+- **Lesson recovery:** visible loading indicators and retry controls for failed loading or rendering.
+- **Token Kitchen:** the simplified preview links to the real Studio dashboard in a new tab. Use that dashboard for the editor instructions.
+- **Navigation:** tab labels keep their natural widths and scroll horizontally on narrow screens.
+- **Validation:** 11 component regression tests and the production build passed, plus local smoke checks on Splunk Enterprise 10.6.0.5. Non-blocking MapLibre and bundle-size build warnings remain; older Splunk versions and Splunk Cloud were not validated with this UI upgrade.
+
+## 2.15.0
+
+- **Live path:** 1 Settings, 2 Data, 3 Search, 4 Dashboard Studio, 5 Champion Quiz. **Setup** is the last tab.
+- **Legacy** holds Metrics, XML Dashboards, and Mobile. Those chapters stay in the app and are not numbered.
+- **Dashboard Studio is six pages:** Overview, Chain Searches, Token Kitchen, Image Upload, Custom Viz, and Sharing.
+- **Token Kitchen is on the page.** It walks the five token types with `makeresults`. It is not a separate dashboard, and it does not need a view refresh.
+- **Custom Viz** is that exercise inside Dashboard Studio, not its own chapter.
+- **Colour scheme** is on Setup, above the health check, and stays visible. Large Room is on the same page.
+- The Canvas visualization library is not a workshop chapter.
+
+## 2.14.0
+
+- **Setup** is the last tab again. Large Room and the colour scheme sit on that page, and the colour scheme is shown, not hidden behind a link.
+- **Dashboard Studio is six pages:** Overview, Chain Searches, Token Kitchen, Image Upload, Custom Viz, and Sharing. The first-dashboard tutorial, the separate tokens lecture, annotations, tabs, and trellis are no longer their own pages.
+- **Custom Viz** is the exercise inside Dashboard Studio. You scaffold a bar chart with `@splunk/dashboard-studio-extension`, draw it, and install it.
+- **Legacy** is the tab for Metrics, XML Dashboards, and Mobile. Those chapters stay in the app and off the numbered path.
+- **Canvas viz library removed.** The Robert Castley Canvas 2D library is no longer a workshop chapter.
+
+---
+
 The repository includes a root-level `WHATS_NEW.md` summary and the <Link to="https://github.com/bautt/splunk4champions2/releases" openInNewContext>Releases</Link> page remains the source for full tag descriptions on <Link to="https://github.com/bautt/splunk4champions2" openInNewContext>GitHub</Link>. Below: recent **app** versions in this build, then **highlights** from an earlier GitHub release so you can see the same story as the repo.
 
 If you build from source, the **exact** app version is shown on the **Setup** health check page and under **Settings → Apps → Splunk4Champions2**.
 
 ---
 
-## This build (2.11.77)
+## 2.11.77
 
 - **Workshop-wide colour schemes:** the Setup colour picker now restyles the whole workshop (top chapter bar, subchapter bar, table headers, lab callouts, complete-lab cards, primary search button, Setup toggles) instead of just the lab blocks. Four schemes: **Blue / Navy** (default), **Brown / Dark Red**, **Blue / Yellow** (Ukrainian flag intensity), and **Pink / Orange** (Splunk.com brand intensity).
 - **Live preview in the picker:** switching schemes immediately previews a `LabBlock` callout and a complete-lab card so trainers see the effect before committing.
@@ -82,11 +112,11 @@ If you build from source, the **exact** app version is shown on the **Setup** he
 
 - **Search basics:** reduced the index-discovery `tstats` example to a compact one-liner for easier teaching.
 
-## This build (2.11.27)
+## 2.11.27
 
 - **Navigation:** Each training chapter (**2–8**) ends with its own **Useful Links** subchapter (one `useful_links.mdx` per chapter folder). Link lists are no longer repeated after every topic step. **Chapter 7** bookmarks `…#sec=sevenMobile Links` still resolve (redirects to **Useful Links**).
 
-## This build (2.11.26)
+## 2.11.26
 
 - **SmartStore / data aging:** Chapter 2 labs refreshed — Splunk Lantern alignment, new **classic vs SmartStore-capable indexer** diagram, captions and copy tuned for indexing/search architecture.
 - **Embedded search bars:** SPL syntax highlighting unchanged; **line numbers** in the workshop preview are off (cleaner layout). In Splunk, turn line numbers on via **Settings → Search Preferences** if you want them while editing. Chapter 1 *Line numbers* step explains that split.

@@ -1,0 +1,57 @@
+<div className="s4c-lab-summary">
+
+**Goal:** one new project, with your own app id, and the three files you will edit.
+
+</div>
+
+Open an empty folder in your editor. Do not reuse an existing visualization project.
+
+Run **one** generator command. Put your initials in lowercase where it says `<initials>`. Letters, digits, and underscores only. If two people share initials, add a digit.
+
+<LabBlock title="Create the project">
+
+```text
+npx @splunk/create@latest --mode=dashboard-studio-extension workshop_bars_<initials>
+```
+
+</LabBlock>
+
+Never use `custom_viz_workshop`. That id belongs to the documentation app.
+
+| Question | Answer |
+|---|---|
+| Mode, if asked | Dashboard Studio Extension |
+| Template | **JavaScript**, not React |
+| Display name | Your name, then Custom Viz Workshop |
+| Description | My first chart |
+| Author | Your name |
+
+Confirm the download if the tool asks. If a question is unclear, stop and ask the trainer.
+
+Stay in the folder that contains `package.json`. If the generator created a subfolder, open that folder and start the terminal there.
+
+<LabBlock title="Install the project tools">
+
+```text
+yarn install
+```
+
+</LabBlock>
+
+This does not install anything into Splunk. Wait until the prompt returns. If it fails, stop. Do not run `yarn build` yet.
+
+| File | Job |
+|---|---|
+| `config.json` | The name in the chart menu, and the editor form |
+| `visualization.js` | Read the rows and draw |
+| `visualization.css` | Type, spacing, and bar height |
+
+The generator may name the folder after your app id. Look under `visualizations/` and use the folder you actually see. In the rest of this lab, `<viz>` means that folder. `src` is inside it, not next to `package.json`.
+
+<LabBlock title="Checkpoint">
+
+Show a partner the three files. Say which one controls how the bars look.
+
+You should also see `package.json`, `build.mjs`, `visualizations/`, and `node_modules/`.
+
+</LabBlock>

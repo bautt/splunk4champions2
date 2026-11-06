@@ -1,0 +1,33 @@
+<div className="s4c-lab-summary">
+
+**For the trainer.** Participants can skip this step. It is the prep list and the pacing gates.
+
+</div>
+
+Before the session:
+
+* Node.js 22 or newer, and Yarn 1.22 or newer, on the machines that will run the generator.
+* One agreed place to install student `.spl` packages. Not production.
+* The app id `custom_viz_workshop` is reserved. Students use `workshop_bars_<initials>`.
+* You have run the lab once with the English templates in `appserver/static/custom_viz/`.
+* Splunk is 10.4 or newer on the lab instance. Say so before anyone scaffolds.
+
+Wait for the room at these gates. Do not start the next block while half the room is still on the previous one.
+
+| After | Everyone can show |
+|---|---|
+| Scaffold | `package.json`, `node_modules`, and the three files |
+| First build | `dist/<viz>/visualization.js`, and they can say a build is not a working chart |
+| Draw the bars | CSS height 28px, and a second successful `yarn build` |
+| Install | Their `config.name` in Studio, with Web, Database, and Mail |
+| LLM | `showValues` off and on, and the saved dashboard still matches |
+
+The template tests live with the source workshop, not in this app:
+
+```text
+node --test workshop/pruefen.test.js
+```
+
+Run that from the Custom Viz Workshop repo when you change the English templates. A passing test is not a substitute for the Studio acceptance table.
+
+Storybook stays optional. Do not spend the room on a preview that failed to start.

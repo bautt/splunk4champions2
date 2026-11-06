@@ -15,7 +15,6 @@ function getSchemeFromBody() {
 
 export default function LabSchemeToggle() {
     const [scheme, setScheme] = useState(getSchemeFromBody);
-    const [expanded, setExpanded] = useState(false);
 
     const updateScheme = (next) => {
         if (typeof window === 'undefined') return;
@@ -23,25 +22,9 @@ export default function LabSchemeToggle() {
         setScheme(next);
     };
 
-    if (!expanded) {
-        return (
-            <p className="s4c-scheme-toggle-link">
-                <a
-                    href="#change-scheme"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setExpanded(true);
-                    }}
-                >
-                    change colour scheme
-                </a>
-            </p>
-        );
-    }
-
     return (
         <div className="displayModeToggle">
-            <h3>Workshop Colour Scheme</h3>
+            <h3>Colour scheme</h3>
             <p>Choose the colour theme applied across the workshop — top navigation, subchapter bar, tables, lab callouts and complete-lab cards.</p>
             <div className="displayModeToggleActions">
                 <Button

@@ -1,5 +1,38 @@
 # What's New — Splunk4Champions Workshop
 
+## Version 2.16.0
+
+- **UI stack refresh:** React/React DOM 18.3.1 with the React 18 page entry point; Splunk React UI 5.18.0, react-page 8.4.0, Search 8.0.0, themes 1.13.1, and icons 5.17.0.
+- **Dashboard framework:** context/core/presets/state aligned at 29.9.0, with visualization-context 28.9.1. Embedded Studio charts remain lazy-loaded.
+- **Supported build baseline:** Node.js 22+. Keep styled-components 5.3.11 and React 18 within the Splunk packages' supported peer ranges.
+- **Clipboard feedback:** deprecated toast notifications removed. Copy success appears only after the clipboard write completes; failures provide manual-copy guidance. Messages persist until dismissed or replaced.
+- **Health Check diagnostics:** distinguish missing/empty indexes from expired sessions, permission failures, malformed responses, network errors, and timeouts. Version requests fail independently, and stale refresh results are ignored.
+- **Lesson loading and recovery:** visible loading indicators, retry controls for failed imports and rendering, and protection against obsolete asynchronous loads.
+- **Token Kitchen:** the simplified in-page preview now links to the real `ch6_ds_token_kitchen` Studio dashboard in a new tab; editor instructions clearly refer to that dashboard.
+- **Narrow-screen navigation:** chapter and section tabs retain natural label widths and scroll horizontally rather than overlapping.
+- **Documentation:** README files, product notes, handouts, flyer, and in-app release highlights updated for 2.16.0.
+- **Validation:** all 11 component regression tests and the production build passed. Local smoke checks on Splunk Enterprise 10.6.0.5 covered Health Check, clipboard feedback, time-picker presets, colour schemes, Large Room, narrow-screen navigation, the embedded chart, the quiz landing page, and the dashboard link.
+- **Known limits:** non-blocking MapLibre dynamic-dependency and bundle-size build warnings remain. Older Splunk releases and Splunk Cloud were not validated with this UI upgrade. The custom visualization exercise requires Splunk Enterprise 10.4+ or an equivalent Cloud release.
+
+## Version 2.15.0
+
+- **Live path:** 1 Settings, 2 Data, 3 Search, 4 Dashboard Studio, 5 Champion Quiz. **Setup** is the last tab.
+- **Legacy** holds Metrics, XML Dashboards, and Mobile. Those chapters stay in the app and are not numbered.
+- **Dashboard Studio is six pages:** Overview, Chain Searches, Token Kitchen, Image Upload, Custom Viz, and Sharing.
+- **Token Kitchen is on the page.** It walks the five token types with `makeresults`. It is not a separate dashboard, and it does not need a view refresh.
+- **Custom Viz** is that exercise inside Dashboard Studio, not its own chapter.
+- **Colour scheme** is on Setup, above the health check, and stays visible. Large Room is on the same page.
+- The Canvas visualization library is not a workshop chapter.
+- Readme, handout, and flyer match this map.
+
+## Version 2.14.0
+
+- **Setup** is the last tab. Large Room and the colour scheme are on that page. The colour scheme is visible; it is no longer hidden behind a link.
+- **Dashboard Studio is six pages:** Overview, Chain Searches, Token Kitchen, Image Upload, Custom Viz, and Sharing.
+- **Custom Viz** is the exercise inside Dashboard Studio.
+- **Legacy** is the tab for Metrics, XML Dashboards, and Mobile.
+- **Canvas viz library removed** from the workshop.
+
 ## Version 2.11.x
 
 ---

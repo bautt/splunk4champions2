@@ -1,6 +1,19 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   Shell: Legacy bar, section nav
+   The chapter bar is the live path, then Legacy, then Setup.
+   Legacy holds Metrics, XML Dashboards, and Mobile as inner tabs.
+   Large Room and the colour scheme live on the Setup page.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+.s4c-shell {
+    display: flex;
+    flex-direction: column;
+}
+
 /* ── 1. Smooth tab transitions ─────────────────────────────────────────────── */
 .chapterBar div[role=tabpanel],
-.sectionBar div[role=tabpanel] {
+.sectionBar div[role=tabpanel],
+.overflowBar div[role=tabpanel] {
     animation: fadeIn 0.18s ease-in-out;
 }
 
@@ -16,6 +29,144 @@
 
 .chapterBar > div[role=tablist] button[aria-selected=true] svg {
     color: #1a4e80;
+}
+
+/* Legacy inner tab bar: slightly quieter than a top-level chapter bar. */
+.overflowBar > div[role=tablist] {
+    background: #f6f8fa;
+    border-bottom: 1px solid #d5dee6;
+    padding-top: 4px;
+}
+.overflowBar > div[role=tablist] button[aria-selected=true] {
+    background-color: rgba(26, 78, 128, 0.08) !important;
+}
+.overflowBar > div[role=tablist] button[aria-selected=true] svg {
+    color: #1a4e80;
+}
+
+/* Section navigation: named previous / next, replaces the floating arrows. */
+.s4c-section-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    max-width: 1200px;
+    margin: 16px auto 24px;
+    padding: 0 24px;
+}
+.s4c-section-nav__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    max-width: 46%;
+    padding: 8px 14px;
+    border: 1px solid #d5dee6;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #1a2a3a;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background 0.12s ease-out, border-color 0.12s ease-out;
+}
+.s4c-section-nav__btn:hover:not(:disabled) {
+    background: #f4f8fd;
+    border-color: #b3cee8;
+}
+.s4c-section-nav__btn:disabled {
+    color: #9aa8b5;
+    background: transparent;
+    border-color: #e3e9ef;
+    cursor: default;
+}
+.s4c-section-nav__btn-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.s4c-section-nav__arrow {
+    font-size: 18px;
+    line-height: 1;
+    color: #3d5166;
+    flex: none;
+}
+.s4c-section-nav__btn:disabled .s4c-section-nav__arrow {
+    color: #c3cbd4;
+}
+.s4c-section-nav__counter {
+    font-size: 12px;
+    color: #3d5166;
+    font-variant-numeric: tabular-nums;
+    min-width: 6rem;
+    text-align: center;
+}
+.s4c-large-room .s4c-section-nav__btn {
+    font-size: 15px;
+    padding: 10px 16px;
+}
+.s4c-large-room .s4c-section-nav__counter {
+    font-size: 14px;
+}
+
+/* WorkshopViz: panel wrapping a single Dashboard Studio visualization in a lab page. */
+.s4c-workshop-viz {
+    margin: 16px 0;
+    background: #ffffff;
+    border: 1px solid #d5dee6;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(26, 42, 58, 0.06);
+    overflow: hidden;
+}
+.s4c-workshop-viz__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 16px;
+    border-bottom: 1px solid #d5dee6;
+    background: #f6f8fa;
+    font-size: 13px;
+    color: #1a2a3a;
+}
+.s4c-workshop-viz__title {
+    font-weight: 650;
+}
+.s4c-workshop-viz__query {
+    font-family: ui-monospace, 'SF Mono', 'Fira Code', Consolas, monospace;
+    font-size: 12px;
+    color: #3d5166;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 60%;
+}
+.s4c-workshop-viz__frame {
+    position: relative;
+    padding: 12px;
+    min-height: 320px;
+}
+.s4c-workshop-viz__frame > div {
+    width: 100% !important;
+}
+.s4c-workshop-viz__loading,
+.s4c-workshop-viz__error {
+    padding: 32px 16px;
+    text-align: center;
+    color: #3d5166;
+    font-size: 13px;
+    font-style: italic;
+}
+.s4c-workshop-viz__error {
+    color: #9c2c2c;
+    font-style: normal;
+}
+.s4c-workshop-viz__caption {
+    padding: 8px 16px 12px;
+    font-size: 12px;
+    color: #3d5166;
+    border-top: 1px solid #e8eef3;
+    background: #fbfcfd;
 }
 
 /* ── 3. Content area max-width ─────────────────────────────────────────────── */
@@ -169,6 +320,13 @@
     display: none;               /* Chrome/Safari */
 }
 
+.chapterBar > div[role=tablist] > [role=tab],
+.sectionBar > div[role=tablist] > [role=tab],
+.overflowBar > div[role=tablist] > [role=tab] {
+    flex-shrink: 0;
+    min-width: max-content;
+}
+
 /* Fine-tune SearchBar control vertical alignment in workshop content */
 .workshopSearchBar [data-test="search-button"] {
     margin-top: 16px !important;
@@ -249,6 +407,13 @@
     width: auto !important;
     min-width: 0 !important;
     max-width: max-content;
+}
+
+.s4c-section-load-error {
+    padding: 12px 16px;
+    border-left: 3px solid #b91c1c;
+    color: #7f1d1d;
+    background: #fff7f7;
 }
 
 /* Setup utility for trainers to switch readability mode */
@@ -537,6 +702,136 @@
     font-size: 18px;
 }
 
+/* ── Token kitchen: a self-contained Studio token playground ─────────────── */
+.s4c-token-kitchen {
+    margin: 24px 0;
+    border: 1px solid #b3cee8;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f7fbfd;
+}
+
+.s4c-token-kitchen__inputs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding: 16px;
+    background: #e8f0f8;
+    border-bottom: 1px solid #b3cee8;
+}
+
+.s4c-token-kitchen__inputs label {
+    display: grid;
+    gap: 6px;
+    color: #1a3a5c;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.s4c-token-kitchen__inputs select,
+.s4c-token-kitchen__inputs input {
+    min-height: 32px;
+    padding: 5px 8px;
+    border: 1px solid #7fa8cb;
+    border-radius: 3px;
+    background: #fff;
+    color: #1a2a3a;
+    font: inherit;
+    font-weight: 400;
+}
+
+.s4c-token-kitchen__inputs select:focus-visible,
+.s4c-token-kitchen__inputs input:focus-visible,
+.s4c-token-kitchen table button:focus-visible {
+    outline: 2px solid #1a4e80;
+    outline-offset: 2px;
+}
+
+.s4c-token-kitchen__tokens {
+    padding: 14px 16px;
+    color: #29445d;
+    font-size: 13px;
+    line-height: 1.65;
+    background: #fff;
+}
+
+.s4c-token-kitchen code {
+    color: #1a4e80;
+}
+
+.s4c-token-kitchen__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: 16px;
+    padding: 16px;
+}
+
+.s4c-token-kitchen h3 {
+    margin: 0 0 6px;
+    color: #1a3a5c;
+}
+
+.s4c-token-kitchen__hint,
+.s4c-token-kitchen__eyebrow {
+    margin: 0 0 10px;
+    color: #52687c;
+    font-size: 12px;
+}
+
+.s4c-token-kitchen table {
+    margin: 0;
+    font-size: 13px;
+}
+
+.s4c-token-kitchen td {
+    vertical-align: middle;
+}
+
+.s4c-token-kitchen table button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #1a4e80;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.s4c-token-kitchen table button:hover {
+    color: #2e6da4;
+}
+
+.s4c-token-kitchen__recipe-card,
+.s4c-token-kitchen__cake {
+    padding: 16px;
+    border: 1px solid #b3cee8;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.s4c-token-kitchen__recipe-card p:last-child {
+    margin-bottom: 0;
+}
+
+.s4c-token-kitchen__cake {
+    margin: 0 16px 16px;
+    background: #fffdf3;
+    border-color: #dfc46b;
+}
+
+.s4c-token-kitchen__cake ul {
+    margin-bottom: 0;
+}
+
+@media (max-width: 700px) {
+    .s4c-token-kitchen__inputs,
+    .s4c-token-kitchen__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ── Scheme preview inside LabSchemeToggle ─────────────────────────────────── */
 .s4c-scheme-preview {
     margin-top: 18px;
@@ -711,8 +1006,17 @@
 .s4c-scheme-brownred .chapterBar > div[role=tablist] button[aria-selected=true] svg {
     color: #9c2c2c;
 }
+.s4c-scheme-brownred .chapterBar > div[role=tablist] button:focus-visible {
+    box-shadow: inset 0 -2px 0 #9c2c2c !important;
+    color: #9c2c2c !important;
+}
 .s4c-scheme-brownred .sectionBar > div[role=tablist] {
     background-color: #fdf6f6;
+}
+.s4c-scheme-brownred .sectionBar > div[role=tablist] button[aria-selected="true"],
+.s4c-scheme-brownred .sectionBar > div[role=tablist] button:focus-visible {
+    box-shadow: inset 0 -2px 0 #9c2c2c !important;
+    color: #9c2c2c !important;
 }
 .s4c-scheme-brownred .workshopContent th {
     background-color: #f5dada;
@@ -736,8 +1040,17 @@
 .s4c-scheme-blueyellow .chapterBar > div[role=tablist] button[aria-selected=true] svg {
     color: #005BBB;
 }
+.s4c-scheme-blueyellow .chapterBar > div[role=tablist] button:focus-visible {
+    box-shadow: inset 0 -2px 0 #005BBB !important;
+    color: #005BBB !important;
+}
 .s4c-scheme-blueyellow .sectionBar > div[role=tablist] {
     background-color: #FFF6C2;
+}
+.s4c-scheme-blueyellow .sectionBar > div[role=tablist] button[aria-selected="true"],
+.s4c-scheme-blueyellow .sectionBar > div[role=tablist] button:focus-visible {
+    box-shadow: inset 0 -2px 0 #005BBB !important;
+    color: #005BBB !important;
 }
 .s4c-scheme-blueyellow .workshopContent th {
     background-color: #FFE34D;
@@ -761,8 +1074,17 @@
 .s4c-scheme-pinkorange .chapterBar > div[role=tablist] button[aria-selected=true] svg {
     color: #E91565;
 }
+.s4c-scheme-pinkorange .chapterBar > div[role=tablist] button:focus-visible {
+    box-shadow: inset 0 -2px 0 #E91565 !important;
+    color: #E91565 !important;
+}
 .s4c-scheme-pinkorange .sectionBar > div[role=tablist] {
     background-color: #FFE0EC;
+}
+.s4c-scheme-pinkorange .sectionBar > div[role=tablist] button[aria-selected="true"],
+.s4c-scheme-pinkorange .sectionBar > div[role=tablist] button:focus-visible {
+    box-shadow: inset 0 -2px 0 #E91565 !important;
+    color: #E91565 !important;
 }
 .s4c-scheme-pinkorange .workshopContent th {
     background-color: #FFC2D8;
@@ -828,30 +1150,6 @@
 .s4c-scheme-pinkorange .workshopSearchBar [data-test="search-button"]:focus-visible {
     box-shadow: 0 0 0 2px rgba(233, 21, 101, 0.30) !important;
 }
-
-/* ── Collapsed colour scheme link (intentionally subtle) ───────────────────── */
-.s4c-scheme-toggle-link {
-    margin: 24px 0 0 0;
-    font-size: 11px;
-    color: #9aa3ad;
-    opacity: 0.7;
-    text-align: right;
-}
-.s4c-scheme-toggle-link:hover {
-    opacity: 1;
-}
-.s4c-scheme-toggle-link a {
-    color: #9aa3ad;
-    text-decoration: none;
-    border-bottom: 1px dotted currentColor;
-}
-.s4c-scheme-toggle-link a:hover {
-    color: #5c6773;
-    border-bottom-style: solid;
-}
-.s4c-scheme-brownred .s4c-scheme-toggle-link a:hover { color: #9c2c2c; }
-.s4c-scheme-blueyellow .s4c-scheme-toggle-link a:hover { color: #005BBB; }
-.s4c-scheme-pinkorange .s4c-scheme-toggle-link a:hover { color: #E91565; }
 
 /* ── Active toggle button tint per scheme (Setup page) ─────────────────────── */
 .s4c-toggle-btn--active {

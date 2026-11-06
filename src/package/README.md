@@ -2,6 +2,20 @@
 
 # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
 
+**Current app version: 2.16.0**
+
+### What's new in 2.16.0
+
+- React 18.3.1, Splunk React UI 5.18.0, Search 8.0.0, and Dashboard framework 29.9.0.
+- Persistent, dismissible inline clipboard messages replace deprecated toasts.
+- Clear Health Check diagnostics for session, permission, network, and timeout failures.
+- Visible lesson loading states and retry controls.
+- Horizontally scrollable navigation without overlapping tab labels on narrow screens.
+- Token Kitchen links from its simplified preview to the real Dashboard Studio dashboard.
+
+See the [release notes](https://github.com/bautt/splunk4champions2/blob/main/WHATS_NEW.md)
+for details.
+
 ## This is a complete re-design from https://github.com/bautt/splunk4champions training 
 ## 
 This repository houses a new version of the Splunk4Champions workshop. The content management has been redesigned to work with React.js, Splunk UI and MDX files.
@@ -14,12 +28,13 @@ Advanced Splunk users
 Splunk admins
 
 ### Content:
-- Options and GUI Settings
-- Using Job Inspector
-- How is data stored in Splunk
-- Search performance: good and bad searches
-- Converting log data to metrics
-- Dashboard hints
+- 1 Settings: GUI options, search modes, Search Assistant, AI Assistant
+- 2 Data: how Splunk stores data
+- 3 Search: Job Inspector, SPL performance, SPL2, optional MCP
+- 4 Dashboard Studio: chain searches, token kitchen, images, custom viz, sharing
+- 5 Champion Quiz
+- Legacy: Metrics, XML Dashboards, Mobile
+- Setup: health check, Large Room, colour scheme
 
 
 
@@ -31,12 +46,24 @@ Splunk admins
 Zero-Powerpoint: all information needed is included in the app
 
 ## Download and installation:
-For simple installaiton just download the release https://github.com/bautt/splunk4champions2/releases/ (look left) and install it as normal Splunk app. It should work on and 8+ versions and in Splunk Cloud. It should do no harm but is not meant to be installed on production systems - so no warranty. 
+Download the latest release from https://github.com/bautt/splunk4champions2/releases/
+and install it as a standard Splunk app. It is not intended for production systems
+and is provided without warranty.
+
+Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5; older
+Splunk releases and Splunk Cloud were not validated with the upgraded UI stack.
+The custom visualization exercise requires Splunk Enterprise 10.4+ or an equivalent
+Splunk Cloud release.
 
 
 
 # Development readme:
 ## Setting up the Development Environment
+
+Use Node.js 22+ and Yarn 1.22. The UI stack uses React 18 and styled-components
+5.3.11; do not independently upgrade to React 19 or styled-components 6.
+The [development README](https://github.com/bautt/splunk4champions2/blob/main/README_development.md)
+lists the supported dependency versions and local validation steps.
 
 Clone the repository to your local workstation
 ```
@@ -47,6 +74,11 @@ Install the required dependencies
 ```
 make deps
 ```
+
+Run the component regression tests with `yarn --cwd src test` and validate the
+production bundle and MDX with `yarn --cwd src build`. Version 2.16.0 passed all
+11 regression tests and the production build, with non-blocking MapLibre and
+bundle-size warnings.
 
 Run the development task. This will build a development version of the app in the `dist` folder.
 ```

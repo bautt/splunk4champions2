@@ -4,8 +4,12 @@ import LabSchemeToggle from '../../components/LabSchemeToggle.js'
 
 <DisplayModeToggle />
 
+<LabSchemeToggle />
+
 <IndexHealth />
 
-> **If any index shows "No data":** go to **Settings → Data → Indexes** and create the missing index, then enable its data source under **Settings → Data inputs → Files & Directories**.
-
-<LabSchemeToggle />
+> **Missing index:** ask the trainer or administrator to confirm it is not hidden by your permissions, then create it under **Settings → Data → Indexes** if needed.
+>
+> **Empty index:** the index already exists. Follow its data-source hint in the Health Check; do not create it again. Metric indexes may need the conversion lab.
+>
+> **Check failed or version unavailable:** follow the displayed permission, connection, or API error guidance, then select **Refresh**. A failed check does not mean an index is missing.

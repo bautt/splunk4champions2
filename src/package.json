@@ -8,29 +8,44 @@
     "@babel/preset-env": "^7.19.3",
     "@babel/preset-react": "^7.18.6",
     "@mdx-js/loader": "^2.1.3",
-    "@splunk/react-page": "^8.3.1",
-    "@splunk/react-search": "^7.0.1",
-    "@splunk/react-toast-notifications": "^0.13.0",
-    "@splunk/react-ui": "^5.9.1",
-    "react": "^16",
-    "react-dom": "^16",
+    "@splunk/dashboard-context": "29.9.0",
+    "@splunk/dashboard-core": "29.9.0",
+    "@splunk/dashboard-presets": "29.9.0",
+    "@splunk/dashboard-state": "29.9.0",
+    "@splunk/react-icons": "5.17.0",
+    "@splunk/react-page": "8.4.0",
+    "@splunk/react-search": "8.0.0",
+    "@splunk/react-ui": "5.18.0",
+    "@splunk/themes": "1.13.1",
+    "@splunk/visualization-context": "28.9.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-is": "18.3.1",
     "react-icons": "^5.6.0",
     "remark-gfm": "^3.0.1",
-    "styled-components": "^5"
+    "styled-components": "5.3.11"
   },
   "devDependencies": {
     "@splunk/babel-preset": "^4.0.0",
     "@splunk/webpack-configs": "^7.0.3",
+    "@types/lodash": "^4.14.156",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
     "babel-loader": "^8.2.5",
     "copy-webpack-plugin": "^14.0.0",
     "css-loader": "^6.7.1",
     "style-loader": "^3.3.1",
+    "react-test-renderer": "18.3.1",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --config webpack.config.mjs"
+    "build": "NODE_ENV=production webpack --config webpack.config.mjs",
+    "test": "node --test test/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=22"
   },
   "resolutions": {
     "postcss": "^8.5.18",

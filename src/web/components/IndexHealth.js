@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Button from '@splunk/react-ui/Button';
+import Message from '@splunk/react-ui/Message';
 
 const INDEXES = [
     { name: 's4c_weather',       label: 'Weather Events',   type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/current*' },
@@ -7,7 +8,7 @@ const INDEXES = [
     { name: 's4c_www',           label: 'Web Server Logs',  type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/www*' },
     { name: 's4c_tutorial',      label: 'Tutorial Data',    type: 'event',  inputType: 'monitor', input: 'Settings → Data Inputs → Files & Directories → monitor: .../static/tutorialdata.zip' },
     { name: 's4c_meteo',         label: 'Meteo Events',     type: 'event',  inputType: 'script',  input: 'Settings → Data Inputs → Scripts → open_meteo_weather.py events (runs every 5 min)' },
-    { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric', inputType: 'mcollect',input: 'Run the mcollect search in Chapter 4 → Metrics Lab to push data from s4c_meteo into this index' },
+    { name: 's4c_meteo_metrics', label: 'Meteo Metrics',    type: 'metric', inputType: 'mcollect',input: 'Run the mcollect search in Legacy → Metrics → Metrics Lab to push data from s4c_meteo into this index' },
     { name: 's4c_meteo_historic',label: 'Historic Weather', type: 'event',  inputType: 'mixed',  input: 'Monitor: .../static/meteo_historic.csv | Daily: `update_meteo_historic_csv.py` (7 cities; `inputlookup` via lookups symlink) | Open-Meteo archive extends dates' },
 ];
 
@@ -44,34 +45,82 @@ function formatCount(n) {
     return Number(n).toLocaleString();
 }
 
-// Returns { exists, count, minTime, maxTime, hasData }
-// exists=false when Splunk returns 404 (index not created yet)
-async function fetchIndexInfo(locale, indexName) {
-    const url = `/${locale}/splunkd/__raw/services/data/indexes/${indexName}?output_mode=json`;
-    const res = await fetch(url, { credentials: 'include' });
-    if (res.status === 404) {
-        return { exists: false, count: 0, minTime: null, maxTime: null, hasData: false };
+async function fetchHealthContent(url, allowMissing = false) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
+    try {
+        let res;
+        try {
+            res = await fetch(url, { credentials: 'include', signal: controller.signal });
+        } catch (error) {
+            if (controller.signal.aborted) {
+                throw new Error('Connection timed out. Check that Splunk is reachable, then refresh.');
+            }
+            throw new Error(`Connection failed. Check your network and Splunk availability, then refresh. ${error.message}`);
+        }
+        if (res.status === 404 && allowMissing) return null;
+        if (res.status === 401) {
+            throw new Error('Session expired (HTTP 401). Sign in to Splunk again, then refresh.');
+        }
+        if (res.status === 403) {
+            throw new Error('Permission denied (HTTP 403). Ask your trainer or administrator to check your access.');
+        }
+        if (!res.ok) {
+            throw new Error(`Splunk API error (HTTP ${res.status}). Ask your trainer to check Splunk, then refresh.`);
+        }
+        let json;
+        try {
+            json = await res.json();
+        } catch (error) {
+            throw new Error('Could not read the Splunk API response. Check your session and connection, then refresh.');
+        }
+        const content = json?.entry?.[0]?.content;
+        if (!content || typeof content !== 'object' || Array.isArray(content)) {
+            throw new Error('Splunk returned an unexpected API response. Ask your trainer to check the endpoint.');
+        }
+        return content;
+    } finally {
+        clearTimeout(timeout);
     }
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const json = await res.json();
-    const content = json.entry?.[0]?.content ?? {};
-    const count   = parseInt(content.totalEventCount ?? '0', 10);
+}
+
+export async function fetchIndexInfo(locale, indexName) {
+    const url = `/${locale}/splunkd/__raw/services/data/indexes/${indexName}?output_mode=json`;
+    const content = await fetchHealthContent(url, true);
+    if (content === null) {
+        return { exists: false, count: null, minTime: null, maxTime: null, hasData: false };
+    }
+    const rawCount = content.totalEventCount;
+    const count = Number(rawCount);
+    if ((typeof rawCount !== 'string' && typeof rawCount !== 'number') ||
+        String(rawCount).trim() === '' || !Number.isInteger(count) || count < 0) {
+        throw new Error('Splunk returned an invalid event count. Ask your trainer to check the index endpoint.');
+    }
     const minTime = content.minTime;
     const maxTime = content.maxTime;
-    const hasData = count > 0 && parseTime(minTime) !== null;
+    const hasData = count > 0;
     return { exists: true, count, minTime, maxTime, hasData };
 }
 
-async function fetchVersions(locale) {
-    const [splunkRes, appRes] = await Promise.all([
-        fetch(`/${locale}/splunkd/__raw/services/server/info?output_mode=json`,                  { credentials: 'include' }),
-        fetch(`/${locale}/splunkd/__raw/services/apps/local/splunk4champions2?output_mode=json`, { credentials: 'include' }),
-    ]);
-    const splunkJson = splunkRes.ok ? await splunkRes.json() : null;
-    const appJson    = appRes.ok   ? await appRes.json()    : null;
+export async function fetchVersions(locale) {
+    const endpoints = [
+        { key: 'splunkVersion', label: 'Splunk version', path: 'server/info' },
+        { key: 'appVersion', label: 'App version', path: 'apps/local/splunk4champions2' },
+    ];
+    const results = await Promise.all(endpoints.map(async ({ key, label, path }) => {
+        try {
+            const content = await fetchHealthContent(`/${locale}/splunkd/__raw/services/${path}?output_mode=json`);
+            if (typeof content.version !== 'string' || !content.version.trim()) {
+                throw new Error('Splunk returned an invalid version response. Ask your trainer to check the endpoint.');
+            }
+            return { key, value: content.version };
+        } catch (error) {
+            return { key, value: 'Unavailable', error: `${label}: ${error.message}` };
+        }
+    }));
     return {
-        splunkVersion: splunkJson?.entry?.[0]?.content?.version ?? '—',
-        appVersion:    appJson?.entry?.[0]?.content?.version    ?? '—',
+        ...Object.fromEntries(results.map(({ key, value }) => [key, value])),
+        errors: results.filter(({ error }) => error).map(({ error }) => error),
     };
 }
 
@@ -107,20 +156,34 @@ function statusColors(s, loading) {
 }
 
 // ── Hints panel ───────────────────────────────────────────────────────────────
-function HintsPanel({ statuses }) {
+function HintsPanel({ statuses, versionErrors }) {
     const missing = INDEXES.filter(idx => {
         const s = statuses[idx.name];
-        return s && (!s.exists || s.error);
+        return s && !s.exists && !s.error;
     });
     const nodata = INDEXES.filter(idx => {
         const s = statuses[idx.name];
         return s && s.exists && !s.hasData && !s.error;
     });
 
-    if (missing.length === 0 && nodata.length === 0) return null;
+    const failed = INDEXES.filter(idx => statuses[idx.name]?.error);
+
+    if (missing.length === 0 && nodata.length === 0 && failed.length === 0 && versionErrors.length === 0) return null;
 
     return (
         <div style={{ borderTop: `1px solid ${C.borderColor}` }}>
+            {(failed.length > 0 || versionErrors.length > 0) && (
+                <Message type="error" role="alert">
+                    <strong>Some checks could not be completed. This does not mean an index is missing.</strong>
+                    <ul>
+                        {versionErrors.map(error => <li key={error}>{error}</li>)}
+                        {failed.map(idx => (
+                            <li key={idx.name}><code>{idx.name}</code>: {statuses[idx.name].error}</li>
+                        ))}
+                    </ul>
+                    After resolving the issue, select Refresh to retry.
+                </Message>
+            )}
             {missing.length > 0 && (
                 <div style={{
                     padding: '10px 14px',
@@ -128,10 +191,10 @@ function HintsPanel({ statuses }) {
                     borderLeft: `4px solid ${C.hintMissingBorder}`,
                 }}>
                     <div style={{ fontWeight: 700, color: C.hintMissingText, marginBottom: 6, fontSize: 12 }}>
-                        ✗ Index not found — create the following indexes first
+                        ✗ Index not found or not visible to your account (HTTP 404)
                     </div>
                     <div style={{ fontSize: 11, color: '#444', marginBottom: 4 }}>
-                        Go to <strong>Settings → Data → Indexes → New Index</strong> and create:
+                        Ask your trainer or administrator to confirm these indexes are missing, then create them under <strong>Settings → Data → Indexes → New Index</strong> if needed:
                     </div>
                     <ul style={{ margin: '0 0 0 16px', padding: 0, fontSize: 11, color: '#333' }}>
                         {missing.map(idx => (
@@ -151,7 +214,7 @@ function HintsPanel({ statuses }) {
                     borderLeft: `4px solid ${C.hintNodataBorder}`,
                 }}>
                     <div style={{ fontWeight: 700, color: C.hintNodataText, marginBottom: 6, fontSize: 12 }}>
-                        ⚠ Index exists but has no data — enable the data input
+                        ⚠ Index exists but has no data — follow its data-source hint
                     </div>
                     <ul style={{ margin: '0 0 0 16px', padding: 0, fontSize: 11, color: '#333' }}>
                         {nodata.map(idx => (
@@ -173,9 +236,15 @@ export default function IndexHealth() {
     const [versions,  setVersions]  = useState({ splunkVersion: '…', appVersion: '…' });
     const [loading,   setLoading]   = useState(true);
     const [checkedAt, setCheckedAt] = useState(null);
+    const [versionErrors, setVersionErrors] = useState([]);
+    const checkId = useRef(0);
 
     const check = useCallback(() => {
+        const currentCheck = ++checkId.current;
         setLoading(true);
+        setStatuses({});
+        setVersions({ splunkVersion: '…', appVersion: '…' });
+        setVersionErrors([]);
         const locale = typeof window !== 'undefined'
             ? window.location.pathname.split('/')[1]
             : 'en-GB';
@@ -185,25 +254,32 @@ export default function IndexHealth() {
             ...INDEXES.map(idx =>
                 fetchIndexInfo(locale, idx.name)
                     .then(info => ({ name: idx.name, ...info, error: null }))
-                    .catch(e   => ({ name: idx.name, exists: false, count: 0, minTime: null, maxTime: null, hasData: false, error: String(e) }))
+                    .catch(e   => ({ name: idx.name, exists: null, count: null, minTime: null, maxTime: null, hasData: null, error: e.message }))
             ),
         ]).then(([vers, ...results]) => {
+            if (currentCheck !== checkId.current) return;
             const map = {};
             results.forEach(r => { map[r.name] = r; });
             setVersions(vers);
+            setVersionErrors(vers.errors);
             setStatuses(map);
             setCheckedAt(new Date().toLocaleTimeString());
             setLoading(false);
         });
     }, []);
 
-    useEffect(() => { check(); }, [check]);
+    useEffect(() => {
+        check();
+        return () => { checkId.current += 1; };
+    }, [check]);
 
-    const allOk = !loading && INDEXES.every(idx => statuses[idx.name]?.hasData);
+    const allOk = !loading && versionErrors.length === 0 && INDEXES.every(idx => statuses[idx.name]?.hasData);
 
     return (
         <div
             className="s4c-index-health"
+            aria-label="Workshop health check"
+            aria-busy={loading}
             style={{
             marginBottom: '24px',
             borderRadius: '10px',
@@ -237,7 +313,8 @@ export default function IndexHealth() {
                         {versions.appVersion}
                     </span>
                 </span>
-                {!loading && (
+                <span role="status" aria-live="polite">
+                {loading ? 'Checking workshop health...' : (
                     <span style={{
                         backgroundColor: allOk ? '#28a745' : '#e53935',
                         color: '#fff',
@@ -250,6 +327,7 @@ export default function IndexHealth() {
                         {allOk ? 'ALL OK' : 'NEEDS ATTENTION'}
                     </span>
                 )}
+                </span>
                 <Button onClick={check} disabled={loading} appearance="secondary"
                     label={loading ? 'Checking…' : 'Refresh'}
                     style={{ color: '#ffffff', borderColor: '#ffffff', fontSize: '12px' }} />
@@ -317,7 +395,7 @@ export default function IndexHealth() {
 
                                 {/* Index exists */}
                                 <td style={{ padding: '5px 8px', textAlign: 'center' }}>
-                                    <StatusBadge loading={loading_} colors={existsC} label={loading_ ? '…' : (exists ? 'Yes' : 'No')} />
+                                    <StatusBadge loading={loading_} colors={existsC} label={loading_ ? '…' : (s?.error ? 'Check failed' : (exists ? 'Yes' : 'Not found'))} />
                                 </td>
 
                                 {/* Has data */}
@@ -343,7 +421,7 @@ export default function IndexHealth() {
             </div>
 
             {/* ── Hints ── */}
-            {!loading && <HintsPanel statuses={statuses} />}
+            {!loading && <HintsPanel statuses={statuses} versionErrors={versionErrors} />}
         </div>
     );
 }

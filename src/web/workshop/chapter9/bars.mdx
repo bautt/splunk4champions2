@@ -1,0 +1,60 @@
+<div className="s4c-lab-summary">
+
+**Goal:** replace the generated chart with the workshop bars, then change one CSS number yourself.
+
+</div>
+
+`cp` overwrites the destination. Look at the path before you run it. Copy these three files, not a whole project.
+
+From this app on the Splunk host:
+
+```text
+appserver/static/custom_viz/config.json
+appserver/static/custom_viz/visualization.js
+appserver/static/custom_viz/visualization.css
+```
+
+You can also open them in the browser and save them:
+
+* <Link to="/static/app/splunk4champions2/custom_viz/config.json" openInNewContext>config.json</Link>
+* <Link to="/static/app/splunk4champions2/custom_viz/visualization.js" openInNewContext>visualization.js</Link>
+* <Link to="/static/app/splunk4champions2/custom_viz/visualization.css" openInNewContext>visualization.css</Link>
+
+<LabBlock title="Copy the three files">
+
+```text
+cp <templates>/config.json visualizations/<viz>/config.json
+cp <templates>/visualization.js visualizations/<viz>/src/visualization.js
+cp <templates>/visualization.css visualizations/<viz>/src/visualization.css
+```
+
+</LabBlock>
+
+`config.json` lands next to `src`, not inside it. The other two replace the files in `src`.
+
+Four stations in `visualization.js`:
+
+1. `state` holds the latest data, options, and theme.
+2. `readRows` checks for exactly one `label` column and one `value` column.
+3. `render` draws the list, or a short message when there is nothing to draw.
+4. `addDataSourcesListener` and `addOptionsListener` call `render` again when Splunk sends something new.
+
+Labels are set with `textContent`. The chart does not turn search text into HTML.
+
+<LabBlock title="One change without an LLM">
+
+In `visualization.css`, `.bar-fill` has `height: 20px`. Change it to `28px`. Save the file.
+
+</LabBlock>
+
+Then build again from the project folder:
+
+```text
+yarn build
+```
+
+<LabBlock title="Checkpoint">
+
+The CSS height is 28, and `yarn build` completes. You have not packaged the app yet.
+
+</LabBlock>

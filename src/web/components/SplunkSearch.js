@@ -1,14 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Button from '@splunk/react-ui/Button'
 import SearchBar from '@splunk/react-search/components/Bar';
 import fetchSearchBNFs from '@splunk/react-search/utils/searchBNFs';
 import ClipBoard from '@splunk/react-icons/Clipboard';
-import { TOAST_TYPES } from '@splunk/react-toast-notifications/ToastConstants';
-import ToastContext from '../context'
+import Message from '@splunk/react-ui/Message';
 
-function CopyToClipBoardButton({search}) {
-    const createToast = useContext(ToastContext)
-
+function CopyToClipBoardButton({ onClick, copying }) {
     const copyButtonStyle = {
         maxWidth: '30px',
         marginLeft: '-40px',
@@ -18,23 +15,11 @@ function CopyToClipBoardButton({search}) {
         marginRight: '10px',
         alignSelf: 'center',
     };
-
-
-    const onClick = (e, value) => {
-        console.info("Copied search to clipboard")
-        navigator.clipboard.writeText(search)
-        
-        const toastProps = {
-            message: `Search copied to clipboard`,
-            type: TOAST_TYPES.SUCCESS,
-        };
-        createToast(toastProps);        
-    }
-
     
     return (
     <Button 
     onClick={onClick}
+    disabled={copying}
     style={copyButtonStyle} icon={<ClipBoard screenReaderText={null} />} appearance='pill' label="Copy to Clipboard"/>
     )
 
@@ -67,18 +52,49 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
     ];
 
     const initialOptions = {
-        earliest: earliest || '-48h@h',
-        latest: latest || 'now',
+        earliest: earliest ?? '-48h@h',
+        latest: latest ?? 'now',
         timePickerFormInputTypes: formInputTypes,
         timePickerPresets: presets,
         timePickerAdvancedInputTypes: advancedInputTypes,
         search: spl,
         enabled: false,
         showLineNumbers: false,
-        componentAppendToInput: <CopyToClipBoardButton search={spl}></CopyToClipBoardButton>
     }
 
     const [options, setOptions] = useState(initialOptions)
+    const [copying, setCopying] = useState(false);
+    const [copyFeedback, setCopyFeedback] = useState(null);
+    const mounted = useRef(true);
+
+    useEffect(() => {
+        mounted.current = true;
+        return () => { mounted.current = false; };
+    }, []);
+
+    const copySearch = async () => {
+        setCopying(true);
+        setCopyFeedback(null);
+        try {
+            if (!navigator.clipboard?.writeText) {
+                throw new Error('Clipboard access is unavailable in this browser or connection.');
+            }
+            await navigator.clipboard.writeText(options.search);
+            if (mounted.current) {
+                setCopyFeedback({ type: 'success', message: 'Search copied to clipboard' });
+            }
+        } catch (error) {
+            console.warn('Could not copy workshop search to clipboard.', error);
+            if (mounted.current) {
+                setCopyFeedback({
+                    type: 'error',
+                    message: 'Could not copy the search. Select the SPL and copy it manually. Clipboard access may require HTTPS or browser permission.',
+                });
+            }
+        } finally {
+            if (mounted.current) setCopying(false);
+        }
+    };
 
     useEffect(() => {
         let isMounted = true;
@@ -111,8 +127,6 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
     }
 
     const onEventTrigger = (ev, value) => {
-        console.log(options)
-
         const searchMode = mode || 'smart'
         const params = new URLSearchParams({
             q: options.search,
@@ -124,10 +138,27 @@ export default function SplunkSearch({spl, earliest, latest, mode}) {
         window.open(`search?${params.toString()}`)
     }
 
+    const searchBarOptions = {
+        ...options,
+        componentAppendToInput: <CopyToClipBoardButton onClick={copySearch} copying={copying} />,
+    }
+
     return (
-        <div className="workshopSearchBar">
-            <SearchBar onOptionsChange={onOptionsChange} onEventTrigger={onEventTrigger} options={options}/>
+        <div>
+            <div className="workshopSearchBar">
+                <SearchBar onOptionsChange={onOptionsChange} onEventTrigger={onEventTrigger} options={searchBarOptions}/>
+            </div>
+            <div role={copyFeedback?.type === 'error' ? 'alert' : 'status'} aria-live={copyFeedback?.type === 'error' ? 'assertive' : 'polite'}>
+                {copyFeedback && (
+                    <Message
+                        appearance="fill"
+                        type={copyFeedback.type}
+                        onRequestRemove={() => setCopyFeedback(null)}
+                    >
+                        {copyFeedback.message}
+                    </Message>
+                )}
+            </div>
         </div>
     )
 }
-

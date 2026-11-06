@@ -33,24 +33,22 @@ Indexes, buckets, data aging, SmartStore concepts, data pipeline, segmentation, 
 Metric indexes, `mcollect`, `mcatalog`, `mstats`, weather data, stock index metrics, and Phyphox sensor experiments.
 
 **Dashboards**  
-Classic XML dashboards, Dashboard Studio, base and chain searches, tokens, drilldowns, annotations, trellis, custom visualizations, and publishing.
+Dashboard Studio (chain searches, Token Kitchen preview and real-dashboard link, images, a custom viz exercise, and sharing) and classic XML dashboards under Legacy.
 
 **Modern Splunk Experience**  
-Splunk AI Assistant, optional Splunk MCP Server lab, Splunk Mobile overview, and a final Champion Quiz.
+Splunk AI Assistant, optional Splunk MCP Server lab, Splunk Mobile under Legacy, and a final Champion Quiz.
 
 ## Workshop structure
 
 | Chapter | Focus |
 |---|---|
-| Setup | Health Check, app readiness, links, release highlights |
-| Settings | UI preferences, search modes, Search Assistant, AI Assistant |
-| Data | Indexes, buckets, pipeline, aging, SmartStore |
-| Search | SPL/SPL2, Inspector, `TERM`, `tstats`, performance, MCP |
-| Metrics | Metric indexes, `mcollect`, `mstats`, weather and stock data |
-| XML Dashboards | Base searches, drilldowns, tokens, colors, pseudonymization |
-| Dashboard Studio | Modern dashboards, interactivity, custom visualizations |
-| Mobile | Splunk Mobile setup and overview |
-| Champion Quiz | Timed knowledge check across the workshop |
+| 1 Settings | UI preferences, search modes, Search Assistant, AI Assistant |
+| 2 Data | Indexes, buckets, pipeline, aging, SmartStore |
+| 3 Search | SPL/SPL2, Inspector, `TERM`, `tstats`, performance, MCP |
+| 4 Dashboard Studio | Overview, chain searches, token kitchen, images, custom viz, sharing |
+| 5 Champion Quiz | Timed knowledge check across the workshop |
+| Legacy | Metrics, XML Dashboards, and Mobile |
+| Setup | Health Check, Large Room, colour scheme, links, release highlights |
 
 ## Included demo data
 
@@ -76,9 +74,14 @@ The app ships with curated `s4c_*` data so labs do not depend on customer produc
 **Format:** Guided hands-on workshop inside Splunk  
 **Audience:** Intermediate to advanced Splunk users  
 **App:** `splunk4champions2`  
-**Current build referenced:** `2.11.77`  
+**Current build referenced:** `2.16.0`  
 **Repository:** <https://github.com/bautt/splunk4champions2>  
 **Contact:** `tbaublys@splunk.com`
+
+**2.16.0 refresh:** updated Splunk UI and React 18, clearer setup and clipboard
+feedback, lesson retry controls, and scrollable navigation. Locally smoke-tested
+on Splunk Enterprise 10.6.0.5. Custom visualization labs require 10.4+ or an
+equivalent Cloud release.
 
 ---
 

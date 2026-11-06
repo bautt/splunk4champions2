@@ -1,0 +1,70 @@
+import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz'
+
+<div className="s4c-lab-summary">
+
+**Goal:** the chart passes the table, then your pair can explain it in two minutes.
+
+</div>
+
+Use the synthetic search from the goal step. Do not edit production data. For zeros, set all three values to 0. For an empty table, append `| where 1=0`.
+
+| Check | What you should see |
+|---|---|
+| 120, 80, 40 | Bar lengths in the ratio 3 : 2 : 1 |
+| 0, 0, 0 | No crash. Zeros stay visible when Show values is on |
+| No rows | The message "No data in the selected time range." |
+| Wrong column name | A message that names `label` or `value` |
+| Text where a number belongs | A message that value must be a non-negative number |
+| A long label | Readable, or cut cleanly. The row does not fall apart |
+| Dark theme | Labels and numbers still readable |
+| A small panel | Numbers are not clipped. Scroll if you need to |
+| Checkbox off, then on | Only the numbers hide and return |
+| Reopen the dashboard | The saved checkbox stays |
+
+Two-minute demo:
+
+1. Which table does the visualization read?
+2. Which file controls how it looks?
+3. What did the LLM change?
+4. Which check proved that change?
+
+<BuzzQuiz
+  title="Custom visualization check"
+  subtitle="The contract, the files, and what a build does not prove."
+  timePerQuestion={25}
+  pointsBase={1000}
+>
+
+  <Question
+    prompt="What does a successful yarn build prove?"
+    explanation="Build writes the browser files. The chart can still be blank, or reject the search, until you open it in Dashboard Studio."
+  >
+    <Answer>The bars match 3 : 2 : 1 in Splunk</Answer>
+    <Answer correct>The project produced files. It does not prove the chart works</Answer>
+    <Answer>The app is installed on the search head</Answer>
+    <Answer>Splunk restarted and loaded the visualization</Answer>
+  </Question>
+
+  <Question
+    prompt="Which column names does this lab require?"
+    explanation="The template looks up label and value by name. Order can change. A sourcetype column is not part of the contract."
+  >
+    <Answer>sourcetype and count</Answer>
+    <Answer correct>label and value</Answer>
+    <Answer>_time and count</Answer>
+    <Answer>Any two numeric fields</Answer>
+  </Question>
+
+  <TrueFalse
+    prompt="config.name is the name people see in the Dashboard Studio chart list."
+    correct={true}
+    explanation="The technical app id is not the menu label. config.name in config.json is."
+  />
+
+  <TrueFalse
+    prompt="This workshop app installs a finished bar visualization for you."
+    correct={false}
+    explanation="You package your own app. custom_viz_workshop is reserved and is not a student app id."
+  />
+
+</BuzzQuiz>
