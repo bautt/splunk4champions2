@@ -2,6 +2,7 @@
 
 ## Version 2.16.0
 
+- **Dependency security follow-up:** patched crypto-js, d3-color, fast-uri, qs, source-map-js, and serialize-javascript through Yarn resolutions; removed the orphaned root npm lockfile. Added compatibility regressions for cloud-auth PKCE and Studio D3 consumers.
 - **UI stack refresh:** React/React DOM 18.3.1 with the React 18 page entry point; Splunk React UI 5.18.0, react-page 8.4.0, Search 8.0.0, themes 1.13.1, and icons 5.17.0.
 - **Dashboard framework:** context/core/presets/state aligned at 29.9.0, with visualization-context 28.9.1. Embedded Studio charts remain lazy-loaded.
 - **Supported build baseline:** Node.js 22+. Keep styled-components 5.3.11 and React 18 within the Splunk packages' supported peer ranges.

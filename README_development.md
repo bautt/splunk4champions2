@@ -67,6 +67,22 @@ Themes and Splunk icons are direct dependencies because app code imports them.
 Clipboard feedback uses persistent, dismissible inline Splunk UI messages rather
 than the deprecated toast-notification package.
 
+### Dependency security maintenance
+
+`src/yarn.lock` is the authoritative dependency lockfile; the unused root npm
+lockfile was removed because it retained vulnerable packages unrelated to the
+Yarn build.
+
+Security resolutions require crypto-js 4.2.0, d3-color 3.1.0, fast-uri 3.1.9+,
+qs 6.16.1+, source-map-js 1.2.2+, and serialize-javascript 7.1.3+.
+CryptoJS and d3-color deliberately override older transitive dependency ranges
+in the Splunk cloud-auth and visualization packages. Yarn reports compatibility
+warnings for those ranges; regression tests cover the cloud-auth PKCE challenge
+and D3 colour interpolation, scale interpolation, and transition module loading.
+Keep these checks and the embedded-chart browser smoke test when updating the
+overrides. CryptoJS is deprecated upstream; this patch does not replace the
+Splunk-owned authentication implementation.
+
 ### Running App Vetting locally
 
 Create a new virtualenv with the required dependencies
