@@ -50,13 +50,17 @@
   "resolutions": {
     "postcss": "^8.5.18",
     "@babel/plugin-transform-modules-systemjs": "^7.29.4",
-    "fast-uri": "^3.1.6",
+    "fast-uri": "^3.1.9",
     "nanoid": "^3.3.18",
     "postcss-selector-parser": "^7.1.3",
-    "qs": "^6.16.0",
+    "qs": "^6.16.1",
     "websocket-driver": "^0.7.5",
     "browserslist": "^4.28.7",
     "baseline-browser-mapping": "^2.11.0",
-    "moment": "^2.31.0"
+    "moment": "^2.31.0",
+    "crypto-js": "4.2.0",
+    "d3-color": "3.1.0",
+    "source-map-js": "^1.2.2",
+    "serialize-javascript": "^7.1.3"
   }
 }
