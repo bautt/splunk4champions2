@@ -8,11 +8,15 @@ import Link from '@splunk/react-ui/Link'
 
 # Welcome to the Splunk4Champions Workshop
 
-**Current app version: 2.16.0**
+**Current app version: 2.17.0**
 
 An interactive, hands-on Splunk workshop delivered as a Splunk app. Participants follow guided labs through this React UI embedded directly in Splunk — no slides, everything runs inside the platform.
 
 Built for experienced Splunk users: admins, use case developers, and champions who want to go deeper.
+
+## New in 2.17.0
+
+- **Data:** new step **When a field exists**. A token in tsidx and a search-time field such as `status` on `s4c_www` are different things. Fast mode, `tstats`, and a high scan count are the same idea seen three ways.
 
 ## New in 2.16.0
 
@@ -33,7 +37,7 @@ Built for experienced Splunk users: admins, use case developers, and champions w
 | Chapter | Topics |
 |---------|--------|
 | **1 · Settings** | GUI options, Search Assistant, search modes, SPL readability, language, AI Assistant |
-| **2 · Data** | Indexes, buckets, data pipeline, distributed architecture, data aging |
+| **2 · Data** | Indexes, buckets, data pipeline, schema on read, distributed architecture, data aging |
 | **3 · Search** | Search basics, **SPL2**, command types, Job Inspector, terms/segmentation, tstats, search tips, **MCP** (optional), quiz |
 | **4 · Dashboard Studio** | Overview, chain searches, token kitchen, image upload, custom viz exercise, sharing |
 | **5 · Champion Quiz** | Kahoot-style quiz. Edit questions in `web/workshop/chapter8/quiz.mdx`. |
@@ -46,7 +50,7 @@ Built for experienced Splunk users: admins, use case developers, and champions w
 
 Download the latest release from the <Link to="https://github.com/bautt/splunk4champions2/releases/" openInNewContext>Releases</Link> page and install as a standard Splunk app.
 
-For version 2.16.0, download `splunk4champions2-2.16.0.tar.gz` from the <Link to="https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0" openInNewContext>v2.16.0 release</Link>. In Splunk Web, use **Apps → Manage Apps → Install app from file**, restart if prompted, then check **Setup → Health Check**.
+The newest tagged download is still 2.16.0: `splunk4champions2-2.16.0.tar.gz` on the <Link to="https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0" openInNewContext>v2.16.0 release</Link>. This text is **2.17.0**. Package this tree with `make package` so the installed app matches **Setup → Health Check**. In Splunk Web, use **Apps → Manage Apps → Install app from file**, restart if prompted, then check **Setup → Health Check**.
 
 - Not intended for production systems — no warranty
 

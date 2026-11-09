@@ -1,0 +1,92 @@
+import SplunkSearch from '../../components/SplunkSearch.js'
+import LabBlock from '../../components/LabBlock.js';
+import Link from '@splunk/react-ui/Link'
+
+# When a field exists
+
+The bucket stores the event. The field names are applied when a search runs. That is schema-on-read.
+
+The pipeline page showed line breaking and indexing. The bucket page showed the journal and the tsidx. Segmentation showed how `_raw` is broken into terms and stored in the tsidx. This page is the layer those three leave out: where names such as `status` and `clientip` come from.
+
+## Three birthplaces
+
+One `access_combined` line in `s4c_www` carries several kinds of name. The extractions for that sourcetype ship with Splunk. This app does not index `status`.
+
+| What you see | When it is born | Survives in the bucket |
+| --- | --- | --- |
+| `_raw` | Index time, written to the journal | Yes |
+| `_time`, `host`, `source`, `sourcetype`, and the terms segmentation stored | Index time | Yes. `tstats` can group by the metadata names. |
+| `clientip`, `status`, `method`, `uri`, `useragent` | Search time, from the `access_combined` extraction, when a search asks for them | No. Change the extraction and the next search sees the new names, including in old buckets. |
+| Anything you type after the first pipe (`eval`, `rex`, `lookup`) | During that search only | No |
+
+A term such as `404` or `Mozilla` is how Splunk finds candidate events. A field is a name bound to a value afterwards. The binding is the schema, and it is applied on read.
+
+The searches below use a five-year window so the shipped access log (March 2023) and the live tail are both in scope.
+
+## Lab — A tsidx term is not a field
+
+<LabBlock title="Look at one event">
+
+<SplunkSearch earliest="-5y" latest="now" spl={`index=s4c_www | head 1`} />
+
+> **What to notice:** the interesting content is one string, `_raw`. Beside it, Splunk already knows `_time`, `host`, `source`, and `sourcetype`. Those four are indexed metadata. `status` is not stored beside them in the bucket.
+
+</LabBlock>
+
+<LabBlock title="Same events, two questions">
+
+<SplunkSearch earliest="-5y" latest="now" spl={`index=s4c_www "Mozilla"`} />
+
+<SplunkSearch earliest="-5y" latest="now" spl={`index=s4c_www useragent=*Mozilla*`} />
+
+> **What to notice:** both return events, for different reasons. `"Mozilla"` matches a term in the tsidx, written at index time when the event was segmented. `useragent=` asks for a field. That name is created by the `access_combined` extraction as the event is read. Edit that extraction tomorrow and the second search changes. The first search still matches the tsidx term. Nobody reindexes.
+
+> **Lesson:** a raw term uses the tsidx. A search-time field still depends on reading the event and applying the schema. In Job Inspector, compare `scanCount` with `eventCount`. The timed measurement is Case 1 of the Inspector lab in Search. `field=*` is the sharp case: “does this field exist?” has no term to look up, so every event in scope is extracted. A search such as `status=404` can still use the literal `404` as a term, and only then check the field. A `field=value` filter is not automatically a full scan.
+
+</LabBlock>
+
+## Lab — Fast mode leaves the schema off
+
+Chapter 1 switched Fast, Smart, and Verbose. Smart discovers fields on an event search, so this comparison is Fast against Verbose. Each bar opens Search in that mode.
+
+<LabBlock title="Fast, then Verbose">
+
+<SplunkSearch earliest="-5y" latest="now" mode="fast" spl={`index=s4c_www | head 20`} />
+
+<SplunkSearch earliest="-5y" latest="now" mode="verbose" spl={`index=s4c_www | head 20`} />
+
+> **What to notice:** in the field sidebar, Fast shows the default indexed names, because the search did not ask for more. Verbose discovers `clientip`, `status`, `method`, `uri`, `useragent`, and the rest. The events on disk did not change between the two runs. The search-time schema was applied on the second run.
+
+Verbose, and any search that needs every field, pays for that work on every event. Job Inspector records it as `command.search.kv`. Inspector Case 2 measures it.
+
+</LabBlock>
+
+## Lab — tstats can see indexed names only
+
+<LabBlock title="Group by a name the bucket stored">
+
+<SplunkSearch earliest="-5y" latest="now" spl={`| tstats count where index=s4c_www by sourcetype`} />
+
+<SplunkSearch earliest="-5y" latest="now" spl={`| tstats count where index=s4c_www by status`} />
+
+> **What to notice:** `sourcetype` returns a row per sourcetype, with a count, because it was written at index time. The `status` search returns no rows. The index is not empty. `tstats` has no indexed field named `status` to group on. The values 200, 301, and 404 are still in `_raw`, and a normal search can extract them. `tstats` does not open the journal to apply the `access_combined` extraction.
+
+The `tstats` step in Search shows how a tsidx term can still be counted without a field. A data-model acceleration is the other way to make a search-time name visible to `tstats`. That comes later.
+
+</LabBlock>
+
+## What it costs to change your mind
+
+A search-time change — the extraction, an alias, a lookup, a tag — applies on the next search, including to buckets indexed last year.
+
+An index-time change — line breaking, the timestamp, an indexed extraction — applies to events indexed after the change. Fixing events already on disk means reindexing.
+
+Weather is the other choice, already in this app. `open_meteo:weather:metric` sets `INDEXED_EXTRACTIONS = json`, so those names are written into the bucket. `access_combined` leaves `status` as a search-time name.
+
+## Where this runs
+
+The extraction runs on the indexer, in the Map phase, from configuration the search head replicated. The next page shows that Map phase: the indexer finds events, extracts fields, and returns intermediate results. When `scanCount` is much larger than `eventCount`, the filter happened during schema-on-the-fly, after the buckets were already open.
+
+A field alias is a second name applied at the same moment as the extraction. CIM is a shared set of those names (`user`, `src`, `action`) so one search fits more than one log format. That lab comes after `tstats`, on its own data.
+
+The <Link to="https://docs.splunk.com/Documentation/Splunk/latest/Indexer/Indextimeversussearchtime" openInNewContext>index-time versus search-time</Link> page in Splunk Docs is the reference for this split.

@@ -43,7 +43,9 @@ ___
  When the scan count is high and the event count is low we are filtering events during schema on
 the fly.
 This is the most expensive place to filter as we have downloaded
-buckets, open the tsidx, extracted slices fully parsed events. 
+buckets, open the tsidx, extracted slices fully parsed events.
+
+The Data step **When a field exists** shows why. The filter is on a name that was not stored in the bucket, so Splunk extracts it while reading. 
 
 ## 6. Avoid using wildcards as prefixes or in the middle of the string
 When you use a wildcard character at the beginning of a string, the search must look at every string to determine if the end of the string matches what you specify after the asterisk. 

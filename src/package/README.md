@@ -2,7 +2,11 @@
 
 # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
 
-**Current app version: 2.16.0**
+**Current app version: 2.17.0**
+
+### What's new in 2.17.0
+
+- Data step **When a field exists**: index-time tokens versus search-time fields on `s4c_www`.
 
 ### What's new in 2.16.0
 
