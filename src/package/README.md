@@ -12,6 +12,7 @@
 - Visible lesson loading states and retry controls.
 - Horizontally scrollable navigation without overlapping tab labels on narrow screens.
 - Token Kitchen links from its simplified preview to the real Dashboard Studio dashboard.
+- Patched vulnerable transitive dependencies; the unused root npm lockfile was removed.
 
 See the [release notes](https://github.com/bautt/splunk4champions2/blob/main/WHATS_NEW.md)
 for details.
@@ -50,6 +51,11 @@ Download the latest release from https://github.com/bautt/splunk4champions2/rele
 and install it as a standard Splunk app. It is not intended for production systems
 and is provided without warranty.
 
+For version 2.16.0, download `splunk4champions2-2.16.0.tar.gz` from
+https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0. In Splunk Web,
+select **Apps → Manage Apps → Install app from file**, follow the prompts, and
+restart Splunk if prompted. Check **Setup → Health Check** before the workshop.
+
 Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5; older
 Splunk releases and Splunk Cloud were not validated with the upgraded UI stack.
 The custom visualization exercise requires Splunk Enterprise 10.4+ or an equivalent
@@ -77,7 +83,7 @@ make deps
 
 Run the component regression tests with `yarn --cwd src test` and validate the
 production bundle and MDX with `yarn --cwd src build`. Version 2.16.0 passed all
-11 regression tests and the production build, with non-blocking MapLibre and
+13 regression tests and the production build, with non-blocking MapLibre and
 bundle-size warnings.
 
 Run the development task. This will build a development version of the app in the `dist` folder.
