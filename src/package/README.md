@@ -56,10 +56,10 @@ https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0. In Splunk Web,
 select **Apps → Manage Apps → Install app from file**, follow the prompts, and
 restart Splunk if prompted. Check **Setup → Health Check** before the workshop.
 
-Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5; older
-Splunk releases and Splunk Cloud were not validated with the upgraded UI stack.
-The custom visualization exercise requires Splunk Enterprise 10.4+ or an equivalent
-Splunk Cloud release.
+This release is for **Splunk Enterprise only**, not Splunk Cloud. Version 2.16.0
+was smoke-tested locally on Splunk Enterprise 10.6.0.5; older Splunk releases
+were not validated with the upgraded UI stack. The custom visualization exercise
+requires Splunk Enterprise 10.4+.
 
 
 

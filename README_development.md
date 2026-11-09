@@ -52,8 +52,9 @@ tabs, the embedded Studio bar chart, the quiz landing page, and the Token Kitche
 dashboard link. This is not a full end-to-end or Cloud certification. The build
 still reports MapLibre dynamic-dependency and bundle-size warnings.
 
-The [v2.16.0 release](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0)
-contains `splunk4champions2-2.16.0.tar.gz`. The repository's `make package`
+The Enterprise-only [v2.16.0 release](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0)
+contains `splunk4champions2-2.16.0.tar.gz`; it is not a Splunk Cloud package.
+The repository's `make package`
 builds `splunk4champions2.tar.gz` and replaces `dist`; avoid it when `dist`
 is a live Splunk app with local configuration. Release archives must exclude
 local configuration, generated caches, and credentials.

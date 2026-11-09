@@ -150,10 +150,10 @@ In Splunk Web, open **Apps → Manage Apps → Install app from file**, select t
 downloaded archive, and follow the prompts. Restart Splunk if prompted. Open the
 workshop and check **Setup → Health Check** before running the labs.
 
-Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5.
-The custom visualization exercise requires Splunk Enterprise 10.4+ or an
-equivalent Splunk Cloud release; the UI upgrade was not validated on older
-Splunk releases or in Splunk Cloud.
+This release is for **Splunk Enterprise only**, not Splunk Cloud. It was
+smoke-tested locally on Splunk Enterprise 10.6.0.5; older Splunk versions were
+not validated with the UI upgrade. The custom visualization exercise requires
+Splunk Enterprise 10.4+.
 
 If you have access to **show.splunk.com**, the workshop is available on Splunk Show.
 

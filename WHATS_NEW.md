@@ -13,7 +13,7 @@
 - **Narrow-screen navigation:** chapter and section tabs retain natural label widths and scroll horizontally rather than overlapping.
 - **Documentation:** README files, product notes, handouts, flyer, and in-app release highlights updated for 2.16.0.
 - **Validation:** all 13 component and compatibility regression tests and the production build passed. Local smoke checks on Splunk Enterprise 10.6.0.5 covered Health Check, clipboard feedback, time-picker presets, colour schemes, Large Room, narrow-screen navigation, the embedded chart, the quiz landing page, and the dashboard link.
-- **Known limits:** non-blocking MapLibre dynamic-dependency and bundle-size build warnings remain. Older Splunk releases and Splunk Cloud were not validated with this UI upgrade. The custom visualization exercise requires Splunk Enterprise 10.4+ or an equivalent Cloud release.
+- **Known limits:** this release is for Splunk Enterprise only, not Splunk Cloud. Non-blocking MapLibre dynamic-dependency and bundle-size build warnings remain. Older Splunk releases were not validated with this UI upgrade. The custom visualization exercise requires Splunk Enterprise 10.4+.
 
 ## Version 2.15.0
 
