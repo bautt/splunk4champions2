@@ -154,6 +154,15 @@ const labs = {
                     ]
                 },
                 {
+                    "title": "When a field exists",
+                    "steps": [
+                        {
+                            "title": "When a field exists",
+                            "content": "chapter2/schema_on_read.mdx"
+                        }
+                    ]
+                },
+                {
                     "title": "Distributed Architecture(s)",
                     "steps": [
                         {

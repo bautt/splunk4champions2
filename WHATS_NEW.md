@@ -1,5 +1,10 @@
 # What's New — Splunk4Champions Workshop
 
+## Version 2.17.0
+
+- **Data:** new step **When a field exists**, after Highlighting TERMs. On `s4c_www` it separates a tsidx token from a search-time field (`status`, `useragent`), compares Fast and Verbose, and shows that `tstats` groups by `sourcetype` and not by `status`.
+- **Search:** Search Basics and Inspector Case 1 point back at that step. The Data quiz has one new question.
+
 ## Version 2.16.0
 
 - **Dependency security follow-up:** patched crypto-js, d3-color, fast-uri, qs, source-map-js, and serialize-javascript through Yarn resolutions; removed the orphaned root npm lockfile. Added compatibility regressions for cloud-auth PKCE and Studio D3 consumers.

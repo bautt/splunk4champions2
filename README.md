@@ -72,6 +72,7 @@ This chapter explains the data lifecycle in Splunk:
 - Raw data, `tsidx`, bloom filters, and bucket metadata
 - Input, parsing, indexing, and search stages
 - Segmentation and `TERM()` behavior
+- Schema on read: when a field exists, versus a token in tsidx
 - Indexers, clustering, data aging, and SmartStore concepts
 
 Participants learn why the same search can behave very differently depending on time range, terms, index layout, and data model.
@@ -143,8 +144,7 @@ The final chapter is a Kahoot-style knowledge check with timed questions, instan
 Download the latest release from the [Releases page](https://github.com/bautt/splunk4champions2/releases/) and install as a standard Splunk app.
 
 - Not intended for production systems — no warranty
-- Current app version: **2.16.0**
-- Release: [v2.16.0](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0); download `splunk4champions2-2.16.0.tar.gz`.
+- Current app version: **2.17.0** (this tree). Newest tagged download: [v2.16.0](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0), `splunk4champions2-2.16.0.tar.gz`. Package this tree with `make package` to install 2.17.0.
 
 In Splunk Web, open **Apps → Manage Apps → Install app from file**, select the
 downloaded archive, and follow the prompts. Restart Splunk if prompted. Open the

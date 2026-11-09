@@ -2,7 +2,7 @@ import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz
 
 <BuzzQuiz
   title="Data Quiz"
-  subtitle="Indexes, buckets, lifecycle, segmentation."
+  subtitle="Indexes, buckets, lifecycle, segmentation, schema on read."
   timePerQuestion={25}
   pointsBase={1000}
 >
@@ -31,6 +31,16 @@ import { BuzzQuiz, Question, Answer, TrueFalse } from '../../components/BuzzQuiz
     <Answer correct>Quickly says whether a term is *probably* in the bucket so Splunk can skip whole buckets</Answer>
     <Answer>Maps event timestamps to disk offsets</Answer>
     <Answer>Holds field extractions for search-time use</Answer>
+  </Question>
+
+  <Question
+    prompt="On an access_combined event in s4c_www, where does the status field come from?"
+    explanation="status is not written into the tsidx as a field. The access_combined sourcetype extracts it at search time from _raw. host, source, sourcetype, and _time are the names the bucket already stored."
+  >
+    <Answer>It is stored as an indexed field in the tsidx</Answer>
+    <Answer correct>It is extracted at search time from the raw event</Answer>
+    <Answer>The Bloom filter keeps a copy of every field</Answer>
+    <Answer>The search head writes it into the journal when you run stats</Answer>
   </Question>
 
   <Question
