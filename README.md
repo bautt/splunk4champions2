@@ -144,6 +144,11 @@ Download the latest release from the [Releases page](https://github.com/bautt/sp
 
 - Not intended for production systems — no warranty
 - Current app version: **2.16.0**
+- Release: [v2.16.0](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0); download `splunk4champions2-2.16.0.tar.gz`.
+
+In Splunk Web, open **Apps → Manage Apps → Install app from file**, select the
+downloaded archive, and follow the prompts. Restart Splunk if prompted. Open the
+workshop and check **Setup → Health Check** before running the labs.
 
 Version 2.16.0 was smoke-tested locally on Splunk Enterprise 10.6.0.5.
 The custom visualization exercise requires Splunk Enterprise 10.4+ or an
@@ -204,6 +209,7 @@ The app ships with curated `s4c_*` data so labs do not depend on customer produc
 ## Recent highlights
 
 - **2.16.0 UI refresh:** React 18.3.1, Splunk React UI 5.18.0, Search 8.0.0, and Dashboard framework 29.9.0
+- Patched vulnerable transitive dependencies and removed the unused root npm lockfile
 - Persistent, dismissible clipboard messages replace deprecated toast notifications
 - Health Check distinguishes missing/empty indexes from permission, session, network, and timeout errors
 - Lesson loading indicators and retry controls for loading or rendering failures
