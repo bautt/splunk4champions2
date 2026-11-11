@@ -144,7 +144,7 @@ The final chapter is a Kahoot-style knowledge check with timed questions, instan
 Download the latest release from the [Releases page](https://github.com/bautt/splunk4champions2/releases/) and install as a standard Splunk app.
 
 - Not intended for production systems — no warranty
-- Current app version: **2.17.0**. Download [v2.17.0](https://github.com/bautt/splunk4champions2/releases/tag/v2.17.0) and install `splunk4champions2-2.17.0.tar.gz`.
+- Current app version: **2.17.1**. Download [v2.17.1](https://github.com/bautt/splunk4champions2/releases/tag/v2.17.1) and install `splunk4champions2-2.17.1.tar.gz`.
 
 In Splunk Web, open **Apps → Manage Apps → Install app from file**, select the
 downloaded archive, and follow the prompts. Restart Splunk if prompted. Open the

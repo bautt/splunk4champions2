@@ -2,7 +2,7 @@
 
 # Splunk4Champions 2.0 -> _Splunk SE Workshop for advanced users_
 
-**Current app version: 2.17.0**
+**Current app version: 2.17.1**
 
 ### What's new in 2.17.0
 
@@ -55,12 +55,12 @@ Download the latest release from https://github.com/bautt/splunk4champions2/rele
 and install it as a standard Splunk app. It is not intended for production systems
 and is provided without warranty.
 
-For version 2.17.0, download `splunk4champions2-2.17.0.tar.gz` from
-https://github.com/bautt/splunk4champions2/releases/tag/v2.17.0. In Splunk Web,
+For version 2.17.1, download `splunk4champions2-2.17.1.tar.gz` from
+https://github.com/bautt/splunk4champions2/releases/tag/v2.17.1. In Splunk Web,
 select **Apps → Manage Apps → Install app from file**, follow the prompts, and
 restart Splunk if prompted. Check **Setup → Health Check** before the workshop.
 
-This release is for **Splunk Enterprise only**, not Splunk Cloud. Version 2.17.0
+This release is for **Splunk Enterprise only**, not Splunk Cloud. Version 2.17.1
 was checked locally on Splunk Enterprise 10.6.0.5; older Splunk releases
 were not validated with the upgraded UI stack. The custom visualization exercise
 requires Splunk Enterprise 10.4+.
