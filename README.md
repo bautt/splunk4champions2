@@ -144,14 +144,14 @@ The final chapter is a Kahoot-style knowledge check with timed questions, instan
 Download the latest release from the [Releases page](https://github.com/bautt/splunk4champions2/releases/) and install as a standard Splunk app.
 
 - Not intended for production systems — no warranty
-- Current app version: **2.17.0** (this tree). Newest tagged download: [v2.16.0](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0), `splunk4champions2-2.16.0.tar.gz`. Package this tree with `make package` to install 2.17.0.
+- Current app version: **2.17.0**. Download [v2.17.0](https://github.com/bautt/splunk4champions2/releases/tag/v2.17.0) and install `splunk4champions2-2.17.0.tar.gz`.
 
 In Splunk Web, open **Apps → Manage Apps → Install app from file**, select the
 downloaded archive, and follow the prompts. Restart Splunk if prompted. Open the
 workshop and check **Setup → Health Check** before running the labs.
 
 This release is for **Splunk Enterprise only**, not Splunk Cloud. It was
-smoke-tested locally on Splunk Enterprise 10.6.0.5; older Splunk versions were
+checked locally on Splunk Enterprise 10.6.0.5; older Splunk versions were
 not validated with the UI upgrade. The custom visualization exercise requires
 Splunk Enterprise 10.4+.
 
@@ -251,37 +251,40 @@ For Splunk Cloud, create HEC tokens through the Cloud-supported admin flow, such
 #### Setup — Health Check
 Verify index status, event counts, and date ranges. Shows Splunk and app version at a glance.
 
-![Health Check](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch0_setup_health_check.png)
+![Health Check](screenshots/ch0_setup_health_check.png)
 
 #### Chapter 1 — Settings: Search Assistant
-![Search Assistant](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch1_settings_search_assistant.png)
+![Search Assistant](screenshots/ch1_settings_search_assistant.png)
 
-#### Chapter 1 — Settings: Stock Index Search (SPL & tstats)
-![Stock Index SPL](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch1_settings_stock_index_spl.png)
+#### Chapter 1 — Settings: Search Modes
+![Search Modes](screenshots/ch1_settings_search_modes.png)
 
-#### Chapter 2 — Data: Index and Buckets
-![Data Index Buckets](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch2_data_index_buckets.png)
+#### Chapter 2 — Data: How is data stored?
+![Data Index Buckets](screenshots/ch2_data_index_buckets.png)
+
+#### Chapter 2 — Data: When a field exists
+![When a field exists](screenshots/ch2_data_when_a_field_exists.png)
 
 #### Chapter 3 — Search: Search Basics
-![Search Basics](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_basics.png)
+![Search Basics](screenshots/ch3_search_basics.png)
 
-#### Chapter 3 — Search: Job Inspector
-![Inspector](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_inspector.png)
+#### Chapter 3 — Search: Inspector
+![Inspector](screenshots/ch3_search_inspector.png)
 
-#### Chapter 3 — Search: Terms & Segmentation
-![Segmentation](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_terms_segmentation.png)
+#### Chapter 3 — Search: Terms
+![Terms](screenshots/ch3_search_terms_segmentation.png)
 
 #### Chapter 3 — Search: tstats
-![tstats](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch3_search_tstats.png)
+![tstats](screenshots/ch3_search_tstats.png)
 
 #### Legacy — Metrics: Searching Metrics
-![Metrics](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch4_metrics_searching.png)
+![Metrics](screenshots/ch4_metrics_searching.png)
 
 #### Legacy — XML Dashboards: Base Search
-![XML Dashboards](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch5_xml_dashboards_base_search.png)
+![XML Dashboards](screenshots/ch5_xml_dashboards_base_search.png)
 
 #### Chapter 4 — Dashboard Studio: Overview
-![Dashboard Studio](https://github.com/bautt/splunk4champions2/blob/main/screenshots/ch6_dashboard_studio_overview.png)
+![Dashboard Studio](screenshots/ch6_dashboard_studio_overview.png)
 
 ---
 

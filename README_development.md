@@ -1,6 +1,6 @@
 # Development readme:
 
-Current app release: **2.16.0**. Both `[launcher]` and `[id]` versions in
+Current app release: **2.17.0**. Both `[launcher]` and `[id]` versions in
 [`src/package/default/app.conf`](src/package/default/app.conf) define the Splunk
 app version; `src/package.json` identifies the frontend build package separately.
 See [release notes](WHATS_NEW.md) for the UI refresh and workshop changes.
@@ -45,15 +45,14 @@ browser APIs are mocked; no running Splunk instance is required.
 Run `yarn --cwd src build` to validate the production app and MDX content. Before
 release, also check Setup, search copying, and lesson navigation inside Splunk Web.
 
-For 2.16.0, all 13 regression tests and the production build passed. Local browser
-checks on Splunk Enterprise 10.6.0.5 covered Health Check, clipboard success and
-dismissal, time-picker presets, all four colour schemes, Large Room, narrow-screen
-tabs, the embedded Studio bar chart, the quiz landing page, and the Token Kitchen
-dashboard link. This is not a full end-to-end or Cloud certification. The build
-still reports MapLibre dynamic-dependency and bundle-size warnings.
+For 2.17.0, all 13 regression tests and the production build passed. A headless
+browser captured the README screenshots from Splunk Enterprise 10.6.0.5 across
+Setup, Settings, Data, Search, Legacy, and Dashboard Studio without errors. This
+is not a full end-to-end or Cloud certification. The build still reports
+MapLibre dynamic-dependency and bundle-size warnings.
 
-The Enterprise-only [v2.16.0 release](https://github.com/bautt/splunk4champions2/releases/tag/v2.16.0)
-contains `splunk4champions2-2.16.0.tar.gz`; it is not a Splunk Cloud package.
+The Enterprise-only [v2.17.0 release](https://github.com/bautt/splunk4champions2/releases/tag/v2.17.0)
+contains `splunk4champions2-2.17.0.tar.gz`; it is not a Splunk Cloud package.
 The repository's `make package`
 builds `splunk4champions2.tar.gz` and replaces `dist`; avoid it when `dist`
 is a live Splunk app with local configuration. Release archives must exclude
