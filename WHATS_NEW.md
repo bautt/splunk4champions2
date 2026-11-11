@@ -1,5 +1,9 @@
 # What's New — Splunk4Champions Workshop
 
+## Version 2.17.1
+
+- **Docs and screenshots:** README screenshots recaptured from Splunk Enterprise 10.6.0.5 with app 2.17.0. Search Modes and When a field exists are added, and the Stock Index and Canvas images are removed. Image links are relative, so GitHub renders them. Install instructions point to 2.17.1.
+
 ## Version 2.17.0
 
 - **Data:** new step **When a field exists**, after Highlighting TERMs. On `s4c_www` it separates a tsidx token from a search-time field (`status`, `useragent`), compares Fast and Verbose, and shows that `tstats` groups by `sourcetype` and not by `status`.
